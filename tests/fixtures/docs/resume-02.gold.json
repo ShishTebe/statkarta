@@ -1,0 +1,14 @@
+{
+ "file": "resume-02.txt",
+ "doc_type": "resume",
+ "case_number": "12611781000100091",
+ "doc_date": "2026-05-15",
+ "persons": [],
+ "victims": [],
+ "qualifications": [],
+ "resume": {
+  "point": "4",
+  "code": "03"
+ },
+ "event": "ev.resume"
+}

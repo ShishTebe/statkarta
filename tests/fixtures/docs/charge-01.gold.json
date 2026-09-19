@@ -1,0 +1,19 @@
+{
+ "file": "charge-01.txt",
+ "doc_type": "charge",
+ "case_number": "12610000000100000",
+ "doc_date": "2026-01-02",
+ "persons": [
+  {
+   "surname": "Сомов",
+   "first_name": "Игорь",
+   "patronymic": "Петрович",
+   "birth": "1987-03-14"
+  }
+ ],
+ "victims": [],
+ "qualifications": [
+  "158/2/в"
+ ],
+ "event": "ev.person_identified"
+}

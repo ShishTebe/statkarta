@@ -1,0 +1,19 @@
+{
+ "file": "charge-02.txt",
+ "doc_type": "charge",
+ "case_number": "12610137000100007",
+ "doc_date": "2026-02-03",
+ "persons": [
+  {
+   "surname": "Белкина",
+   "first_name": "Анна",
+   "patronymic": "Викторовна",
+   "birth": "1992-11-02"
+  }
+ ],
+ "victims": [],
+ "qualifications": [
+  "111/4/"
+ ],
+ "event": "ev.person_identified"
+}

@@ -1,0 +1,15 @@
+{
+ "file": "extend-03.txt",
+ "doc_type": "extend",
+ "case_number": "12610822000100042",
+ "doc_date": "2026-07-08",
+ "persons": [],
+ "victims": [],
+ "qualifications": [],
+ "extend": {
+  "months": 9,
+  "until": "2027-04-04",
+  "code": "3"
+ },
+ "event": "ev.extend"
+}

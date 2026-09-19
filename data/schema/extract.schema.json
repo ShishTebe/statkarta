@@ -48,7 +48,10 @@
        "case_number",
        "episodes",
        "fabula",
-       "victims"
+       "victims",
+       "person",
+       "citation",
+       "term"
       ]
      },
      "parts": {
@@ -132,6 +135,15 @@
      },
      "window": {
       "type": "integer"
+     },
+     "info": {
+      "type": "boolean"
+     },
+     "target": {
+      "type": "object"
+     },
+     "attr": {
+      "type": "string"
      },
      "max_len": {
       "type": "integer"

@@ -1,0 +1,22 @@
+{
+ "file": "terminate-01.txt",
+ "doc_type": "terminate",
+ "case_number": "12612192000100112",
+ "doc_date": "2026-08-18",
+ "persons": [
+  {
+   "surname": "Белкина",
+   "first_name": "Анна",
+   "patronymic": "Викторовна",
+   "birth": "1992-11-02"
+  }
+ ],
+ "victims": [],
+ "qualifications": [],
+ "terminate": {
+  "cite": "п. 2 ч. 1 ст. 24 УПК РФ",
+  "code": "13",
+  "ground_type": "rehab"
+ },
+ "event": "ev.terminate"
+}

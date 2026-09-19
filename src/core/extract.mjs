@@ -4,6 +4,7 @@
 
 import { normalizeForScan } from './doctext.mjs';
 import { parseQualification, refToText } from './uk.mjs';
+import { optKey } from './pack.mjs';
 
 const MONTHS = ['январ', 'феврал', 'март', 'апрел', 'ма', 'июн', 'июл', 'август', 'сентябр', 'октябр', 'ноябр', 'декабр'];
 const MACROS = {
@@ -64,11 +65,12 @@ function moneyOf(g) {
 const RX_ESTABLISHED = /У\s?С\s?Т\s?А\s?Н\s?О\s?В\s?И\s?Л\s?:?/g;
 const RX_DECIDED = /П\s?О\s?С\s?Т\s?А\s?Н\s?О\s?В\s?И\s?Л\s?:?/g;
 const RX_TITLE = /постановлени[ея]\s+о\s+возбуждении\s+уголовного\s+дела/iu;
+const RX_ANY_TITLE = /(?:постановлени[ея]|протокол|рапорт|обвинительное\s+заключение|приговор)[^\n]{0,160}/iu;
 
 // Деление на части по якорям «УСТАНОВИЛ» и «ПОСТАНОВИЛ» (заглавными, в том числе вразрядку)
-export function splitParts(text) {
+export function splitParts(text, { titleAt = null } = {}) {
   const t = text;
-  const title = RX_TITLE.exec(t);
+  const title = titleAt === null ? RX_TITLE.exec(t) : { index: t.lastIndexOf('\n', titleAt) + 1, 0: t.slice(titleAt, t.indexOf('\n', titleAt) < 0 ? t.length : t.indexOf('\n', titleAt)) };
   const titleStart = title ? title.index : 0;
   // заголовок: строка с «о возбуждении уголовного дела» и строка «и принятии его к производству»
   let titleEnd = title ? t.indexOf('\n', title.index + title[0].length) : 0;
@@ -171,7 +173,7 @@ function scan(rule, text, range) {
 }
 
 function finding(rule, text, start, end, value, { confidence = rule.confidence, note = null, display = null, key = rule.id } = {}) {
-  return { key, rule: rule.id, label: rule.label, field: rule.field, value, display: display ?? String(value), confidence, note: note ?? rule.note ?? null, fragment: fragmentOf(text, start, end) };
+  return { key, rule: rule.id, label: rule.label, field: rule.field, info: rule.info === true, value, display: display ?? String(value), confidence, note: note ?? rule.note ?? null, fragment: fragmentOf(text, start, end) };
 }
 
 function simpleField(rule, text, parts, byRule) {
@@ -370,6 +372,17 @@ export function dativeToNominative([surname, first, patr]) {
   };
 }
 
+// Винительный падеж женского имени («Кравцову Елену Игоревну») – в именительный
+export function accusativeToNominative([surname, first, patr]) {
+  if (!/ну$/u.test(patr)) return null;
+  const sub = (w, pairs) => { for (const [a, b] of pairs) if (w.endsWith(a)) return w.slice(0, w.length - a.length) + b; return w; };
+  return {
+    surname: sub(surname, [['скую', 'ская'], ['цкую', 'цкая'], ['ую', 'ая'], ['ову', 'ова'], ['еву', 'ева'], ['ину', 'ина'], ['ыну', 'ына'], ['у', 'а'], ['ю', 'я']]),
+    first_name: sub(first, [['ью', 'ья'], ['ию', 'ия'], ['у', 'а'], ['ю', 'я']]),
+    patronymic: `${patr.slice(0, -2)}на`,
+  };
+}
+
 // Потерпевшие – только подсказка (низкая уверенность, ответ В-41): «потерпевшему …», «потерпевшая …»
 // Фамилия при инициалах в косвенном падеже – только однозначные окончания; иначе как в тексте
 export function surnameToNominative(w) {
@@ -387,7 +400,7 @@ function victimsField(rule, text, parts, suspects) {
     const w = raw.split(' ');
     const full = w.length === 3;
     if (!w.every((x) => /^[А-Я]/u.test(x))) continue; // шаблон без учета регистра – Ф.И.О. только с заглавных
-    if (full && !/(?:ич|на|ича|ны|ичу|не|ичем|ной)$/u.test(w[2])) continue; // не Ф.И.О.
+    if (full && !/(?:ич|на|ича|ны|ичу|не|ичем|ной|ну)$/u.test(w[2])) continue; // не Ф.И.О.
     const init = full ? `${w[1][0]}.${w[2][0]}.` : w[1];
     if (suspects.some((p) => same(p.surname, w[0]) && p.initials === init)) continue;
     if (out.some((v) => same(v.names.surname, w[0]) && v.initials === init)) continue;
@@ -397,7 +410,7 @@ function victimsField(rule, text, parts, suspects) {
     let how = 'как в тексте';
     if (full && /(?:ич|на)$/u.test(w[2])) { names = { surname: w[0], first_name: w[1], patronymic: w[2] }; how = 'именительный'; }
     else if (full) {
-      names = (full && nominative(text, w, birth)) || genitiveToNominative(w) || dativeToNominative(w);
+      names = (full && nominative(text, w, birth)) || genitiveToNominative(w) || dativeToNominative(w) || accusativeToNominative(w);
       if (names) how = 'восстановлен';
     }
     if (!names && !full) {
@@ -413,9 +426,140 @@ function victimsField(rule, text, parts, suspects) {
   return out;
 }
 
+
+
+// Лицо из резолютивной части («Привлечь Иванова Ивана Ивановича, 01.02.1980 года рождения, …»)
+function personsField(rule, text, parts) {
+  const out = [];
+  for (const range of rule.parts.map((x) => parts[x])) {
+    for (const h of scan(rule, text, range)) {
+      const raw = h.g.v.replace(/\s+/g, ' ');
+      const w = raw.split(' ');
+      if (!w.every((x) => /^[А-Я]/u.test(x))) continue;
+      const full = w.length === 3;
+      const start = h.m.index + h.m[0].length - h.g.v.length;
+      const b = RX_BIRTH.exec(text.slice(start + h.g.v.length, start + h.g.v.length + 40));
+      const birth = b && b[1] ? `${b[3]}-${b[2]}-${b[1]}` : null;
+      const nom = full ? nominative(text, w, birth) : null;
+      const guessed = full && !nom ? (genitiveToNominative(w) ?? dativeToNominative(w) ?? accusativeToNominative(w)) : null;
+      const names = nom ?? guessed ?? { surname: full ? w[0] : (surnameToNominative(w[0]) ?? w[0]), first_name: full ? w[1] : '', patronymic: full ? w[2] : '' };
+      const initials = full ? `${names.first_name[0]}.${names.patronymic[0]}.` : w[1];
+      if (out.some((p) => p.label === `${names.surname} ${initials}`)) continue;
+      out.push({ key: `person.${out.length + 1}`, label: `${names.surname} ${initials}`, names, birth, genitive: raw,
+        nominativeFound: Boolean(nom), nominativeGuessed: Boolean(guessed), confidence: rule.confidence,
+        fragment: fragmentOf(text, start, start + h.g.v.length + (b ? b[0].length : 0)) });
+    }
+    if (out.length) break;
+  }
+  return out;
+}
+
+// Код реквизита по ссылке на УПК в тексте (основание приостановления, прекращения, возобновления)
+function citationField(rule, text, parts, optionsOf) {
+  for (const range of rule.parts.map((x) => parts[x])) {
+    for (const h of scan(rule, text, range)) {
+      const citation = h.g.v.replace(/\s+/g, ' ');
+      const options = optionsOf(rule.target.form, rule.target.requisite) ?? [];
+      // «по ранее прекращенному делу» – ссылки нет, ищем вариант по словам
+      const hit = /прекращ/iu.test(citation)
+        ? (() => { const o = options.find((x) => !x.group && /ранее\s+прекращенному/iu.test(x.value)); return o ? { code: o.code, title: o.value, key: optKey(o) } : null; })()
+        : codeByCitation(options, citation);
+      const start = text.indexOf(h.g.v, h.m.index);
+      if (!hit) {
+        return finding(rule, text, start, start + h.g.v.length, null, { confidence: 'low', display: citation,
+          note: `Код реквизита ${rule.target.requisite} ф. ${rule.target.form} по ссылке «${citation}» не подобран – выберите код сами` });
+      }
+      const ref = parseUpkRef(citation);
+      return { ...finding(rule, text, start, start + h.g.v.length, [hit.key], { display: `${hit.code} – ${hit.title}` }),
+        target: rule.target, attr: rule.attr ?? null, citation, point: ref?.point ?? null, code: hit.code };
+    }
+  }
+  return null;
+}
+
+// Срок продления: «до 03 месяцев 00 суток», «на 1 месяц» → код реквизита 9 ф. 3
+function termField(rule, text, parts) {
+  for (const range of rule.parts.map((x) => parts[x])) {
+    for (const h of scan(rule, text, range)) {
+      const months = Number(h.g.mon ?? 0);
+      const days = Number(h.g.day ?? 0);
+      if (!months && !days) continue;
+      const code = extensionCode({ months, days });
+      const start = h.m.index;
+      return { ...finding(rule, text, start, start + h.m[0].length, [`|${code}`], { display: `${code} – ${months ? `${months} мес.` : ''}${days ? ` ${days} сут.` : ''}`.trim() }),
+        target: rule.target, code };
+    }
+  }
+  return null;
+}
+
+// ---------- ссылки на УПК и коды реквизитов ----------
+
+// «п. 3 ч. 1 ст. 24 УПК РФ», «пунктом 2 части 1 статьи 208», «ст. 25 УПК РФ» → { article, part, point }
+export function parseUpkRef(text) {
+  const rx = /(?:п(?:\.|ункт[а-я]*)\s*(?<pt>\d+(?:\.\d+)?)\s*)?(?:ч(?:\.|аст[а-я]+)\s*(?<pr>\d+(?:\.\d+)?)\s*)?ст(?:\.|ат[а-я]+)\s*(?<art>\d+(?:\.\d+)?)/iu;
+  const m = rx.exec(String(text ?? ''));
+  if (!m) return null;
+  return { article: m.groups.art, part: m.groups.pr ?? null, point: m.groups.pt ?? null };
+}
+
+const sameRef = (a, b) => Boolean(a && b) && a.article === b.article
+  && (a.part === null || b.part === null || a.part === b.part)
+  && (a.point === null || b.point === null || a.point === b.point);
+
+// Код реквизита по ссылке на УПК: у вариантов реквизита ссылка записана в самом наименовании
+export function codeByCitation(options, citation) {
+  const ref = parseUpkRef(citation);
+  if (!ref) return null;
+  const exact = options.filter((o) => !o.group).map((o) => ({ o, r: parseUpkRef(o.value) })).filter((x) => x.r && x.r.article === ref.article);
+  const hit = exact.find((x) => sameRef(x.r, ref) && x.r.part === ref.part && x.r.point === ref.point)
+    ?? exact.find((x) => sameRef(x.r, ref))
+    ?? null;
+  return hit ? { code: hit.o.code, title: hit.o.value, key: optKey(hit.o) } : null;
+}
+
+// Код срока продления (реквизит 9 ф. 3): считаем общий срок в сутках
+export function extensionCode({ months = 0, days = 0 }) {
+  const total = months * 30 + days;
+  if (total <= 20) return '6';
+  if (total <= 60) return '5';
+  if (total <= 92) return '1';
+  if (total <= 183) return '2';
+  if (total <= 366) return '3';
+  return '4';
+}
+
 // ---------- постановление целиком ----------
 
+// Вид документа – по признакам из пакета документов (documents.json), в заголовке
+export function detectDoc(text, documents = []) {
+  // заголовок – короткая строка в начале документа; в длинных фразах признаки не ищутся
+  const head = text.slice(0, 4000);
+  const lines = [];
+  let at = 0;
+  for (const line of head.split('\n').slice(0, 40)) {
+    const t = line.trim();
+    if (t && t.length <= 150) lines.push({ text: t.toLowerCase(), at: at + line.indexOf(t) });
+    at += line.length + 1;
+  }
+  let best = null;
+  for (const d of documents) {
+    if ((d.not_detect ?? []).some((x) => lines.some((l) => l.text.includes(x.toLowerCase())))) continue;
+    for (const mark of d.detect ?? []) {
+      for (const line of lines) {
+        const i = line.text.indexOf(mark.toLowerCase());
+        if (i < 0 || i > 80) continue;
+        if (!best || mark.length > best.mark.length) best = { doc: d, mark, at: line.at + i };
+      }
+    }
+  }
+  if (best) return { ok: true, doc: best.doc, at: best.at };
+  const t = RX_ANY_TITLE.exec(text.slice(0, 700));
+  return { ok: false, reason: t ? `Этот документ программе пока не знаком: «${t[0].trim().slice(0, 100)}»` : 'Заголовок документа не распознан' };
+}
+
 export function detectVud(text) {
+
   const head = text.slice(0, 600);
   if (!RX_TITLE.test(head)) {
     const t = /постановлени[ея][^\n]{0,120}/iu.exec(head);
@@ -427,40 +571,53 @@ export function detectVud(text) {
   return { ok: true };
 }
 
-// rules – массив правил extract.json с doc_type «vud»
-export function extractVud(sourceText, rules) {
+// Разбор документа дела: правила из пакета (extract.json) ищутся каждое в своей части.
+// optionsOf(form, requisite) – варианты реквизита, нужны для подстановки кодов по ссылке на УПК.
+export function extractDoc(sourceText, { rules = [], documents = [], optionsOf = () => [] } = {}) {
   const t0 = Date.now();
   const text = normalizeForScan(sourceText);
-  const det = detectVud(text);
-  const res = { ok: det.ok, reason: det.reason ?? null, text, fields: [], episodes: [], victims: [], warnings: [], parts: null, ms: 0 };
+  const det = detectDoc(text, documents);
+  const res = { ok: det.ok, doc: det.doc ?? null, docType: det.doc?.doc_type ?? null, reason: det.reason ?? null,
+    text, fields: [], episodes: [], persons: [], victims: [], warnings: [], parts: null, ms: 0 };
   if (!det.ok) { res.ms = Date.now() - t0; return res; }
-  const parts = splitParts(text);
+  const parts = splitParts(text, { titleAt: det.at ?? null });
   res.parts = parts;
   if (!parts.found.established) res.warnings.push('Не найдено слово «УСТАНОВИЛ» – описательная часть не выделена');
   if (!parts.found.decided) res.warnings.push('Не найдено слово «ПОСТАНОВИЛ» – резолютивная часть не выделена');
   const byRule = new Map();
-  for (const rule of rules.filter((r) => r.doc_type === 'vud')) {
+  const mine = rules.filter((r) => r.doc_type === res.docType || r.doc_type === '*');
+  for (const rule of mine) {
     if (rule.kind === 'episodes') {
       const ep = episodesField(rule, text, parts);
-      res.episodes = ep.episodes;
+      res.episodes.push(...ep.episodes);
       res.warnings.push(...ep.warnings);
       continue;
     }
     if (rule.kind === 'victims') {
-      const suspects = res.episodes.filter((e) => e.person).flatMap((e) => {
+      res.victims.push(...victimsField(rule, text, parts, res.episodes.filter((e) => e.person).flatMap((e) => {
         const p = e.person;
         const initials = p.names.first_name ? `${p.names.first_name[0]}.${p.names.patronymic[0]}.` : p.label.split(' ')[1];
         return [{ surname: p.names.surname, initials }, { surname: p.genitive.split(' ')[0], initials }];
-      });
-      res.victims = victimsField(rule, text, parts, suspects);
+      })));
       continue;
     }
-    const f = rule.kind === 'fabula' ? fabulaField(rule, text, parts) : simpleField(rule, text, parts, byRule);
+    if (rule.kind === 'person') {
+      res.persons.push(...personsField(rule, text, parts));
+      continue;
+    }
+    const f = rule.kind === 'fabula' ? fabulaField(rule, text, parts)
+      : rule.kind === 'citation' ? citationField(rule, text, parts, optionsOf)
+        : rule.kind === 'term' ? termField(rule, text, parts)
+          : simpleField(rule, text, parts, byRule);
     if (f) { byRule.set(rule.id, f); res.fields.push(f); }
   }
-  if (!res.episodes.length) res.warnings.push('Квалификация не найдена – эпизоды добавьте вручную');
-  const withPerson = res.episodes.filter((e) => e.person);
-  res.suspectKnown = withPerson.length > 0;
+  if (res.docType === 'vud' && !res.episodes.length) res.warnings.push('Квалификация не найдена – эпизоды добавьте вручную');
+  res.suspectKnown = res.episodes.some((e) => e.person);
   res.ms = Date.now() - t0;
   return res;
+}
+
+// Постановление о ВУД (Фаза 2): оставлено для совместимости с прежним вызовом
+export function extractVud(sourceText, rules) {
+  return extractDoc(sourceText, { rules, documents: [{ doc_type: 'vud', detect: ['о возбуждении уголовного дела'] }] });
 }

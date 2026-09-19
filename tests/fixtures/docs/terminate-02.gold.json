@@ -1,0 +1,22 @@
+{
+ "file": "terminate-02.txt",
+ "doc_type": "terminate",
+ "case_number": "12612329000100119",
+ "doc_date": "2026-09-19",
+ "persons": [
+  {
+   "surname": "Жуковский",
+   "first_name": "Олег",
+   "patronymic": "Андреевич",
+   "birth": "1979-06-30"
+  }
+ ],
+ "victims": [],
+ "qualifications": [],
+ "terminate": {
+  "cite": "п. 3 ч. 1 ст. 24 УПК РФ",
+  "code": "52",
+  "ground_type": "non_rehab"
+ },
+ "event": "ev.terminate"
+}

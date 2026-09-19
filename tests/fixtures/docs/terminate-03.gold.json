@@ -1,0 +1,22 @@
+{
+ "file": "terminate-03.txt",
+ "doc_type": "terminate",
+ "case_number": "12612466000100126",
+ "doc_date": "2026-01-20",
+ "persons": [
+  {
+   "surname": "Тарасюк",
+   "first_name": "Николай",
+   "patronymic": "Юрьевич",
+   "birth": "2001-01-19"
+  }
+ ],
+ "victims": [],
+ "qualifications": [],
+ "terminate": {
+  "cite": "ст. 25 УПК РФ",
+  "code": "09",
+  "ground_type": "non_rehab"
+ },
+ "event": "ev.terminate"
+}

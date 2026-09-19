@@ -95,13 +95,13 @@ SCHEMAS = {
         "id": {"type": "string", "pattern": "^a\\."}, "facts": arr(STR, minItems=1), "disabled_when": {"type": "object"}, "reason": STR, "source_note": STR})),
     "extract": top("Правила извлечения", "extract", obj(["id", "doc_type", "field", "label", "kind", "parts", "patterns", "confidence"], {
         "id": {"type": "string", "pattern": "^x\\."}, "doc_type": STR, "field": NSTR, "label": STR,
-        "kind": enum("text", "date", "time", "number", "enum", "case_number", "episodes", "fabula", "victims"),
+        "kind": enum("text", "date", "time", "number", "enum", "case_number", "episodes", "fabula", "victims", "person", "citation", "term"),
         "parts": arr(enum("title", "header", "intro", "descriptive", "resolutive"), minItems=1),
         "fallback_parts": arr(enum("title", "header", "intro", "descriptive", "resolutive")),
         "patterns": arr(STR, minItems=1), "values": arr(STR), "confidence": enum("high", "medium", "low"),
         "pattern_confidence": arr(enum("high", "medium", "low")),
         "pick": enum("first", "earliest"), "sentence": STR, "exclude_after": arr(STR), "exclude_before": arr(STR),
-        "after_field": STR, "window": {"type": "integer"}, "max_len": {"type": "integer"}, "digits": {"type": "integer"},
+        "after_field": STR, "window": {"type": "integer"}, "info": {"type": "boolean"}, "target": {"type": "object"}, "attr": STR, "max_len": {"type": "integer"}, "digits": {"type": "integer"},
         "clause": STR, "person": STR, "unknown_person": STR, "note": STR})),
     "documents": top("Документы дела", "documents", obj(["doc_type", "title", "required_for", "priority", "provides", "detect"], {
         "doc_type": STR, "title": STR, "required_for": arr(STR), "priority": enum("required", "desirable"),

@@ -1,0 +1,16 @@
+{
+ "file": "victim_decision-04.txt",
+ "doc_type": "victim_decision",
+ "case_number": "12613151000100161",
+ "doc_date": "2026-06-25",
+ "persons": [],
+ "victims": [
+  {
+   "surname": "Кравцова",
+   "first_name": "Елена",
+   "patronymic": "Игоревна"
+  }
+ ],
+ "qualifications": [],
+ "event": "ev.victim_new"
+}

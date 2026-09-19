@@ -17,9 +17,13 @@ const DIR = path.join(ROOT, 'tests/fixtures/vud');
 const golds = fs.readdirSync(DIR).filter((f) => f.endsWith('.gold.json')).sort().map((f) => readJson(path.join('tests/fixtures/vud', f)));
 const others = fs.readdirSync(DIR).filter((f) => f.startsWith('other-'));
 
+const DOCS = PACK.documents;
+const optionsOf = (form, req) => core.optionsOf(IX, form, req);
+const parse = (text) => core.extractDoc(text, { rules: RULES, documents: DOCS, optionsOf });
+
 async function run(file) {
   const { text } = await core.fileText(file, new Uint8Array(fs.readFileSync(path.join(DIR, file))));
-  return core.extractVud(text, RULES);
+  return parse(text);
 }
 
 const qualKey = (q) => core.parseQualification(q).refs.map((r) => `${r.article}/${r.parts.join(',')}/${r.points.join(',')}`).join(';');
@@ -86,19 +90,24 @@ test('A2-1: .docx, .txt (UTF-8 и Windows-1251) и вставка дают од�
     assert.ok(res.parts.found.established && res.parts.found.decided, `${g.file}: части не выделены`);
   }
   const { text } = await core.fileText('x.txt', new Uint8Array(fs.readFileSync(path.join(DIR, golds[1].file))));
-  const pasted = core.extractVud(text, RULES);
+  const pasted = parse(text);
   assert.equal(fieldOf(pasted, 'x.vud.date').value, golds[1].vud_date);
 });
 
-test('A2-1: .doc, .rtf и .pdf – понятное сообщение, а не сбой', async () => {
+test('A2-1: .doc – подсказка пересохранить; пустые .rtf и .pdf – понятное сообщение', async () => {
   const ole = new Uint8Array([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]);
   await assert.rejects(() => core.fileText('a.doc', ole), /\.docx/);
-  await assert.rejects(() => core.fileText('a.rtf', new TextEncoder().encode('{\\rtf1 x}')), /Фаза 3/);
-  await assert.rejects(() => core.fileText('a.pdf', new TextEncoder().encode('%PDF-1.4')), /Фаза 3/);
+  await assert.rejects(() => core.fileText('a.rtf', new TextEncoder().encode('{\\rtf1 x}')), /не нашелся текст/);
+  await assert.rejects(() => core.fileText('a.pdf', new TextEncoder().encode('%PDF-1.4')), /скан/);
 });
 
-test('документы другого вида не принимаются за постановление о ВУД', async () => {
-  for (const f of others) assert.equal((await run(f)).ok, false, f);
+test('вид документа определяется верно, чужой документ не принимается за постановление о ВУД', async () => {
+  const kinds = {};
+  for (const f of others) { const r = await run(f); kinds[f] = r.ok ? r.docType : 'не распознан'; }
+  assert.equal(kinds['other-01.txt'], 'не распознан', 'постановление о назначении экспертизы');
+  assert.equal(kinds['other-02.txt'], 'не распознан', 'постановление об отказе в возбуждении дела');
+  assert.equal(kinds['other-03.txt'], 'victim_decision', 'постановление о признании потерпевшим');
+  for (const g of golds) assert.equal((await run(g.file)).docType, 'vud', g.file);
 });
 
 test('A2-2: точность извлечения на тестовом наборе не ниже порогов', () => {
@@ -115,7 +124,7 @@ test('A2-6: разбор постановления быстрее 2 секун�
 });
 
 test('A2-2: номер дела не из 17 цифр – низкая уверенность', () => {
-  const res = core.extractVud('ПОСТАНОВЛЕНИЕ\nо возбуждении уголовного дела № 1260000000000109\nг. Энск\t01.02.2026\nСледователь отдела, рассмотрев сообщение,\nУСТАНОВИЛ:\nТекст.\nПОСТАНОВИЛ:\nВозбудить уголовное дело по признакам преступления, предусмотренного ч. 1 ст. 158 УК РФ.', RULES);
+  const res = parse('ПОСТАНОВЛЕНИЕ\nо возбуждении уголовного дела № 1260000000000109\nг. Энск\t01.02.2026\nСледователь отдела, рассмотрев сообщение,\nУСТАНОВИЛ:\nТекст.\nПОСТАНОВИЛ:\nВозбудить уголовное дело по признакам преступления, предусмотренного ч. 1 ст. 158 УК РФ.');
   const f = fieldOf(res, 'x.vud.case_number');
   assert.equal(f.confidence, 'low');
   assert.match(f.note, /16 цифр/);
@@ -157,7 +166,7 @@ test('FR-09, A2-4: переносится только подтвержденн�
   dec.fields[dateKey].accept = false; // не подтверждено
   const conflicts = core.importConflicts(c, res, dec);
   assert.deepEqual(conflicts.map((x) => x.field), ['fact.case.kusp']);
-  const log = core.importVud(IX, c, res, dec);
+  const log = core.importDoc(IX, c, res, dec);
   assert.equal(core.factAt(c, c.case, 'fact.case.kusp').value, 'вручную');
   assert.ok(log.kept.includes('fact.case.kusp'));
   assert.equal(core.factAt(c, c.case, 'fact.case.kusp_date'), null, 'неподтвержденное поле в дело не попало');
@@ -171,7 +180,7 @@ test('FR-09, A2-4: переносится только подтвержденн�
   assert.equal(c.victims.length, 0, 'потерпевший без отметки не переносится');
   // замена по выбору следователя
   dec.replace['fact.case.kusp'] = true;
-  core.importVud(IX, c, res, dec);
+  core.importDoc(IX, c, res, dec);
   assert.equal(core.factAt(c, c.case, 'fact.case.kusp').value, g.kusp);
   assert.equal(c.crimes.length, 1, 'повторный перенос не создает эпизод заново');
   assert.equal(c.persons.length, 1);

@@ -1,0 +1,16 @@
+{
+ "file": "victim_decision-01.txt",
+ "doc_type": "victim_decision",
+ "case_number": "12612740000100140",
+ "doc_date": "2026-03-22",
+ "persons": [],
+ "victims": [
+  {
+   "surname": "Зайцев",
+   "first_name": "Артем",
+   "patronymic": "Олегович"
+  }
+ ],
+ "qualifications": [],
+ "event": "ev.victim_new"
+}

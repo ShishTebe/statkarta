@@ -17,8 +17,9 @@ const files = [...walk('data'), ...walk('tests'), ...walk('docs')].filter((f) =>
 const scrubFile = path.join(ROOT, 'data-private/blanks-src/scrub.json');
 const scrub = fs.existsSync(scrubFile) ? JSON.parse(fs.readFileSync(scrubFile, 'utf8')).fragments : [];
 // Вымышленный набор Фазы 2: ФИО допустимы, только если заданы в генераторе; номера генерируются им же
-const FICTION_DIR = 'tests/fixtures/vud/';
-const fiction = fs.readFileSync(path.join(ROOT, 'scripts/fixtures/make-vud-corpus.mjs'), 'utf8');
+const FICTION_DIRS = ['tests/fixtures/vud/', 'tests/fixtures/docs/'];
+const fiction = ['scripts/fixtures/make-vud-corpus.mjs', 'scripts/fixtures/make-docs-corpus.mjs']
+  .map((f) => fs.readFileSync(path.join(ROOT, f), 'utf8')).join('\n');
 const fictional = (h) => fiction.includes(h.split(/\s+/)[0].replace(/\./g, '')) || fiction.includes(h.replace(/.*\s/, ''));
 let total = 0;
 for (const f of files) {
@@ -31,7 +32,7 @@ for (const f of files) {
     if (r.name.startsWith('номер уголовного дела')) hits = hits.filter((h) => !t.includes(`"okato": "${h}"`));
     // образцы номера с девятью и более нулями подряд (12602300000000001) – заведомо не номера дел
     if (r.name.startsWith('номер')) hits = hits.filter((h) => !/0{9}/.test(h));
-    if (f.startsWith(FICTION_DIR)) hits = hits.filter((h) => !(['номер', 'телефон'].some((x) => r.name.startsWith(x)) || fictional(h)));
+    if (FICTION_DIRS.some((d) => f.startsWith(d))) hits = hits.filter((h) => !(['номер', 'телефон'].some((x) => r.name.startsWith(x)) || fictional(h)));
     if (hits.length) { total += hits.length; console.log(`${f}: ${r.name}: ${hits.slice(0, 8).join('; ')}${hits.length > 8 ? ' …' : ''}`); }
   }
 }

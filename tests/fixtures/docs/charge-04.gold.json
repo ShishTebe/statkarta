@@ -1,0 +1,19 @@
+{
+ "file": "charge-04.txt",
+ "doc_type": "charge",
+ "case_number": "12610411000100021",
+ "doc_date": "2026-04-05",
+ "persons": [
+  {
+   "surname": "Тарасюк",
+   "first_name": "Николай",
+   "patronymic": "Юрьевич",
+   "birth": "2001-01-19"
+  }
+ ],
+ "victims": [],
+ "qualifications": [
+  "293/1/"
+ ],
+ "event": "ev.person_identified"
+}

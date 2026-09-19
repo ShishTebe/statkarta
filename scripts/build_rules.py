@@ -318,30 +318,9 @@ def main():
     ]
 
     # Правила извлечения ведутся вручную (Фаза 2): scripts/import/extract-vud-2026.json
-    extract = json.loads((ROOT / "scripts" / "import" / "extract-vud-2026.json").read_text(encoding="utf-8"))["extract"]
-    documents = [
-        {"doc_type": "vud", "title": "Постановление о возбуждении уголовного дела и принятии его к производству", "required_for": ["1", "1.1", "2", "2.1", "3", "4", "5"],
-         "priority": "required", "provides": ["fact.case.case_number", "fact.case.vud_date", "fact.case.kusp", "fact.case.kusp_date", "fact.crime.qualification", "fact.case.investigator", "fact.case.suspect_known", "fact.crime.crime_date", "fact.crime.ipk_in_r22", "fact.crime.ipk_in_r23", "fact.crime.fabula", "fact.damage.amount", "fact.case.report_source", "fact.person.surname", "fact.person.first_name", "fact.person.patronymic", "fact.person.birth_date"],
-         "detect": ["о возбуждении уголовного дела"]},
-        {"doc_type": "report", "title": "Рапорт об обнаружении признаков преступления, выписка из КРСП (КУСП)", "required_for": ["1"], "priority": "desirable",
-         "provides": ["fact.case.kusp", "fact.case.report_source"], "detect": ["рапорт об обнаружении признаков преступления"]},
-        {"doc_type": "victim_decision", "title": "Постановление о признании потерпевшим, протокол допроса потерпевшего", "required_for": ["1", "5"], "priority": "desirable",
-         "provides": [], "detect": ["о признании потерпевшим"]},
-        {"doc_type": "detention", "title": "Протокол задержания подозреваемого, уведомление о подозрении, постановление об избрании меры пресечения", "required_for": ["2", "2.1"], "priority": "desirable",
-         "provides": [], "detect": ["протокол задержания", "уведомление о подозрении", "об избрании меры пресечения"]},
-        {"doc_type": "charge", "title": "Постановление о привлечении в качестве обвиняемого", "required_for": ["1.1", "2", "2.1"], "priority": "desirable",
-         "provides": ["fact.crime.qualification"], "detect": ["о привлечении в качестве обвиняемого"]},
-        {"doc_type": "criminal_record", "title": "Требование о судимости (сведения ИЦ), характеристики, справки с места работы или учебы", "required_for": ["2"], "priority": "desirable",
-         "provides": [], "detect": ["требование", "судимост"]},
-        {"doc_type": "movement", "title": "Постановления о продлении срока, приостановлении, возобновлении, соединении, передаче по подследственности", "required_for": ["3"], "priority": "desirable",
-         "provides": [], "detect": ["о продлении срока", "о приостановлении", "о возобновлении", "о соединении", "по подследственности"]},
-        {"doc_type": "final", "title": "Обвинительное заключение, постановление о прекращении, о направлении дела в суд", "required_for": ["1.1", "2", "3"], "priority": "desirable",
-         "provides": [], "detect": ["обвинительное заключение", "о прекращении уголовного дела"]},
-        {"doc_type": "damage", "title": "Протоколы выемки, обыска, осмотра с изъятием, документы об ущербе и его возмещении, постановление о наложении ареста на имущество", "required_for": ["4"], "priority": "desirable",
-         "provides": ["fact.damage.amount"], "detect": ["протокол выемки", "протокол обыска", "о наложении ареста на имущество"]},
-        {"doc_type": "verdict", "title": "Приговор или постановление суда", "required_for": ["6"], "priority": "required",
-         "provides": [], "detect": ["приговор", "именем российской федерации"]},
-    ]
+    extract = json.loads((ROOT / "scripts" / "import" / "extract-2026.json").read_text(encoding="utf-8"))["extract"]
+    # Документы дела и их события ведутся вручную: scripts/import/documents-2026.json
+    documents = json.loads((ROOT / "scripts" / "import" / "documents-2026.json").read_text(encoding="utf-8"))["documents"]
     # служебные факты, которые не являются реквизитами, но нужны правилам
     for extra in [("fact.case.kusp_date", "case", "date", "Дата регистрации сообщения о преступлении"),
                   ("fact.case.investigator", "case", "text", "Следователь (должность, Ф.И.О.)"),

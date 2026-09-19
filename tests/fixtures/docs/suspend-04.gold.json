@@ -1,0 +1,14 @@
+{
+ "file": "suspend-04.txt",
+ "doc_type": "suspend",
+ "case_number": "12611507000100077",
+ "doc_date": "2026-03-13",
+ "persons": [],
+ "victims": [],
+ "qualifications": [],
+ "suspend": {
+  "point": "4",
+  "code": "2"
+ },
+ "event": "ev.suspend"
+}

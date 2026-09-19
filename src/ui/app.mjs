@@ -330,7 +330,7 @@ function caseShell() {
     h('button', { class: 'btn small', onclick: () => { confirmActive(C()); touch(); render(); } }, 'Да, ведется')));
   const tab = (id, label) => h('button', { 'aria-pressed': String(state.tab === id), onclick: () => { state.tab = id; render(); } }, label);
   put(wrap, h('div', { class: 'toolbar' },
-    h('div', { class: 'seg' }, tab('document', 'Постановление о ВУД'), tab('objects', 'Объекты дела'), tab('event', 'События и пакет'), tab('questions', 'Опросник пакета'), tab('memos', 'Памятки пакета'), tab('save', 'Сохранение и журнал')),
+    h('div', { class: 'seg' }, tab('document', 'Документ дела'), tab('objects', 'Объекты дела'), tab('event', 'События и пакет'), tab('questions', 'Опросник пакета'), tab('memos', 'Памятки пакета'), tab('save', 'Сохранение и журнал')),
     h('span', { class: 'muted small' }, `${c.title || 'Дело'}: эпизодов ${c.crimes.length}, лиц ${c.persons.length}, потерпевших ${c.victims.length}, событий ${c.events.length}`)));
   if (state.tab === 'document') put(wrap, documentView());
   else if (state.tab === 'objects') put(wrap, objectsView());
@@ -346,13 +346,13 @@ function caseShell() {
 const EXTRACT_RULES = PACK.rules.extract ?? [];
 
 function parseDocText(name, text) {
-  const res = extractVud(text, EXTRACT_RULES);
+  const res = extractDoc(text, { rules: EXTRACT_RULES, documents: PACK.documents, optionsOf: (form, req) => optionsOf(IX, form, req) });
   state.doc = { name, res, dec: res.ok ? defaultDecisions(res) : null, error: null, conflicts: null };
   render();
 }
 
 async function loadDocFile() {
-  const f = await pickFileBytes('.docx,.txt,.doc,.rtf,.pdf');
+  const f = await pickFileBytes('.docx,.txt,.rtf,.pdf,.doc');
   if (!f) return;
   try {
     const { text } = await fileText(f.name, f.bytes);
@@ -390,8 +390,9 @@ function documentView() {
   const box = h('div');
   const doc = state.doc;
   const pasteId = 'doc-paste';
-  put(box, h('div', { class: 'panel' }, h('h2', {}, 'Постановление о возбуждении уголовного дела'),
-    h('p', { class: 'small muted' }, 'Загрузите файл Word (.docx) или текст (.txt), либо вставьте текст постановления. Программа найдет сведения по шаблонам и покажет, откуда каждое взято; в дело попадет только то, что вы подтвердите. Текст постановления не сохраняется в деле и не покидает устройство.'),
+  const knownDocs = PACK.documents.filter((d) => d.event).map((d) => d.title.replace(/^Постановление /, 'постановление ')).join('; ');
+  put(box, h('div', { class: 'panel' }, h('h2', {}, 'Документ дела'),
+    h('p', { class: 'small muted' }, `Загрузите файл Word (.docx), текст (.txt), .rtf или .pdf с текстовым слоем, либо вставьте текст документа. Программа сама определит вид документа, найдет сведения по шаблонам и покажет, откуда каждое взято; в дело попадет только то, что вы подтвердите. Текст документа не сохраняется в деле и не покидает устройство. Виды документов: ${knownDocs}.`),
     h('div', { class: 'row toolbar' },
       h('button', { class: 'btn primary', onclick: loadDocFile }, 'Загрузить файл'),
       doc ? h('button', { class: 'btn', onclick: () => { state.doc = null; render(); } }, 'Очистить') : null),
@@ -405,12 +406,14 @@ function documentView() {
   if (doc.error) { put(box, h('div', { class: 'notice' }, `${doc.name}: ${doc.error}`)); return box; }
   const { res, dec } = doc;
   if (!res.ok) { put(box, h('div', { class: 'notice' }, `${doc.name}: ${res.reason}`)); return box; }
-  const panel = h('div', { class: 'panel' }, h('h2', {}, `Найдено в документе «${doc.name}»`),
+  const evTitle = res.doc?.event ? eventTitle(res.doc.event.type) : null;
+  const panel = h('div', { class: 'panel' }, h('h2', {}, `${res.doc?.title ?? 'Документ'}: найдено`),
+    h('p', { class: 'small' }, `Файл: ${doc.name}.`, evTitle ? ` По этому документу будет создано событие «${evTitle}».` : ' Событие по этому документу не создается: сведения попадут в дело, событие добавьте сами.'),
     h('p', { class: 'small muted' }, `Разбор занял ${res.ms} мс. Отметка «В дело» стоит у сведений высокой и средней уверенности; низкая – только после вашей проверки. Значение можно исправить.`));
   for (const w of res.warnings) put(panel, h('div', { class: 'item warning small' }, w));
   const rows = res.fields.map((f) => {
     const d = dec.fields[f.key];
-    const info = f.field === null;
+    const info = f.info;
     return h('tr', {},
       h('td', {}, info ? h('span', { class: 'muted small' }, 'для сведения')
         : h('input', { type: 'checkbox', checked: d.accept, 'aria-label': `Перенести: ${f.label}`, onchange: (e) => { d.accept = e.target.checked; } })),
@@ -441,7 +444,24 @@ function documentView() {
   put(ep, h('div', { class: 'table-wrap' }, h('table', { class: 'memo doc-found' },
     h('thead', {}, h('tr', {}, h('th', {}, 'В дело'), h('th', {}, 'Квалификация'), h('th', {}, 'Лицо'), h('th', {}, 'Уверенность'), h('th', {}, 'Откуда взято'))),
     h('tbody', {}, ...erows))));
-  put(box, ep);
+  if (res.episodes.length || res.docType === 'vud') put(box, ep);
+  if (res.persons?.length) {
+    const pp = h('div', { class: 'panel' }, h('h2', {}, `Лица по документу (${res.persons.length})`),
+      h('p', { class: 'small muted' }, 'Лицо связывается с эпизодами этого документа и указывается в событии. Падеж и написание проверьте.'));
+    const prows = res.persons.map((p, i) => {
+      const d = dec.persons[i];
+      return h('tr', {},
+        h('td', {}, h('input', { type: 'checkbox', checked: d.accept, 'aria-label': `Лицо ${i + 1}`, onchange: (e) => { d.accept = e.target.checked; } })),
+        h('td', {}, `${p.names.surname} ${p.names.first_name} ${p.names.patronymic}${p.birth ? `, ${isoToRu(p.birth)} г. р.` : ''}`,
+          p.nominativeFound ? null : h('div', { class: 'src' }, `в тексте: «${p.genitive}»${p.nominativeGuessed ? '; падеж восстановлен по окончаниям' : ''} – проверьте`)),
+        h('td', {}, confBadge(p.confidence)),
+        h('td', {}, sourceNode(p.fragment)));
+    });
+    put(pp, h('div', { class: 'table-wrap' }, h('table', { class: 'memo doc-found' },
+      h('thead', {}, h('tr', {}, h('th', {}, 'В дело'), h('th', {}, 'Лицо'), h('th', {}, 'Уверенность'), h('th', {}, 'Откуда взято'))),
+      h('tbody', {}, ...prows))));
+    put(box, pp);
+  }
   if (res.victims?.length) {
     const vp = h('div', { class: 'panel' }, h('h2', {}, `Потерпевшие – подсказка (${res.victims.length})`),
       h('p', { class: 'small muted' }, 'Найдены по оборотам «потерпевшему …», «причинив … вред». Отметьте тех, кого добавить в дело: потерпевший связывается с эпизодами этого постановления. Падеж и написание проверьте.'));
@@ -473,9 +493,9 @@ function documentView() {
         doc.conflicts = importConflicts(C(), res, dec);
         if (doc.conflicts.length) { render(); return; }
       }
-      const log = importVud(IX, C(), res, dec);
+      const log = importDoc(IX, C(), res, dec);
       touch();
-      state.notices.push(`Из постановления перенесено сведений: ${log.set.length}; эпизодов: ${log.crimes.length}; лиц: ${log.persons.length}; потерпевших: ${log.victims.length}${log.kept.length ? `; оставлено как было в деле: ${log.kept.length}` : ''}${log.event ? (log.reusedEvent ? '; событие «Возбуждение уголовного дела» дополнено' : '; создано событие «Возбуждение уголовного дела»') : '; событие не создано – нет даты возбуждения или эпизодов'}.`);
+      state.notices.push(`Перенесено сведений: ${log.set.length}; эпизодов: ${log.crimes.length}; лиц: ${log.persons.length}; потерпевших: ${log.victims.length}${log.kept.length ? `; оставлено как было в деле: ${log.kept.length}` : ''}${log.event ? (log.reusedEvent ? `; событие «${eventTitle(getEvent(C(), log.event).type)}» дополнено` : `; создано событие «${eventTitle(getEvent(C(), log.event).type)}»`) : '; событие не создано – нет даты документа'}${log.cardFacts.length ? `; заполнено реквизитов карточек: ${log.cardFacts.length}` : ''}.`);
       if (log.event) state.evId = log.event;
       state.doc = null;
       state.tab = log.event ? 'event' : 'objects';

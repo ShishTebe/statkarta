@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "data_version": "2026.2.1-draft",
+ "data_version": "2026.3.0-draft",
  "edition": "2026",
  "effective_from": "2026-01-01",
  "generated": "2026-09-19",
@@ -135,8 +135,8 @@
   },
   {
    "path": "data/documents/2026/documents.json",
-   "sha256": "58e948a96d7a77505a604857ca195bddf8b10aa2b3966d1ad2a3ae5d47164cc1",
-   "bytes": 4985,
+   "sha256": "b8eec95f4d76fb535b1eb3dce2018664edaa6d49734e8bda2c9ee9bdfcb4bcf1",
+   "bytes": 8954,
    "schema": "documents",
    "public": true
   },
@@ -338,8 +338,8 @@
   },
   {
    "path": "data/rules/2026/extract.json",
-   "sha256": "a978c38feb229794dc0cd82d0c761aa3dc7c8776574f12b4076ca7eb5328a186",
-   "bytes": 8999,
+   "sha256": "0468f9b5577695793850959e54838fe4fc72a8bff3cc37c2c4c6e894a3010adc",
+   "bytes": 15849,
    "schema": "extract",
    "public": true
   },
@@ -422,8 +422,8 @@
   },
   {
    "path": "data/schema/extract.schema.json",
-   "sha256": "fd4e8cad3fcc18551f0ac621ce3bdc419db221bcbcd50093891a6bfbb7ac3b8c",
-   "bytes": 2519,
+   "sha256": "6896152d62cf973ccc305d9790af2dc0bb215a1e53452678c17b0e7266ad242f",
+   "bytes": 2711,
    "schema": null,
    "public": true
   },
