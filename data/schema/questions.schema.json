@@ -1,0 +1,75 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Вопросы опросника",
+ "type": "object",
+ "required": [
+  "edition",
+  "questions"
+ ],
+ "properties": {
+  "questions": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "text",
+     "why",
+     "answer",
+     "ask_when",
+     "sets",
+     "allow_unknown",
+     "status"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^q\\."
+     },
+     "text": {
+      "type": "string"
+     },
+     "why": {
+      "type": "string"
+     },
+     "answer": {
+      "type": "object",
+      "required": [
+       "type"
+      ],
+      "properties": {
+       "type": {
+        "type": "string"
+       }
+      }
+     },
+     "ask_when": {
+      "type": "object"
+     },
+     "sets": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1
+     },
+     "allow_unknown": {
+      "type": "boolean"
+     },
+     "status": {
+      "enum": [
+       "draft",
+       "approved"
+      ]
+     },
+     "review": {
+      "enum": [
+       "pending",
+       "done"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

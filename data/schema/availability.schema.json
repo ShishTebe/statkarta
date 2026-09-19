@@ -1,0 +1,46 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Неактивность вопросов",
+ "type": "object",
+ "required": [
+  "edition",
+  "availability"
+ ],
+ "properties": {
+  "availability": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "facts",
+     "disabled_when",
+     "reason",
+     "source_note"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^a\\."
+     },
+     "facts": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1
+     },
+     "disabled_when": {
+      "type": "object"
+     },
+     "reason": {
+      "type": "string"
+     },
+     "source_note": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

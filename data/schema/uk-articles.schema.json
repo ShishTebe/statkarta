@@ -1,0 +1,80 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Статьи УК РФ",
+ "type": "object",
+ "required": [
+  "meta",
+  "articles"
+ ],
+ "properties": {
+  "meta": {
+   "type": "object"
+  },
+  "articles": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "article",
+     "title",
+     "repealed",
+     "parts"
+    ],
+    "properties": {
+     "article": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?$"
+     },
+     "title": {
+      "type": "string"
+     },
+     "repealed": {
+      "type": "boolean"
+     },
+     "parts": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "part",
+        "category",
+        "category_source",
+        "lists"
+       ],
+       "properties": {
+        "part": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "category": {
+         "enum": [
+          "small",
+          "medium",
+          "grave",
+          "especially_grave",
+          null
+         ]
+        },
+        "category_source": {
+         "enum": [
+          "lists",
+          "computed_only",
+          "conflict"
+         ]
+        },
+        "lists": {
+         "type": "array",
+         "items": {
+          "type": "object"
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

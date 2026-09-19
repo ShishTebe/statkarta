@@ -1,0 +1,21 @@
+{
+ "file": "vud-24.txt",
+ "blank": "3.02",
+ "format": "txt1251",
+ "case_number": null,
+ "vud_date": "2026-03-06",
+ "kusp": "43пр/1-26",
+ "kusp_date": "2026-03-04",
+ "report_source": "prosecutor_materials",
+ "investigator": "Руководитель следственного отдела по Озерному району следственного управления Следственного комитета Российской Федерации по Условной области подполковник юстиции Громов А.Е.",
+ "qualifications": [
+  "228/2/",
+  "111/4/"
+ ],
+ "persons": [],
+ "suspect_known": false,
+ "crime_date": "2025-12-23",
+ "crime_place": "Условная обл., пгт Озерный, ул. Лесная, д. 3а",
+ "damage_amount": null,
+ "victims": []
+}

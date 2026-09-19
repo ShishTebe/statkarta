@@ -1,0 +1,60 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Манифест пакетов данных",
+ "type": "object",
+ "required": [
+  "schema_version",
+  "data_version",
+  "edition",
+  "generated",
+  "files"
+ ],
+ "properties": {
+  "schema_version": {
+   "type": "integer"
+  },
+  "data_version": {
+   "type": "string"
+  },
+  "edition": {
+   "type": "string"
+  },
+  "generated": {
+   "type": "string"
+  },
+  "files": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "path",
+     "sha256",
+     "bytes",
+     "schema",
+     "public"
+    ],
+    "properties": {
+     "path": {
+      "type": "string"
+     },
+     "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+     },
+     "bytes": {
+      "type": "integer"
+     },
+     "schema": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "public": {
+      "type": "boolean"
+     }
+    }
+   }
+  }
+ }
+}

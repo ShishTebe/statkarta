@@ -1,0 +1,65 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Словарь фактов",
+ "type": "object",
+ "required": [
+  "edition",
+  "facts"
+ ],
+ "properties": {
+  "facts": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "entity",
+     "type",
+     "label",
+     "status"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^fact\\.[a-z0-9_.]+$"
+     },
+     "entity": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "scope": {
+      "enum": [
+       "case",
+       "crime",
+       "person",
+       "victim",
+       "card",
+       "event",
+       "profile"
+      ]
+     },
+     "classifier_no": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "shared": {
+      "type": "boolean"
+     },
+     "label": {
+      "type": "string"
+     },
+     "status": {
+      "enum": [
+       "draft",
+       "approved"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

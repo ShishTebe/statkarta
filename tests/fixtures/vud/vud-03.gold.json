@@ -1,0 +1,28 @@
+{
+ "file": "vud-03.txt",
+ "blank": "3.01",
+ "format": "txt1251",
+ "case_number": "12686702000001074",
+ "vud_date": "2026-01-10",
+ "kusp": "5",
+ "kusp_date": "2026-01-06",
+ "report_source": "confession",
+ "investigator": "Старший следователь Северогорского межрайонного следственного отдела следственного управления Следственного комитета Российской Федерации по Условной области капитан юстиции Лаптева О.Н.",
+ "qualifications": [
+  "293/1/",
+  "105/1/"
+ ],
+ "persons": [
+  {
+   "surname": "Жуковский",
+   "first_name": "Олег",
+   "patronymic": "Андреевич",
+   "birth": "1979-06-30"
+  }
+ ],
+ "suspect_known": true,
+ "crime_date": "2025-12-10",
+ "crime_place": null,
+ "damage_amount": null,
+ "victims": []
+}

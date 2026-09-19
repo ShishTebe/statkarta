@@ -1,0 +1,15 @@
+{
+ "note": "Дело в формате Фазы 1 (приложение 0.2, схема case/1 без поля schema). Вымышленные значения.",
+ "answers": {
+  "fact.crime.qualification": { "status": "answered", "value": "п. «в» ч. 2 ст. 158 УК РФ" },
+  "fact.crime.crime_date": { "status": "answered", "value": "2026-02-20" },
+  "fact.case.case_number": { "status": "answered", "value": "12602300000000001" },
+  "fact.victims.victims_count": { "status": "answered", "value": "1" },
+  "fact.person.sex": { "status": "answered", "value": ["|1"] },
+  "fact.f1.r25": { "status": "answered", "value": ["|5"] },
+  "fact.crime.method": { "status": "unknown", "value": null }
+ },
+ "fills": { "1|25": { "1": "150000" } },
+ "forms": ["1", "2"],
+ "created": "2026-03-01"
+}

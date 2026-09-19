@@ -1,0 +1,50 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Подсказки кодов",
+ "type": "object",
+ "required": [
+  "edition",
+  "hints"
+ ],
+ "properties": {
+  "hints": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "fact",
+     "when",
+     "codes",
+     "text",
+     "source_note"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^h\\."
+     },
+     "fact": {
+      "type": "string"
+     },
+     "when": {
+      "type": "object"
+     },
+     "codes": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1
+     },
+     "text": {
+      "type": "string"
+     },
+     "source_note": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

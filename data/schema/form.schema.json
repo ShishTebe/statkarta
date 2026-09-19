@@ -1,0 +1,306 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Пакет формы статистической карточки",
+ "type": "object",
+ "required": [
+  "form",
+  "title",
+  "edition",
+  "effective_from",
+  "requisites_count",
+  "requisites"
+ ],
+ "properties": {
+  "form": {
+   "type": "string",
+   "pattern": "^(\\d+(\\.\\d+)?|ipk|ipk-in)$"
+  },
+  "variants": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "title"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "title": {
+   "type": "string"
+  },
+  "edition": {
+   "type": "string"
+  },
+  "effective_from": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+  },
+  "effective_to": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "legal_basis": {
+   "type": "string"
+  },
+  "source": {
+   "type": "string"
+  },
+  "requisites_count": {
+   "type": "integer"
+  },
+  "requisites": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "number",
+     "label",
+     "label_status",
+     "field_type",
+     "options",
+     "fills_by"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^(\\d+(\\.\\d+)*(~\\d+)?|[a-z][a-z_]*)$"
+     },
+     "number": {
+      "type": "string"
+     },
+     "variants": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "label": {
+      "type": "string",
+      "minLength": 2
+     },
+     "label_status": {
+      "enum": [
+       "source",
+       "derived",
+       "corrected",
+       "verified",
+       "needs_review"
+      ]
+     },
+     "correction_source": {
+      "type": "string"
+     },
+     "field_type": {
+      "enum": [
+       "enum",
+       "classifier",
+       "date",
+       "text"
+      ]
+     },
+     "classifier_no": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "multiple": {
+      "type": [
+       "boolean",
+       "null"
+      ]
+     },
+     "has_text": {
+      "type": "boolean"
+     },
+     "has_date": {
+      "type": "boolean"
+     },
+     "section": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "fills_by": {
+      "enum": [
+       "investigator",
+       "registrar",
+       "ic",
+       "head",
+       "court"
+      ]
+     },
+     "raw": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "input": {
+      "type": "object",
+      "required": [],
+      "properties": {
+       "code_digits": {
+        "type": "integer"
+       },
+       "fields": {
+        "type": "integer"
+       },
+       "select": {
+        "enum": [
+         "single",
+         "multiple",
+         "overlay"
+        ]
+       },
+       "max_codes": {
+        "type": "integer"
+       },
+       "max_chars": {
+        "type": "integer"
+       },
+       "lookup": {
+        "type": "string"
+       },
+       "fills": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "required": [
+          "label",
+          "type"
+         ],
+         "properties": {
+          "label": {
+           "type": "string"
+          },
+          "type": {
+           "enum": [
+            "number",
+            "text",
+            "date"
+           ]
+          },
+          "unit": {
+           "type": "string"
+          },
+          "for_code": {
+           "type": "string"
+          },
+          "for_codes": {
+           "type": "array",
+           "items": {
+            "type": "string"
+           }
+          },
+          "key": {
+           "type": "string"
+          }
+         }
+        }
+       },
+       "sources": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "options": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "code",
+        "value"
+       ],
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "value": {
+         "type": "string"
+        },
+        "group": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "hint": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "embedded_classifiers": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "applies_to",
+     "options"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     },
+     "applies_to": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "options": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "code",
+        "value"
+       ],
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "value": {
+         "type": "string"
+        },
+        "group": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "hint": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

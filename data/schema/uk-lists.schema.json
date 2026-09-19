@@ -1,0 +1,76 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Перечни статей УК РФ",
+ "type": "object",
+ "required": [
+  "meta",
+  "lists"
+ ],
+ "properties": {
+  "meta": {
+   "type": "object"
+  },
+  "lists": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "no",
+     "sections"
+    ],
+    "properties": {
+     "no": {
+      "type": "integer"
+     },
+     "sections": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "number",
+        "heading",
+        "kind",
+        "items",
+        "text"
+       ],
+       "properties": {
+        "number": {
+         "type": "string"
+        },
+        "heading": {
+         "type": "string"
+        },
+        "kind": {
+         "enum": [
+          "unconditional",
+          "date",
+          "conditional",
+          "excluded",
+          "other"
+         ]
+        },
+        "items": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "required": [
+           "article"
+          ],
+          "properties": {
+           "article": {
+            "type": "string"
+           }
+          }
+         }
+        },
+        "text": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

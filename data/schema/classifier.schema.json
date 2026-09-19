@@ -1,0 +1,107 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Пакет справочника",
+ "type": "object",
+ "required": [
+  "no",
+  "title",
+  "edition",
+  "effective_from",
+  "count",
+  "entries"
+ ],
+ "properties": {
+  "no": {
+   "type": "integer"
+  },
+  "title": {
+   "type": "string"
+  },
+  "edition": {
+   "type": "string"
+  },
+  "effective_from": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+  },
+  "effective_to": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "source": {
+   "type": "string"
+  },
+  "count": {
+   "type": "integer"
+  },
+  "notes": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "mark",
+     "text"
+    ],
+    "properties": {
+     "mark": {
+      "type": "string"
+     },
+     "text": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "entries": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "code",
+     "name"
+    ],
+    "properties": {
+     "code": {
+      "type": "string",
+      "minLength": 1
+     },
+     "name": {
+      "type": "string",
+      "minLength": 1
+     },
+     "section": {
+      "type": "string"
+     },
+     "path": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "group": {
+      "type": "boolean"
+     },
+     "notes": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "active": {
+      "type": "boolean"
+     },
+     "availability": {
+      "type": "string"
+     },
+     "source": {
+      "enum": [
+       "word"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

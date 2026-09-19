@@ -1,0 +1,33 @@
+{
+ "edition": "2026",
+ "status": "draft",
+ "review": "требует предметной ревизии (риск Д-4). Сгенерировано scripts/build_rules.py из пакета форм.",
+ "availability": [
+  {
+   "id": "a.no_victims",
+   "facts": [
+    "fact.f1.r33",
+    "fact.victims.arrival_purpose",
+    "fact.victims.citizenship",
+    "fact.victims.position",
+    "fact.victims.residence_country",
+    "fact.victims.social_status"
+   ],
+   "disabled_when": {
+    "any": [
+     {
+      "eq": [
+       "fact.victims.victims_count",
+       "0"
+      ]
+     },
+     {
+      "na": "fact.victims.victims_count"
+     }
+    ]
+   },
+   "reason": "В р. 30 ф. 1 указано, что потерпевших (физических лиц) нет – характеристики потерпевших не заполняются",
+   "source_note": "Бланк ф. 1: р. 33–38 характеризуют потерпевших, указанных в р. 30"
+  }
+ ]
+}

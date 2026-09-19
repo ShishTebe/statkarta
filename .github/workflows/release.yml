@@ -1,0 +1,31 @@
+name: Выпуск однофайловой сборки
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Проверка и тесты
+        run: |
+          node scripts/validate-data.mjs --warnings
+          node scripts/audit-public.mjs
+          npm test
+      - name: Сборка
+        run: node scripts/build-app.mjs
+      - name: Выпуск
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/statkarta-offline.html \
+            --title "СтатКарта $GITHUB_REF_NAME" \
+            --notes "Однофайловая сборка: скачайте statkarta-offline.html и откройте двойным щелчком. Изменения – docs/CHANGELOG.md."

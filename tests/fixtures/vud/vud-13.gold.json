@@ -1,0 +1,33 @@
+{
+ "file": "vud-13.docx",
+ "blank": "3.01",
+ "format": "docx",
+ "case_number": "12664198000001444",
+ "vud_date": "2026-08-27",
+ "kusp": "184пр-26",
+ "kusp_date": "2026-08-23",
+ "report_source": "report",
+ "investigator": "Старший следователь Северогорского межрайонного следственного отдела следственного управления Следственного комитета Российской Федерации по Условной области капитан юстиции Лаптева О.Н.",
+ "qualifications": [
+  "293/1/"
+ ],
+ "persons": [
+  {
+   "surname": "Ремезов",
+   "first_name": "Сергей",
+   "patronymic": "Ильич",
+   "birth": "1968-09-08"
+  }
+ ],
+ "suspect_known": true,
+ "crime_date": "2026-03-27",
+ "crime_place": null,
+ "damage_amount": "237000",
+ "victims": [
+  {
+   "surname": "Зайцев",
+   "first_name": "Артем",
+   "patronymic": "Олегович"
+  }
+ ]
+}

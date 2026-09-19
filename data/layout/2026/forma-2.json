@@ -1,0 +1,1525 @@
+{
+ "form": "2",
+ "blank": "cards_2.docx",
+ "blank_sha256": "fc3c0dbc50581a14ff4cca48862d9b409991a94449bd07dc830868a0e7969c81",
+ "part": "word/document.xml",
+ "map_status": "draft",
+ "source_note": "Разметка по размеченной копии бланка, напечатанной Word (scripts/blanks/build_layout.py)",
+ "fields": [
+  {
+   "requisite": "1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     3,
+     4
+    ],
+    [
+     13,
+     11,
+     10,
+     9,
+     8
+    ]
+   ],
+   "note": "разбор записал р. 1 как «0»"
+  },
+  {
+   "requisite": "2",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Учесть, изменить, снять",
+   "groups": [
+    [
+     14
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "3",
+   "kind": "code_cells",
+   "fills_by": "registrar",
+   "label": "Номер УД, материала",
+   "groups": [
+    [
+     33,
+     30,
+     31,
+     32,
+     27,
+     28,
+     29,
+     16,
+     17,
+     18,
+     25,
+     26,
+     19,
+     20,
+     23,
+     24,
+     21
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "3.1",
+   "kind": "code_cells",
+   "fills_by": "registrar",
+   "label": "Дата возбуждения (отказа в возбуждении) уголовного дела",
+   "groups": [
+    [
+     35,
+     36,
+     37,
+     38,
+     39,
+     42,
+     43,
+     40
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "3.2",
+   "kind": "code_cells",
+   "fills_by": "registrar",
+   "label": "Дата совершения преступления (по наиболее тяжкому)",
+   "groups": [
+    [
+     44,
+     45,
+     46,
+     47,
+     48,
+     51,
+     52,
+     49
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "4",
+   "kind": "code_cells",
+   "fills_by": "registrar",
+   "label": "Порядковый номер лица, количество и порядковые номера совершенных им преступлений в уголовном деле",
+   "groups": [
+    [
+     55,
+     53,
+     54
+    ],
+    [
+     58,
+     56,
+     57
+    ],
+    [
+     59,
+     60,
+     61
+    ],
+    [
+     64,
+     62,
+     63
+    ],
+    [
+     68,
+     66,
+     67
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "5",
+   "kind": "code_cells",
+   "fills_by": "ic",
+   "label": "Дата направления карточки в ИЦ",
+   "groups": [
+    [
+     69,
+     70,
+     71,
+     72,
+     73,
+     76,
+     77,
+     74
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "6",
+   "kind": "code_cells",
+   "fills_by": "ic",
+   "label": "Дата поступления карточки в ИЦ",
+   "groups": [
+    [
+     78,
+     79,
+     80,
+     81,
+     82,
+     85,
+     86,
+     83
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "7",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 1,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "фамилия – после напечатанного наименования"
+  },
+  {
+   "requisite": "8",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "word": 0,
+     "place": {
+      "table": 3,
+      "row": 2,
+      "cell": 1
+     },
+     "groups": []
+    },
+    {
+     "role": "text",
+     "mode": "append",
+     "word": "rest",
+     "place": {
+      "table": 3,
+      "row": 2,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "имя (р. 8) и отчество (р. 9) – одно значение на два места"
+  },
+  {
+   "requisite": "10",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Пол",
+   "groups": [
+    [
+     87
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "11",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Дата рождения, полных лет; возраст (на момент совершения преступления)",
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "facts": [
+      "fact.person.birth_date"
+     ],
+     "format": "DDMMYY",
+     "groups": [
+      [
+       89,
+       90,
+       94,
+       93,
+       92,
+       91
+      ]
+     ]
+    },
+    {
+     "role": "fact",
+     "facts": [
+      "fact.person.age"
+     ],
+     "groups": [
+      [
+       97,
+       98,
+       99
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     89,
+     90,
+     94,
+     93,
+     92,
+     91
+    ],
+    [
+     97,
+     98,
+     99
+    ]
+   ],
+   "note": "дата рождения ДД.ММ.ГГ (ответ В-25) и полных лет; клетка кода возраста [95] не заполняется – в пакете нет сведения о коде возраста"
+  },
+  {
+   "requisite": "12",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Образование",
+   "groups": [
+    [
+     100
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "13",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Гражданство (по справочнику № 6)",
+   "groups": [
+    [
+     102,
+     103,
+     104
+    ],
+    [
+     105,
+     106,
+     107
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "13.1",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Гражданство, предшествовавшее получению гражданства Российской Федерации (по справочнику № 6)",
+   "groups": [
+    [
+     116,
+     117,
+     118
+    ],
+    [
+     119,
+     120,
+     121
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "14",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Страна проживания (по справочнику № 6)",
+   "groups": [
+    [
+     109,
+     110,
+     111
+    ],
+    [
+     112,
+     113,
+     114
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "15",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Место проживания; адрес проживания",
+   "groups": [
+    [
+     123
+    ],
+    [
+     129
+    ],
+    [
+     124,
+     125,
+     126,
+     127
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "16",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Цель приезда для иностранных граждан и лиц без гражданства",
+   "groups": [
+    [
+     130,
+     131
+    ],
+    [
+     132,
+     133
+    ],
+    [
+     134,
+     135
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "17",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Национальность (по справочнику № 5)",
+   "groups": [
+    [
+     137,
+     138,
+     139
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "18",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Социальное положение (по справочнику № 9)",
+   "groups": [
+    [
+     162,
+     163,
+     164,
+     165
+    ],
+    [
+     145,
+     146,
+     147,
+     148
+    ],
+    [
+     141,
+     142,
+     143,
+     144
+    ],
+    [
+     158,
+     159,
+     160,
+     161
+    ],
+    [
+     154,
+     155,
+     156,
+     157
+    ],
+    [
+     150,
+     151,
+     152,
+     153
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "19",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Должностное положение (по справочнику № 10)",
+   "groups": [
+    [
+     172,
+     166,
+     167,
+     170,
+     171,
+     168
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "20",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Место работы, учебы",
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "place": {
+      "table": 3,
+      "row": 14,
+      "cell": 1,
+      "slot": 0,
+      "span": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "место работы, учебы на линейке; клетки справа – код, источника в пакете нет"
+  },
+  {
+   "requisite": "21.1",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Квалификация преступления, строка 1 (по наиболее тяжкому): статья, знак, часть, знак, пункт, знак",
+   "in_form": true,
+   "parts": [
+    {
+     "role": "qual",
+     "slot": "article",
+     "groups": [
+      [
+       179,
+       180,
+       181
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "asign",
+     "groups": [
+      [
+       182,
+       183
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "part",
+     "groups": [
+      [
+       184
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "psign",
+     "groups": [
+      [
+       213
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "points",
+     "groups": [
+      [
+       185,
+       186,
+       187,
+       188,
+       189
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "point_sign",
+     "groups": [
+      [
+       191
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     179,
+     180,
+     181
+    ],
+    [
+     182,
+     183
+    ],
+    [
+     184
+    ],
+    [
+     213
+    ],
+    [
+     185,
+     186,
+     187,
+     188,
+     189
+    ],
+    [
+     191
+    ]
+   ],
+   "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+  },
+  {
+   "requisite": "21.2",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "qual",
+     "slot": "article",
+     "groups": [
+      [
+       216,
+       217,
+       218
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "asign",
+     "groups": [
+      [
+       214,
+       215
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "part",
+     "groups": [
+      [
+       178
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "psign",
+     "groups": [
+      [
+       219
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "points",
+     "groups": [
+      [
+       192,
+       193,
+       194,
+       195,
+       196
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "point_sign",
+     "groups": [
+      [
+       198
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     216,
+     217,
+     218
+    ],
+    [
+     214,
+     215
+    ],
+    [
+     178
+    ],
+    [
+     219
+    ],
+    [
+     192,
+     193,
+     194,
+     195,
+     196
+    ],
+    [
+     198
+    ]
+   ],
+   "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+  },
+  {
+   "requisite": "21.3",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Квалификация преступления, строка 3: статья, знак, часть, знак, пункт, знак",
+   "in_form": true,
+   "parts": [
+    {
+     "role": "qual",
+     "slot": "article",
+     "groups": [
+      [
+       199,
+       200,
+       201
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "asign",
+     "groups": [
+      [
+       202,
+       203
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "part",
+     "groups": [
+      [
+       204
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "psign",
+     "groups": [
+      [
+       205
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "points",
+     "groups": [
+      [
+       206,
+       207,
+       208,
+       209,
+       210
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "point_sign",
+     "groups": [
+      [
+       212
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     199,
+     200,
+     201
+    ],
+    [
+     202,
+     203
+    ],
+    [
+     204
+    ],
+    [
+     205
+    ],
+    [
+     206,
+     207,
+     208,
+     209,
+     210
+    ],
+    [
+     212
+    ]
+   ],
+   "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+  },
+  {
+   "requisite": "23",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Категория преступления (ст. 15 УК РФ)",
+   "groups": [
+    [
+     220
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "24",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Преступление совершено в крупном, особо крупном, значительном размере; причинен значительный, крупный, особо крупный ущерб",
+   "groups": [
+    [
+     222
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "25",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "По ст. 30 УК РФ: приготовление, покушение",
+   "groups": [
+    [
+     224
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "26",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Преступление коррупционной, общеуголовной; экономической направленности, в т.ч. налоговое преступление",
+   "groups": [
+    [
+     228,
+     227
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "27",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Лицо задерживалось в порядке ст. 91, 92 УПК РФ; мера пресечения заключение под стражу избиралась",
+   "groups": [
+    [
+     229
+    ],
+    [
+     230
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "28",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Место совершения преступления (по справочнику № 2)",
+   "in_form": true,
+   "groups": [
+    [
+     250,
+     244,
+     245,
+     248,
+     249,
+     246
+    ]
+   ],
+   "note": "шестизначный код"
+  },
+  {
+   "requisite": "28.1",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Место совершения преступления по ОКАТО",
+   "groups": [
+    [
+     235,
+     236
+    ],
+    [
+     232,
+     233,
+     234
+    ],
+    [
+     237,
+     238,
+     239
+    ],
+    [
+     240,
+     241,
+     242
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "28.2",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Преступление совершено после принятия в РФ, до принятия в РФ на территории Донецкой Народной Республики, Луганской Народной Республики, Запорожской области, Херсонской области",
+   "groups": [
+    [
+     251
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "29",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Организационно-правовая форма хозяйствующего субъекта (по справочнику № 11)",
+   "groups": [
+    [
+     253,
+     254,
+     255
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "30",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Вид экономической деятельности, в ходе осуществления которой лицо совершило преступление (по классификатору № 1)",
+   "groups": [
+    [
+     273,
+     274,
+     275,
+     276,
+     277
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "31",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Предмет преступного посягательства или незаконного оборота (по справочнику № 3)",
+   "groups": [
+    [
+     257,
+     258,
+     259,
+     260,
+     261
+    ],
+    [
+     262,
+     263,
+     264,
+     265,
+     266
+    ],
+    [
+     272,
+     267,
+     270,
+     271,
+     268
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "31.1",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Оружие, боеприпасы и взрывчатые материалы (по справочнику № 4)",
+   "groups": [
+    [
+     279,
+     280,
+     281,
+     282,
+     283
+    ],
+    [
+     284,
+     285,
+     286,
+     287,
+     288
+    ],
+    [
+     294,
+     289,
+     292,
+     293,
+     290
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "32",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Форма собственности, в отношении которой совершено преступное посягательство",
+   "groups": [
+    [
+     295,
+     296
+    ],
+    [
+     297,
+     298
+    ],
+    [
+     299,
+     300
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "33",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Способ совершения преступления (по справочнику № 12)",
+   "groups": [
+    [
+     318,
+     319,
+     320
+    ],
+    [
+     315,
+     316,
+     317
+    ],
+    [
+     312,
+     313,
+     314
+    ],
+    [
+     309,
+     310,
+     311
+    ],
+    [
+     306,
+     307,
+     308
+    ],
+    [
+     302,
+     303,
+     304
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "34",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Дополнительная характеристика преступления (по справочнику № 15)",
+   "groups": [
+    [
+     330,
+     331,
+     332
+    ],
+    [
+     340,
+     341,
+     342
+    ],
+    [
+     327,
+     328,
+     329
+    ],
+    [
+     324,
+     325,
+     326
+    ],
+    [
+     321,
+     322,
+     323
+    ],
+    [
+     337,
+     338,
+     339
+    ],
+    [
+     333,
+     334,
+     335
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "35",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Мотив (цель) преступления",
+   "groups": [
+    [
+     346,
+     347
+    ],
+    [
+     344,
+     345
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "36",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Лицо совершило преступление в состоянии опьянения; являясь хроническим алкоголиком, потребителем наркотических средств и психотропных веществ, токсикоманом",
+   "groups": [
+    [
+     374
+    ],
+    [
+     373
+    ],
+    [
+     375
+    ],
+    [
+     376
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "36.1",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Лицо является потребителем наркотических средств; являлось подставным лицом, координатором подставных лиц",
+   "groups": [
+    [
+     356,
+     353,
+     354,
+     355
+    ],
+    [
+     352,
+     349,
+     350,
+     351
+    ],
+    [
+     369,
+     371,
+     370,
+     372
+    ],
+    [
+     358,
+     359,
+     357,
+     360
+    ],
+    [
+     364,
+     361,
+     362,
+     363
+    ],
+    [
+     368,
+     365,
+     366,
+     367
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "38",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Лицо совершило преступление в составе группы; с участием, только иностранных граждан, лиц без гражданства",
+   "groups": [
+    [
+     381,
+     382,
+     379,
+     380
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "39",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Лицо совершило преступление со связями: коррумпированными, международными, межрегиональными",
+   "groups": [
+    [
+     383,
+     384
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "40",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Признано: исполнителем, организатором, подстрекателем, пособником",
+   "groups": [
+    [
+     386
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "41",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Являлось участником организованной группы, преступного сообщества (организации); совершило серию аналогичных преступлений, преступление по найму (заказу)",
+   "groups": [
+    [
+     388
+    ],
+    [
+     389
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "42",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Находясь под следствием, с мерой пресечения, не связанной с арестом, в розыске; мера пресечения содержание под стражей изменена",
+   "groups": [
+    [
+     393
+    ],
+    [
+     394
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "43",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Совершило два и более преступления, но к уголовной ответственности за них не привлекалось",
+   "groups": [
+    [
+     391
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "44",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Лицо, ранее совершавшее преступления, привлекалось к уголовной ответственности два, три и более раза",
+   "groups": [
+    [
+     396
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "45",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Ранее судимо",
+   "groups": [
+    [
+     402,
+     403,
+     404
+    ],
+    [
+     398,
+     399,
+     400
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "46",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Совершило рецидив, опасный, особо опасный",
+   "groups": [
+    [
+     405
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "47",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Ранее содержалось в ИУ, в т.ч. данной области, края, республики",
+   "groups": [
+    [
+     407
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "48",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Совершило преступление после освобождения из ИУ, в период неотбытой части наказания, условного осуждения, пробации, отбывания наказания",
+   "groups": [
+    [
+     413,
+     414
+    ],
+    [
+     411,
+     412
+    ],
+    [
+     409,
+     410
+    ],
+    [
+     415,
+     416
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "50",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Ранее совершало преступление",
+   "groups": [
+    [
+     418
+    ],
+    [
+     419
+    ],
+    [
+     420
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "51",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Результат расследования",
+   "groups": [
+    [
+     422,
+     423
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "51.1",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Судебное решение (по справочнику № 16)",
+   "groups": [
+    [
+     425,
+     426
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "52",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "На лицо содержится информация в АБД",
+   "groups": [
+    [
+     428
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "53",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "К лицу ранее применялись меры административного воздействия",
+   "groups": [
+    [
+     430
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "54",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Уголовное дело расследовано (разрешен материал)",
+   "groups": [
+    [
+     436,
+     433,
+     435,
+     432
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "54.1",
+   "kind": "code_cells",
+   "fills_by": "investigator",
+   "label": "Решение принято судьей",
+   "groups": [
+    [
+     441,
+     438,
+     440,
+     437
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "55",
+   "kind": "code_cells",
+   "fills_by": "head",
+   "label": "Лицо, совершившее преступление, состояло на учете; объявлялось в розыск по данному делу",
+   "groups": [
+    [
+     443,
+     442
+    ],
+    [
+     448,
+     447
+    ],
+    [
+     444,
+     445
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "56",
+   "kind": "code_cells",
+   "fills_by": "head",
+   "label": "Служба, установившая лицо (по справочнику № 14)",
+   "groups": [
+    [
+     455,
+     449,
+     450,
+     453,
+     454,
+     451
+    ]
+   ],
+   "in_form": true
+  },
+  {
+   "requisite": "sign.investigator",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "investigator",
+     "place": {
+      "table": 3,
+      "row": 54,
+      "cell": 1,
+      "slot": 3,
+      "span": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  }
+ ]
+}

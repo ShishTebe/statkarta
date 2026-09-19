@@ -1,0 +1,561 @@
+{
+ "golden": "package-compositions/1",
+ "status": "draft",
+ "review": "Составлено исполнителем по таблице разд. 8 ТЗ версии 1.2 и ответам заказчика (09_…, разд. 17–19) до реализации; требует проверки заказчиком. Спорные места – в поле note.",
+ "key": "Карточка: form (1, 1.1, 2, 2.1, 3, 4, 5, 6, ipk, ipk-in), variant (lc – лицо, pr – событие), of (экземпляры объектов). Режим во всех случаях – new (учесть).",
+ "compositions": {
+  "E1": [
+   {
+    "form": "1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "1",
+    "of": {
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "5",
+    "of": {
+     "victim": "victim.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "pr",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "pr",
+    "of": {
+     "crime": "crime.2"
+    }
+   }
+  ],
+  "E2": [
+   {
+    "form": "5",
+    "of": {
+     "victim": "victim.2"
+    }
+   }
+  ],
+  "E3": [
+   {
+    "form": "2.1",
+    "of": {
+     "person": "person.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.2"
+    }
+   }
+  ],
+  "E4": [
+   {
+    "form": "3",
+    "of": {}
+   }
+  ],
+  "E5": [
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.1"
+    }
+   },
+   {
+    "form": "3",
+    "of": {}
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.2"
+    }
+   }
+  ],
+  "E6": [
+   {
+    "form": "3",
+    "of": {}
+   }
+  ],
+  "E7": [
+   {
+    "form": "2.1",
+    "of": {
+     "person": "person.2"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.2",
+     "crime": "crime.1"
+    }
+   }
+  ],
+  "B-court": [
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.1"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.2"
+    }
+   },
+   {
+    "form": "3",
+    "of": {}
+   },
+   {
+    "form": "4",
+    "of": {}
+   },
+   {
+    "form": "6",
+    "of": {
+     "person": "person.1"
+    }
+   },
+   {
+    "form": "6",
+    "of": {
+     "person": "person.2"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.2",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk-in",
+    "of": {
+     "person": "person.2"
+    }
+   }
+  ],
+  "B-term-nonrehab": [
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.1"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.2"
+    }
+   },
+   {
+    "form": "3",
+    "of": {}
+   },
+   {
+    "form": "4",
+    "of": {}
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.2",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk-in",
+    "of": {
+     "person": "person.2"
+    }
+   }
+  ],
+  "B-term-rehab": [
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "3",
+    "of": {}
+   },
+   {
+    "form": "4",
+    "of": {}
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.2",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk-in",
+    "of": {
+     "person": "person.2"
+    }
+   }
+  ],
+  "B-transfer": [
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "3",
+    "of": {}
+   }
+  ],
+  "B-join": [
+   {
+    "form": "3",
+    "of": {}
+   }
+  ],
+  "B-split": {
+   "source_case": [],
+   "new_case": [
+    {
+     "form": "1",
+     "of": {
+      "crime": "crime.2"
+     }
+    },
+    {
+     "form": "3",
+     "of": {}
+    }
+   ]
+  },
+  "S-refusal": [
+   {
+    "form": "1",
+    "of": {
+     "crime": "crime.1"
+    },
+    "note": "признак «материал»"
+   },
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.2"
+    }
+   },
+   {
+    "form": "3",
+    "of": {}
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.2",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk-in",
+    "of": {
+     "person": "person.2"
+    }
+   }
+  ],
+  "S-vud-person": [
+   {
+    "form": "1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "5",
+    "of": {
+     "victim": "victim.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.2",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk-in",
+    "of": {
+     "person": "person.2"
+    }
+   }
+  ],
+  "B-prosecutor": [
+   {
+    "form": "3",
+    "of": {}
+   }
+  ],
+  "B-fine": [
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "1.1",
+    "of": {
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.1"
+    }
+   },
+   {
+    "form": "2",
+    "of": {
+     "person": "person.2"
+    }
+   },
+   {
+    "form": "3",
+    "of": {}
+   },
+   {
+    "form": "4",
+    "of": {}
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.1"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.1",
+     "crime": "crime.2"
+    }
+   },
+   {
+    "form": "ipk",
+    "variant": "lc",
+    "of": {
+     "person": "person.2",
+     "crime": "crime.1"
+    }
+   }
+  ],
+  "B-return": [
+   {
+    "form": "3",
+    "of": {}
+   }
+  ],
+  "B-cancel": [
+   {
+    "form": "3",
+    "of": {}
+   }
+  ]
+ },
+ "open_points": [
+  {
+   "id": "G-1",
+   "scenario": "E7",
+   "text": "ИПК-ЛЦ на второе лицо по эпизоду 1: ИПК-ПР по эпизоду выставлялась при возбуждении, но позже по эпизоду уже выставлена ИПК-ЛЦ на первое лицо. Принято: выставляется (условие – ИПК-ПР по эпизоду выставлялась когда-либо ранее)."
+  },
+  {
+   "id": "G-2",
+   "scenario": "E5",
+   "text": "Карта на иностранцев при приостановлении не выставляется: в таблице разд. 8 ТЗ ее нет (ответ 13: ВУД, окончание, учетный отказ, прекращение)."
+  },
+  {
+   "id": "G-3",
+   "scenario": "B-term-rehab",
+   "text": "При реабилитирующем прекращении ИПК на эпизоды с установленным лицом – ИПК-ЛЦ, и карта на иностранцев выставляется (правило ответов 12, 13 без исключения по основанию)."
+  },
+  {
+   "id": "G-4",
+   "scenario": "B-transfer",
+   "text": "ИПК при передаче по подследственности не выставляется: в таблице разд. 8 ТЗ ее нет."
+  },
+  {
+   "id": "G-5",
+   "scenario": "B-split",
+   "text": "По выделенному делу автоматически – только ф. 1 и ф. 3 (ответы 7, 18.2); ф. 5 и ИПК по выделенному делу – не выставляются автоматически, добавляются вручную."
+  },
+  {
+   "id": "G-6",
+   "scenario": "E1, S-vud-person",
+   "text": "Карта на иностранцев при ВУД – на иностранного лица или потерпевшего, указанного в событии; при ВУД по факту иностранец еще не установлен – карты нет."
+  },
+  {
+   "id": "G-7",
+   "scenario": "E1, S-vud-person",
+   "text": "Ф. 3 при возбуждении дела не составляется (уточнение порядка учета от 16.09.2026); при необходимости добавляется вручную."
+  }
+ ]
+}

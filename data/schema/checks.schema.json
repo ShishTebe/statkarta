@@ -1,0 +1,70 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Контрольные соотношения",
+ "type": "object",
+ "required": [
+  "edition",
+  "checks"
+ ],
+ "properties": {
+  "checks": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "forms",
+     "scope",
+     "severity",
+     "when",
+     "assert",
+     "message",
+     "source_note"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^c\\."
+     },
+     "forms": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1
+     },
+     "scope": {
+      "enum": [
+       "card",
+       "package"
+      ]
+     },
+     "per": {
+      "enum": [
+       "case",
+       "crime"
+      ]
+     },
+     "severity": {
+      "enum": [
+       "error",
+       "warning"
+      ]
+     },
+     "when": {
+      "type": "object"
+     },
+     "assert": {
+      "type": "object"
+     },
+     "message": {
+      "type": "string"
+     },
+     "source_note": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

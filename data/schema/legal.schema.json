@@ -1,0 +1,61 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Нормативная база",
+ "type": "object",
+ "required": [
+  "edition",
+  "acts"
+ ],
+ "properties": {
+  "acts": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "kind",
+     "date",
+     "title",
+     "summary",
+     "applies_to_forms",
+     "status",
+     "publication"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string"
+     },
+     "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+     },
+     "title": {
+      "type": "string"
+     },
+     "summary": {
+      "type": "string"
+     },
+     "applies_to_forms": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "status": {
+      "type": "string"
+     },
+     "publication": {
+      "enum": [
+       "public",
+       "pending",
+       "private"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

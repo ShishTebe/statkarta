@@ -1,0 +1,276 @@
+{
+ "edition": "2026",
+ "status": "draft",
+ "review": "требует предметной ревизии (риск Д-4). Сгенерировано scripts/build_rules.py из пакета форм.",
+ "extract": [
+  {
+   "id": "x.vud.case_number",
+   "doc_type": "vud",
+   "field": "fact.case.case_number",
+   "label": "Номер уголовного дела",
+   "kind": "case_number",
+   "parts": [
+    "title",
+    "header"
+   ],
+   "confidence": "high",
+   "digits": 17,
+   "patterns": [
+    "дел[ао]\\s*(?:№|No|N)\\s*(?<v>\\d[\\d ]{8,24}\\d)",
+    "(?:№|No|N)\\s*(?<v>\\d{12,20})"
+   ]
+  },
+  {
+   "id": "x.vud.date",
+   "doc_type": "vud",
+   "field": "fact.case.vud_date",
+   "label": "Дата возбуждения",
+   "kind": "date",
+   "parts": [
+    "header"
+   ],
+   "confidence": "high",
+   "patterns": [
+    "{DATE}"
+   ]
+  },
+  {
+   "id": "x.vud.time",
+   "doc_type": "vud",
+   "field": null,
+   "label": "Время возбуждения",
+   "kind": "time",
+   "parts": [
+    "header"
+   ],
+   "confidence": "high",
+   "patterns": [
+    "(?<![\\d.])«?\\s*(?<hh>\\d{1,2})\\s*»?\\s*(?:ч(?:ас(?:а|ов)?)?\\.?|:)\\s*«?\\s*(?<mm>\\d{2})\\s*»?\\s*(?:м(?:ин(?:ут[аы]?)?)?\\.?)?(?![\\d.])"
+   ],
+   "note": "Для сведения: в карточки не переносится"
+  },
+  {
+   "id": "x.vud.place",
+   "doc_type": "vud",
+   "field": null,
+   "label": "Место составления",
+   "kind": "text",
+   "parts": [
+    "header"
+   ],
+   "confidence": "high",
+   "max_len": 80,
+   "patterns": [
+    "^\\s*(?<v>(?:г\\.|город|пгт\\.?|пос\\.|поселок|с\\.|село|ст\\.|станица)\\s*[^\\n\\t\\d«]{2,60}?)(?=\\s*(?:\\t|\\s{2,}|«|\\d|$))"
+   ],
+   "note": "Для сведения: в карточки не переносится"
+  },
+  {
+   "id": "x.vud.investigator",
+   "doc_type": "vud",
+   "field": "fact.case.investigator",
+   "label": "Следователь",
+   "kind": "text",
+   "parts": [
+    "intro"
+   ],
+   "confidence": "high",
+   "max_len": 400,
+   "patterns": [
+    "^\\s*(?<v>[^]{10,400}?)\\s*,?\\s*рассмотрев"
+   ]
+  },
+  {
+   "id": "x.vud.kusp",
+   "doc_type": "vud",
+   "field": "fact.case.kusp",
+   "label": "Номер КРСП",
+   "kind": "text",
+   "parts": [
+    "intro",
+    "descriptive"
+   ],
+   "confidence": "high",
+   "max_len": 30,
+   "patterns": [
+    "(?:КРСП|КУСП|книг[а-я]*\\s+регистрации\\s+сообщений\\s+о\\s+преступлениях)[^№\\n]{0,200}?(?:№|No|N)\\s*(?<v>[0-9А-Яа-я](?:[0-9А-Яа-я/.-]*[0-9А-Яа-я])?)",
+    "материал[а-я]*\\s+проверки(?:\\s+сообщения\\s+о\\s+преступлении)?\\s*(?:№|No|N)\\s*(?<v>\\d(?:[0-9А-Яа-я/.-]*[0-9А-Яа-я])?)"
+   ],
+   "pattern_confidence": [
+    "high",
+    "medium"
+   ]
+  },
+  {
+   "id": "x.vud.kusp_date",
+   "doc_type": "vud",
+   "field": "fact.case.kusp_date",
+   "label": "Дата регистрации сообщения (КРСП)",
+   "kind": "date",
+   "parts": [
+    "intro",
+    "descriptive"
+   ],
+   "confidence": "high",
+   "patterns": [
+    "(?:КРСП|КУСП|книг[а-я]*\\s+регистрации\\s+сообщений\\s+о\\s+преступлениях)[^№\\n]{0,200}?(?:№|No|N)\\s*(?:_*\\s*[0-9А-Яа-я](?:[0-9А-Яа-я/.-]*[0-9А-Яа-я])?|_+[0-9А-Яа-я/.-]*)\\s*,?\\s*от\\s*{DATE}",
+    "материал[а-я]*\\s+проверки(?:\\s+сообщения\\s+о\\s+преступлении)?\\s*(?:№|No|N)\\s*\\d(?:[0-9А-Яа-я/.-]*[0-9А-Яа-я])?\\s*,?\\s*от\\s*{DATE}"
+   ],
+   "pattern_confidence": [
+    "high",
+    "medium"
+   ]
+  },
+  {
+   "id": "x.vud.report_source",
+   "doc_type": "vud",
+   "field": "fact.case.report_source",
+   "label": "Повод к возбуждению",
+   "kind": "enum",
+   "parts": [
+    "intro",
+    "descriptive"
+   ],
+   "confidence": "medium",
+   "pick": "earliest",
+   "sentence": "повод|рассмотрев",
+   "patterns": [
+    "явк[а-я]*\\s+с\\s+повинной",
+    "рапорт[а-я]*(?:[^.\\n]{0,250}?об\\s+обнаружении)?",
+    "заявлени[а-я]*",
+    "(?:материал|постановлени)[а-я]*[^.\\n]{0,120}прокурор"
+   ],
+   "values": [
+    "confession",
+    "report",
+    "statement",
+    "prosecutor_materials"
+   ]
+  },
+  {
+   "id": "x.vud.episodes",
+   "doc_type": "vud",
+   "field": "fact.crime.qualification",
+   "label": "Квалификация",
+   "kind": "episodes",
+   "parts": [
+    "resolutive"
+   ],
+   "fallback_parts": [
+    "intro"
+   ],
+   "confidence": "high",
+   "clause": "возбудить\\s+уголовн[а-я]*\\s+дел[а-я]*",
+   "patterns": [
+    "предусмотренн[а-я]*\\s+(?<v>[^]*?)\\s*(?:УК\\s*РФ|Уголовного\\s+кодекса\\s+Российской\\s+Федерации)"
+   ],
+   "person": "в\\s+отношении\\s+(?<v>[^,.;\\n]{3,80})",
+   "unknown_person": "неустановленн|не\\s+установленн",
+   "note": "Каждый пункт «Возбудить уголовное дело» – эпизод; несколько статей в одном пункте при слове «преступлений» – несколько эпизодов"
+  },
+  {
+   "id": "x.vud.crime_date",
+   "doc_type": "vud",
+   "field": "fact.crime.crime_date",
+   "label": "Дата совершения",
+   "kind": "date",
+   "parts": [
+    "descriptive"
+   ],
+   "confidence": "medium",
+   "pick": "first",
+   "patterns": [
+    "{DATE}"
+   ],
+   "exclude_after": [
+    "^\\s*(?:г\\.|года?)?\\s*(?:рождения|г\\.\\s*р\\.?|гр\\b|r\\.?\\s*p\\b)",
+    "^\\s*(?:г\\.|года?)?\\s*(?:№|No|N\\s*\\d)",
+    "^\\s*(?:г\\.|года?)?\\s*\\d{1,4}-ФЗ"
+   ],
+   "exclude_before": [
+    "(?:закон[а-я]*|кодекс[а-я]*|приказ[а-я]*|постановлени[а-я]*|указ[а-я]*|решени[а-я]*|распоряжени[а-я]*|договор[а-я]*|контракт[а-я]*|лицензи[а-я]*|свидетельств[а-я]*|КРСП|КУСП|рождения)[^.\\n]{0,60}от\\s*$",
+    "рождения\\s*$"
+   ]
+  },
+  {
+   "id": "x.vud.crime_time",
+   "doc_type": "vud",
+   "field": "fact.crime.ipk_in_r22",
+   "label": "Время совершения",
+   "kind": "time",
+   "parts": [
+    "descriptive"
+   ],
+   "confidence": "medium",
+   "after_field": "x.vud.crime_date",
+   "window": 60,
+   "patterns": [
+    "^[^.\\n]{0,40}?(?:в|около|примерно\\s+в|не\\s+позднее)\\s+(?<hh>\\d{1,2})\\s*(?:ч(?:ас(?:а|ов)?)?\\.?|:)\\s*(?<mm>\\d{2})?"
+   ]
+  },
+  {
+   "id": "x.vud.crime_place",
+   "doc_type": "vud",
+   "field": "fact.crime.ipk_in_r23",
+   "label": "Место совершения",
+   "kind": "text",
+   "parts": [
+    "descriptive"
+   ],
+   "confidence": "medium",
+   "max_len": 160,
+   "patterns": [
+    "по\\s+адресу\\s*:?\\s*(?<v>[^;\\n]{5,160}?(?:д(?:ом)?\\.?\\s*\\d+[а-яА-Я]?(?:\\s*/\\s*\\d+)?(?:\\s*,?\\s*(?:корп(?:ус)?|стр(?:оение)?|кв(?:артира)?|к)\\.?\\s*\\d+[а-яА-Я]?(?:-\\d+)?)*))",
+    "по\\s+адресу\\s*:?\\s*(?<v>[^;\\n]{5,160}?)(?=\\.\\s|;|\\n|$)"
+   ]
+  },
+  {
+   "id": "x.vud.damage",
+   "doc_type": "vud",
+   "field": "fact.damage.amount",
+   "label": "Сумма ущерба",
+   "kind": "number",
+   "parts": [
+    "descriptive"
+   ],
+   "confidence": "medium",
+   "pick": "first",
+   "sentence": "ущерб|похит|хищени|растрат|присвоени|присвоил|завладе",
+   "patterns": [
+    "{MONEY}"
+   ]
+  },
+  {
+   "id": "x.vud.fabula",
+   "doc_type": "vud",
+   "field": "fact.crime.fabula",
+   "label": "Фабула",
+   "kind": "fabula",
+   "parts": [
+    "descriptive"
+   ],
+   "confidence": "medium",
+   "max_len": 500,
+   "patterns": [
+    "^"
+   ],
+   "note": "Вся описательная часть с сокращением до 500 знаков (ответ В-37)"
+  },
+  {
+   "id": "x.vud.victims",
+   "doc_type": "vud",
+   "field": null,
+   "label": "Потерпевший",
+   "kind": "victims",
+   "parts": [
+    "descriptive"
+   ],
+   "confidence": "low",
+   "patterns": [
+    "потерпевш[а-я]*\\s*(?:[–-]\\s*)?(?<v>[А-Я][а-я]+(?:-[А-Я][а-я]+)?\\s+(?:[А-Я][а-я]+\\s+[А-Я][а-я]+|[А-Я]\\.\\s*[А-Я]\\.))",
+    "причинив[а-я]*\\s+(?:(?:малолетн|несовершеннолетн)[а-я]*\\s+)?(?:своими\\s+действиями\\s+)?(?<v>[А-Я][а-я]+(?:-[А-Я][а-я]+)?\\s+(?:[А-Я][а-я]+\\s+[А-Я][а-я]+|[А-Я]\\.\\s*[А-Я]\\.))(?=\\s+(?:физическ|моральн|имуществен|материальн|значительн|телесн|тяжк|легк|вред|ущерб|смерть|нравствен))"
+   ],
+   "note": "Подсказка (ответ В-41): по умолчанию не отмечено; переносится объектом «Потерпевший»"
+  }
+ ]
+}

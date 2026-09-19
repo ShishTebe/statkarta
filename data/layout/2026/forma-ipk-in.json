@@ -1,0 +1,841 @@
+{
+ "form": "ipk-in",
+ "blank": "ipk-in.docx",
+ "blank_sha256": "0d32ce9fe89ed3a3517c5c8ae9230b7950c2f4b5632f6543be55043e78379327",
+ "part": "word/document.xml",
+ "map_status": "draft",
+ "source_note": "Бланк-таблица: места задаются адресами ячеек (scripts/blanks/cellmap.mjs)",
+ "fields": [
+  {
+   "requisite": "2",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 0,
+      "row": 0,
+      "cell": 0,
+      "slot": 0,
+      "span": 2,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "3",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 0,
+      "row": 0,
+      "cell": 0,
+      "slot": 2,
+      "span": 2,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "4",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 0,
+      "row": 0,
+      "cell": 0,
+      "slot": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "5",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 0,
+      "row": 0,
+      "cell": 0,
+      "slot": 5,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "6",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 0,
+      "row": 0,
+      "cell": 0,
+      "slot": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "7",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 0,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "8",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 1,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "9",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 2,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "10",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 3
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "11",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "boxes",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "пол – один знак в клетке"
+  },
+  {
+   "requisite": "12",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 5,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "13",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 6,
+      "span": 2,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "14",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 8,
+      "span": 4,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "15",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 12,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "16",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 13
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "17",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 14,
+      "span": 2,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "18",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 16,
+      "span": 2,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "19",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 18,
+      "span": 3,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "20",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 0,
+      "slot": 21,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "21",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 2,
+      "row": 0,
+      "cell": 0,
+      "slot": 0,
+      "span": 4,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "23",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 2,
+      "row": 0,
+      "cell": 0,
+      "slot": 6,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "24",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 2,
+      "row": 0,
+      "cell": 0,
+      "slot": 7,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "25",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 0,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "26",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "27",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 2,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "28",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "qual",
+     "slot": "points",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 3
+     },
+     "groups": []
+    },
+    {
+     "role": "qual",
+     "slot": "part",
+     "width": 1,
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 4
+     },
+     "groups": []
+    },
+    {
+     "role": "qual",
+     "slot": "article",
+     "width": 3,
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 5
+     },
+     "groups": []
+    },
+    {
+     "role": "qual",
+     "slot": "point_sign",
+     "width": 1,
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "первая строка «пункты; часть; статья; примечание»; вторая строка (места 7–10) – для второй статьи, не заполняется"
+  },
+  {
+   "requisite": "29",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 11,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "30",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 12
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "31",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 13
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "32",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 14
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "33",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 15,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "34",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 17,
+      "span": 1,
+      "boxes": true
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "35",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "boxes",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 0,
+      "slot": 18
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "36",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 4,
+      "row": 0,
+      "cell": 0,
+      "slot": 0,
+      "span": 1,
+      "boxes": true
+     },
+     "size": 16,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  }
+ ]
+}

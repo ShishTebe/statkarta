@@ -1,0 +1,22 @@
+{
+ "file": "vud-18.txt",
+ "blank": "3.02",
+ "format": "txt1251",
+ "case_number": null,
+ "vud_date": "2026-07-25",
+ "kusp": "37пр/1-26",
+ "kusp_date": "2026-07-24",
+ "report_source": "statement",
+ "investigator": "Руководитель следственного отдела по Озерному району следственного управления Следственного комитета Российской Федерации по Условной области подполковник юстиции Громов А.Е.",
+ "qualifications": [
+  "105/1/",
+  "293/1/",
+  "105/1/"
+ ],
+ "persons": [],
+ "suspect_known": false,
+ "crime_date": "2026-06-02",
+ "crime_place": null,
+ "damage_amount": "767500",
+ "victims": []
+}

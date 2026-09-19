@@ -1,0 +1,61 @@
+// Сборка заполненного бланка .docx (Фаза 1.6, FR-40).
+// Эталонный бланк не пересобирается: в нем меняется только word/document.xml, остальные части
+// переносятся в новый файл сжатыми, байт в байт. Перед заполнением сверяется контрольная сумма
+// бланка (критерий A1.6-4): если бланк не тот, файл не собирается.
+
+import { readZip, entryText, replaceEntry, writeZip, sha256Hex } from './zip.mjs';
+import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars } from './ooxml.mjs';
+import { setXlsxCell, setXlsxUnderscores, XLSX_SHEET } from './xlsxfill.mjs';
+
+export const CELL_FONT_HALF_POINTS = 16;   // 8 пунктов – как в клетках самого бланка
+
+export async function checkBlank(bytes, layout) {
+  const sha = await sha256Hex(bytes);
+  if (layout.blank_sha256 && sha !== layout.blank_sha256) {
+    throw new Error(`Бланк «${layout.blank}» отличается от того, по которому составлена карта раскладки`
+      + ' – заполнение отменено. Обновите пакет бланков.');
+  }
+  return sha;
+}
+
+// Заполненный бланк: [{ shape, text }] – знаки в клетки, [{ place, text }] – значения в ячейки
+// таблицы бланка (бланки ИПК).
+export async function fillDocx(bytes, layout, edits, cellEdits = []) {
+  await checkBlank(bytes, layout);
+  const entries = readZip(bytes);
+  if (layout.kind === 'xlsx') {
+    // ф. 3 – книга Excel: знаки в ячейки листа, текст – на линейки в тексте ячеек
+    const sheetEntry = entries.find((e) => e.name === XLSX_SHEET);
+    let sheet = await entryText(sheetEntry);
+    const ss = await entryText(entries.find((e) => e.name === 'xl/sharedStrings.xml'));
+    for (const e of edits) sheet = setXlsxCell(sheet, e.shape, e.text);
+    for (const e of cellEdits) sheet = setXlsxUnderscores(sheet, ss, e.place.cell, e.text, { slot: e.place.slot ?? 0 });
+    await replaceEntry(entries, XLSX_SHEET, new TextEncoder().encode(sheet));
+    return writeZip(entries);
+  }
+  const part = layout.part ?? 'word/document.xml';
+  const entry = entries.find((e) => e.name === part);
+  if (!entry) throw new Error(`В бланке нет части ${part}`);
+  let xml = await entryText(entry);
+  if (edits.length) xml = fillShapes(xml, edits, { size: CELL_FONT_HALF_POINTS, force: true });
+  // В одной ячейке места нумеруются подряд, а вписанный текст убирает подчеркивания –
+  // поэтому места заполняются с конца ячейки, чтобы номера оставшихся не сдвигались.
+  const ordered = [...cellEdits].sort((a, b) => (a.place.table - b.place.table) || (a.place.row - b.place.row)
+    || (a.place.cell - b.place.cell) || ((b.place.slot ?? 0) - (a.place.slot ?? 0)));
+  for (const e of ordered) {
+    if (e.mode === 'cell') xml = setCellText(xml, e.place, e.text, { size: e.size ?? null });
+    else if (e.mode === 'append') xml = appendCellText(xml, e.place, e.text, { size: e.size ?? null });
+    else if (e.mode === 'prepend') xml = prependCellText(xml, e.place, e.text, { size: e.size ?? null });
+    else if (e.mode === 'boxes') xml = setBoxChars(xml, e.place, e.text, { slot: e.place.slot ?? 0 });
+    else xml = setUnderscoreText(xml, e.place, e.text, { slot: e.place.slot ?? 0, span: e.place.span ?? 1, boxes: Boolean(e.place.boxes) });
+  }
+  await replaceEntry(entries, part, new TextEncoder().encode(xml));
+  return writeZip(entries);
+}
+
+export function blankFileName(form, card, { ext = 'docx' } = {}) {
+  const safe = (s) => String(s ?? '').replace(/[\\/:*?"<>|]+/g, '-').replace(/\s+/g, ' ').trim();
+  const parts = ['Форма', form];
+  if (card?.title) parts.push(safe(card.title));
+  return `${parts.join(' ')}.${ext}`;
+}

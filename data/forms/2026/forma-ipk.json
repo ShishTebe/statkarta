@@ -1,0 +1,5747 @@
+{
+ "form": "ipk",
+ "variants": [
+  {
+   "id": "lc",
+   "title": "лицо – ЛЦ"
+  },
+  {
+   "id": "pr",
+   "title": "событие – ПР"
+  }
+ ],
+ "title": "ИНФОРМАЦИОННО-ПОИСКОВАЯ КАРТА (ИПК)",
+ "edition": "2026",
+ "effective_from": "2026-01-01",
+ "effective_to": null,
+ "legal_basis": "эталонный бланк заказчика",
+ "source": "new_cards/ИПК.doc (нормализован в .docx нативным Word); реквизиты извлечены scripts/import/import_ipk.py",
+ "requisites_count": 72,
+ "requisites": [
+  {
+   "id": "02",
+   "number": "02",
+   "label": "Фамилия",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "03",
+   "number": "03",
+   "label": "Имя",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "4",
+   "number": "4",
+   "label": "Отчество",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "05",
+   "number": "05",
+   "label": "Дата рождения",
+   "label_status": "source",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "06",
+   "number": "06",
+   "label": "Паспорт (другой документ, удостоверение личности, свидетельство)",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "07",
+   "number": "07",
+   "label": "Место рождения: республика; край, область; район; населенный пункт",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "08",
+   "number": "08",
+   "label": "Адрес: республика; край, область; район; населенный пункт; улица; дом; корпус; квартира; микрорайон; административный участок",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "09",
+   "number": "09",
+   "label": "Адрес фактического проживания: республика; край, область; район; населенный пункт; улица; дом; корпус; квартира; микрорайон; административный участок",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "70",
+   "number": "70",
+   "label": "Гражданство",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "10",
+   "number": "10",
+   "label": "Национальность",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "11",
+   "number": "11",
+   "label": "Место работы",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "12",
+   "number": "12",
+   "label": "Специальность",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "13",
+   "number": "13",
+   "label": "Клички",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "14",
+   "number": "14",
+   "label": "Выезжает, посещает (республика, край, область, район, населенный пункт, улица, дом, корпус или наименование объекта)",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "15",
+   "number": "15",
+   "label": "Порочные наклонности",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "симуляция",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "алкоголизм",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "токсикомания",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "наркомания",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "садизм",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "половые извращения",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "16",
+   "number": "16",
+   "label": "Интересы",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "азартные игры",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "коллекционирование",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "музыка",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "охота, рыбалка",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "радиодело",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "религия",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "спорт",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "театр",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "фотодело",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "автодело",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "17",
+   "number": "17",
+   "label": "Имеет навык",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "12",
+     "value": "бокса",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "борьбы",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "автомобиля",
+     "group": "вождения"
+    },
+    {
+     "code": "4",
+     "value": "катера",
+     "group": "вождения"
+    },
+    {
+     "code": "6",
+     "value": "мотоцикла",
+     "group": "вождения"
+    },
+    {
+     "code": "8",
+     "value": "самолета",
+     "group": "вождения"
+    },
+    {
+     "code": "10",
+     "value": "трактора",
+     "group": "вождения"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "18",
+   "number": "18",
+   "label": "Знает язык",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "22",
+   "number": "22",
+   "label": "Вид документа",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "25",
+     "value": "УД",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "23",
+   "number": "23",
+   "label": "Номер документа",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "doc_date",
+   "number": "б/н",
+   "label": "Дата документа",
+   "label_status": "source",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "78",
+   "number": "78",
+   "label": "Номер эпизода",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "episode_date",
+   "number": "б/н",
+   "label": "Дата выявления эпизода",
+   "label_status": "source",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "ic_code",
+   "number": "б/н",
+   "label": "Код территориального органа и ИЦ, где подлежит учету",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": "Код территориального органа и ИЦ УТ МВД России по ФО, ЛУ МВД России на транспорте, территориального органа МВД России на региональном уровне, где подлежит учету",
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "79",
+   "number": "79",
+   "label": "Наименование органа",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "76",
+   "number": "76",
+   "label": "Решение по УД / отказному материалу",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "приостановлено",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "передано по подследственности",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "передано в суд",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "передано на доп.расследование",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "передано по территориальности",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "прекращено по основаниям, дающим право на реабилитацию",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "прекращено по основаниям, не дающим право на реабилитацию",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "выделение УД в отдельное производство",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "соединение уголовных дел в одно",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "преступление снято с учета в связи с отменой постановления о возбуждении УД",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "в возбуждении дела отказано по нереабилитирующим основаниям",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "77",
+   "number": "77",
+   "label": "Дата принятия решения по УД / отказному материалу",
+   "label_status": "source",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "28",
+   "number": "28",
+   "label": "Подследственность",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "30",
+     "value": "ОВД",
+     "group": null
+    },
+    {
+     "code": "31",
+     "value": "органы федеральной службы безопасности",
+     "group": null
+    },
+    {
+     "code": "32",
+     "value": "СК России",
+     "group": null
+    },
+    {
+     "code": "33",
+     "value": "ФСКН России",
+     "group": null
+    },
+    {
+     "code": "34",
+     "value": "мировой судья",
+     "group": null
+    },
+    {
+     "code": "35",
+     "value": "ФТС России",
+     "group": null
+    },
+    {
+     "code": "36",
+     "value": "ФССП России",
+     "group": null
+    },
+    {
+     "code": "37",
+     "value": "ФСИН России",
+     "group": null
+    },
+    {
+     "code": "38",
+     "value": "ГПН ФПС",
+     "group": null
+    },
+    {
+     "code": "39",
+     "value": "пограничные органы",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "category",
+   "number": "б/н",
+   "label": "Категория",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "5",
+     "value": "гастролер",
+     "group": null
+    },
+    {
+     "code": "45",
+     "value": "участник организ. группы",
+     "group": null
+    },
+    {
+     "code": "47",
+     "value": "организатор преступной группы",
+     "group": null
+    },
+    {
+     "code": "57",
+     "value": "уголовный авторитет",
+     "group": null
+    },
+    {
+     "code": "59",
+     "value": "вор в законе",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "преступник с межрегиональной или международной направленностью",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "серийный преступник",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "лицо без определенного места пребывания или жительства",
+     "group": null
+    },
+    {
+     "code": "49",
+     "value": "подследственный",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "условно осужденный",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "осужденный с отсрочкой наказания",
+     "group": null
+    },
+    {
+     "code": "25",
+     "value": "проход. по отказным матер",
+     "group": null
+    },
+    {
+     "code": "31",
+     "value": "скрывшийся от органов дознания, следствия, суда",
+     "group": null
+    },
+    {
+     "code": "33",
+     "value": "бежавший из МЛС",
+     "group": null
+    },
+    {
+     "code": "39",
+     "value": "дезертир",
+     "group": null
+    },
+    {
+     "code": "37",
+     "value": "уклон. от адмнадзора",
+     "group": null
+    },
+    {
+     "code": "73",
+     "value": "госдолжник",
+     "group": null
+    },
+    {
+     "code": "77",
+     "value": "осужденный к ИР",
+     "group": null
+    },
+    {
+     "code": "93",
+     "value": "находящийся на поселении",
+     "group": null
+    },
+    {
+     "code": "63",
+     "value": "проститутка",
+     "group": null
+    },
+    {
+     "code": "65",
+     "value": "гомосексуалист",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "наркоман",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "психбольной",
+     "group": null
+    },
+    {
+     "code": "75",
+     "value": "содержатель притона",
+     "group": null
+    },
+    {
+     "code": "27",
+     "value": "коррупционер",
+     "group": null
+    },
+    {
+     "code": "81",
+     "value": "лицо офиц. призн. алкоголиком",
+     "group": null
+    },
+    {
+     "code": "51",
+     "value": "владелец оружия",
+     "group": null
+    },
+    {
+     "code": "61",
+     "value": "нераскрытое преступление",
+     "group": null
+    },
+    {
+     "code": "100",
+     "value": "футбольный фанат",
+     "group": null
+    },
+    {
+     "code": "101",
+     "value": "осужденный к иным видам наказания",
+     "group": null
+    },
+    {
+     "code": "102",
+     "value": "осужденный к отбыванию обязательных работ",
+     "group": null
+    },
+    {
+     "code": "103",
+     "value": "осужденный к отбыванию ограничения свободы",
+     "group": null
+    },
+    {
+     "code": "104",
+     "value": "осужденный к отбыванию лишения права занимать определенные должности или заниматься определенной деятельностью",
+     "group": null
+    },
+    {
+     "code": "105",
+     "value": "осужденный к испытательному сроку",
+     "group": null
+    },
+    {
+     "code": "106",
+     "value": "лицо, к которому применен домашний арест",
+     "group": null
+    },
+    {
+     "code": "107",
+     "value": "условно-досрочно освобожденный",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "looks_like",
+   "number": "б/н",
+   "label": "Внешне похож на",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "европейца",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "кавказца",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "китайца",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "среднеазиата",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "цыгана",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "африканца",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "sex",
+   "number": "б/н",
+   "label": "Пол",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "муж",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "жен",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "height",
+   "number": "б/н",
+   "label": "Рост",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "низкий (до 165)",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "средний (165-175)",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "высокий (176-185)",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "очень высокий (выше 185)",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "build",
+   "number": "б/н",
+   "label": "Телосложение",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "худощавое",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "среднее",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "полное",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "коренастое",
+     "group": null
+    },
+    {
+     "code": "10",
+     "value": "сутулое",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "атлетическое",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "hair",
+   "number": "б/н",
+   "label": "Волосы",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "прямые",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "вьющиеся",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "светлые",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "седые",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "рыжие",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "темные",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "черные",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "длинные",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "короткие",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "с проседью",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "крашеные",
+     "group": null
+    },
+    {
+     "code": "35",
+     "value": "русые",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "коса",
+     "group": null
+    },
+    {
+     "code": "25",
+     "value": "усы",
+     "group": null
+    },
+    {
+     "code": "27",
+     "value": "борода",
+     "group": null
+    },
+    {
+     "code": "29",
+     "value": "лобное, залысины",
+     "group": "облысение"
+    },
+    {
+     "code": "31",
+     "value": "теменное",
+     "group": "облысение"
+    },
+    {
+     "code": "33",
+     "value": "полное",
+     "group": "облысение"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "37",
+   "number": "37",
+   "label": "Особенности внешности",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "смуглое",
+     "group": "лицо"
+    },
+    {
+     "code": "4",
+     "value": "красное",
+     "group": "лицо"
+    },
+    {
+     "code": "1",
+     "value": "круглое",
+     "group": "лицо"
+    },
+    {
+     "code": "6",
+     "value": "желтое",
+     "group": "лицо"
+    },
+    {
+     "code": "8",
+     "value": "худое",
+     "group": "лицо"
+    },
+    {
+     "code": "3",
+     "value": "овальное",
+     "group": "лицо"
+    },
+    {
+     "code": "10",
+     "value": "конопатое",
+     "group": "лицо"
+    },
+    {
+     "code": "12",
+     "value": "ямочки",
+     "group": "лицо"
+    },
+    {
+     "code": "5",
+     "value": "треугольное",
+     "group": "лицо"
+    },
+    {
+     "code": "14",
+     "value": "морщинистое",
+     "group": "лицо"
+    },
+    {
+     "code": "16",
+     "value": "выступающие скулы",
+     "group": "лицо"
+    },
+    {
+     "code": "7",
+     "value": "прямоугольное",
+     "group": "лицо"
+    },
+    {
+     "code": "18",
+     "value": "прыщавое (рябое)",
+     "group": "лицо"
+    },
+    {
+     "code": "20",
+     "value": "седые",
+     "group": "брови"
+    },
+    {
+     "code": "22",
+     "value": "густые",
+     "group": "брови"
+    },
+    {
+     "code": "24",
+     "value": "широкие",
+     "group": "брови"
+    },
+    {
+     "code": "26",
+     "value": "узкие",
+     "group": "брови"
+    },
+    {
+     "code": "28",
+     "value": "сросшиеся",
+     "group": "брови"
+    },
+    {
+     "code": "30",
+     "value": "отсутствие",
+     "group": "брови"
+    },
+    {
+     "code": "32",
+     "value": "большой",
+     "group": "нос"
+    },
+    {
+     "code": "33",
+     "value": "маленький",
+     "group": "нос"
+    },
+    {
+     "code": "34",
+     "value": "вздернут",
+     "group": "нос"
+    },
+    {
+     "code": "35",
+     "value": "прямой",
+     "group": "нос"
+    },
+    {
+     "code": "36",
+     "value": "приплюснут",
+     "group": "нос"
+    },
+    {
+     "code": "38",
+     "value": "свернут",
+     "group": "нос"
+    },
+    {
+     "code": "40",
+     "value": "с горбинкой",
+     "group": "нос"
+    },
+    {
+     "code": "42",
+     "value": "раздвоенность кончика",
+     "group": "нос"
+    },
+    {
+     "code": "44",
+     "value": "толстые",
+     "group": "губы"
+    },
+    {
+     "code": "46",
+     "value": "тонкие",
+     "group": "губы"
+    },
+    {
+     "code": "48",
+     "value": "«заячья губа»",
+     "group": "губы"
+    },
+    {
+     "code": "50",
+     "value": "выступающие",
+     "group": "губы"
+    },
+    {
+     "code": "52",
+     "value": "выступание верхней",
+     "group": "губы"
+    },
+    {
+     "code": "54",
+     "value": "выступание нижней",
+     "group": "губы"
+    },
+    {
+     "code": "56",
+     "value": "большой",
+     "group": "подбородок"
+    },
+    {
+     "code": "58",
+     "value": "скошенный",
+     "group": "подбородок"
+    },
+    {
+     "code": "60",
+     "value": "выступающий",
+     "group": "подбородок"
+    },
+    {
+     "code": "62",
+     "value": "раздвоенность (ямка)",
+     "group": "подбородок"
+    },
+    {
+     "code": "64",
+     "value": "очки",
+     "group": "глаза"
+    },
+    {
+     "code": "66",
+     "value": "пятна",
+     "group": "глаза"
+    },
+    {
+     "code": "68",
+     "value": "большие",
+     "group": "глаза"
+    },
+    {
+     "code": "70",
+     "value": "навыкате",
+     "group": "глаза"
+    },
+    {
+     "code": "72",
+     "value": "светлые",
+     "group": "глаза"
+    },
+    {
+     "code": "74",
+     "value": "темные",
+     "group": "глаза"
+    },
+    {
+     "code": "76",
+     "value": "разноцветные",
+     "group": "глаза"
+    },
+    {
+     "code": "78",
+     "value": "косоглазие",
+     "group": "глаза"
+    },
+    {
+     "code": "80",
+     "value": "глубокосидящие",
+     "group": "глаза"
+    },
+    {
+     "code": "65",
+     "value": "близкопосаженные",
+     "group": "глаза"
+    },
+    {
+     "code": "86",
+     "value": "редкие",
+     "group": "зубы"
+    },
+    {
+     "code": "87",
+     "value": "ровные",
+     "group": "зубы"
+    },
+    {
+     "code": "88",
+     "value": "кривые",
+     "group": "зубы"
+    },
+    {
+     "code": "90",
+     "value": "щербатые",
+     "group": "зубы"
+    },
+    {
+     "code": "92",
+     "value": "желтые",
+     "group": "зубы"
+    },
+    {
+     "code": "94",
+     "value": "выступающие",
+     "group": "зубы"
+    },
+    {
+     "code": "96",
+     "value": "почерневшие",
+     "group": "зубы"
+    },
+    {
+     "code": "82",
+     "value": "большой",
+     "group": "рот"
+    },
+    {
+     "code": "84",
+     "value": "кривой",
+     "group": "рот"
+    },
+    {
+     "code": "83",
+     "value": "маленький",
+     "group": "рот"
+    },
+    {
+     "code": "98",
+     "value": "большие",
+     "group": "уши, лоб"
+    },
+    {
+     "code": "99",
+     "value": "сросшиеся мочки",
+     "group": "уши, лоб"
+    },
+    {
+     "code": "102",
+     "value": "мочка свободная",
+     "group": "уши, лоб"
+    },
+    {
+     "code": "110",
+     "value": "высокий",
+     "group": "уши, лоб"
+    },
+    {
+     "code": "100",
+     "value": "оттопыренные",
+     "group": "уши, лоб"
+    },
+    {
+     "code": "104",
+     "value": "прилегающие",
+     "group": "уши, лоб"
+    },
+    {
+     "code": "108",
+     "value": "овальные",
+     "group": "уши, лоб"
+    },
+    {
+     "code": "112",
+     "value": "низкий",
+     "group": "уши, лоб"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "38",
+   "number": "38",
+   "label": "Особенности поведения",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "37",
+     "value": "левша",
+     "group": null
+    },
+    {
+     "code": "1",
+     "value": "невнятная",
+     "group": "речь"
+    },
+    {
+     "code": "3",
+     "value": "заикается",
+     "group": "речь"
+    },
+    {
+     "code": "5",
+     "value": "картавит",
+     "group": "речь"
+    },
+    {
+     "code": "7",
+     "value": "акцент",
+     "group": "речь"
+    },
+    {
+     "code": "9",
+     "value": "характерные слова (обороты)",
+     "group": "речь"
+    },
+    {
+     "code": "11",
+     "value": "глухонемой",
+     "group": "речь"
+    },
+    {
+     "code": "13",
+     "value": "жестикулирует",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "15",
+     "value": "щурится",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "23",
+     "value": "глаз",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "17",
+     "value": "кривит рот",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "25",
+     "value": "щека",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "19",
+     "value": "щелкает пальцами",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "27",
+     "value": "голова",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "21",
+     "value": "часто сплевывает",
+     "group": "жесты и мимика"
+    },
+    {
+     "code": "29",
+     "value": "хромает",
+     "group": "походка"
+    },
+    {
+     "code": "39",
+     "value": "волочит ногу",
+     "group": "походка"
+    },
+    {
+     "code": "31",
+     "value": "с палкой",
+     "group": "походка"
+    },
+    {
+     "code": "33",
+     "value": "косолапит",
+     "group": "походка"
+    },
+    {
+     "code": "35",
+     "value": "ноги кривые",
+     "group": "походка"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "39",
+   "number": "39",
+   "label": "Группа крови, резус",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "1(0)",
+     "group": "группа крови"
+    },
+    {
+     "code": "2",
+     "value": "2(А)",
+     "group": "группа крови"
+    },
+    {
+     "code": "3",
+     "value": "3(В)",
+     "group": "группа крови"
+    },
+    {
+     "code": "4",
+     "value": "4(АВ)",
+     "group": "группа крови"
+    },
+    {
+     "code": "1",
+     "value": "положительный",
+     "group": "резус"
+    },
+    {
+     "code": "2",
+     "value": "отрицательный",
+     "group": "резус"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "marks",
+   "number": "б/н",
+   "label": "Особые приметы и татуировки: код расположения, код приметы (татуировки), описание",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "100",
+     "value": "лицо",
+     "group": "расположение"
+    },
+    {
+     "code": "101",
+     "value": "лоб",
+     "group": "расположение"
+    },
+    {
+     "code": "102",
+     "value": "нос",
+     "group": "расположение"
+    },
+    {
+     "code": "103",
+     "value": "подбородок",
+     "group": "расположение"
+    },
+    {
+     "code": "111",
+     "value": "щека левая",
+     "group": "расположение"
+    },
+    {
+     "code": "112",
+     "value": "щека правая",
+     "group": "расположение"
+    },
+    {
+     "code": "121",
+     "value": "губа верхняя",
+     "group": "расположение"
+    },
+    {
+     "code": "122",
+     "value": "губа нижняя",
+     "group": "расположение"
+    },
+    {
+     "code": "131",
+     "value": "ухо левое",
+     "group": "расположение"
+    },
+    {
+     "code": "132",
+     "value": "ухо правое",
+     "group": "расположение"
+    },
+    {
+     "code": "141",
+     "value": "глаз левый",
+     "group": "расположение"
+    },
+    {
+     "code": "142",
+     "value": "глаз правый",
+     "group": "расположение"
+    },
+    {
+     "code": "151",
+     "value": "зубы верхние",
+     "group": "расположение"
+    },
+    {
+     "code": "152",
+     "value": "зубы нижние",
+     "group": "расположение"
+    },
+    {
+     "code": "161",
+     "value": "веко левое",
+     "group": "расположение"
+    },
+    {
+     "code": "162",
+     "value": "веко правое",
+     "group": "расположение"
+    },
+    {
+     "code": "171",
+     "value": "висок левый",
+     "group": "расположение"
+    },
+    {
+     "code": "172",
+     "value": "висок правый",
+     "group": "расположение"
+    },
+    {
+     "code": "181",
+     "value": "бровь левая",
+     "group": "расположение"
+    },
+    {
+     "code": "182",
+     "value": "бровь правая",
+     "group": "расположение"
+    },
+    {
+     "code": "200",
+     "value": "голова",
+     "group": "расположение"
+    },
+    {
+     "code": "201",
+     "value": "затылок",
+     "group": "расположение"
+    },
+    {
+     "code": "202",
+     "value": "шея",
+     "group": "расположение"
+    },
+    {
+     "code": "310",
+     "value": "рука левая",
+     "group": "расположение"
+    },
+    {
+     "code": "311",
+     "value": "кисть левая",
+     "group": "расположение"
+    },
+    {
+     "code": "312",
+     "value": "пальцы левой",
+     "group": "расположение"
+    },
+    {
+     "code": "313",
+     "value": "предплечье левое",
+     "group": "расположение"
+    },
+    {
+     "code": "314",
+     "value": "запястье левой руки",
+     "group": "расположение"
+    },
+    {
+     "code": "320",
+     "value": "рука правая",
+     "group": "расположение"
+    },
+    {
+     "code": "321",
+     "value": "кисть правая",
+     "group": "расположение"
+    },
+    {
+     "code": "322",
+     "value": "пальцы правой",
+     "group": "расположение"
+    },
+    {
+     "code": "324",
+     "value": "запястье правой руки",
+     "group": "расположение"
+    },
+    {
+     "code": "323",
+     "value": "предплечье правое",
+     "group": "расположение"
+    },
+    {
+     "code": "410",
+     "value": "нога левая",
+     "group": "расположение"
+    },
+    {
+     "code": "411",
+     "value": "бедро левое",
+     "group": "расположение"
+    },
+    {
+     "code": "412",
+     "value": "голень левая",
+     "group": "расположение"
+    },
+    {
+     "code": "413",
+     "value": "щиколотка левая",
+     "group": "расположение"
+    },
+    {
+     "code": "414",
+     "value": "стопа левая",
+     "group": "расположение"
+    },
+    {
+     "code": "416",
+     "value": "колено левой",
+     "group": "расположение"
+    },
+    {
+     "code": "420",
+     "value": "нога правая",
+     "group": "расположение"
+    },
+    {
+     "code": "421",
+     "value": "бедро правое",
+     "group": "расположение"
+    },
+    {
+     "code": "422",
+     "value": "голень правая",
+     "group": "расположение"
+    },
+    {
+     "code": "423",
+     "value": "щиколотка правая",
+     "group": "расположение"
+    },
+    {
+     "code": "424",
+     "value": "стопа правая",
+     "group": "расположение"
+    },
+    {
+     "code": "426",
+     "value": "колено правое",
+     "group": "расположение"
+    },
+    {
+     "code": "428",
+     "value": "поясница",
+     "group": "расположение"
+    },
+    {
+     "code": "510",
+     "value": "грудь",
+     "group": "расположение"
+    },
+    {
+     "code": "520",
+     "value": "живот",
+     "group": "расположение"
+    },
+    {
+     "code": "530",
+     "value": "плечи",
+     "group": "расположение"
+    },
+    {
+     "code": "531",
+     "value": "плечо левое",
+     "group": "расположение"
+    },
+    {
+     "code": "532",
+     "value": "плечо правое",
+     "group": "расположение"
+    },
+    {
+     "code": "540",
+     "value": "спина",
+     "group": "расположение"
+    },
+    {
+     "code": "550",
+     "value": "ягодицы",
+     "group": "расположение"
+    },
+    {
+     "code": "551",
+     "value": "ягодица правая",
+     "group": "расположение"
+    },
+    {
+     "code": "552",
+     "value": "ягодица левая",
+     "group": "расположение"
+    },
+    {
+     "code": "560",
+     "value": "половые органы",
+     "group": "расположение"
+    },
+    {
+     "code": "01",
+     "value": "отсутствие",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "02",
+     "value": "дефект",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "03",
+     "value": "протез",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "04",
+     "value": "бородавка",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "05",
+     "value": "родинка",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "06",
+     "value": "опухоль",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "07",
+     "value": "пигментные пятна",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "08",
+     "value": "следы оспы",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "09",
+     "value": "жировик",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "10",
+     "value": "шрам",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "11",
+     "value": "ожог",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "12",
+     "value": "горб",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "13",
+     "value": "бельмо",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "14",
+     "value": "желтый металл",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "15",
+     "value": "белый метал",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "16",
+     "value": "волосяной покров",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "17",
+     "value": "серьги",
+     "group": "примета, татуировка"
+    },
+    {
+     "code": "20",
+     "value": "татуировка (если не определена)",
+     "group": "татуировки"
+    },
+    {
+     "code": "21",
+     "value": "следы татуировки",
+     "group": "татуировки"
+    },
+    {
+     "code": "30",
+     "value": "текст",
+     "group": "татуировки"
+    },
+    {
+     "code": "32",
+     "value": "имена",
+     "group": "татуировки"
+    },
+    {
+     "code": "41",
+     "value": "дата",
+     "group": "татуировки"
+    },
+    {
+     "code": "31",
+     "value": "буквы",
+     "group": "татуировки"
+    },
+    {
+     "code": "40",
+     "value": "цифры",
+     "group": "татуировки"
+    },
+    {
+     "code": "50",
+     "value": "рисунок",
+     "group": "татуировки"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "41",
+   "number": "41",
+   "label": "Описание иных характерных признаков",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "42",
+   "number": "42",
+   "label": "Примерный год рождения неустановленного лица",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о лице",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "pr"
+   ]
+  },
+  {
+   "id": "uk_article",
+   "number": "б/н",
+   "label": "Статья УК",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "44",
+   "number": "44",
+   "label": "Вид преступления",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "бандитизм",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "прест. террористич. характера",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "незаконная охота",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "захват заложника",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "прест. экстремистской направленности",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "получение взятки",
+     "group": null
+    },
+    {
+     "code": "10",
+     "value": "вымогательство",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "вовлечение н/л",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "против воен. службы",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "против гос. власти",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "грабеж",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "дезорг. работы ИТУ",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "зараж. вен.(ВИЧ) болезн",
+     "group": null
+    },
+    {
+     "code": "25",
+     "value": "изнасилование",
+     "group": null
+    },
+    {
+     "code": "26",
+     "value": "насильств.действ. секс.харак",
+     "group": null
+    },
+    {
+     "code": "27",
+     "value": "незак. оборот вооружения",
+     "group": null
+    },
+    {
+     "code": "28",
+     "value": "незаконное лишен. свободы",
+     "group": null
+    },
+    {
+     "code": "31",
+     "value": "контрабанда",
+     "group": null
+    },
+    {
+     "code": "33",
+     "value": "кража",
+     "group": null
+    },
+    {
+     "code": "39",
+     "value": "незаконный аборт",
+     "group": null
+    },
+    {
+     "code": "41",
+     "value": "масс. беспорядки",
+     "group": null
+    },
+    {
+     "code": "42",
+     "value": "растрата",
+     "group": null
+    },
+    {
+     "code": "43",
+     "value": "мошенничество",
+     "group": null
+    },
+    {
+     "code": "47",
+     "value": "подделка докум",
+     "group": null
+    },
+    {
+     "code": "51",
+     "value": "похищ. человека",
+     "group": null
+    },
+    {
+     "code": "53",
+     "value": "уничт. имущества",
+     "group": null
+    },
+    {
+     "code": "55",
+     "value": "притоносодержан",
+     "group": null
+    },
+    {
+     "code": "57",
+     "value": "разбой",
+     "group": null
+    },
+    {
+     "code": "59",
+     "value": "разврат. действия",
+     "group": null
+    },
+    {
+     "code": "60",
+     "value": "половое сношение с лицом, не достигшим 16–летнего возраста",
+     "group": null
+    },
+    {
+     "code": "61",
+     "value": "неоказание помощи",
+     "group": null
+    },
+    {
+     "code": "63",
+     "value": "незакон. оборот наркотиков",
+     "group": null
+    },
+    {
+     "code": "65",
+     "value": "приобр. или сбыт краден",
+     "group": null
+    },
+    {
+     "code": "68",
+     "value": "принуждение к изъятию органов",
+     "group": null
+    },
+    {
+     "code": "69",
+     "value": "причин. вреда здоровью",
+     "group": null
+    },
+    {
+     "code": "70",
+     "value": "орг. преступ. сообщ",
+     "group": null
+    },
+    {
+     "code": "71",
+     "value": "убийство",
+     "group": null
+    },
+    {
+     "code": "72",
+     "value": "доведение до самоубийства",
+     "group": null
+    },
+    {
+     "code": "73",
+     "value": "угон. трансп. средства",
+     "group": null
+    },
+    {
+     "code": "74",
+     "value": "уклонение от уплаты налогов и таможенных платежей",
+     "group": null
+    },
+    {
+     "code": "77",
+     "value": "изгот. и сбыт подд. денег, бумаг, платеж. документов",
+     "group": null
+    },
+    {
+     "code": "78",
+     "value": "незакон. предпринимат",
+     "group": null
+    },
+    {
+     "code": "79",
+     "value": "хищение предметов, имеющих особую ценность",
+     "group": null
+    },
+    {
+     "code": "80",
+     "value": "причинение имущественного ущерба путем обмана и злоупотребления доверием",
+     "group": null
+    },
+    {
+     "code": "81",
+     "value": "хищение вооружения",
+     "group": null
+    },
+    {
+     "code": "83",
+     "value": "хулиганство",
+     "group": null
+    },
+    {
+     "code": "84",
+     "value": "вандализм",
+     "group": null
+    },
+    {
+     "code": "87",
+     "value": "побег или уклонение",
+     "group": null
+    },
+    {
+     "code": "89",
+     "value": "против порядка управл",
+     "group": null
+    },
+    {
+     "code": "90",
+     "value": "созд. незак. вооруж. формир",
+     "group": null
+    },
+    {
+     "code": "92",
+     "value": "экологич. преступлен",
+     "group": null
+    },
+    {
+     "code": "93",
+     "value": "преступления в сфере экономической деятельности",
+     "group": null
+    },
+    {
+     "code": "94",
+     "value": "против правосудия",
+     "group": null
+    },
+    {
+     "code": "95",
+     "value": "заведомо ложные сообщения",
+     "group": null
+    },
+    {
+     "code": "96",
+     "value": "незаконная банковская деят",
+     "group": null
+    },
+    {
+     "code": "97",
+     "value": "угроза убийством",
+     "group": null
+    },
+    {
+     "code": "98",
+     "value": "прест. против безопасности движения и эксплуатации транспорта",
+     "group": null
+    },
+    {
+     "code": "101",
+     "value": "вовлечение в проституцию",
+     "group": null
+    },
+    {
+     "code": "103",
+     "value": "изгот. и распростр. порнографических материалов",
+     "group": null
+    },
+    {
+     "code": "105",
+     "value": "торговля людьми",
+     "group": null
+    },
+    {
+     "code": "107",
+     "value": "использование рабского труда",
+     "group": null
+    },
+    {
+     "code": "109",
+     "value": "преступление против чести и достоинства личности",
+     "group": null
+    },
+    {
+     "code": "111",
+     "value": "прест. против конституц–х прав и свобод человека и гражданина",
+     "group": null
+    },
+    {
+     "code": "113",
+     "value": "преступления против семьи",
+     "group": null
+    },
+    {
+     "code": "115",
+     "value": "преступ. против интересов службы в коммерческих и иных организац",
+     "group": null
+    },
+    {
+     "code": "116",
+     "value": "нарушение правил безопасности",
+     "group": null
+    },
+    {
+     "code": "117",
+     "value": "незаконное обращение с ядерными материалами либо их хищение",
+     "group": null
+    },
+    {
+     "code": "119",
+     "value": "небрежное хранение или ненадлежащее исполнение обязанностей по охране оружия",
+     "group": null
+    },
+    {
+     "code": "120",
+     "value": "пиратство",
+     "group": null
+    },
+    {
+     "code": "121",
+     "value": "прест. против здоровья населения и общественной нравственности",
+     "group": null
+    },
+    {
+     "code": "123",
+     "value": "прест. в сфере компьютерной информации",
+     "group": null
+    },
+    {
+     "code": "125",
+     "value": "прест. против мира и безопасности человечества",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "71",
+   "number": "71",
+   "label": "Характер преступления",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "транснациональный характер",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "экстремистская направленность",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "коррупционый характер",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "экономическая направленность",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "террористический характер",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "72",
+   "number": "72",
+   "label": "Наименование юридического лица",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "74",
+   "number": "74",
+   "label": "ОГРН",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "73",
+   "number": "73",
+   "label": "Фактический адрес юридического лица",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "object_relation",
+   "number": "б/н",
+   "label": "Отношение к объекту учета",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "4",
+     "value": "фиктивная фирма",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "исп–е банковских и платежных док–в",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "осуществление деятельности от лица фирмы",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "фирма–поручитель",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "исп–е фиктивных банк.и платежных док–в",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "объект преступ.посягательства",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "фирма–посредник",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "использование имени фирмы",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "45",
+   "number": "45",
+   "label": "Отношение к преступлению",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "организатор",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "подстрекатель",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "исполнитель",
+     "group": null
+    },
+    {
+     "code": "20",
+     "value": "сбытчик",
+     "group": null
+    },
+    {
+     "code": "22",
+     "value": "перевозчик",
+     "group": null
+    },
+    {
+     "code": "44",
+     "value": "пособник",
+     "group": null
+    },
+    {
+     "code": "48",
+     "value": "посредник",
+     "group": null
+    },
+    {
+     "code": "16",
+     "value": "наводчик",
+     "group": null
+    },
+    {
+     "code": "47",
+     "value": "заказчик",
+     "group": null
+    },
+    {
+     "code": "26",
+     "value": "наркоманов",
+     "group": "содержатель притона"
+    },
+    {
+     "code": "28",
+     "value": "проституток",
+     "group": "содержатель притона"
+    },
+    {
+     "code": "30",
+     "value": "алкоголиков",
+     "group": "содержатель притона"
+    },
+    {
+     "code": "32",
+     "value": "азартных игр",
+     "group": "содержатель притона"
+    },
+    {
+     "code": "34",
+     "value": "к наркомании",
+     "group": "лицо, склоняющее"
+    },
+    {
+     "code": "36",
+     "value": "к проституции",
+     "group": "лицо, склоняющее"
+    },
+    {
+     "code": "38",
+     "value": "к алкоголизму",
+     "group": "лицо, склоняющее"
+    },
+    {
+     "code": "42",
+     "value": "к попрошайничеству",
+     "group": "лицо, склоняющее"
+    },
+    {
+     "code": "40",
+     "value": "к азартным играм",
+     "group": "лицо, склоняющее"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "46",
+   "number": "46",
+   "label": "Совершено",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "в группе",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "в одиночку",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "в отношении личной собственности",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "с сексуальной направленностью",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "в состоянии алкогольного опьянения",
+     "group": null
+    },
+    {
+     "code": "29",
+     "value": "в состоянии наркотического.опьянения",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "неоднократно",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "на бытовой почве",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "с участием женщин",
+     "group": null
+    },
+    {
+     "code": "27",
+     "value": "наемником",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "с особой жестокостью",
+     "group": null
+    },
+    {
+     "code": "25",
+     "value": "в организованной группе",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "в отношении госимущества",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "в крупных размерах",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "с использованием детей",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "47",
+   "number": "47",
+   "label": "Способ проникновения",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "взлом",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "взлом двери",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "взлом замка",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "гнутой монеты",
+     "group": "использование"
+    },
+    {
+     "code": "10",
+     "value": "лестницы",
+     "group": "использование"
+    },
+    {
+     "code": "12",
+     "value": "строит. лесов",
+     "group": "использование"
+    },
+    {
+     "code": "14",
+     "value": "ловушки",
+     "group": "нарушение"
+    },
+    {
+     "code": "16",
+     "value": "пломбы",
+     "group": "нарушение"
+    },
+    {
+     "code": "18",
+     "value": "сигнализации",
+     "group": "нарушение"
+    },
+    {
+     "code": "22",
+     "value": "обнаружение ключа",
+     "group": null
+    },
+    {
+     "code": "24",
+     "value": "отжим замка",
+     "group": null
+    },
+    {
+     "code": "26",
+     "value": "сигнализации",
+     "group": "отключение"
+    },
+    {
+     "code": "28",
+     "value": "электропитания",
+     "group": "отключение"
+    },
+    {
+     "code": "30",
+     "value": "отклеив. контр. ленты",
+     "group": null
+    },
+    {
+     "code": "32",
+     "value": "открытие люков",
+     "group": null
+    },
+    {
+     "code": "34",
+     "value": "переупаковка",
+     "group": null
+    },
+    {
+     "code": "36",
+     "value": "балкон",
+     "group": "через"
+    },
+    {
+     "code": "38",
+     "value": "окно",
+     "group": "через"
+    },
+    {
+     "code": "42",
+     "value": "крыши",
+     "group": "пропил (пролом)"
+    },
+    {
+     "code": "44",
+     "value": "пола",
+     "group": "пропил (пролом)"
+    },
+    {
+     "code": "46",
+     "value": "потолка",
+     "group": "пропил (пролом)"
+    },
+    {
+     "code": "48",
+     "value": "решеток люка, вент. люка",
+     "group": "пропил (пролом)"
+    },
+    {
+     "code": "50",
+     "value": "стены",
+     "group": "пропил (пролом)"
+    },
+    {
+     "code": "52",
+     "value": "разбитие витрин( окон)",
+     "group": null
+    },
+    {
+     "code": "54",
+     "value": "разбор трубы (дымохода)",
+     "group": null
+    },
+    {
+     "code": "56",
+     "value": "разоборудование техники",
+     "group": null
+    },
+    {
+     "code": "58",
+     "value": "распиливание дужек замка",
+     "group": null
+    },
+    {
+     "code": "60",
+     "value": "распиловка(разрезание)",
+     "group": null
+    },
+    {
+     "code": "64",
+     "value": "свободный доступ",
+     "group": null
+    },
+    {
+     "code": "66",
+     "value": "снятие (перекос) двери",
+     "group": null
+    },
+    {
+     "code": "68",
+     "value": "срыв пломбы и закрутки",
+     "group": null
+    },
+    {
+     "code": "70",
+     "value": "ключа",
+     "group": "подбор"
+    },
+    {
+     "code": "72",
+     "value": "шифра",
+     "group": "подбор"
+    },
+    {
+     "code": "74",
+     "value": "подкоп",
+     "group": null
+    },
+    {
+     "code": "76",
+     "value": "похищение",
+     "group": null
+    },
+    {
+     "code": "78",
+     "value": "прозванивание",
+     "group": null
+    },
+    {
+     "code": "80",
+     "value": "простукивание",
+     "group": null
+    },
+    {
+     "code": "82",
+     "value": "порча замка",
+     "group": null
+    },
+    {
+     "code": "84",
+     "value": "взрыв",
+     "group": null
+    },
+    {
+     "code": "86",
+     "value": "выдавливание стекла",
+     "group": null
+    },
+    {
+     "code": "88",
+     "value": "спрятался в помещении",
+     "group": null
+    },
+    {
+     "code": "90",
+     "value": "выставление стекла",
+     "group": null
+    },
+    {
+     "code": "92",
+     "value": "перекусывание",
+     "group": null
+    },
+    {
+     "code": "20",
+     "value": "упаковки",
+     "group": "нарушение"
+    },
+    {
+     "code": "40",
+     "value": "форточку",
+     "group": "через"
+    },
+    {
+     "code": "62",
+     "value": "сверление",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "48",
+   "number": "48",
+   "label": "Способ насильственных действий",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "взрыв",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "выброс из движ. транспорта",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "истязание",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "нанесение ударов",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "отравление",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "поджог",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "примен.оружия",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "рывок",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "спаивание",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "угроза оружием",
+     "group": null
+    },
+    {
+     "code": "25",
+     "value": "угроза предметами",
+     "group": null
+    },
+    {
+     "code": "27",
+     "value": "угроза словами",
+     "group": null
+    },
+    {
+     "code": "31",
+     "value": "усыпление",
+     "group": null
+    },
+    {
+     "code": "33",
+     "value": "физич. насилие",
+     "group": null
+    },
+    {
+     "code": "35",
+     "value": "утопление",
+     "group": null
+    },
+    {
+     "code": "37",
+     "value": "пытки",
+     "group": null
+    },
+    {
+     "code": "39",
+     "value": "извращенный",
+     "group": null
+    },
+    {
+     "code": "41",
+     "value": "сбрасывание с высоты",
+     "group": null
+    },
+    {
+     "code": "43",
+     "value": "пропал без вести",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "нападение",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "связывание",
+     "group": null
+    },
+    {
+     "code": "29",
+     "value": "удушение",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "fraud_method",
+   "number": "б/н",
+   "label": "Способ мошенничества",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "заключение невыполнимого договора",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "азартные игры",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "заключение договора от имени несуществующей фирмы",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "изготовление «куклы»",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "ломка денег",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "обналичивание денежных средств",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "использование фиктивных чековых книжек",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "использ. лотерейных билетов",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "введение в заблуждение",
+     "group": null
+    },
+    {
+     "code": "10",
+     "value": "использ. других документов",
+     "group": null
+    },
+    {
+     "code": "20",
+     "value": "посредством сотовой связи",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "посредством отвлечения внимания",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "злоупотребление служеб. положением",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "подделка под золото",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "предъявление фиктивных документов",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "подделка под драгоценности",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "получение кредита по поддельным гарантийным письмам",
+     "group": null
+    },
+    {
+     "code": "16",
+     "value": "подмена вещи",
+     "group": null
+    },
+    {
+     "code": "18",
+     "value": "злоупотребление доверием",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "подделка документов",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "заключение фиктив. договора",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "means",
+   "number": "б/н",
+   "label": "Средства",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "автогенный апп",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "трансп.средства",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "паспорт",
+     "group": "документы"
+    },
+    {
+     "code": "8",
+     "value": "другие",
+     "group": "документы"
+    },
+    {
+     "code": "10",
+     "value": "дрель",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "камень",
+     "group": null
+    },
+    {
+     "code": "16",
+     "value": "ключ",
+     "group": null
+    },
+    {
+     "code": "18",
+     "value": "кувалда",
+     "group": null
+    },
+    {
+     "code": "20",
+     "value": "колющ. предмет",
+     "group": null
+    },
+    {
+     "code": "22",
+     "value": "лом",
+     "group": null
+    },
+    {
+     "code": "26",
+     "value": "метал. прут",
+     "group": null
+    },
+    {
+     "code": "28",
+     "value": "молоток",
+     "group": null
+    },
+    {
+     "code": "30",
+     "value": "напильник",
+     "group": null
+    },
+    {
+     "code": "34",
+     "value": "нож",
+     "group": null
+    },
+    {
+     "code": "36",
+     "value": "ножовка",
+     "group": null
+    },
+    {
+     "code": "38",
+     "value": "номерок гардероба",
+     "group": null
+    },
+    {
+     "code": "40",
+     "value": "гладкоствольное оружие",
+     "group": null
+    },
+    {
+     "code": "41",
+     "value": "холодное оружие",
+     "group": null
+    },
+    {
+     "code": "42",
+     "value": "нарезное оружие",
+     "group": null
+    },
+    {
+     "code": "44",
+     "value": "самодельное оружие",
+     "group": null
+    },
+    {
+     "code": "46",
+     "value": "отмычка",
+     "group": null
+    },
+    {
+     "code": "48",
+     "value": "петля",
+     "group": null
+    },
+    {
+     "code": "50",
+     "value": "сладости",
+     "group": null
+    },
+    {
+     "code": "52",
+     "value": "спирт. нап",
+     "group": null
+    },
+    {
+     "code": "54",
+     "value": "яд",
+     "group": null
+    },
+    {
+     "code": "56",
+     "value": "топор",
+     "group": null
+    },
+    {
+     "code": "58",
+     "value": "снотворное",
+     "group": null
+    },
+    {
+     "code": "62",
+     "value": "домкрат",
+     "group": null
+    },
+    {
+     "code": "64",
+     "value": "веревка",
+     "group": null
+    },
+    {
+     "code": "66",
+     "value": "электросварка",
+     "group": null
+    },
+    {
+     "code": "68",
+     "value": "взрывчатые в-ва",
+     "group": null
+    },
+    {
+     "code": "70",
+     "value": "письмо",
+     "group": null
+    },
+    {
+     "code": "86",
+     "value": "тупой предмет",
+     "group": null
+    },
+    {
+     "code": "88",
+     "value": "бритва",
+     "group": null
+    },
+    {
+     "code": "96",
+     "value": "гидравлический инструмент",
+     "group": null
+    },
+    {
+     "code": "72",
+     "value": "грим",
+     "group": "маскировочные"
+    },
+    {
+     "code": "74",
+     "value": "накл. усы",
+     "group": "маскировочные"
+    },
+    {
+     "code": "76",
+     "value": "накл. борода",
+     "group": "маскировочные"
+    },
+    {
+     "code": "24",
+     "value": "маска",
+     "group": null
+    },
+    {
+     "code": "78",
+     "value": "очки",
+     "group": null
+    },
+    {
+     "code": "80",
+     "value": "парик",
+     "group": null
+    },
+    {
+     "code": "82",
+     "value": "перчатки",
+     "group": null
+    },
+    {
+     "code": "84",
+     "value": "чулок",
+     "group": null
+    },
+    {
+     "code": "90",
+     "value": "спецсредства",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "кастет",
+     "group": null
+    },
+    {
+     "code": "114",
+     "value": "ремень",
+     "group": null
+    },
+    {
+     "code": "116",
+     "value": "бита",
+     "group": null
+    },
+    {
+     "code": "118",
+     "value": "бутылка",
+     "group": null
+    },
+    {
+     "code": "32",
+     "value": "наркотики",
+     "group": null
+    },
+    {
+     "code": "108",
+     "value": "арбалет/лук",
+     "group": null
+    },
+    {
+     "code": "120",
+     "value": "электрошокер",
+     "group": null
+    },
+    {
+     "code": "102",
+     "value": "боеприпасы",
+     "group": null
+    },
+    {
+     "code": "92",
+     "value": "газовое оружие",
+     "group": null
+    },
+    {
+     "code": "98",
+     "value": "пневматическое оружие",
+     "group": null
+    },
+    {
+     "code": "106",
+     "value": "оружие, переделанное под боевой патрон",
+     "group": null
+    },
+    {
+     "code": "60",
+     "value": "инструмент",
+     "group": null
+    },
+    {
+     "code": "110",
+     "value": "кислоты",
+     "group": null
+    },
+    {
+     "code": "100",
+     "value": "травматическое оружие",
+     "group": null
+    },
+    {
+     "code": "94",
+     "value": "газ.баллон",
+     "group": null
+    },
+    {
+     "code": "112",
+     "value": "скотч",
+     "group": null
+    },
+    {
+     "code": "104",
+     "value": "наручники",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "disguise",
+   "number": "б/н",
+   "label": "Под видом",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "военнослужащего",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "жениха (невесты)",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "домработницы",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "знакомого",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "квартиранта",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "командированного",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "сотруд. органа вн.дел",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "правоохран. орг",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "медучреждения",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "пожарной охраны",
+     "group": null
+    },
+    {
+     "code": "25",
+     "value": "почты, узла связи",
+     "group": null
+    },
+    {
+     "code": "29",
+     "value": "снабжения",
+     "group": null
+    },
+    {
+     "code": "31",
+     "value": "строит. организ",
+     "group": null
+    },
+    {
+     "code": "33",
+     "value": "торговли",
+     "group": null
+    },
+    {
+     "code": "35",
+     "value": "финорганов, госстраха",
+     "group": null
+    },
+    {
+     "code": "39",
+     "value": "пассажира",
+     "group": null
+    },
+    {
+     "code": "41",
+     "value": "попрошайки",
+     "group": null
+    },
+    {
+     "code": "43",
+     "value": "экскурсовода",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "иностранца",
+     "group": null
+    },
+    {
+     "code": "49",
+     "value": "родственника",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "коммунальн. учреж",
+     "group": null
+    },
+    {
+     "code": "47",
+     "value": "работника социальной сферы",
+     "group": null
+    },
+    {
+     "code": "27",
+     "value": "просвещения",
+     "group": null
+    },
+    {
+     "code": "37",
+     "value": "покупателя",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "pretext",
+   "number": "б/н",
+   "label": "Под предлогом",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "врачевания",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "гадания",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "знакомства",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "игры в карты",
+     "group": null
+    },
+    {
+     "code": "10",
+     "value": "найма на работу",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "оказания услуг",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "получения услуг",
+     "group": null
+    },
+    {
+     "code": "16",
+     "value": "продажи",
+     "group": null
+    },
+    {
+     "code": "18",
+     "value": "приобретения напрокат (в кредит)",
+     "group": null
+    },
+    {
+     "code": "20",
+     "value": "размена денег",
+     "group": null
+    },
+    {
+     "code": "22",
+     "value": "розыска знакомых",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "51",
+   "number": "51",
+   "label": "В отношении",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "военнослужащего",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "инкассатора",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "иностранца",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "кассира",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "почтальона",
+     "group": null
+    },
+    {
+     "code": "65",
+     "value": "лица, находящегося на соц. обеспечении",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "престарелого",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "приезжего",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "пьяного",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "водителя",
+     "group": null
+    },
+    {
+     "code": "63",
+     "value": "инвалида",
+     "group": null
+    },
+    {
+     "code": "67",
+     "value": "бомжа",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "сотруд. правоохр. органов",
+     "group": null
+    },
+    {
+     "code": "27",
+     "value": "женщины",
+     "group": null
+    },
+    {
+     "code": "37",
+     "value": "мужчины",
+     "group": null
+    },
+    {
+     "code": "55",
+     "value": "пол жертвы не определен (скелетированный труп)",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "магазина",
+     "group": "работника"
+    },
+    {
+     "code": "25",
+     "value": "охраны",
+     "group": "работника"
+    },
+    {
+     "code": "45",
+     "value": "СМИ",
+     "group": "работника"
+    },
+    {
+     "code": "59",
+     "value": "банковской сферы",
+     "group": "работника"
+    },
+    {
+     "code": "29",
+     "value": "родственника",
+     "group": null
+    },
+    {
+     "code": "31",
+     "value": "девочки (до10 лет)",
+     "group": null
+    },
+    {
+     "code": "33",
+     "value": "мальчика (до 10 лет)",
+     "group": null
+    },
+    {
+     "code": "43",
+     "value": "депутата(гос. деятеля)",
+     "group": null
+    },
+    {
+     "code": "61",
+     "value": "предпринимателя",
+     "group": null
+    },
+    {
+     "code": "41",
+     "value": "дипломата (торг. пред.)",
+     "group": null
+    },
+    {
+     "code": "47",
+     "value": "несовершеннолетнего муж.пола ( с 10 до 18 лет)",
+     "group": null
+    },
+    {
+     "code": "49",
+     "value": "несовершеннолетнего жен. пола (с 10 до 18 лет)",
+     "group": null
+    },
+    {
+     "code": "51",
+     "value": "новорожденного",
+     "group": null
+    },
+    {
+     "code": "53",
+     "value": "деятелей науки, культуры",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "57",
+   "number": "57",
+   "label": "Предмет посягательства",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "69",
+     "value": "легковая автомашина",
+     "group": null
+    },
+    {
+     "code": "54",
+     "value": "аудио-, видеотехника",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "боеприпасы",
+     "group": null
+    },
+    {
+     "code": "75",
+     "value": "велосипед",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "взрывчатые вещества",
+     "group": null
+    },
+    {
+     "code": "93",
+     "value": "химич. и бактериолог. вещества",
+     "group": null
+    },
+    {
+     "code": "88",
+     "value": "вино–водочн. изд",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "галантерейные изд",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "головные уборы",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "ГСМ",
+     "group": null
+    },
+    {
+     "code": "1",
+     "value": "двигат.(мотор, насос)",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "валюта",
+     "group": null
+    },
+    {
+     "code": "10",
+     "value": "документы",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "дом. животные (птица)",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "драг. металлы",
+     "group": null
+    },
+    {
+     "code": "21",
+     "value": "драг. камни",
+     "group": null
+    },
+    {
+     "code": "16",
+     "value": "зап. части",
+     "group": null
+    },
+    {
+     "code": "18",
+     "value": "изд. куст.пр–ва",
+     "group": null
+    },
+    {
+     "code": "94",
+     "value": "инструмент (станки)",
+     "group": null
+    },
+    {
+     "code": "20",
+     "value": "книги",
+     "group": null
+    },
+    {
+     "code": "22",
+     "value": "ковры",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "деньги",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "лодки, катер, яхта",
+     "group": null
+    },
+    {
+     "code": "24",
+     "value": "лекарства",
+     "group": null
+    },
+    {
+     "code": "26",
+     "value": "марки",
+     "group": null
+    },
+    {
+     "code": "28",
+     "value": "мебель",
+     "group": null
+    },
+    {
+     "code": "98",
+     "value": "мед. техника",
+     "group": null
+    },
+    {
+     "code": "30",
+     "value": "меха",
+     "group": null
+    },
+    {
+     "code": "32",
+     "value": "монеты",
+     "group": null
+    },
+    {
+     "code": "97",
+     "value": "средства выч. техники",
+     "group": null
+    },
+    {
+     "code": "73",
+     "value": "мопед",
+     "group": null
+    },
+    {
+     "code": "71",
+     "value": "мотоцикл (мотороллер)",
+     "group": null
+    },
+    {
+     "code": "34",
+     "value": "муз. инструм",
+     "group": null
+    },
+    {
+     "code": "36",
+     "value": "наркотики",
+     "group": null
+    },
+    {
+     "code": "38",
+     "value": "государственный регистрационный знак",
+     "group": null
+    },
+    {
+     "code": "40",
+     "value": "носильные вещи",
+     "group": null
+    },
+    {
+     "code": "96",
+     "value": "оптич. приборы",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "оргтехника",
+     "group": null
+    },
+    {
+     "code": "42",
+     "value": "ордена, наградные знаки, медали",
+     "group": null
+    },
+    {
+     "code": "44",
+     "value": "оружие",
+     "group": null
+    },
+    {
+     "code": "46",
+     "value": "парфюмерия",
+     "group": null
+    },
+    {
+     "code": "48",
+     "value": "полиграф. оборудование и материалы",
+     "group": null
+    },
+    {
+     "code": "50",
+     "value": "посуда",
+     "group": null
+    },
+    {
+     "code": "23",
+     "value": "печати,жетоны, нагрудные знаки",
+     "group": null
+    },
+    {
+     "code": "19",
+     "value": "прод.звероферм",
+     "group": null
+    },
+    {
+     "code": "52",
+     "value": "прод. питания",
+     "group": null
+    },
+    {
+     "code": "82",
+     "value": "антиквариата и изобраз. искусс",
+     "group": "предметы"
+    },
+    {
+     "code": "84",
+     "value": "коллекциониров",
+     "group": null
+    },
+    {
+     "code": "106",
+     "value": "недвижимость",
+     "group": null
+    },
+    {
+     "code": "56",
+     "value": "сельхозпродукты",
+     "group": null
+    },
+    {
+     "code": "17",
+     "value": "сельхозтехника",
+     "group": null
+    },
+    {
+     "code": "25",
+     "value": "средства связи",
+     "group": null
+    },
+    {
+     "code": "55",
+     "value": "скот",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "спортинвентарь",
+     "group": null
+    },
+    {
+     "code": "60",
+     "value": "скаты (колеса)",
+     "group": null
+    },
+    {
+     "code": "62",
+     "value": "стройматериалы",
+     "group": null
+    },
+    {
+     "code": "86",
+     "value": "сырье",
+     "group": null
+    },
+    {
+     "code": "64",
+     "value": "сумка (портфель, чемодан)",
+     "group": null
+    },
+    {
+     "code": "58",
+     "value": "телефон, факс",
+     "group": null
+    },
+    {
+     "code": "66",
+     "value": "ткани",
+     "group": null
+    },
+    {
+     "code": "104",
+     "value": "груз",
+     "group": null
+    },
+    {
+     "code": "108",
+     "value": "кредитная карточка",
+     "group": null
+    },
+    {
+     "code": "68",
+     "value": "иные трансп. средства",
+     "group": null
+    },
+    {
+     "code": "70",
+     "value": "украшения",
+     "group": null
+    },
+    {
+     "code": "72",
+     "value": "фото-, кинотовары",
+     "group": null
+    },
+    {
+     "code": "92",
+     "value": "хрусталь(стекло)",
+     "group": null
+    },
+    {
+     "code": "90",
+     "value": "хозтовары(быттехника)",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "цв. металлы",
+     "group": null
+    },
+    {
+     "code": "76",
+     "value": "ценные бумаги",
+     "group": null
+    },
+    {
+     "code": "74",
+     "value": "часы",
+     "group": null
+    },
+    {
+     "code": "78",
+     "value": "электротовары",
+     "group": null
+    },
+    {
+     "code": "80",
+     "value": "ювелирные изд",
+     "group": null
+    },
+    {
+     "code": "95",
+     "value": "грузовой автотранспорт",
+     "group": null
+    },
+    {
+     "code": "99",
+     "value": "прочие",
+     "group": null
+    },
+    {
+     "code": "100",
+     "value": "летательные аппараты",
+     "group": null
+    },
+    {
+     "code": "102",
+     "value": "строительная техника",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "58",
+   "number": "58",
+   "label": "Место",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "17",
+     "value": "город",
+     "group": "населенный пункт"
+    },
+    {
+     "code": "33",
+     "value": "ИУ",
+     "group": "населенный пункт"
+    },
+    {
+     "code": "61",
+     "value": "ПГТ",
+     "group": "населенный пункт"
+    },
+    {
+     "code": "93",
+     "value": "сельская местность",
+     "group": "населенный пункт"
+    },
+    {
+     "code": "141",
+     "value": "военный городок",
+     "group": "населенный пункт"
+    },
+    {
+     "code": "21",
+     "value": "двор дома",
+     "group": "открытая местность"
+    },
+    {
+     "code": "29",
+     "value": "дорога (шоссе)",
+     "group": "открытая местность"
+    },
+    {
+     "code": "43",
+     "value": "кладбище",
+     "group": "открытая местность"
+    },
+    {
+     "code": "49",
+     "value": "лес",
+     "group": "открытая местность"
+    },
+    {
+     "code": "167",
+     "value": "пустырь",
+     "group": "открытая местность"
+    },
+    {
+     "code": "73",
+     "value": "парк (сквер)",
+     "group": "открытая местность"
+    },
+    {
+     "code": "79",
+     "value": "пляж",
+     "group": "открытая местность"
+    },
+    {
+     "code": "83",
+     "value": "поле",
+     "group": "открытая местность"
+    },
+    {
+     "code": "125",
+     "value": "улица",
+     "group": "открытая местность"
+    },
+    {
+     "code": "163",
+     "value": "лесополоса",
+     "group": "открытая местность"
+    },
+    {
+     "code": "165",
+     "value": "свалка",
+     "group": "открытая местность"
+    },
+    {
+     "code": "169",
+     "value": "берег",
+     "group": "открытая местность"
+    },
+    {
+     "code": "219",
+     "value": "водоем (река)",
+     "group": "открытая местность"
+    },
+    {
+     "code": "223",
+     "value": "мост",
+     "group": "открытая местность"
+    },
+    {
+     "code": "113",
+     "value": "автомобильный",
+     "group": "транспорт"
+    },
+    {
+     "code": "115",
+     "value": "водный",
+     "group": "транспорт"
+    },
+    {
+     "code": "117",
+     "value": "воздушный",
+     "group": "транспорт"
+    },
+    {
+     "code": "119",
+     "value": "железнодорожный",
+     "group": "транспорт"
+    },
+    {
+     "code": "121",
+     "value": "городской",
+     "group": "транспорт"
+    },
+    {
+     "code": "123",
+     "value": "пригородный",
+     "group": "транспорт"
+    },
+    {
+     "code": "55",
+     "value": "метро",
+     "group": "транспорт"
+    },
+    {
+     "code": "3",
+     "value": "автомашина",
+     "group": "транспорт"
+    },
+    {
+     "code": "9",
+     "value": "вагон",
+     "group": "транспорт"
+    },
+    {
+     "code": "11",
+     "value": "вокзал, порт",
+     "group": "транспорт"
+    },
+    {
+     "code": "45",
+     "value": "контейнер",
+     "group": "транспорт"
+    },
+    {
+     "code": "47",
+     "value": "контейнерная площадка",
+     "group": "транспорт"
+    },
+    {
+     "code": "75",
+     "value": "перрон",
+     "group": "транспорт"
+    },
+    {
+     "code": "31",
+     "value": "ж/д перегон",
+     "group": "транспорт"
+    },
+    {
+     "code": "143",
+     "value": "остановка общественного транспорта",
+     "group": "транспорт"
+    },
+    {
+     "code": "171",
+     "value": "автостоянка",
+     "group": "транспорт"
+    },
+    {
+     "code": "19",
+     "value": "гостиница",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "25",
+     "value": "детсад (ясли)",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "27",
+     "value": "дом отдыха (санаторий)",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "77",
+     "value": "детский оздоровит. лагерь",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "37",
+     "value": "квартира",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "23",
+     "value": "дача",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "59",
+     "value": "общежитие",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "161",
+     "value": "жилой дом",
+     "group": "жилые помещения"
+    },
+    {
+     "code": "57",
+     "value": "нежилое помещение",
+     "group": "нежилые помещения"
+    },
+    {
+     "code": "89",
+     "value": "сарай (амбар)",
+     "group": "нежилые помещения"
+    },
+    {
+     "code": "101",
+     "value": "склад",
+     "group": "нежилые помещения"
+    },
+    {
+     "code": "103",
+     "value": "стройка",
+     "group": "нежилые помещения"
+    },
+    {
+     "code": "107",
+     "value": "телефонная будка",
+     "group": "нежилые помещения"
+    },
+    {
+     "code": "111",
+     "value": "туалет",
+     "group": "нежилые помещения"
+    },
+    {
+     "code": "135",
+     "value": "гараж",
+     "group": "нежилые помещения"
+    },
+    {
+     "code": "65",
+     "value": "столовая, кафе, ресторан, бар",
+     "group": "предприятия, учреждения, организации"
+    },
+    {
+     "code": "157",
+     "value": "завод, фабрика, цех",
+     "group": "предприятия, учреждения, организации"
+    },
+    {
+     "code": "69",
+     "value": "сферы обслуж., торговли, АО, ТОО",
+     "group": "предприятия, учреждения, организации"
+    },
+    {
+     "code": "53",
+     "value": "медучереждение",
+     "group": "предприятия, учреждения, организации"
+    },
+    {
+     "code": "145",
+     "value": "вино-водочный",
+     "group": "магазины"
+    },
+    {
+     "code": "147",
+     "value": "продовольственный",
+     "group": "магазины"
+    },
+    {
+     "code": "149",
+     "value": "промтоварный",
+     "group": "магазины"
+    },
+    {
+     "code": "151",
+     "value": "смешанный",
+     "group": "магазины"
+    },
+    {
+     "code": "153",
+     "value": "комиссионный",
+     "group": "магазины"
+    },
+    {
+     "code": "155",
+     "value": "ювелирный",
+     "group": "магазины"
+    },
+    {
+     "code": "129",
+     "value": "учреждения",
+     "group": null
+    },
+    {
+     "code": "127",
+     "value": "учебное заведение",
+     "group": null
+    },
+    {
+     "code": "139",
+     "value": "горрайлинорган",
+     "group": null
+    },
+    {
+     "code": "85",
+     "value": "почта",
+     "group": null
+    },
+    {
+     "code": "91",
+     "value": "банк, обменный пункт, банкомат",
+     "group": null
+    },
+    {
+     "code": "99",
+     "value": "совхоз, колхоз",
+     "group": null
+    },
+    {
+     "code": "87",
+     "value": "рынок",
+     "group": null
+    },
+    {
+     "code": "109",
+     "value": "тир",
+     "group": null
+    },
+    {
+     "code": "97",
+     "value": "спортсооружение",
+     "group": null
+    },
+    {
+     "code": "39",
+     "value": "кинотеатр, клуб, дискотека",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "выставка, музей",
+     "group": null
+    },
+    {
+     "code": "131",
+     "value": "церковь (др. религ. учреждение)",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "аптека",
+     "group": null
+    },
+    {
+     "code": "41",
+     "value": "киоск",
+     "group": null
+    },
+    {
+     "code": "105",
+     "value": "театр, концертный зал",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "буфет, ларек",
+     "group": null
+    },
+    {
+     "code": "211",
+     "value": "склад, база",
+     "group": null
+    },
+    {
+     "code": "159",
+     "value": "АЗС",
+     "group": null
+    },
+    {
+     "code": "213",
+     "value": "воинская часть",
+     "group": null
+    },
+    {
+     "code": "71",
+     "value": "прочие",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "гардероб",
+     "group": "внутри здания"
+    },
+    {
+     "code": "35",
+     "value": "касса (инкас. пункт)",
+     "group": "внутри здания"
+    },
+    {
+     "code": "51",
+     "value": "лифт",
+     "group": "внутри здания"
+    },
+    {
+     "code": "81",
+     "value": "подъезд",
+     "group": "внутри здания"
+    },
+    {
+     "code": "63",
+     "value": "подвал",
+     "group": "внутри здания"
+    },
+    {
+     "code": "95",
+     "value": "сейф (жел. ящик)",
+     "group": "внутри здания"
+    },
+    {
+     "code": "217",
+     "value": "кабинет (офис)",
+     "group": "внутри здания"
+    },
+    {
+     "code": "133",
+     "value": "чердак",
+     "group": "внутри здания"
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "59",
+   "number": "59",
+   "label": "Фабула преступления (когда, где, совместно с кем и что совершено, характерные приемы совершения и сокрытия преступления, похищенные предметы, следы и вещественные доказательства)",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "identified_date",
+   "number": "б/н",
+   "label": "Дата установления лица",
+   "label_status": "source",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "61",
+   "number": "61",
+   "label": "Дата совершения",
+   "label_status": "source",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "weekday",
+   "number": "б/н",
+   "label": "День недели",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "ПН",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "ВТ",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "СР",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "ЧТ",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "ПТ",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "СБ",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "ВС",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "daytime",
+   "number": "б/н",
+   "label": "Время совершения преступления",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "утро (6-12 час.)",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "день (12–18 час.)",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "вечер (18–24 час.)",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "ночь (0-6 ч.)",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "64",
+   "number": "64",
+   "label": "Место совершения: республика; край, область; район; населенный пункт; улица; дом",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "territory",
+   "number": "б/н",
+   "label": "Территория",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "66",
+   "number": "66",
+   "label": "Связи лица",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc"
+   ]
+  },
+  {
+   "id": "67",
+   "number": "67",
+   "label": "По делу имеются",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "отпечатки пальцев",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "пули, гильзы",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "следы ног",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "следы крови",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "орудие взлома",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "оружие",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "микрочастицы",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "следы трансп. средства",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "маскировочные средства",
+     "group": null
+    },
+    {
+     "code": "10",
+     "value": "следы орудия взлома",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "волосы",
+     "group": null
+    },
+    {
+     "code": "50",
+     "value": "фоторобот",
+     "group": null
+    },
+    {
+     "code": "51",
+     "value": "очевидцы",
+     "group": null
+    },
+    {
+     "code": "99",
+     "value": "прочее",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "68",
+   "number": "68",
+   "label": "Способ сокрытия преступления",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "закапывание",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "замуровывание",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "затопление",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "замазывание",
+     "group": null
+    },
+    {
+     "code": "6",
+     "value": "обезображение",
+     "group": null
+    },
+    {
+     "code": "7",
+     "value": "перебивка",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "подбрасывание",
+     "group": null
+    },
+    {
+     "code": "10",
+     "value": "подделка",
+     "group": null
+    },
+    {
+     "code": "11",
+     "value": "расчленение",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "подчистка",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "растворение",
+     "group": null
+    },
+    {
+     "code": "15",
+     "value": "скармливание",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "вываривание",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "переделка",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "вытравливание",
+     "group": null
+    },
+    {
+     "code": "16",
+     "value": "сжигание",
+     "group": null
+    }
+   ],
+   "multiple": true,
+   "has_text": false,
+   "has_date": false,
+   "section": "Сведения о преступлении",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "multiple"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "65",
+   "number": "65",
+   "label": "Отметка о коррекции и снятии",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "СУ",
+     "value": "снять с учета",
+     "group": null
+    },
+    {
+     "code": "К",
+     "value": "корректировка",
+     "group": null
+    },
+    {
+     "code": "СМ",
+     "value": "постановка на учет умершего лица",
+     "group": null
+    },
+    {
+     "code": "СМ, К",
+     "value": "корректировка умершего лица или корректировка в связи со смертью лица",
+     "group": null
+    },
+    {
+     "code": "СМ, СУ",
+     "value": "снятие с учета умершего лица",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "85",
+   "number": "85",
+   "label": "Основание снятия с учета",
+   "label_status": "source",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "ошибочный документ",
+     "group": null
+    },
+    {
+     "code": "2",
+     "value": "по достижению лицом 80 лет",
+     "group": null
+    },
+    {
+     "code": "3",
+     "value": "дубль лица",
+     "group": null
+    },
+    {
+     "code": "4",
+     "value": "дубль преступления",
+     "group": null
+    },
+    {
+     "code": "5",
+     "value": "УД передано по территориальности",
+     "group": null
+    },
+    {
+     "code": "8",
+     "value": "УД прекращено по основаниям, дающим право на реабилитацию",
+     "group": null
+    },
+    {
+     "code": "9",
+     "value": "непричастность подозреваемого, обвиняемого, подсудимого к совершению преступления",
+     "group": null
+    },
+    {
+     "code": "12",
+     "value": "соединение УД",
+     "group": null
+    },
+    {
+     "code": "13",
+     "value": "отмена постановления о возбуждении УД",
+     "group": null
+    },
+    {
+     "code": "14",
+     "value": "отмена постановления об отказе в возбуждении УД по основаниям, не дающим право на реабилитацию",
+     "group": null
+    }
+   ],
+   "multiple": false,
+   "has_text": false,
+   "has_date": false,
+   "section": "Документ, эпизод, решение",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "select": "single"
+   },
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "filled_by",
+   "number": "б/н",
+   "label": "Заполнил: должность, фамилия, подпись",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Подписи",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  },
+  {
+   "id": "head_sign",
+   "number": "б/н",
+   "label": "Руководитель: должность, фамилия, подпись",
+   "label_status": "source",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "Подписи",
+   "fills_by": "head",
+   "raw": null,
+   "input": {},
+   "variants": [
+    "lc",
+    "pr"
+   ]
+  }
+ ]
+}

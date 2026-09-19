@@ -1,0 +1,880 @@
+{
+ "edition": "2026",
+ "status": "draft",
+ "review": "требует предметной ревизии (риск Д-4). Сгенерировано scripts/build_rules.py из пакета форм.",
+ "checks": [
+  {
+   "id": "c.attempt_vs_art30",
+   "forms": [
+    "1",
+    "2"
+   ],
+   "severity": "error",
+   "when": {
+    "exists": "fact.crime.attempt"
+   },
+   "assert": {
+    "matches": [
+     "fact.crime.qualification",
+     "(^|\\D)30(\\D|$)"
+    ]
+   },
+   "message": "Отмечено приготовление или покушение, но в квалификации нет ссылки на ст. 30 УК РФ",
+   "source_note": "Бланк ф. 1 р. 16, ф. 2 р. 25 «По ст. 30 УК РФ»",
+   "scope": "card"
+  },
+  {
+   "id": "c.art30_vs_attempt",
+   "forms": [
+    "1",
+    "2"
+   ],
+   "severity": "warning",
+   "when": {
+    "matches": [
+     "fact.crime.qualification",
+     "ч\\.\\s*[13]\\s*ст\\.\\s*30"
+    ]
+   },
+   "assert": {
+    "exists": "fact.crime.attempt"
+   },
+   "message": "В квалификации есть ст. 30 УК РФ, но стадия (приготовление или покушение) не отмечена",
+   "source_note": "Бланк ф. 1 р. 16, ф. 2 р. 25",
+   "scope": "card"
+  },
+  {
+   "id": "c.category_vs_uk",
+   "forms": [
+    "1",
+    "2",
+    "2.1"
+   ],
+   "severity": "warning",
+   "when": {
+    "all": [
+     {
+      "exists": "fact.crime.category"
+     },
+     {
+      "exists": "fact.crime.qualification"
+     }
+    ]
+   },
+   "assert": {
+    "eq": [
+     "fact.crime.category",
+     {
+      "fn": "uk.category_code",
+      "args": [
+       "fact.crime.qualification"
+      ]
+     }
+    ]
+   },
+   "message": "Категория преступления не соответствует статье УК РФ по перечням № 4–7",
+   "source_note": "ст. 15 УК РФ; перечни № 4–7 (указание от 28.07.2025 № 147)",
+   "scope": "card"
+  },
+  {
+   "id": "c.f11_r13_code8",
+   "forms": [
+    "1.1"
+   ],
+   "severity": "error",
+   "when": {
+    "eq": [
+     "req.13",
+     "08"
+    ]
+   },
+   "assert": {
+    "fn": "uk.article_in",
+    "args": [
+     "fact.crime.qualification",
+     [
+      "263",
+      "263.1",
+      "264",
+      "264.1"
+     ]
+    ]
+   },
+   "message": "Код «8» реквизита 13 ф. 1.1 применяется только для ст. 263–264.1 УК РФ при невыполнении требования о медицинском освидетельствовании",
+   "source_note": "Разъяснения ГП на 01.07.2025, ф. 1.1 р. 13 (gp-razj-2025-07#004)",
+   "scope": "card"
+  },
+  {
+   "id": "c.f1_r9_prosecutor",
+   "forms": [
+    "1"
+   ],
+   "severity": "warning",
+   "when": {
+    "eq": [
+     "fact.case.report_source",
+     "prosecutor_materials"
+    ]
+   },
+   "assert": {
+    "eq": [
+     "req.9",
+     "000125"
+    ]
+   },
+   "message": "Дело возбуждено по материалам прокурора (п. 2 ч. 2 ст. 37 УПК РФ): в реквизите 9 ф. 1 указывается код «000125»",
+   "source_note": "Разъяснения ГП на 01.07.2025, ф. 1 р. 9 (gp-razj-2025-07#003)",
+   "scope": "card"
+  },
+  {
+   "id": "c.minors_extra_char",
+   "forms": [
+    "1"
+   ],
+   "severity": "warning",
+   "when": {
+    "fn": "uk.article_in_note",
+    "args": [
+     "fact.crime.qualification",
+     "gp-razj-2025-07#027"
+    ]
+   },
+   "assert": {
+    "any_in": [
+     "req.27",
+     [
+      "134",
+      "181",
+      "246",
+      "247"
+     ]
+    ]
+   },
+   "message": "По данной статье обязательно отражение дополнительной характеристики «в отношении несовершеннолетних» (коды 134, 181, 246, 247 справочника № 15)",
+   "source_note": "Разъяснения ГП на 01.07.2025, справочник № 15 (gp-razj-2025-07#027)",
+   "scope": "card"
+  },
+  {
+   "id": "c.ic_fields_empty",
+   "forms": [
+    "1",
+    "1.1",
+    "2",
+    "2.1",
+    "3",
+    "4",
+    "5"
+   ],
+   "severity": "warning",
+   "when": {
+    "fills_by": "ic"
+   },
+   "assert": {
+    "empty": "req.*"
+   },
+   "message": "Реквизит заполняет информационный центр – следователем не заполняется",
+   "source_note": "Бланки: «Дата направления/поступления карточки в ИЦ», служебные реквизиты 7.2, 7.3 ф. 1",
+   "scope": "card"
+  },
+  {
+   "id": "c.vud_after_report",
+   "forms": [
+    "1"
+   ],
+   "severity": "warning",
+   "when": {
+    "all": [
+     {
+      "exists": "fact.case.vud_date"
+     },
+     {
+      "exists": "fact.case.kusp_date"
+     }
+    ]
+   },
+   "assert": {
+    "gte": [
+     "fact.case.vud_date",
+     "fact.case.kusp_date"
+    ]
+   },
+   "message": "Дата возбуждения уголовного дела раньше даты регистрации сообщения о преступлении",
+   "source_note": "ст. 144–146 УПК РФ; ф. 1 р. 5 и р. 11",
+   "scope": "card"
+  },
+  {
+   "id": "c.f3_extension_date",
+   "forms": [
+    "3"
+   ],
+   "severity": "error",
+   "when": {
+    "all": [
+     {
+      "exists": "req.10"
+     },
+     {
+      "exists": "req.9.1"
+     }
+    ]
+   },
+   "assert": {
+    "gt": [
+     "req.10",
+     "req.9.1"
+    ]
+   },
+   "message": "Дата, до которой продлен срок, должна быть позже даты решения о продлении",
+   "source_note": "Бланк ф. 3 р. 9.1 и р. 10",
+   "scope": "card"
+  },
+  {
+   "id": "c.classifier_code_valid",
+   "forms": [
+    "*"
+   ],
+   "severity": "error",
+   "when": {
+    "field_type": "classifier"
+   },
+   "assert": {
+    "fn": "classifier.has_code",
+    "args": [
+     "req.*"
+    ]
+   },
+   "message": "Код отсутствует в справочнике действующей редакции",
+   "source_note": "Справочники № 1–17 ред. 2026",
+   "scope": "card"
+  },
+  {
+   "id": "c.enum_code_valid",
+   "forms": [
+    "*"
+   ],
+   "severity": "error",
+   "when": {
+    "field_type": "enum"
+   },
+   "assert": {
+    "fn": "form.has_option",
+    "args": [
+     "req.*"
+    ]
+   },
+   "message": "Код отсутствует среди вариантов реквизита в бланке",
+   "source_note": "Бланки ред. 2026",
+   "scope": "card"
+  },
+  {
+   "id": "c.victims_count_vs_f5",
+   "forms": [
+    "1"
+   ],
+   "severity": "warning",
+   "when": {
+    "gt": [
+     "req.30",
+     0
+    ]
+   },
+   "assert": {
+    "fn": "case.has_form",
+    "args": [
+     "5"
+    ]
+   },
+   "message": "Указаны потерпевшие – по каждому потерпевшему физическому лицу составляется карточка ф. 5",
+   "source_note": "Методичка по статкарточкам, раздел 4 (связи карточек)",
+   "scope": "card"
+  },
+  {
+   "id": "c.no_victims_characteristics",
+   "forms": [
+    "1"
+   ],
+   "severity": "error",
+   "when": {
+    "any": [
+     {
+      "eq": [
+       "fact.victims.victims_count",
+       "0"
+      ]
+     },
+     {
+      "na": "fact.victims.victims_count"
+     }
+    ]
+   },
+   "assert": {
+    "all": [
+     {
+      "empty": "req.33"
+     },
+     {
+      "empty": "req.34"
+     },
+     {
+      "empty": "req.35"
+     },
+     {
+      "empty": "req.36"
+     },
+     {
+      "empty": "req.37"
+     },
+     {
+      "empty": "req.38"
+     }
+    ]
+   },
+   "message": "Потерпевших нет (р. 30), но заполнены характеристики потерпевших (р. 33–38)",
+   "source_note": "Бланк ф. 1, р. 30 и р. 33–38",
+   "scope": "card"
+  },
+  {
+   "id": "c.f1_r40_required",
+   "forms": [
+    "1"
+   ],
+   "severity": "error",
+   "when": {
+    "always": true
+   },
+   "assert": {
+    "exists": "req.40"
+   },
+   "message": "Реквизит 40 (подразделение, в производстве которого находится дело) заполняется обязательно при возбуждении дела",
+   "source_note": "Разъяснения ГИАЦ 2025 (giac-razj-2025#046)",
+   "scope": "card"
+  },
+  {
+   "id": "c.itt_method_required",
+   "forms": [
+    "1",
+    "2"
+   ],
+   "severity": "warning",
+   "when": {
+    "fn": "uk.in_list",
+    "args": [
+     "fact.crime.qualification",
+     25
+    ]
+   },
+   "assert": {
+    "any_in": [
+     "fact.crime.method",
+     [
+      "049",
+      "055",
+      "057",
+      "059",
+      "060",
+      "072",
+      "073",
+      "086",
+      "087",
+      "088",
+      "089",
+      "091",
+      "092",
+      "094",
+      "095",
+      "126",
+      "127",
+      "128",
+      "129",
+      "130",
+      "131",
+      "132",
+      "134",
+      "135",
+      "141",
+      "142",
+      "144",
+      "145"
+     ]
+    ]
+   },
+   "message": "Статья в перечне № 25: способ совершения должен содержать код использования ИТТ (справочник № 12)",
+   "source_note": "Разъяснения 2026 к справочнику № 12 (giac-razj-2026#001)",
+   "scope": "card"
+  },
+  {
+   "id": "c.mkb_method_required",
+   "forms": [
+    "1",
+    "2"
+   ],
+   "severity": "warning",
+   "when": {
+    "fn": "uk.article_in",
+    "args": [
+     "fact.crime.qualification",
+     [
+      "105",
+      "106",
+      "107",
+      "108",
+      "111",
+      "205",
+      "206",
+      "277",
+      "281",
+      "295",
+      "317"
+     ]
+    ]
+   },
+   "assert": {
+    "any_in": [
+     "fact.crime.method",
+     [
+      "101",
+      "102",
+      "103",
+      "104",
+      "105",
+      "106",
+      "107",
+      "108",
+      "109",
+      "110",
+      "111",
+      "112",
+      "113",
+      "114",
+      "115",
+      "116",
+      "117",
+      "118",
+      "119",
+      "120",
+      "121",
+      "122",
+      "123",
+      "124",
+      "125"
+     ]
+    ]
+   },
+   "message": "По преступлению против жизни с гибелью потерпевшего укажите механизм по МКБ-10 (коды 101–125 справочника № 12)",
+   "source_note": "Сноска к справочнику № 12 (ред. 2026)",
+   "scope": "card"
+  },
+  {
+   "id": "c.svo_extra_char",
+   "forms": [
+    "1"
+   ],
+   "severity": "warning",
+   "when": {
+    "any_in": [
+     "fact.victims.social_status",
+     [
+      "0054",
+      "0055"
+     ]
+    ]
+   },
+   "assert": {
+    "any_in": [
+     "fact.crime.extra_char",
+     [
+      "062"
+     ]
+    ]
+   },
+   "message": "Потерпевший – участник СВО: если преступление связано с участием в СВО, в р. 27 обязательна характеристика 062",
+   "source_note": "Сноска к кодам 0054, 0055 справочника № 9 (ред. 2026)",
+   "scope": "card"
+  },
+  {
+   "id": "c.foreign_victim_regime",
+   "forms": [
+    "1"
+   ],
+   "severity": "warning",
+   "when": {
+    "all": [
+     {
+      "exists": "fact.victims.citizenship"
+     },
+     {
+      "not_any_in": [
+       "fact.victims.citizenship",
+       [
+        "589"
+       ]
+      ]
+     }
+    ]
+   },
+   "assert": {
+    "any_in": [
+     "fact.victims.social_status",
+     [
+      "0041",
+      "0042",
+      "0043",
+      "0050"
+     ]
+    ]
+   },
+   "message": "Потерпевший – иностранный гражданин или лицо без гражданства: в р. 34 обязателен режим пребывания (коды 0041, 0042, 0043, 0050)",
+   "source_note": "Разъяснения ГИАЦ 2025 (giac-razj-2025#043)",
+   "scope": "card"
+  },
+  {
+   "id": "c.art322_arrival_purpose",
+   "forms": [
+    "2"
+   ],
+   "severity": "warning",
+   "when": {
+    "fn": "uk.article_in",
+    "args": [
+     "fact.crime.qualification",
+     [
+      "322"
+     ]
+    ]
+   },
+   "assert": {
+    "any_in": [
+     "fact.person.arrival_purpose",
+     [
+      "14"
+     ]
+    ]
+   },
+   "message": "Ст. 322 УК РФ: в реквизите цели приезда обязателен код 14 «незаконный мигрант»",
+   "source_note": "Разъяснения ГИАЦ 2025 (giac-razj-2025#045)",
+   "scope": "card"
+  },
+  {
+   "id": "c.select_limits",
+   "forms": [
+    "*"
+   ],
+   "severity": "error",
+   "when": {
+    "field_type_in": [
+     "enum",
+     "classifier"
+    ]
+   },
+   "assert": {
+    "fn": "form.select_ok",
+    "args": [
+     "req.*"
+    ]
+   },
+   "message": "Выбрано больше кодов, чем полей в бланке, или коды одного разряда наложены друг на друга",
+   "source_note": "Бланки ред. 2026: число кодовых полей; позиционные коды справочников",
+   "scope": "card"
+  },
+  {
+   "id": "c.fabula_length",
+   "forms": [
+    "1"
+   ],
+   "severity": "error",
+   "when": {
+    "exists": "req.12"
+   },
+   "assert": {
+    "fn": "text.max_len",
+    "args": [
+     "req.12",
+     355
+    ]
+   },
+   "message": "Фабула длиннее 355 знаков – не поместится в поле р. 12 бланка",
+   "source_note": "Расчет по бланку cards_1.docx: 457 мм подчеркнутых строк, Times New Roman 8 пт",
+   "scope": "card"
+  },
+  {
+   "id": "c.pkg.f11_each_crime",
+   "per": "crime",
+   "forms": [
+    "1.1"
+   ],
+   "severity": "warning",
+   "when": {
+    "fn": "package.has_form",
+    "args": [
+     "1.1"
+    ]
+   },
+   "assert": {
+    "gte": [
+     {
+      "fn": "package.count_cards",
+      "args": [
+       [
+        "1.1"
+       ]
+      ]
+     },
+     1
+    ]
+   },
+   "message": "По эпизоду события нет карточки ф. 1.1 – она составляется на каждое преступление",
+   "source_note": "ТЗ версии 1.2, разд. 8 (состав пакета); методичка, разд. 3",
+   "scope": "package"
+  },
+  {
+   "id": "c.pkg.f2_each_person",
+   "per": "crime",
+   "forms": [
+    "2"
+   ],
+   "severity": "warning",
+   "when": {
+    "fn": "package.has_form",
+    "args": [
+     "2"
+    ]
+   },
+   "assert": {
+    "gte": [
+     {
+      "fn": "package.count_cards",
+      "args": [
+       [
+        "2"
+       ]
+      ]
+     },
+     {
+      "fn": "package.count_objects",
+      "args": [
+       "persons"
+      ]
+     }
+    ]
+   },
+   "message": "Не на каждое лицо эпизода, указанное в событии, есть карточка ф. 2",
+   "source_note": "Бланк ф. 2 «на лицо, совершившее преступление»; практика учета СК России, уточнения от 16.09.2026, пп. 8, 10, 18.1",
+   "scope": "package"
+  },
+  {
+   "id": "c.pkg.ipk_each_crime",
+   "per": "crime",
+   "forms": [
+    "ipk"
+   ],
+   "severity": "warning",
+   "when": {
+    "fn": "package.has_form",
+    "args": [
+     "ipk"
+    ]
+   },
+   "assert": {
+    "gte": [
+     {
+      "fn": "package.count_cards",
+      "args": [
+       [
+        "ipk"
+       ]
+      ]
+     },
+     1
+    ]
+   },
+   "message": "По эпизоду события нет ИПК – ИПК выставляется на каждый эпизод",
+   "source_note": "практика учета СК России, уточнения от 16.09.2026, пп. 12 и 18.4",
+   "scope": "package"
+  },
+  {
+   "id": "c.pkg.f5_vs_victims_count",
+   "per": "crime",
+   "forms": [
+    "1",
+    "5"
+   ],
+   "severity": "warning",
+   "when": {
+    "all": [
+     {
+      "fn": "package.has_form",
+      "args": [
+       "1"
+      ]
+     },
+     {
+      "gt": [
+       "fact.victims.victims_count",
+       0
+      ]
+     }
+    ]
+   },
+   "assert": {
+    "gte": [
+     {
+      "fn": "package.count_cards_case",
+      "args": [
+       [
+        "5"
+       ]
+      ]
+     },
+     "fact.victims.victims_count"
+    ]
+   },
+   "message": "Карточек ф. 5 по эпизоду меньше, чем потерпевших в р. 30 ф. 1",
+   "source_note": "Бланк ф. 1 р. 30; методичка, разд. 3 (ф. 5 на каждого потерпевшего); практика учета СК России, уточнение от 16.09.2026, п. 1",
+   "scope": "package"
+  },
+  {
+   "id": "c.pkg.f4_vs_f11_damage",
+   "per": "case",
+   "forms": [
+    "4",
+    "1.1"
+   ],
+   "severity": "warning",
+   "when": {
+    "all": [
+     {
+      "fn": "package.has_form",
+      "args": [
+       "4"
+      ]
+     },
+     {
+      "fn": "package.has_form",
+      "args": [
+       "1.1"
+      ]
+     },
+     {
+      "exists": {
+       "fn": "package.req",
+       "args": [
+        "4",
+        "10"
+       ]
+      }
+     }
+    ]
+   },
+   "assert": {
+    "exists": {
+     "fn": "package.req",
+     "args": [
+      "1.1",
+      "28"
+     ]
+    }
+   },
+   "message": "В ф. 4 указана установленная сумма материального ущерба (р. 10), а в ф. 1.1 р. 28 – нет",
+   "source_note": "Бланк ф. 4 р. 10, бланк ф. 1.1 р. 28 «Установленная сумма материального ущерба»",
+   "scope": "package"
+  },
+  {
+   "id": "c.pkg.f3_vs_f11_decision",
+   "per": "case",
+   "forms": [
+    "3",
+    "1.1"
+   ],
+   "severity": "warning",
+   "when": {
+    "all": [
+     {
+      "fn": "package.has_form",
+      "args": [
+       "3"
+      ]
+     },
+     {
+      "exists": {
+       "fn": "package.req",
+       "args": [
+        "1.1",
+        "25"
+       ]
+      }
+     }
+    ]
+   },
+   "assert": {
+    "any": [
+     {
+      "exists": {
+       "fn": "package.req",
+       "args": [
+        "3",
+        "7"
+       ]
+      }
+     },
+     {
+      "exists": {
+       "fn": "package.req",
+       "args": [
+        "3",
+        "12"
+       ]
+      }
+     },
+     {
+      "exists": {
+       "fn": "package.req",
+       "args": [
+        "3",
+        "12.2"
+       ]
+      }
+     },
+     {
+      "exists": {
+       "fn": "package.req",
+       "args": [
+        "3",
+        "13"
+       ]
+      }
+     }
+    ]
+   },
+   "message": "В ф. 1.1 р. 25 указано решение по преступлению, а в ф. 3 не отмечено движение дела (р. 7, 12, 12.2 или 13)",
+   "source_note": "Бланк ф. 1.1 р. 25; бланк ф. 3 р. 7, 12, 12.2, 13",
+   "scope": "package"
+  },
+  {
+   "id": "c.pkg.event_after_vud",
+   "per": "case",
+   "forms": [
+    "*"
+   ],
+   "severity": "error",
+   "when": {
+    "all": [
+     {
+      "exists": "fact.case.vud_date"
+     },
+     {
+      "exists": "event.date"
+     }
+    ]
+   },
+   "assert": {
+    "gte": [
+     "event.date",
+     "fact.case.vud_date"
+    ]
+   },
+   "message": "Дата события раньше даты возбуждения уголовного дела",
+   "source_note": "ст. 146, 162, 208, 211 УПК РФ: решения по делу принимаются после его возбуждения",
+   "scope": "package"
+  }
+ ]
+}

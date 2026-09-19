@@ -1,0 +1,158 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Правила извлечения",
+ "type": "object",
+ "required": [
+  "edition",
+  "extract"
+ ],
+ "properties": {
+  "extract": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "doc_type",
+     "field",
+     "label",
+     "kind",
+     "parts",
+     "patterns",
+     "confidence"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^x\\."
+     },
+     "doc_type": {
+      "type": "string"
+     },
+     "field": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "label": {
+      "type": "string"
+     },
+     "kind": {
+      "enum": [
+       "text",
+       "date",
+       "time",
+       "number",
+       "enum",
+       "case_number",
+       "episodes",
+       "fabula",
+       "victims"
+      ]
+     },
+     "parts": {
+      "type": "array",
+      "items": {
+       "enum": [
+        "title",
+        "header",
+        "intro",
+        "descriptive",
+        "resolutive"
+       ]
+      },
+      "minItems": 1
+     },
+     "fallback_parts": {
+      "type": "array",
+      "items": {
+       "enum": [
+        "title",
+        "header",
+        "intro",
+        "descriptive",
+        "resolutive"
+       ]
+      }
+     },
+     "patterns": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1
+     },
+     "values": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "confidence": {
+      "enum": [
+       "high",
+       "medium",
+       "low"
+      ]
+     },
+     "pattern_confidence": {
+      "type": "array",
+      "items": {
+       "enum": [
+        "high",
+        "medium",
+        "low"
+       ]
+      }
+     },
+     "pick": {
+      "enum": [
+       "first",
+       "earliest"
+      ]
+     },
+     "sentence": {
+      "type": "string"
+     },
+     "exclude_after": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "exclude_before": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "after_field": {
+      "type": "string"
+     },
+     "window": {
+      "type": "integer"
+     },
+     "max_len": {
+      "type": "integer"
+     },
+     "digits": {
+      "type": "integer"
+     },
+     "clause": {
+      "type": "string"
+     },
+     "person": {
+      "type": "string"
+     },
+     "unknown_person": {
+      "type": "string"
+     },
+     "note": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

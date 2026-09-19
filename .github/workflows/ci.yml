@@ -1,0 +1,26 @@
+name: Проверка пакетов данных
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Валидация пакетов
+        run: node scripts/validate-data.mjs --warnings
+      - name: Аудит публичных данных
+        run: node scripts/audit-public.mjs
+      - name: Автотесты ядра
+        run: npm test
+      - name: Однофайловая сборка
+        run: node scripts/build-app.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: statkarta-offline
+          path: dist/statkarta-offline.html

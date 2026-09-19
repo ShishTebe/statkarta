@@ -1,0 +1,57 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Разъяснения",
+ "type": "object",
+ "required": [
+  "edition",
+  "notes"
+ ],
+ "properties": {
+  "notes": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "act",
+     "text",
+     "verbatim",
+     "bindings"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "act": {
+      "type": "string"
+     },
+     "text": {
+      "type": "string",
+      "minLength": 2
+     },
+     "verbatim": {
+      "type": "boolean"
+     },
+     "bindings": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "form",
+        "requisite"
+       ],
+       "properties": {
+        "form": {
+         "type": "string"
+        },
+        "requisite": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

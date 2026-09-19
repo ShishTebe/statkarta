@@ -1,0 +1,133 @@
+{
+ "edition": "2026",
+ "classifiers": [
+  {
+   "no": 1,
+   "title": "Виды экономической деятельности",
+   "file": "spr-01.json",
+   "count": 434,
+   "public": true,
+   "edition": "2025"
+  },
+  {
+   "no": 2,
+   "title": "Место совершения преступления",
+   "file": "spr-02.json",
+   "count": 155,
+   "public": true,
+   "edition": "2025"
+  },
+  {
+   "no": 3,
+   "title": "Предмет преступного посягательства или незаконного оборота",
+   "file": "spr-03.json",
+   "count": 176,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 4,
+   "title": "Оружие, боеприпасы и взрывчатые материалы",
+   "file": "spr-04.json",
+   "count": 90,
+   "public": true,
+   "edition": "2025"
+  },
+  {
+   "no": 5,
+   "title": "Национальности",
+   "file": "spr-05.json",
+   "count": 306,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 6,
+   "title": "Страны (гражданство, государства)",
+   "file": "spr-06.json",
+   "count": 255,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 7,
+   "title": "Валюта",
+   "file": "spr-07.json",
+   "count": 30,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 8,
+   "title": "Наркотические средства, психотропные, сильнодействующие вещества, прекурсоры",
+   "file": "spr-08.json",
+   "count": 222,
+   "public": true,
+   "edition": "2025"
+  },
+  {
+   "no": 9,
+   "title": "Социальное положение",
+   "file": "spr-09.json",
+   "count": 58,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 10,
+   "title": "Должностное (служебное) положение",
+   "file": "spr-10.json",
+   "count": 112,
+   "public": true,
+   "edition": "2025"
+  },
+  {
+   "no": 11,
+   "title": "Организационно-правовые формы (ОКОПФ)",
+   "file": "spr-11.json",
+   "count": 121,
+   "public": true,
+   "edition": "2025"
+  },
+  {
+   "no": 12,
+   "title": "Способ совершения преступления",
+   "file": "spr-12.json",
+   "count": 122,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 14,
+   "title": "Служба, выявившая преступление или установившая лицо",
+   "file": "spr-14.json",
+   "count": 120,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 15,
+   "title": "Дополнительная характеристика преступления",
+   "file": "spr-15.json",
+   "count": 234,
+   "public": true,
+   "edition": "2026"
+  },
+  {
+   "no": 16,
+   "title": "Решение, принятое по уголовному делу",
+   "file": "spr-16.json",
+   "count": 77,
+   "public": true,
+   "edition": "2025"
+  },
+  {
+   "no": 17,
+   "title": "Код подразделения",
+   "file": "../../../data-private/classifiers/2026/spr-17.json",
+   "count": 28503,
+   "public": false,
+   "edition": "2025"
+  }
+ ]
+}

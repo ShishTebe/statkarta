@@ -1,0 +1,58 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Документы дела",
+ "type": "object",
+ "required": [
+  "edition",
+  "documents"
+ ],
+ "properties": {
+  "documents": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "doc_type",
+     "title",
+     "required_for",
+     "priority",
+     "provides",
+     "detect"
+    ],
+    "properties": {
+     "doc_type": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     },
+     "required_for": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "priority": {
+      "enum": [
+       "required",
+       "desirable"
+      ]
+     },
+     "provides": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "detect": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,8281 @@
+{
+ "edition": "2026",
+ "status": "draft",
+ "review": "требует предметной ревизии (риск Д-4). Сгенерировано scripts/build_rules.py из пакета форм.",
+ "questions": [
+  {
+   "id": "q.core.qualification",
+   "text": "Квалификация преступления по постановлению о возбуждении уголовного дела",
+   "why": "Например: п. «в» ч. 2 ст. 158 УК РФ; при покушении – ч. 3 ст. 30, п. «в» ч. 2 ст. 158 УК РФ. От квалификации зависят категория, стадия, направленность",
+   "forms": [
+    "*"
+   ],
+   "entity": "crime",
+   "core": true,
+   "answer": {
+    "type": "text",
+    "multiple": false
+   },
+   "ask_when": {
+    "always": true
+   },
+   "sets": [
+    "fact.crime.qualification"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.core.crime_date",
+   "text": "Дата совершения преступления (по наиболее тяжкому)",
+   "why": "Нужна для категории по перечням статей УК на дату преступления; если дату установить нельзя – дата выявления",
+   "forms": [
+    "*"
+   ],
+   "entity": "crime",
+   "core": true,
+   "answer": {
+    "type": "date",
+    "multiple": false
+   },
+   "ask_when": {
+    "always": true
+   },
+   "sets": [
+    "fact.crime.crime_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.core.vud_date",
+   "text": "Дата возбуждения уголовного дела",
+   "why": "Реквизиты даты возбуждения; проверка с датой регистрации сообщения",
+   "forms": [
+    "*"
+   ],
+   "entity": "case",
+   "core": true,
+   "answer": {
+    "type": "date",
+    "multiple": false
+   },
+   "ask_when": {
+    "always": true
+   },
+   "sets": [
+    "fact.case.vud_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.core.case_number",
+   "text": "Номер уголовного дела",
+   "why": "Раздел 1 карточек: номер впечатывается в клетки бланка (вид, год, код подразделения, № – 17 цифр, например 12600000000000001); если номер не внесен, его вписывает работник учета",
+   "forms": [
+    "*"
+   ],
+   "entity": "case",
+   "core": true,
+   "answer": {
+    "type": "text",
+    "multiple": false
+   },
+   "ask_when": {
+    "always": true
+   },
+   "sets": [
+    "fact.case.case_number"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.core.kusp",
+   "text": "Номер регистрации сообщения о преступлении (КРСП, КУСП)",
+   "why": "Раздел 1 ф. 1 (р. 5) и ф. 5 (р. 4): номер впечатывается в бланк вместе с датой регистрации",
+   "forms": [
+    "*"
+   ],
+   "entity": "case",
+   "core": true,
+   "answer": {
+    "type": "text",
+    "multiple": false
+   },
+   "ask_when": {
+    "always": true
+   },
+   "sets": [
+    "fact.case.kusp"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.core.kusp_date",
+   "text": "Дата регистрации сообщения о преступлении",
+   "why": "Проверка: дело не может быть возбуждено раньше регистрации сообщения",
+   "forms": [
+    "*"
+   ],
+   "entity": "case",
+   "core": true,
+   "answer": {
+    "type": "date",
+    "multiple": false
+   },
+   "ask_when": {
+    "always": true
+   },
+   "sets": [
+    "fact.case.kusp_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.core.report_source",
+   "text": "Повод к возбуждению уголовного дела",
+   "why": "Проверка кода реквизита 9 ф. 1 (разъяснения ГП на 01.07.2025)",
+   "forms": [
+    "*"
+   ],
+   "entity": "case",
+   "core": true,
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options": [
+     {
+      "code": "report",
+      "value": "рапорт об обнаружении признаков преступления"
+     },
+     {
+      "code": "statement",
+      "value": "заявление о преступлении"
+     },
+     {
+      "code": "confession",
+      "value": "явка с повинной"
+     },
+     {
+      "code": "prosecutor_materials",
+      "value": "материалы, направленные прокурором (п. 2 ч. 2 ст. 37 УПК РФ)"
+     },
+     {
+      "code": "other",
+      "value": "иной повод"
+     }
+    ]
+   },
+   "ask_when": {
+    "always": true
+   },
+   "sets": [
+    "fact.case.report_source"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.ipk_in_r1",
+   "text": "Территориальный орган МВД России, ИЦ, где подлежит учету?",
+   "why": "ф. ipk-in р. 1",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.ipk_in_r1"
+    ]
+   },
+   "sets": [
+    "fact.case.ipk_in_r1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.ipk_in_r27",
+   "text": "Подследственность?",
+   "why": "ф. ipk-in р. 27",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.ipk_in_r27"
+    ]
+   },
+   "sets": [
+    "fact.case.ipk_in_r27"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.ipk_in_r29",
+   "text": "№ отказного материала?",
+   "why": "ф. ipk-in р. 29",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.ipk_in_r29"
+    ]
+   },
+   "sets": [
+    "fact.case.ipk_in_r29"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.ipk_in_r3",
+   "text": "№ по КУСП; № дополнительного преступления?",
+   "why": "ф. ipk-in р. 3",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.ipk_in_r3"
+    ]
+   },
+   "sets": [
+    "fact.case.ipk_in_r3"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.ipk_in_r30",
+   "text": "Дата отказа в возбуждении УД?",
+   "why": "ф. ipk-in р. 30",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.ipk_in_r30"
+    ]
+   },
+   "sets": [
+    "fact.case.ipk_in_r30"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.ipk_in_r4",
+   "text": "Дата регистрации?",
+   "why": "ф. ipk-in р. 4",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.ipk_in_r4"
+    ]
+   },
+   "sets": [
+    "fact.case.ipk_in_r4"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.ipk_ric_code",
+   "text": "Код территориального органа и ИЦ, где подлежит учету?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.ipk_ric_code"
+    ]
+   },
+   "sets": [
+    "fact.case.ipk_ric_code"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.organ",
+   "text": "Орган?",
+   "why": "ф. 1.1 р. 1, ф. 1 р. 1, ф. 2.1 р. 1, ф. 2 р. 1, ф. 3 р. 1, ф. 4 р. 1, ф. 5 р. 1",
+   "forms": [
+    "1",
+    "1.1",
+    "2",
+    "2.1",
+    "3",
+    "4",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.organ"
+    ]
+   },
+   "sets": [
+    "fact.case.organ"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.organ_name",
+   "text": "Наименование органа, проводившего расследование?",
+   "why": "ф. 6 р. 1, ф. ipk-in р. 2, ф. ipk р. 79",
+   "forms": [
+    "6",
+    "ipk",
+    "ipk-in"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.organ_name"
+    ]
+   },
+   "sets": [
+    "fact.case.organ_name"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.record_kind.opt55b84a",
+   "text": "Учесть, изменить, снять?",
+   "why": "ф. 1.1 р. 2, ф. 1 р. 2, ф. 2 р. 2, ф. 3 р. 2",
+   "forms": [
+    "1",
+    "1.1",
+    "2",
+    "3"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.record_kind.opt55b84a"
+    ]
+   },
+   "sets": [
+    "fact.case.record_kind.opt55b84a"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.record_kind.optf8ef5b",
+   "text": "Учесть, изменить, снять, в т.ч. в связи с прекращением уголовного дела или уголовного преследования по реабилитирующим основаниям?",
+   "why": "ф. 2.1 р. 2, ф. 4 р. 2, ф. 5 р. 2",
+   "forms": [
+    "2.1",
+    "4",
+    "5"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.record_kind.optf8ef5b"
+    ]
+   },
+   "sets": [
+    "fact.case.record_kind.optf8ef5b"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.vud_date.date",
+   "text": "Дата возбуждения уголовного дела?",
+   "why": "ф. 3 р. 6, ф. ipk-in р. 26",
+   "forms": [
+    "3",
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.vud_date.date"
+    ]
+   },
+   "sets": [
+    "fact.case.vud_date.date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.case.vud_date.opte034c7",
+   "text": "Дата возбуждения уголовного дела, вынесения постановления об отказе в возбуждении уголовного дела?",
+   "why": "ф. 1 р. 11",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "11"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.vud_date.opte034c7"
+    ]
+   },
+   "sets": [
+    "fact.case.vud_date.opte034c7"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.court.qualification",
+   "text": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 1: статья, знак, часть, пункт; стадия, форма соучастия, категория соучастника?",
+   "why": "ф. 6 р. 15.1, ф. 6 р. 15.2, ф. 6 р. 15.3, ф. 6 р. 15.4, ф. 6 р. 15.5, ф. 6 р. 15.6",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "6",
+     "requisite": "15.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.court.qualification"
+    ]
+   },
+   "sets": [
+    "fact.court.qualification"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.attempt",
+   "text": "По ст. 30 УК РФ: приготовление, покушение?",
+   "why": "ф. 1 р. 16, ф. 2 р. 25",
+   "forms": [
+    "1",
+    "2"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "16"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.attempt"
+    ]
+   },
+   "sets": [
+    "fact.crime.attempt"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.category",
+   "text": "Категория преступления (ст. 15 УК РФ)?",
+   "why": "ф. 1 р. 15, ф. 2.1 р. 15, ф. 2 р. 23",
+   "forms": [
+    "1",
+    "2",
+    "2.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "15"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.category"
+    ]
+   },
+   "sets": [
+    "fact.crime.category"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.citizenship",
+   "text": "Преступление совершено в составе группы; с участием, только иностранных граждан, лиц без гражданства?",
+   "why": "ф. 1.1 р. 10",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "10"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.citizenship"
+    ]
+   },
+   "sets": [
+    "fact.crime.citizenship"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.extra_char",
+   "text": "Дополнительная характеристика преступления (по справочнику № 15)?",
+   "why": "ф. 1 р. 27, ф. 2.1 р. 20, ф. 2 р. 34, ф. 4 р. 9, ф. 5 р. 20",
+   "forms": [
+    "1",
+    "2",
+    "2.1",
+    "4",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 15
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.extra_char"
+    ]
+   },
+   "sets": [
+    "fact.crime.extra_char"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.fabula",
+   "text": "Описание (краткая фабула) преступления, место, дата и время его совершения?",
+   "why": "ф. 1 р. 12, ф. ipk-in р. 36, ф. ipk р. 59",
+   "forms": [
+    "1",
+    "ipk",
+    "ipk-in"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.fabula"
+    ]
+   },
+   "sets": [
+    "fact.crime.fabula"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.intoxication",
+   "text": "Преступление совершено в состоянии опьянения; лицом, состоящим на учете, хроническим алкоголиком, потребителем наркотических средств, токсикоманом?",
+   "why": "ф. 1.1 р. 13",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "13"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.intoxication"
+    ]
+   },
+   "sets": [
+    "fact.crime.intoxication"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_in_r21",
+   "text": "Предмет преступного посягательства?",
+   "why": "ф. ipk-in р. 21",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_in_r21"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_in_r21"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_in_r22",
+   "text": "Время совершения преступления (происшествия): часов, минут?",
+   "why": "ф. ipk-in р. 22",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_in_r22"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_in_r22"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_in_r23",
+   "text": "Место преступления (происшествия)?",
+   "why": "ф. ipk-in р. 23",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_in_r23"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_in_r23"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_in_r24",
+   "text": "Способ совершения?",
+   "why": "ф. ipk-in р. 24",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_in_r24"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_in_r24"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_in_r5",
+   "text": "Вид преступления (происшествия)?",
+   "why": "ф. ipk-in р. 5",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_in_r5"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_in_r5"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r44",
+   "text": "Вид преступления?",
+   "why": "ф. ipk р. 44",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "44"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r44"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r44"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r45",
+   "text": "Отношение к преступлению?",
+   "why": "ф. ipk р. 45",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "45"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r45"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r45"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r46",
+   "text": "Совершено?",
+   "why": "ф. ipk р. 46",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "46"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r46"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r46"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r47",
+   "text": "Способ проникновения?",
+   "why": "ф. ipk р. 47",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "47"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r47"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r47"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r48",
+   "text": "Способ насильственных действий?",
+   "why": "ф. ipk р. 48",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "48"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r48"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r48"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r51",
+   "text": "В отношении?",
+   "why": "ф. ipk р. 51",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "51"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r51"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r51"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r57",
+   "text": "Предмет посягательства?",
+   "why": "ф. ipk р. 57",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "57"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r57"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r57"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r58",
+   "text": "Место?",
+   "why": "ф. ipk р. 58",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "58"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r58"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r58"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r64",
+   "text": "Место совершения: республика; край, область; район; населенный пункт; улица; дом?",
+   "why": "ф. ipk р. 64",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r64"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r64"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r66",
+   "text": "Связи лица?",
+   "why": "ф. ipk р. 66",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r66"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r66"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r67",
+   "text": "По делу имеются?",
+   "why": "ф. ipk р. 67",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "67"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r67"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r67"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r68",
+   "text": "Способ сокрытия преступления?",
+   "why": "ф. ipk р. 68",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "68"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r68"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r68"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r71",
+   "text": "Характер преступления?",
+   "why": "ф. ipk р. 71",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "71"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r71"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r71"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r72",
+   "text": "Наименование юридического лица?",
+   "why": "ф. ipk р. 72",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r72"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r72"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r73",
+   "text": "Фактический адрес юридического лица?",
+   "why": "ф. ipk р. 73",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r73"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r73"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r74",
+   "text": "Огрн?",
+   "why": "ф. ipk р. 74",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r74"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r74"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_r78",
+   "text": "Номер эпизода?",
+   "why": "ф. ipk р. 78",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_r78"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_r78"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_rdaytime",
+   "text": "Время совершения преступления?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "daytime"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_rdaytime"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_rdaytime"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_rdisguise",
+   "text": "Под видом?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "disguise"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_rdisguise"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_rdisguise"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_rfraud_method",
+   "text": "Способ мошенничества?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "fraud_method"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_rfraud_method"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_rfraud_method"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_ridentified_date",
+   "text": "Дата установления лица?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_ridentified_date"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_ridentified_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_rmeans",
+   "text": "Средства?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "means"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_rmeans"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_rmeans"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_robject_relation",
+   "text": "Отношение к объекту учета?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "object_relation"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_robject_relation"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_robject_relation"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_rpretext",
+   "text": "Под предлогом?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "pretext"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_rpretext"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_rpretext"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_rterritory",
+   "text": "Территория?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_rterritory"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_rterritory"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ipk_rweekday",
+   "text": "День недели?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "weekday"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ipk_rweekday"
+    ]
+   },
+   "sets": [
+    "fact.crime.ipk_rweekday"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.laundering_predicate",
+   "text": "Квалификация преступления, предшествовавшего легализации (отмыванию) денежных средств и иного имущества?",
+   "why": "ф. 1.1 р. 7.1, ф. 1 р. 13.1",
+   "forms": [
+    "1",
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.laundering_predicate"
+    ]
+   },
+   "sets": [
+    "fact.crime.laundering_predicate"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.method",
+   "text": "Способ совершения преступления (по справочнику № 12)?",
+   "why": "ф. 1 р. 26, ф. 2.1 р. 19, ф. 2 р. 33, ф. 5 р. 20.1",
+   "forms": [
+    "1",
+    "2",
+    "2.1",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 12
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.method"
+    ]
+   },
+   "sets": [
+    "fact.crime.method"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.motive",
+   "text": "Мотив (цель) преступления?",
+   "why": "ф. 1.1 р. 26, ф. 5 р. 19",
+   "forms": [
+    "1.1",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "26"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.motive"
+    ]
+   },
+   "sets": [
+    "fact.crime.motive"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.new_regions",
+   "text": "Преступление совершено после принятия в РФ, до принятия в РФ на территории Донецкой Народной Республики, Луганской Народной Республики, Запорожской области, Херсонской области?",
+   "why": "ф. 1 р. 19.2, ф. 2 р. 28.2, ф. 5 р. 18.4",
+   "forms": [
+    "1",
+    "2",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "19.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.new_regions"
+    ]
+   },
+   "sets": [
+    "fact.crime.new_regions"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.okato",
+   "text": "Место совершения преступления по ОКАТО?",
+   "why": "ф. 1 р. 19.1, ф. 2 р. 28.1, ф. 5 р. 18.3",
+   "forms": [
+    "1",
+    "2",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.okato"
+    ]
+   },
+   "sets": [
+    "fact.crime.okato"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.opf",
+   "text": "Организационно-правовая форма хозяйствующего субъекта (по справочнику № 11)?",
+   "why": "ф. 1 р. 20, ф. 2 р. 29",
+   "forms": [
+    "1",
+    "2"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 11
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.opf"
+    ]
+   },
+   "sets": [
+    "fact.crime.opf"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.orientation",
+   "text": "Преступление коррупционной, общеуголовной; экономической направленности, в т.ч. налоговое преступление?",
+   "why": "ф. 1 р. 18, ф. 2.1 р. 16, ф. 2 р. 26, ф. 4 р. 8",
+   "forms": [
+    "1",
+    "2",
+    "2.1",
+    "4"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "18"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.orientation"
+    ]
+   },
+   "sets": [
+    "fact.crime.orientation"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.ownership",
+   "text": "Форма собственности, в отношении которой совершено преступное посягательство?",
+   "why": "ф. 1 р. 24, ф. 2 р. 32, ф. 5 р. 17",
+   "forms": [
+    "1",
+    "2",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "24"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.ownership"
+    ]
+   },
+   "sets": [
+    "fact.crime.ownership"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.place",
+   "text": "Место совершения преступления (по справочнику № 2)?",
+   "why": "ф. 1 р. 19, ф. 2.1 р. 17, ф. 2 р. 28, ф. 5 р. 18.1",
+   "forms": [
+    "1",
+    "2",
+    "2.1",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 2
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.place"
+    ]
+   },
+   "sets": [
+    "fact.crime.place"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.public_place.opt5e3a7e",
+   "text": "Преступление совершено: серийно; в общественном месте; вне населенного пункта?",
+   "why": "ф. 1.1 р. 9",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "9"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.public_place.opt5e3a7e"
+    ]
+   },
+   "sets": [
+    "fact.crime.public_place.opt5e3a7e"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.public_place.optf6829d",
+   "text": "В общественном месте; вне населенного пункта?",
+   "why": "ф. 1 р. 21.1, ф. 5 р. 18.2",
+   "forms": [
+    "1",
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "21.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.public_place.optf6829d"
+    ]
+   },
+   "sets": [
+    "fact.crime.public_place.optf6829d"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.service.spr14",
+   "text": "Силы и средства, установившие лицо или предотвратившие преступление (одна служба) (по справочнику № 14)?",
+   "why": "ф. 1.1 р. 34",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 14
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.service.spr14"
+    ]
+   },
+   "sets": [
+    "fact.crime.service.spr14"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.service.text",
+   "text": "Служба, способствовавшая раскрытию преступлений (коды реквизита 34)?",
+   "why": "ф. 1.1 р. 34.1",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.service.text"
+    ]
+   },
+   "sets": [
+    "fact.crime.service.text"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.size",
+   "text": "Преступление совершено в крупном, особо крупном, значительном размере; причинен значительный, крупный, особо крупный ущерб?",
+   "why": "ф. 1 р. 17, ф. 2 р. 24",
+   "forms": [
+    "1",
+    "2"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "17"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.size"
+    ]
+   },
+   "sets": [
+    "fact.crime.size"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.subject",
+   "text": "Предмет преступного посягательства или незаконного оборота (по справочнику № 3)?",
+   "why": "ф. 1 р. 23, ф. 2.1 р. 18, ф. 2 р. 31",
+   "forms": [
+    "1",
+    "2",
+    "2.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 3
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.subject"
+    ]
+   },
+   "sets": [
+    "fact.crime.subject"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.crime.weapon",
+   "text": "Оружие, боеприпасы и взрывчатые материалы (по справочнику № 4)?",
+   "why": "ф. 1 р. 23.1, ф. 2.1 р. 18.1, ф. 2 р. 31.1",
+   "forms": [
+    "1",
+    "2",
+    "2.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 4
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.crime.weapon"
+    ]
+   },
+   "sets": [
+    "fact.crime.weapon"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r10",
+   "text": "Уголовное дело возбуждено?",
+   "why": "ф. 1 р. 10",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "10"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r10"
+    ]
+   },
+   "sets": [
+    "fact.f1.r10"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r10_1",
+   "text": "Уголовное дело возбуждено при отмене постановления об отказе в возбуждении уголовного дела, после отмены постановления о возбуждении уголовного дела?",
+   "why": "ф. 1 р. 10.1",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "10.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r10_1"
+    ]
+   },
+   "sets": [
+    "fact.f1.r10_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r10_2",
+   "text": "Преступление ранее было укрыто от учета (не учтено)?",
+   "why": "ф. 1 р. 10.2",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "10.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r10_2"
+    ]
+   },
+   "sets": [
+    "fact.f1.r10_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r10_3",
+   "text": "Факт укрытия преступления допущен (по справочнику № 14)?",
+   "why": "ф. 1 р. 10.3",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 14
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r10_3"
+    ]
+   },
+   "sets": [
+    "fact.f1.r10_3"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r21",
+   "text": "Преступление совершено в: республиканском, краевом или областном центре; городе, поселке городского типа, сельской местности, за пределами России; в зоне?",
+   "why": "ф. 1 р. 21",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "21"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r21"
+    ]
+   },
+   "sets": [
+    "fact.f1.r21"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r22",
+   "text": "Вид экономической деятельности, в ходе осуществления которой совершено преступление (по классификатору № 1)?",
+   "why": "ф. 1 р. 22",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 1
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r22"
+    ]
+   },
+   "sets": [
+    "fact.f1.r22"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r25",
+   "text": "Предварительная оценка ущерба, причиненного федеральному бюджету; сумма взятки, подкупа, незаконного вознаграждения?",
+   "why": "ф. 1 р. 25",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "25"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r25"
+    ]
+   },
+   "sets": [
+    "fact.f1.r25"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r25_1",
+   "text": "На момент возбуждения уголовного дела изъято наркотических средств, психотропных или сильнодействующих веществ, прекурсоров, наркосодержащих растений (либо их частей) (по справочнику № 8)?",
+   "why": "ф. 1 р. 25.1",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r25_1"
+    ]
+   },
+   "sets": [
+    "fact.f1.r25_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r25_2",
+   "text": "Изъято наркотических средств: вид, код по справочнику № 8 (например, героин – 3114), количество в миллиграммах?",
+   "why": "ф. 1 р. 25.2",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8,
+    "options_from": {
+     "form": "1",
+     "requisite": "25.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r25_2"
+    ]
+   },
+   "sets": [
+    "fact.f1.r25_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r25_3",
+   "text": "Изъято прекурсоров: вид, код по справочнику № 8, количество в килограммах?",
+   "why": "ф. 1 р. 25.3",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r25_3"
+    ]
+   },
+   "sets": [
+    "fact.f1.r25_3"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r25_4",
+   "text": "Уничтожено (изъято) наркосодержащих растений при выявлении их посевов?",
+   "why": "ф. 1 р. 25.4",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r25_4"
+    ]
+   },
+   "sets": [
+    "fact.f1.r25_4"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r25_5",
+   "text": "Выявлено: незаконных нарколабораторий, других мест незаконного производства, изготовления или переработки?",
+   "why": "ф. 1 р. 25.5",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8,
+    "options_from": {
+     "form": "1",
+     "requisite": "25.5"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r25_5"
+    ]
+   },
+   "sets": [
+    "fact.f1.r25_5"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r28",
+   "text": "Преступление совершено с использованием, в т.ч. с применением?",
+   "why": "ф. 1 р. 28",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "28"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r28"
+    ]
+   },
+   "sets": [
+    "fact.f1.r28"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r29",
+   "text": "Характеристика охраны объекта?",
+   "why": "ф. 1 р. 29",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "29"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r29"
+    ]
+   },
+   "sets": [
+    "fact.f1.r29"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r29_1",
+   "text": "Результаты осмотра места происшествия?",
+   "why": "ф. 1 р. 29.1",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "29.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r29_1"
+    ]
+   },
+   "sets": [
+    "fact.f1.r29_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r31",
+   "text": "Количество юридических лиц, которым причинен материальный ущерб имуществу и деловой репутации?",
+   "why": "ф. 1 р. 31",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r31"
+    ]
+   },
+   "sets": [
+    "fact.f1.r31"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r32",
+   "text": "Личность потерпевшего не установлена; ущерб причинен юридическому лицу, государству; № дела по установлению личности погибшего?",
+   "why": "ф. 1 р. 32",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "32"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r32"
+    ]
+   },
+   "sets": [
+    "fact.f1.r32"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r33",
+   "text": "Характеристика потерпевших?",
+   "why": "ф. 1 р. 33",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "33"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r33"
+    ]
+   },
+   "sets": [
+    "fact.f1.r33"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r40",
+   "text": "Уголовное дело находится в производстве (материал разрешен)?",
+   "why": "ф. 1 р. 40",
+   "forms": [
+    "1"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "40"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r40"
+    ]
+   },
+   "sets": [
+    "fact.f1.r40"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r8",
+   "text": "Преступление предотвращено на стадии приготовления, покушения?",
+   "why": "ф. 1 р. 8",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "8"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r8"
+    ]
+   },
+   "sets": [
+    "fact.f1.r8"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r9",
+   "text": "Преступление выявлено (наличие состава преступления установлено) (по справочнику № 14)?",
+   "why": "ф. 1 р. 9",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 14
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r9"
+    ]
+   },
+   "sets": [
+    "fact.f1.r9"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1.r9_1",
+   "text": "По оперативным данным, с помощью оперативно-технических мероприятий, с применением технических средств; подозреваемый установлен в течение 24 часов?",
+   "why": "ф. 1 р. 9.1",
+   "forms": [
+    "1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "9.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1.r9_1"
+    ]
+   },
+   "sets": [
+    "fact.f1.r9_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r11",
+   "text": "Преступление совершено со связями: коррумпированными, международными, межрегиональными?",
+   "why": "ф. 1.1 р. 11",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "11"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r11"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r11"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r12",
+   "text": "Преступление совершено участником организованной группы, преступного сообщества (организации), женщиной, несовершеннолетним, малолетним, по найму (по заказу)?",
+   "why": "ф. 1.1 р. 12",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "12"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r12"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r12"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r14",
+   "text": "Преступление совершено лицом, ранее совершавшим преступление?",
+   "why": "ф. 1.1 р. 14",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "14"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r14"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r14"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r15",
+   "text": "Преступление совершено лицом, ранее судимым?",
+   "why": "ф. 1.1 р. 15",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "15"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r15"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r15"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r16",
+   "text": "Рецидив преступления?",
+   "why": "ф. 1.1 р. 16",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "16"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r16"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r16"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r17",
+   "text": "Преступление совершено обвиняемым с мерой пресечения, не связанной с содержанием под стражей; лицом, находящимся в розыске?",
+   "why": "ф. 1.1 р. 17",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "17"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r17"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r17"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r20",
+   "text": "Место проживания?",
+   "why": "ф. 1.1 р. 20",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "20"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r20"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r20"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r25",
+   "text": "Решение по преступлению (по справочнику № 16), дата?",
+   "why": "ф. 1.1 р. 25",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 16
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r25"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r25"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r25_1",
+   "text": "Судебное решение (по справочнику № 16), дата?",
+   "why": "ф. 1.1 р. 25.1",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 16
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r25_1"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r25_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r25_2",
+   "text": "Решение по преступлению (первоначальное приостановление дела), дата?",
+   "why": "ф. 1.1 р. 25.2",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "25.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r25_2"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r25_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r27",
+   "text": "Преступление выявлено в ходе расследования, дознания; явка с повинной?",
+   "why": "ф. 1.1 р. 27",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "27"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r27"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r27"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r28",
+   "text": "Установленная сумма материального ущерба?",
+   "why": "ф. 1.1 р. 28",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "28"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r28"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r28"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r28_1",
+   "text": "По преступлению принималось решение о приостановлении операций с денежными средствами, электронными денежными средствами, денежными средствами, внесенными в качестве аванса за услуги связи, в порядке ст. 115.2 УПК РФ?",
+   "why": "ф. 1.1 р. 28.1",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "28.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r28_1"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r28_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r29",
+   "text": "Орудия и средства преступления: оружие, взрывчатые материалы и боеприпасы (по справочнику № 4)?",
+   "why": "ф. 1.1 р. 29",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 4
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r29"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r29"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r30",
+   "text": "Орудия и средства преступления: технические средства снятия информации?",
+   "why": "ф. 1.1 р. 30",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "30"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r30"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r30"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r31",
+   "text": "Применение криминалистических средств и методов при установлении лица?",
+   "why": "ф. 1.1 р. 31",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "31"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r31"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r31"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r32",
+   "text": "Использование оперативно-справочных, криминалистических, розыскных, дактилоскопических и иных учетов?",
+   "why": "ф. 1.1 р. 32",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "32"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r32"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r32"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r32_1",
+   "text": "Использование аппаратно-программных средств и комплексов ЕИТКС, технических средств?",
+   "why": "ф. 1.1 р. 32.1",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "32.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r32_1"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r32_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r33",
+   "text": "Уголовное дело расследовано (разрешен материал)?",
+   "why": "ф. 1.1 р. 33",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "33"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r33"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r33"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r33_1",
+   "text": "Решение принято судьей?",
+   "why": "ф. 1.1 р. 33.1",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "33.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r33_1"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r33_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r35",
+   "text": "Сообщение; № рабочего дела; наименование ОВД (аппарата министерства)?",
+   "why": "ф. 1.1 р. 35",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r35"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r35"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r35_1",
+   "text": "Первоначальная информация представлена спецаппаратом (коды реквизита 35)?",
+   "why": "ф. 1.1 р. 35.1",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r35_1"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r35_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r36",
+   "text": "Применялись?",
+   "why": "ф. 1.1 р. 36",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "36"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r36"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r36"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f1_1.r37",
+   "text": "Дата утверждения руководителем следственного органа, начальником подразделения дознания, прокурором принятого решения?",
+   "why": "ф. 1.1 р. 37",
+   "forms": [
+    "1.1"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f1_1.r37"
+    ]
+   },
+   "sets": [
+    "fact.f1_1.r37"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r15",
+   "text": "Место проживания; адрес проживания?",
+   "why": "ф. 2 р. 15",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "15"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r15"
+    ]
+   },
+   "sets": [
+    "fact.f2.r15"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r20",
+   "text": "Место работы, учебы?",
+   "why": "ф. 2 р. 20",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r20"
+    ]
+   },
+   "sets": [
+    "fact.f2.r20"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r27",
+   "text": "Лицо задерживалось в порядке ст. 91, 92 УПК РФ; мера пресечения заключение под стражу избиралась?",
+   "why": "ф. 2 р. 27",
+   "forms": [
+    "2"
+   ],
+   "entity": "crime_by_person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "27"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r27"
+    ]
+   },
+   "sets": [
+    "fact.f2.r27"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r30",
+   "text": "Вид экономической деятельности, в ходе осуществления которой лицо совершило преступление (по классификатору № 1)?",
+   "why": "ф. 2 р. 30",
+   "forms": [
+    "2"
+   ],
+   "entity": "crime_by_person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r30"
+    ]
+   },
+   "sets": [
+    "fact.f2.r30"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r36_1",
+   "text": "Лицо является потребителем наркотических средств; являлось подставным лицом, координатором подставных лиц?",
+   "why": "ф. 2 р. 36.1",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "36.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r36_1"
+    ]
+   },
+   "sets": [
+    "fact.f2.r36_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r39",
+   "text": "Лицо совершило преступление со связями: коррумпированными, международными, межрегиональными?",
+   "why": "ф. 2 р. 39",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "39"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r39"
+    ]
+   },
+   "sets": [
+    "fact.f2.r39"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r40",
+   "text": "Признано: исполнителем, организатором, подстрекателем, пособником?",
+   "why": "ф. 2 р. 40",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "40"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r40"
+    ]
+   },
+   "sets": [
+    "fact.f2.r40"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r41",
+   "text": "Являлось участником организованной группы, преступного сообщества (организации); совершило серию аналогичных преступлений, преступление по найму (заказу)?",
+   "why": "ф. 2 р. 41",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "41"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r41"
+    ]
+   },
+   "sets": [
+    "fact.f2.r41"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r42",
+   "text": "Находясь под следствием, с мерой пресечения, не связанной с арестом, в розыске; мера пресечения содержание под стражей изменена?",
+   "why": "ф. 2 р. 42",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "42"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r42"
+    ]
+   },
+   "sets": [
+    "fact.f2.r42"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r43",
+   "text": "Совершило два и более преступления, но к уголовной ответственности за них не привлекалось?",
+   "why": "ф. 2 р. 43",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "43"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r43"
+    ]
+   },
+   "sets": [
+    "fact.f2.r43"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r44",
+   "text": "Лицо, ранее совершавшее преступления, привлекалось к уголовной ответственности два, три и более раза?",
+   "why": "ф. 2 р. 44",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "44"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r44"
+    ]
+   },
+   "sets": [
+    "fact.f2.r44"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r46",
+   "text": "Совершило рецидив, опасный, особо опасный?",
+   "why": "ф. 2 р. 46",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "46"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r46"
+    ]
+   },
+   "sets": [
+    "fact.f2.r46"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r47",
+   "text": "Ранее содержалось в ИУ, в т.ч. данной области, края, республики?",
+   "why": "ф. 2 р. 47",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "47"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r47"
+    ]
+   },
+   "sets": [
+    "fact.f2.r47"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r48",
+   "text": "Совершило преступление после освобождения из ИУ, в период неотбытой части наказания, условного осуждения, пробации, отбывания наказания?",
+   "why": "ф. 2 р. 48",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "48"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r48"
+    ]
+   },
+   "sets": [
+    "fact.f2.r48"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r49",
+   "text": "Освобождалось от уголовной ответственности, от наказания; судимость погашена?",
+   "why": "ф. 2 р. 49",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "49"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r49"
+    ]
+   },
+   "sets": [
+    "fact.f2.r49"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r50",
+   "text": "Ранее совершало преступление?",
+   "why": "ф. 2 р. 50",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "50"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r50"
+    ]
+   },
+   "sets": [
+    "fact.f2.r50"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r51",
+   "text": "Результат расследования?",
+   "why": "ф. 2 р. 51",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "51"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r51"
+    ]
+   },
+   "sets": [
+    "fact.f2.r51"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r51_1",
+   "text": "Судебное решение (по справочнику № 16)?",
+   "why": "ф. 2 р. 51.1",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 16
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r51_1"
+    ]
+   },
+   "sets": [
+    "fact.f2.r51_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r52",
+   "text": "На лицо содержится информация в АБД?",
+   "why": "ф. 2 р. 52",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "52"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r52"
+    ]
+   },
+   "sets": [
+    "fact.f2.r52"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r53",
+   "text": "К лицу ранее применялись меры административного воздействия?",
+   "why": "ф. 2 р. 53",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "53"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r53"
+    ]
+   },
+   "sets": [
+    "fact.f2.r53"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r54",
+   "text": "Уголовное дело расследовано (разрешен материал)?",
+   "why": "ф. 2 р. 54",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "54"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r54"
+    ]
+   },
+   "sets": [
+    "fact.f2.r54"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r54_1",
+   "text": "Решение принято судьей?",
+   "why": "ф. 2 р. 54.1",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "54.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r54_1"
+    ]
+   },
+   "sets": [
+    "fact.f2.r54_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r55",
+   "text": "Лицо, совершившее преступление, состояло на учете; объявлялось в розыск по данному делу?",
+   "why": "ф. 2 р. 55",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "55"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r55"
+    ]
+   },
+   "sets": [
+    "fact.f2.r55"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r7",
+   "text": "Фамилия?",
+   "why": "ф. 2 р. 7",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r7"
+    ]
+   },
+   "sets": [
+    "fact.f2.r7"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2.r8",
+   "text": "Имя (реквизит 8), отчество (реквизит 9)?",
+   "why": "ф. 2 р. 8",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2.r8"
+    ]
+   },
+   "sets": [
+    "fact.f2.r8"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r10",
+   "text": "Отчество?",
+   "why": "ф. 2.1 р. 10",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r10"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r10"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r23",
+   "text": "Основание признания лица подозреваемым, обвиняемым; дата принятия решения (производства процессуального действия)?",
+   "why": "ф. 2.1 р. 23",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "23"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r23"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r23"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r24",
+   "text": "Применена мера процессуального принуждения?",
+   "why": "ф. 2.1 р. 24",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "24"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r24"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r24"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r25",
+   "text": "Результат расследования; дата принятия решения?",
+   "why": "ф. 2.1 р. 25",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r25"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r25"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r26",
+   "text": "Уголовное дело расследовано (разрешен материал) руководителем следственного органа, следователем, дознавателем?",
+   "why": "ф. 2.1 р. 26",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "26"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r26"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r26"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r7",
+   "text": "Персональные данные не заполняются?",
+   "why": "ф. 2.1 р. 7",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "7"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r7"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r7"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r8",
+   "text": "Фамилия?",
+   "why": "ф. 2.1 р. 8",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r8"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r8"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f2_1.r9",
+   "text": "Имя?",
+   "why": "ф. 2.1 р. 9",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f2_1.r9"
+    ]
+   },
+   "sets": [
+    "fact.f2_1.r9"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r10",
+   "text": "Дата, до которой продлен срок расследования?",
+   "why": "ф. 3 р. 10",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r10"
+    ]
+   },
+   "sets": [
+    "fact.f3.r10"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r11",
+   "text": "Дата передачи дела для ознакомления обвиняемого и его защитника?",
+   "why": "ф. 3 р. 11",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r11"
+    ]
+   },
+   "sets": [
+    "fact.f3.r11"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r12",
+   "text": "Дело приостановлено?",
+   "why": "ф. 3 р. 12",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "12"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r12"
+    ]
+   },
+   "sets": [
+    "fact.f3.r12"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r12_1",
+   "text": "Дата принятия решения (к реквизиту 12)?",
+   "why": "ф. 3 р. 12.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r12_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r12_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r12_2",
+   "text": "Дело передано прокурору?",
+   "why": "ф. 3 р. 12.2",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "12.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r12_2"
+    ]
+   },
+   "sets": [
+    "fact.f3.r12_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r12_3",
+   "text": "Дата принятия решения (к реквизиту 12.2)?",
+   "why": "ф. 3 р. 12.3",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r12_3"
+    ]
+   },
+   "sets": [
+    "fact.f3.r12_3"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r13",
+   "text": "Дело направлено прокурором в суд; прекращено; передано в компетентные органы иностранного государства?",
+   "why": "ф. 3 р. 13",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "13"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r13"
+    ]
+   },
+   "sets": [
+    "fact.f3.r13"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r13_1",
+   "text": "Дата принятия решения (к реквизиту 13)?",
+   "why": "ф. 3 р. 13.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r13_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r13_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r15",
+   "text": "Решение принято?",
+   "why": "ф. 3 р. 15",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "15"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r15"
+    ]
+   },
+   "sets": [
+    "fact.f3.r15"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r16",
+   "text": "Принято к производству после возвращения дела на дополнительное расследование?",
+   "why": "ф. 3 р. 16",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "16"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r16"
+    ]
+   },
+   "sets": [
+    "fact.f3.r16"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r16_1",
+   "text": "Дата принятия к производству?",
+   "why": "ф. 3 р. 16.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r16_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r16_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r16_2",
+   "text": "Уголовное дело направлено в суд после отмены решения о возвращении на дополнительное расследование в порядке ст. 237 УПК РФ, дата принятия решения?",
+   "why": "ф. 3 р. 16.2",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "16.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r16_2"
+    ]
+   },
+   "sets": [
+    "fact.f3.r16_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r17",
+   "text": "Возобновлено производство по ранее прекращенному, ранее приостановленному делу?",
+   "why": "ф. 3 р. 17",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "17"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r17"
+    ]
+   },
+   "sets": [
+    "fact.f3.r17"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r17_1",
+   "text": "Дата принятия решения (к реквизиту 17)?",
+   "why": "ф. 3 р. 17.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r17_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r17_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r18",
+   "text": "Отмена постановления о приостановлении, о прекращении?",
+   "why": "ф. 3 р. 18",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "18"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r18"
+    ]
+   },
+   "sets": [
+    "fact.f3.r18"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r18_1",
+   "text": "Дата принятия решения (к реквизиту 18)?",
+   "why": "ф. 3 р. 18.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r18_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r18_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r7",
+   "text": "Уголовное дело передано / поступило по подследственности (территориальности)?",
+   "why": "ф. 3 р. 7",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "7"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r7"
+    ]
+   },
+   "sets": [
+    "fact.f3.r7"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r7_1",
+   "text": "Дата принятия решения (к реквизиту 7)?",
+   "why": "ф. 3 р. 7.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r7_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r7_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r7_2",
+   "text": "Информация о другом регионе (талон-уведомление)?",
+   "why": "ф. 3 р. 7.2",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "7.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r7_2"
+    ]
+   },
+   "sets": [
+    "fact.f3.r7_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r7_2_1",
+   "text": "Дата поступления уголовного дела (к реквизиту 7.2)?",
+   "why": "ф. 3 р. 7.2.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r7_2_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r7_2_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r8",
+   "text": "Соединено с делом, в т.ч. по признаку серийности; выделено из дела?",
+   "why": "ф. 3 р. 8",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "8"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r8"
+    ]
+   },
+   "sets": [
+    "fact.f3.r8"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r8_1",
+   "text": "Дата принятия решения (к реквизиту 8)?",
+   "why": "ф. 3 р. 8.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r8_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r8_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r9",
+   "text": "Продлен срок расследования?",
+   "why": "ф. 3 р. 9",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "3",
+     "requisite": "9"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r9"
+    ]
+   },
+   "sets": [
+    "fact.f3.r9"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f3.r9_1",
+   "text": "Дата принятия решения (к реквизиту 9)?",
+   "why": "ф. 3 р. 9.1",
+   "forms": [
+    "3"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f3.r9_1"
+    ]
+   },
+   "sets": [
+    "fact.f3.r9_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r10",
+   "text": "Установленная сумма материального ущерба?",
+   "why": "ф. 4 р. 10",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "10"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r10"
+    ]
+   },
+   "sets": [
+    "fact.f4.r10"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r11",
+   "text": "Добровольно погашено (как до возбуждения уголовного дела, так и в процессе следствия)?",
+   "why": "ф. 4 р. 11",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "11"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r11"
+    ]
+   },
+   "sets": [
+    "fact.f4.r11"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r11_1",
+   "text": "Возмещен ущерб (как до возбуждения дела, так и в процессе предварительного расследования)?",
+   "why": "ф. 4 р. 11.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "11.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r11_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r11_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r11_2",
+   "text": "Сумма погашенной задолженности?",
+   "why": "ф. 4 р. 11.2",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "11.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r11_2"
+    ]
+   },
+   "sets": [
+    "fact.f4.r11_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r12",
+   "text": "Наложен арест на имущество (денежные средства), на транспортное средство?",
+   "why": "ф. 4 р. 12",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "12"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r12"
+    ]
+   },
+   "sets": [
+    "fact.f4.r12"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r12_1",
+   "text": "Сумма денежных средств, электронных денежных средств, денежных средств, внесенных в качестве аванса за услуги связи, операции с которыми приостанавливались в порядке ст. 115.2 УПК РФ?",
+   "why": "ф. 4 р. 12.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r12_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r12_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r13",
+   "text": "Сумма штрафных санкций?",
+   "why": "ф. 4 р. 13",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r13"
+    ]
+   },
+   "sets": [
+    "fact.f4.r13"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r15",
+   "text": "Сведения об изъятии имущества, денег, ценностей и предметов преступной деятельности: изъято имущества, денег, ценностей на сумму?",
+   "why": "ф. 4 р. 15",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r15"
+    ]
+   },
+   "sets": [
+    "fact.f4.r15"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r16",
+   "text": "Изъято имущества, денег, сберкнижек, ценных бумаг, кредитных карточек, чековых книжек, иных платежных документов?",
+   "why": "ф. 4 р. 16",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "16"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r16"
+    ]
+   },
+   "sets": [
+    "fact.f4.r16"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r17",
+   "text": "Изъято ценных бумаг, кредитных карточек, чековых книжек, иных платежных документов зарубежных фирм и банков?",
+   "why": "ф. 4 р. 17",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "17"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r17"
+    ]
+   },
+   "sets": [
+    "fact.f4.r17"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r18",
+   "text": "Изъято иностранной валюты (по справочнику № 7)?",
+   "why": "ф. 4 р. 18",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 7
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r18"
+    ]
+   },
+   "sets": [
+    "fact.f4.r18"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r19",
+   "text": "Изъято продовольствия, похищенных (угнанных) транспортных средств, этилового спирта, алкогольной продукции?",
+   "why": "ф. 4 р. 19",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "19"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r19"
+    ]
+   },
+   "sets": [
+    "fact.f4.r19"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r20",
+   "text": "Изъято предметов антиквариата?",
+   "why": "ф. 4 р. 20",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r20"
+    ]
+   },
+   "sets": [
+    "fact.f4.r20"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r21",
+   "text": "Изъято культурных, исторических ценностей?",
+   "why": "ф. 4 р. 21",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "21"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r21"
+    ]
+   },
+   "sets": [
+    "fact.f4.r21"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r22",
+   "text": "Изъято драгоценных металлов?",
+   "why": "ф. 4 р. 22",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "22"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r22"
+    ]
+   },
+   "sets": [
+    "fact.f4.r22"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r23",
+   "text": "Изъято драгоценных камней?",
+   "why": "ф. 4 р. 23",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "23"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r23"
+    ]
+   },
+   "sets": [
+    "fact.f4.r23"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r23_1",
+   "text": "Изъято необработанных драгоценных камней?",
+   "why": "ф. 4 р. 23.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r23_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r23_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r23_2",
+   "text": "Изъято полудрагоценных камней, необработанных полудрагоценных камней?",
+   "why": "ф. 4 р. 23.2",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "23.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r23_2"
+    ]
+   },
+   "sets": [
+    "fact.f4.r23_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r24",
+   "text": "Изъято цветных, черных, редкоземельных металлов, нефти, нефтепродуктов и ГСМ, леса и лесоматериалов?",
+   "why": "ф. 4 р. 24",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "24"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r24"
+    ]
+   },
+   "sets": [
+    "fact.f4.r24"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r24_1",
+   "text": "Изъято лома металлов?",
+   "why": "ф. 4 р. 24.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "24.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r24_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r24_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r25",
+   "text": "Изъято радиоактивных материалов?",
+   "why": "ф. 4 р. 25",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r25"
+    ]
+   },
+   "sets": [
+    "fact.f4.r25"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r26",
+   "text": "Изъято оружия, боеприпасов, взрывчатых материалов (по справочнику № 4)?",
+   "why": "ф. 4 р. 26",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 4
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r26"
+    ]
+   },
+   "sets": [
+    "fact.f4.r26"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r27",
+   "text": "Изъято наркотических средств, психотропных или сильнодействующих веществ, наркосодержащих растений (либо их частей) (по справочнику № 8)?",
+   "why": "ф. 4 р. 27",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r27"
+    ]
+   },
+   "sets": [
+    "fact.f4.r27"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r27_1",
+   "text": "Изъято наркотических средств: вид, код по справочнику № 8 (например, героин – 3114), количество в миллиграммах?",
+   "why": "ф. 4 р. 27.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8,
+    "options_from": {
+     "form": "4",
+     "requisite": "27.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r27_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r27_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r27_2",
+   "text": "Изъято прекурсоров (по справочнику № 8)?",
+   "why": "ф. 4 р. 27.2",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r27_2"
+    ]
+   },
+   "sets": [
+    "fact.f4.r27_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r27_3",
+   "text": "Уничтожено (изъято) наркосодержащих растений при выявлении их посевов?",
+   "why": "ф. 4 р. 27.3",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r27_3"
+    ]
+   },
+   "sets": [
+    "fact.f4.r27_3"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r27_4",
+   "text": "Количество выявленных незаконных нарколабораторий, других мест незаконного производства, изготовления или переработки?",
+   "why": "ф. 4 р. 27.4",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r27_4"
+    ]
+   },
+   "sets": [
+    "fact.f4.r27_4"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r28",
+   "text": "Изъято инструментов, оборудования, используемых для изготовления наркотических средств или психотропных веществ?",
+   "why": "ф. 4 р. 28",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 8,
+    "options_from": {
+     "form": "4",
+     "requisite": "28"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r28"
+    ]
+   },
+   "sets": [
+    "fact.f4.r28"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r29",
+   "text": "Изъято используемых преступниками при совершении преступлений технических средств, транспортных средств, средств личной защиты?",
+   "why": "ф. 4 р. 29",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "29"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r29"
+    ]
+   },
+   "sets": [
+    "fact.f4.r29"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r29_1",
+   "text": "Изъято материалов террористического или экстремистского характера?",
+   "why": "ф. 4 р. 29.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "29.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r29_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r29_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r29_2",
+   "text": "Изъято банковских карт (иных средств платежа), сим-карт?",
+   "why": "ф. 4 р. 29.2",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "29.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r29_2"
+    ]
+   },
+   "sets": [
+    "fact.f4.r29_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r30",
+   "text": "Изъято поддельных денег, иностранной валюты, ценных бумаг, финансово-платежных документов, кредитных карточек?",
+   "why": "ф. 4 р. 30",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "30"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r30"
+    ]
+   },
+   "sets": [
+    "fact.f4.r30"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r30_1",
+   "text": "Изъято поддельных, строка 1: вид (код реквизита 30), количество штук, сумма?",
+   "why": "ф. 4 р. 30.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r30_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r30_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r30_2",
+   "text": "Изъято поддельных, строка 2: вид (код реквизита 30), количество штук, сумма?",
+   "why": "ф. 4 р. 30.2",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r30_2"
+    ]
+   },
+   "sets": [
+    "fact.f4.r30_2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r30_3",
+   "text": "Изъято поддельных, строка 3: вид (код реквизита 30), количество штук, сумма?",
+   "why": "ф. 4 р. 30.3",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r30_3"
+    ]
+   },
+   "sets": [
+    "fact.f4.r30_3"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r30_4",
+   "text": "Изъято поддельных, строка 4: вид (код реквизита 30), количество штук, сумма?",
+   "why": "ф. 4 р. 30.4",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r30_4"
+    ]
+   },
+   "sets": [
+    "fact.f4.r30_4"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r31",
+   "text": "Изъято поддельных купюр (по справочнику № 7)?",
+   "why": "ф. 4 р. 31",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 7
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r31"
+    ]
+   },
+   "sets": [
+    "fact.f4.r31"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r32",
+   "text": "Предъявлен гражданский иск на сумму?",
+   "why": "ф. 4 р. 32",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r32"
+    ]
+   },
+   "sets": [
+    "fact.f4.r32"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r32_1",
+   "text": "Вещественные доказательства?",
+   "why": "ф. 4 р. 32.1",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "32.1"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r32_1"
+    ]
+   },
+   "sets": [
+    "fact.f4.r32_1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f4.r33",
+   "text": "Уголовное дело расследовано (разрешен материал)?",
+   "why": "ф. 4 р. 33",
+   "forms": [
+    "4"
+   ],
+   "entity": "damage",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "4",
+     "requisite": "33"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f4.r33"
+    ]
+   },
+   "sets": [
+    "fact.f4.r33"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f5.r10",
+   "text": "Характеристика потерпевшего (физического лица)?",
+   "why": "ф. 5 р. 10",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f5.r10"
+    ]
+   },
+   "sets": [
+    "fact.f5.r10"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f5.r11",
+   "text": "Материальный ущерб причинен физическому, юридическому лицу; размер причиненного материального ущерба?",
+   "why": "ф. 5 р. 11",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "5",
+     "requisite": "11"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f5.r11"
+    ]
+   },
+   "sets": [
+    "fact.f5.r11"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f5.r18",
+   "text": "Преступление совершено в: республиканском, краевом или областном центре; городе, поселке городского типа, сельской местности, за пределами России; в зоне?",
+   "why": "ф. 5 р. 18",
+   "forms": [
+    "5"
+   ],
+   "entity": "crime",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "5",
+     "requisite": "18"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f5.r18"
+    ]
+   },
+   "sets": [
+    "fact.f5.r18"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f5.r21",
+   "text": "Уголовное дело находится в производстве (материал разрешен)?",
+   "why": "ф. 5 р. 21",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "5",
+     "requisite": "21"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f5.r21"
+    ]
+   },
+   "sets": [
+    "fact.f5.r21"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f5.r8",
+   "text": "Потерпевший является физическим, юридическим лицом?",
+   "why": "ф. 5 р. 8",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "5",
+     "requisite": "8"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f5.r8"
+    ]
+   },
+   "sets": [
+    "fact.f5.r8"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f6.r7",
+   "text": "Место рождения (обвиняемого): республика, край, область, район, город, поселок, деревня, село?",
+   "why": "ф. 6 р. 7",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f6.r7"
+    ]
+   },
+   "sets": [
+    "fact.f6.r7"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.f6.r8",
+   "text": "Дата направления уголовного дела в суд?",
+   "why": "ф. 6 р. 8",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.f6.r8"
+    ]
+   },
+   "sets": [
+    "fact.f6.r8"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_in_r34",
+   "text": "Решение по УД?",
+   "why": "ф. ipk-in р. 34",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_in_r34"
+    ]
+   },
+   "sets": [
+    "fact.fipk_in_r34"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_in_r35",
+   "text": "Дата принятия решения по УД?",
+   "why": "ф. ipk-in р. 35",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_in_r35"
+    ]
+   },
+   "sets": [
+    "fact.fipk_in_r35"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_in_r37",
+   "text": "Дополнительные сведения?",
+   "why": "ф. ipk-in р. 37",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_in_r37"
+    ]
+   },
+   "sets": [
+    "fact.fipk_in_r37"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_in_r38",
+   "text": "Карту заполнил (должность, ФИО, телефон)?",
+   "why": "ф. ipk-in р. 38",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_in_r38"
+    ]
+   },
+   "sets": [
+    "fact.fipk_in_r38"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_in_r39",
+   "text": "Дата заполнения?",
+   "why": "ф. ipk-in р. 39",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_in_r39"
+    ]
+   },
+   "sets": [
+    "fact.fipk_in_r39"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_in_rhead_sign",
+   "text": "Начальник органа (ФИО, подпись)?",
+   "why": "ф. ipk-in р. б/н",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_in_rhead_sign"
+    ]
+   },
+   "sets": [
+    "fact.fipk_in_rhead_sign"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_in_rtransfer_date",
+   "text": "Дата передачи Карты-ИГ ответственному лицу?",
+   "why": "ф. ipk-in р. б/н",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_in_rtransfer_date"
+    ]
+   },
+   "sets": [
+    "fact.fipk_in_rtransfer_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_r22",
+   "text": "Вид документа?",
+   "why": "ф. ipk р. 22",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "22"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_r22"
+    ]
+   },
+   "sets": [
+    "fact.fipk_r22"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_r28",
+   "text": "Подследственность?",
+   "why": "ф. ipk р. 28",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "28"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_r28"
+    ]
+   },
+   "sets": [
+    "fact.fipk_r28"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_r65",
+   "text": "Отметка о коррекции и снятии?",
+   "why": "ф. ipk р. 65",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "65"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_r65"
+    ]
+   },
+   "sets": [
+    "fact.fipk_r65"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_r76",
+   "text": "Решение по УД / отказному материалу?",
+   "why": "ф. ipk р. 76",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "76"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_r76"
+    ]
+   },
+   "sets": [
+    "fact.fipk_r76"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_r77",
+   "text": "Дата принятия решения по УД / отказному материалу?",
+   "why": "ф. ipk р. 77",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_r77"
+    ]
+   },
+   "sets": [
+    "fact.fipk_r77"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_r85",
+   "text": "Основание снятия с учета?",
+   "why": "ф. ipk р. 85",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "85"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_r85"
+    ]
+   },
+   "sets": [
+    "fact.fipk_r85"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_rdoc_date",
+   "text": "Дата документа?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_rdoc_date"
+    ]
+   },
+   "sets": [
+    "fact.fipk_rdoc_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_repisode_date",
+   "text": "Дата выявления эпизода?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_repisode_date"
+    ]
+   },
+   "sets": [
+    "fact.fipk_repisode_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_rfilled_by",
+   "text": "Заполнил: должность, фамилия, подпись?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_rfilled_by"
+    ]
+   },
+   "sets": [
+    "fact.fipk_rfilled_by"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.fipk_rhead_sign",
+   "text": "Руководитель: должность, фамилия, подпись?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.fipk_rhead_sign"
+    ]
+   },
+   "sets": [
+    "fact.fipk_rhead_sign"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.age",
+   "text": "Дата рождения, полных лет; возраст (на момент совершения преступления)?",
+   "why": "ф. 2.1 р. 12, ф. 2 р. 11",
+   "forms": [
+    "2",
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "12"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.age"
+    ]
+   },
+   "sets": [
+    "fact.person.age"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.arrival_purpose",
+   "text": "Цель приезда для иностранных граждан и лиц без гражданства?",
+   "why": "ф. 1.1 р. 21, ф. 2 р. 16",
+   "forms": [
+    "1.1",
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1.1",
+     "requisite": "21"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.arrival_purpose"
+    ]
+   },
+   "sets": [
+    "fact.person.arrival_purpose"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.birth_date",
+   "text": "Дата рождения (обвиняемого)?",
+   "why": "ф. 6 р. 6, ф. ipk-in р. 10, ф. ipk р. 05",
+   "forms": [
+    "6",
+    "ipk",
+    "ipk-in"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.birth_date"
+    ]
+   },
+   "sets": [
+    "fact.person.birth_date"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.citizenship.opt27ecf8",
+   "text": "Лицо совершило преступление в составе группы; с участием, только иностранных граждан, лиц без гражданства?",
+   "why": "ф. 2 р. 38",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "38"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.citizenship.opt27ecf8"
+    ]
+   },
+   "sets": [
+    "fact.person.citizenship.opt27ecf8"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.citizenship.spr6",
+   "text": "Гражданство лица, совершившего преступление (по справочнику № 6)?",
+   "why": "ф. 1.1 р. 18, ф. 2.1 р. 13, ф. 2 р. 13",
+   "forms": [
+    "1.1",
+    "2",
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 6
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.citizenship.spr6"
+    ]
+   },
+   "sets": [
+    "fact.person.citizenship.spr6"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.education",
+   "text": "Образование?",
+   "why": "ф. 2 р. 12",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "12"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.education"
+    ]
+   },
+   "sets": [
+    "fact.person.education"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.first_name",
+   "text": "Имя (обвиняемого)?",
+   "why": "ф. 6 р. 4, ф. ipk-in р. 8, ф. ipk р. 03",
+   "forms": [
+    "6",
+    "ipk",
+    "ipk-in"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.first_name"
+    ]
+   },
+   "sets": [
+    "fact.person.first_name"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.group",
+   "text": "Лицо совершило преступление в составе, с участием, только?",
+   "why": "ф. 2.1 р. 21",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "21"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.group"
+    ]
+   },
+   "sets": [
+    "fact.person.group"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.intoxication",
+   "text": "Лицо совершило преступление в состоянии опьянения; являясь хроническим алкоголиком, потребителем наркотических средств и психотропных веществ, токсикоманом?",
+   "why": "ф. 2 р. 36",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "36"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.intoxication"
+    ]
+   },
+   "sets": [
+    "fact.person.intoxication"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r11",
+   "text": "Пол?",
+   "why": "ф. ipk-in р. 11",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r11"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r11"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r12",
+   "text": "Гражданство?",
+   "why": "ф. ipk-in р. 12",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r12"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r12"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r13",
+   "text": "Место рождения: страна, республика; край, область, район, город, населенный пункт?",
+   "why": "ф. ipk-in р. 13",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r13"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r13"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r14",
+   "text": "Паспорт (или иной документ): тип документа; № документа; дата выдачи; кем выдан?",
+   "why": "ф. ipk-in р. 14",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r14"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r14"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r15",
+   "text": "Страна выбытия?",
+   "why": "ф. ipk-in р. 15",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r15"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r15"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r16",
+   "text": "Дата въезда?",
+   "why": "ф. ipk-in р. 16",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r16"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r16"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r17",
+   "text": "Цель въезда, статус?",
+   "why": "ф. ipk-in р. 17",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r17"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r17"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r18",
+   "text": "Место работы, учебы: тип предприятия (учреждения); наименование?",
+   "why": "ф. ipk-in р. 18",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r18"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r18"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r19",
+   "text": "Сведения о регистрации по месту жительства: страна, республика, субъект Российской Федерации; край, область, район; город, населенный пункт?",
+   "why": "ф. ipk-in р. 19",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r19"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r19"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r20",
+   "text": "Процессуальный статус (подозреваемый, обвиняемый, потерпевший)?",
+   "why": "ф. ipk-in р. 20",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r20"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r20"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r31",
+   "text": "Дата задержания?",
+   "why": "ф. ipk-in р. 31",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r31"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r31"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r32",
+   "text": "Дата предъявления обвинения?",
+   "why": "ф. ipk-in р. 32",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "date",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r32"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r32"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_in_r33",
+   "text": "Мера пресечения: вид; дата?",
+   "why": "ф. ipk-in р. 33",
+   "forms": [
+    "ipk-in"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_in_r33"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_in_r33"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r06",
+   "text": "Паспорт (другой документ, удостоверение личности, свидетельство)?",
+   "why": "ф. ipk р. 06",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r06"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r06"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r07",
+   "text": "Место рождения: республика; край, область; район; населенный пункт?",
+   "why": "ф. ipk р. 07",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r07"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r07"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r08",
+   "text": "Адрес: республика; край, область; район; населенный пункт; улица; дом; корпус; квартира; микрорайон; административный участок?",
+   "why": "ф. ipk р. 08",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r08"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r08"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r09",
+   "text": "Адрес фактического проживания: республика; край, область; район; населенный пункт; улица; дом; корпус; квартира; микрорайон; административный участок?",
+   "why": "ф. ipk р. 09",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r09"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r09"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r10",
+   "text": "Национальность?",
+   "why": "ф. ipk р. 10",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r10"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r10"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r11",
+   "text": "Место работы?",
+   "why": "ф. ipk р. 11",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r11"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r11"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r12",
+   "text": "Специальность?",
+   "why": "ф. ipk р. 12",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r12"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r12"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r13",
+   "text": "Клички?",
+   "why": "ф. ipk р. 13",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r13"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r13"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r14",
+   "text": "Выезжает, посещает (республика, край, область, район, населенный пункт, улица, дом, корпус или наименование объекта)?",
+   "why": "ф. ipk р. 14",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r14"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r14"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r15",
+   "text": "Порочные наклонности?",
+   "why": "ф. ipk р. 15",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "15"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r15"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r15"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r16",
+   "text": "Интересы?",
+   "why": "ф. ipk р. 16",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "16"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r16"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r16"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r17",
+   "text": "Имеет навык?",
+   "why": "ф. ipk р. 17",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "17"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r17"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r17"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r18",
+   "text": "Знает язык?",
+   "why": "ф. ipk р. 18",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r18"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r18"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r37",
+   "text": "Особенности внешности?",
+   "why": "ф. ipk р. 37",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "37"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r37"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r37"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r38",
+   "text": "Особенности поведения?",
+   "why": "ф. ipk р. 38",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "38"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r38"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r38"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r39",
+   "text": "Группа крови, резус?",
+   "why": "ф. ipk р. 39",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "39"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r39"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r39"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r41",
+   "text": "Описание иных характерных признаков?",
+   "why": "ф. ipk р. 41",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r41"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r41"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r42",
+   "text": "Примерный год рождения неустановленного лица?",
+   "why": "ф. ipk р. 42",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r42"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r42"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_r70",
+   "text": "Гражданство?",
+   "why": "ф. ipk р. 70",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_r70"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_r70"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_rbuild",
+   "text": "Телосложение?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "build"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_rbuild"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_rbuild"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_rcategory",
+   "text": "Категория?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "category"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_rcategory"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_rcategory"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_rhair",
+   "text": "Волосы?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "hair"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_rhair"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_rhair"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_rheight",
+   "text": "Рост?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "height"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_rheight"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_rheight"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_rlooks_like",
+   "text": "Внешне похож на?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "looks_like"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_rlooks_like"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_rlooks_like"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_rmarks",
+   "text": "Особые приметы и татуировки: код расположения, код приметы (татуировки), описание?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": true,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "marks"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_rmarks"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_rmarks"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.ipk_rsex",
+   "text": "Пол?",
+   "why": "ф. ipk р. б/н",
+   "forms": [
+    "ipk"
+   ],
+   "entity": "case",
+   "answer": {
+    "type": "enum",
+    "multiple": false,
+    "options_from": {
+     "form": "ipk",
+     "requisite": "sex"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.ipk_rsex"
+    ]
+   },
+   "sets": [
+    "fact.person.ipk_rsex"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.motive.opt2d3b50",
+   "text": "Мотив (цель) преступления?",
+   "why": "ф. 2 р. 35",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "35"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.motive.opt2d3b50"
+    ]
+   },
+   "sets": [
+    "fact.person.motive.opt2d3b50"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.motive.opt4b44f4",
+   "text": "Мотив (цель) преступления?",
+   "why": "ф. 2.1 р. 22",
+   "forms": [
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "22"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.motive.opt4b44f4"
+    ]
+   },
+   "sets": [
+    "fact.person.motive.opt4b44f4"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.nationality",
+   "text": "Национальность (по справочнику № 5)?",
+   "why": "ф. 1.1 р. 22, ф. 2 р. 17",
+   "forms": [
+    "1.1",
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 5
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.nationality"
+    ]
+   },
+   "sets": [
+    "fact.person.nationality"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.patronymic",
+   "text": "Отчество (обвиняемого)?",
+   "why": "ф. 6 р. 5, ф. ipk-in р. 9, ф. ipk р. 4",
+   "forms": [
+    "6",
+    "ipk",
+    "ipk-in"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.patronymic"
+    ]
+   },
+   "sets": [
+    "fact.person.patronymic"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.position",
+   "text": "Должностное положение (по справочнику № 10)?",
+   "why": "ф. 1.1 р. 24, ф. 2 р. 19",
+   "forms": [
+    "1.1",
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 10
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.position"
+    ]
+   },
+   "sets": [
+    "fact.person.position"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.prev_citizenship",
+   "text": "Гражданство, предшествовавшее получению гражданства Российской Федерации (по справочнику № 6)?",
+   "why": "ф. 1.1 р. 18.1, ф. 2 р. 13.1",
+   "forms": [
+    "1.1",
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 6
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.prev_citizenship"
+    ]
+   },
+   "sets": [
+    "fact.person.prev_citizenship"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.record",
+   "text": "Ранее судимо?",
+   "why": "ф. 2 р. 45",
+   "forms": [
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2",
+     "requisite": "45"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.record"
+    ]
+   },
+   "sets": [
+    "fact.person.record"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.residence_country",
+   "text": "Страна проживания (по справочнику № 6)?",
+   "why": "ф. 1.1 р. 19, ф. 2 р. 14",
+   "forms": [
+    "1.1",
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 6
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.residence_country"
+    ]
+   },
+   "sets": [
+    "fact.person.residence_country"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.service",
+   "text": "Лицо, совершившее преступление, установлено (служба по справочнику № 14)?",
+   "why": "ф. 2.1 р. 27, ф. 2 р. 56",
+   "forms": [
+    "2",
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 14
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.service"
+    ]
+   },
+   "sets": [
+    "fact.person.service"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.sex",
+   "text": "Пол?",
+   "why": "ф. 2.1 р. 11, ф. 2 р. 10",
+   "forms": [
+    "2",
+    "2.1"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "2.1",
+     "requisite": "11"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.sex"
+    ]
+   },
+   "sets": [
+    "fact.person.sex"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.social_status",
+   "text": "Социальное положение лица, совершившего преступление (по справочнику № 9)?",
+   "why": "ф. 1.1 р. 23, ф. 2 р. 18",
+   "forms": [
+    "1.1",
+    "2"
+   ],
+   "entity": "person",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 9
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.social_status"
+    ]
+   },
+   "sets": [
+    "fact.person.social_status"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.person.surname",
+   "text": "Фамилия (обвиняемого)?",
+   "why": "ф. 6 р. 3, ф. ipk-in р. 7, ф. ipk р. 02",
+   "forms": [
+    "6",
+    "ipk",
+    "ipk-in"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.person.surname"
+    ]
+   },
+   "sets": [
+    "fact.person.surname"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victim.arrival_purpose",
+   "text": "Цель приезда для иностранных граждан и лиц без гражданства?",
+   "why": "ф. 5 р. 16",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "5",
+     "requisite": "16"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victim.arrival_purpose"
+    ]
+   },
+   "sets": [
+    "fact.victim.arrival_purpose"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victim.citizenship",
+   "text": "Гражданство (по справочнику № 6)?",
+   "why": "ф. 5 р. 14",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 6
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victim.citizenship"
+    ]
+   },
+   "sets": [
+    "fact.victim.citizenship"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victim.position",
+   "text": "Должностное положение (по справочнику № 10)?",
+   "why": "ф. 5 р. 13",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 10
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victim.position"
+    ]
+   },
+   "sets": [
+    "fact.victim.position"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victim.residence_country",
+   "text": "Страна проживания (по справочнику № 6)?",
+   "why": "ф. 5 р. 15",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 6
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victim.residence_country"
+    ]
+   },
+   "sets": [
+    "fact.victim.residence_country"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victim.sex",
+   "text": "Пол потерпевшего?",
+   "why": "ф. 5 р. 9",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "5",
+     "requisite": "9"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victim.sex"
+    ]
+   },
+   "sets": [
+    "fact.victim.sex"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victim.social_status",
+   "text": "Социальное положение (по справочнику № 9)?",
+   "why": "ф. 5 р. 12",
+   "forms": [
+    "5"
+   ],
+   "entity": "victim",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 9
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victim.social_status"
+    ]
+   },
+   "sets": [
+    "fact.victim.social_status"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victims.arrival_purpose",
+   "text": "Цель приезда для иностранных граждан и лиц без гражданства?",
+   "why": "ф. 1 р. 38",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "1",
+     "requisite": "38"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victims.arrival_purpose"
+    ]
+   },
+   "sets": [
+    "fact.victims.arrival_purpose"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victims.citizenship",
+   "text": "Гражданство потерпевшего (по справочнику № 6)?",
+   "why": "ф. 1 р. 36",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 6
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victims.citizenship"
+    ]
+   },
+   "sets": [
+    "fact.victims.citizenship"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victims.position",
+   "text": "Должностное положение потерпевшего (по справочнику № 10)?",
+   "why": "ф. 1 р. 35",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 10
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victims.position"
+    ]
+   },
+   "sets": [
+    "fact.victims.position"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victims.residence_country",
+   "text": "Страна проживания потерпевшего (по справочнику № 6)?",
+   "why": "ф. 1 р. 37",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 6
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victims.residence_country"
+    ]
+   },
+   "sets": [
+    "fact.victims.residence_country"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victims.social_status",
+   "text": "Социальное положение потерпевшего (по справочнику № 9)?",
+   "why": "ф. 1 р. 34",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 9
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victims.social_status"
+    ]
+   },
+   "sets": [
+    "fact.victims.social_status"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.victims.victims_count",
+   "text": "Количество потерпевших?",
+   "why": "ф. 1 р. 30",
+   "forms": [
+    "1"
+   ],
+   "entity": "victims",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.victims.victims_count"
+    ]
+   },
+   "sets": [
+    "fact.victims.victims_count"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  }
+ ]
+}

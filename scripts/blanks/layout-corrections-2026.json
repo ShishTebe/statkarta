@@ -1,0 +1,4729 @@
+{
+ "note": "Ручные исправления карт раскладки бланков (Фаза 1.6). Ссылка на группу черновика: [реквизит, буква] – буква по порядку групп слева направо, '*' – все группы. Сверка – по контрольному заполнению (scripts/blanks/testfill.mjs, groupfill.mjs), печать Word. Применение: python3 scripts/blanks/build_layout.py --apply <форма>.",
+ "1": {
+  "status": "draft",
+  "fields": [
+   {
+    "requisite": "10.3",
+    "groups": [
+     [
+      "11",
+      "a"
+     ]
+    ],
+    "note": "шесть клеток р. 10.3 разбор отнес к р. 11"
+   },
+   {
+    "requisite": "11",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        "11",
+        "b"
+       ]
+      ]
+     },
+     {
+      "role": "date",
+      "facts": [
+       "fact.case.vud_date",
+       "fact.case.vud_date.date"
+      ],
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "11",
+        "c"
+       ]
+      ]
+     }
+    ],
+    "note": "вид (1) и дата «год мес. чис.» в восьми клетках"
+   },
+   {
+    "requisite": "12",
+    "parts": [
+     {
+      "role": "text",
+      "place": {
+       "table": 3,
+       "row": 9,
+       "cell": 1,
+       "slot": 0,
+       "span": 2
+      }
+     },
+     {
+      "role": "date",
+      "facts": [
+       "fact.crime.crime_date"
+      ],
+      "time_fill": 0,
+      "format": "YYYYMMDDHH",
+      "groups": [
+       [
+        "12",
+        "a"
+       ]
+      ]
+     }
+    ],
+    "note": "фабула на линейках; дата и час совершения – «год мес. чис. часы» в десяти клетках"
+   },
+   {
+    "requisite": "13",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        "13",
+        "a"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        "13",
+        "b"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        "13",
+        "c"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        "13",
+        "d"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        "13",
+        "e"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        "13",
+        "f"
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+   },
+   {
+    "requisite": "sign.investigator",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "investigator",
+      "place": {
+       "table": 3,
+       "row": 49,
+       "cell": 1,
+       "slot": 2,
+       "span": 1
+      }
+     }
+    ],
+    "note": "фамилия лица, ведущего расследование (ответ В-16)"
+   },
+   {
+    "requisite": "20",
+    "groups": [
+     [
+      "20",
+      "a"
+     ]
+    ],
+    "note": "вторая группа – клетки кода органа прокуратуры р. 40"
+   },
+   {
+    "requisite": "30",
+    "groups": [
+     [
+      "30",
+      "*"
+     ],
+     [
+      "31",
+      "a"
+     ],
+     [
+      "31",
+      "b"
+     ],
+     [
+      "31",
+      "c"
+     ],
+     [
+      "31",
+      "d"
+     ],
+     [
+      "31",
+      "e"
+     ]
+    ],
+    "note": "четвертую строку (30.10–30.12) разбор отнес к р. 31"
+   },
+   {
+    "requisite": "31",
+    "groups": [
+     [
+      "31",
+      "f"
+     ]
+    ]
+   },
+   {
+    "requisite": "34",
+    "groups": [
+     [
+      "34",
+      "*"
+     ],
+     [
+      "35",
+      "a"
+     ],
+     [
+      "35",
+      "b"
+     ],
+     [
+      "35",
+      "c"
+     ],
+     [
+      "35",
+      "d"
+     ],
+     [
+      "35",
+      "e"
+     ],
+     [
+      831,
+      832,
+      833,
+      834
+     ]
+    ],
+    "note": "второй ряд р. 34 разбор отнес к р. 35; порядок групп – слева направо по рядам"
+   },
+   {
+    "requisite": "35",
+    "groups": [
+     [
+      862,
+      858,
+      857,
+      860,
+      861,
+      859
+     ],
+     [
+      863,
+      864,
+      867,
+      868,
+      865,
+      866
+     ]
+    ],
+    "note": "номера фигур по печати indexfill"
+   },
+   {
+    "requisite": "40",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        895,
+        892,
+        894,
+        891
+       ]
+      ]
+     },
+     {
+      "role": "fill",
+      "index": 0,
+      "groups": [
+       [
+        901,
+        902,
+        903,
+        904,
+        900,
+        897,
+        899,
+        896
+       ]
+      ]
+     },
+     {
+      "role": "fill",
+      "index": 1,
+      "groups": [
+       [
+        910,
+        911,
+        912,
+        913,
+        909,
+        906,
+        908,
+        905
+       ]
+      ]
+     }
+    ],
+    "note": "код (4), код подразделения (8), код органа прокуратуры (8) – номера фигур по печати indexfill"
+   },
+   {
+    "requisite": "5",
+    "parts": [
+     {
+      "role": "fact",
+      "facts": [
+       "fact.case.kusp"
+      ],
+      "digits": true,
+      "groups": [
+       [
+        "5",
+        "a"
+       ]
+      ]
+     },
+     {
+      "role": "date",
+      "facts": [
+       "fact.case.kusp_date"
+      ],
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "5",
+        "b"
+       ]
+      ]
+     }
+    ],
+    "note": "раздел 1: номер КРСП (КУСП) и дата регистрации «год мес. чис.» – впечатываются, если внесены следователем (замечание 19.09.2026)"
+   }
+  ]
+ },
+ "1.1": {
+  "status": "draft",
+  "drop": [],
+  "fields": [
+   {
+    "requisite": "1",
+    "groups": [
+     [
+      "1",
+      "a"
+     ],
+     [
+      "1",
+      "b"
+     ]
+    ],
+    "note": "третья группа – клетки р. 25.2"
+   },
+   {
+    "requisite": "2",
+    "groups": [
+     [
+      0
+     ]
+    ],
+    "note": "клетка р. 2 разбором не найдена"
+   },
+   {
+    "requisite": "7",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        "7",
+        "a"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        "7",
+        "b"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        "7",
+        "c"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        "7",
+        "d"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        "7",
+        "e"
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        "7",
+        "f"
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+   },
+   {
+    "requisite": "9",
+    "groups": [
+     [
+      120,
+      119,
+      115,
+      118,
+      116
+     ]
+    ],
+    "note": "пятизначный код"
+   },
+   {
+    "requisite": "11",
+    "groups": [
+     [
+      130,
+      129
+     ],
+     [
+      126,
+      127
+     ]
+    ]
+   },
+   {
+    "requisite": "12",
+    "groups": [
+     [
+      132,
+      135
+     ],
+     [
+      134,
+      137
+     ],
+     [
+      136,
+      131
+     ]
+    ]
+   },
+   {
+    "requisite": "13",
+    "groups": [
+     [
+      139,
+      138
+     ],
+     [
+      142,
+      141
+     ],
+     [
+      144,
+      143
+     ],
+     [
+      146,
+      145
+     ]
+    ]
+   },
+   {
+    "requisite": "20",
+    "groups": [
+     [
+      197
+     ],
+     [
+      195
+     ],
+     [
+      200
+     ],
+     [
+      198
+     ]
+    ],
+    "note": "два ряда по две клетки; второй ряд разбор отнес к р. 21"
+   },
+   {
+    "requisite": "21",
+    "groups": [
+     [
+      "21",
+      "c"
+     ],
+     [
+      "21",
+      "d"
+     ],
+     [
+      "21",
+      "e"
+     ]
+    ]
+   },
+   {
+    "requisite": "23",
+    "groups": [
+     [
+      257,
+      258,
+      259,
+      260
+     ],
+     [
+      223,
+      224,
+      225,
+      226
+     ],
+     [
+      215,
+      216,
+      217,
+      218
+     ],
+     [
+      231,
+      232,
+      233,
+      234
+     ],
+     [
+      227,
+      228,
+      229,
+      230
+     ],
+     [
+      219,
+      220,
+      221,
+      222
+     ],
+     [
+      261,
+      262,
+      263,
+      264
+     ],
+     [
+      243,
+      244,
+      245,
+      246
+     ],
+     [
+      235,
+      236,
+      237,
+      238
+     ],
+     [
+      251,
+      252,
+      253,
+      254
+     ],
+     [
+      247,
+      248,
+      249,
+      250
+     ],
+     [
+      239,
+      240,
+      241,
+      242
+     ]
+    ],
+    "note": "два ряда по шесть кодов; номера фигур по печати indexfill"
+   },
+   {
+    "requisite": "24",
+    "groups": [
+     [
+      270,
+      266,
+      265,
+      268,
+      269,
+      267
+     ],
+     [
+      277,
+      271,
+      272,
+      275,
+      276,
+      273
+     ]
+    ]
+   },
+   {
+    "requisite": "25",
+    "groups": [
+     [
+      279,
+      278
+     ]
+    ],
+    "note": "код; дата решения в восьми клетках [288,287,286,285,284,282,281,280] – источника даты в пакете нет"
+   },
+   {
+    "requisite": "25.1",
+    "groups": [
+     [
+      290,
+      289
+     ]
+    ],
+    "note": "код; дата [299,298,297,296,295,293,292,291] – источника даты в пакете нет"
+   },
+   {
+    "requisite": "25.2",
+    "groups": [
+     [
+      300,
+      301,
+      302
+     ]
+    ]
+   },
+   {
+    "requisite": "33",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        "33",
+        "a"
+       ]
+      ]
+     },
+     {
+      "role": "fill",
+      "index": 0,
+      "groups": [
+       [
+        434,
+        435,
+        436,
+        437,
+        433,
+        430,
+        432,
+        429
+       ]
+      ]
+     },
+     {
+      "role": "fill",
+      "index": 1,
+      "groups": [
+       [
+        440,
+        441,
+        442,
+        443,
+        446,
+        438,
+        445,
+        439
+       ]
+      ]
+     }
+    ],
+    "note": "код, код подразделения, код органа прокуратуры"
+   },
+   {
+    "requisite": "35",
+    "groups": [
+     [
+      472,
+      471,
+      470,
+      469,
+      468,
+      466
+     ]
+    ]
+   },
+   {
+    "requisite": "35.1",
+    "groups": [
+     [
+      479,
+      478,
+      477,
+      476,
+      475,
+      473
+     ]
+    ]
+   },
+   {
+    "requisite": "37",
+    "groups": [
+     [
+      496,
+      495,
+      494,
+      493,
+      492,
+      490,
+      489,
+      488
+     ]
+    ],
+    "note": "дата «год мес. чис.» восемь клеток"
+   },
+   {
+    "requisite": "sign.investigator",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "investigator",
+      "place": {
+       "table": 3,
+       "row": 34,
+       "cell": 1,
+       "slot": 3,
+       "span": 1
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "2": {
+  "status": "draft",
+  "drop": [
+   "0"
+  ],
+  "fields": [
+   {
+    "requisite": "1",
+    "groups": [
+     [
+      3,
+      4
+     ],
+     [
+      13,
+      11,
+      10,
+      9,
+      8
+     ]
+    ],
+    "note": "разбор записал р. 1 как «0»"
+   },
+   {
+    "requisite": "7",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 1,
+       "cell": 1
+      }
+     }
+    ],
+    "note": "фамилия – после напечатанного наименования"
+   },
+   {
+    "requisite": "8",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "word": 0,
+      "place": {
+       "table": 3,
+       "row": 2,
+       "cell": 1
+      }
+     },
+     {
+      "role": "text",
+      "mode": "append",
+      "word": "rest",
+      "place": {
+       "table": 3,
+       "row": 2,
+       "cell": 5
+      }
+     }
+    ],
+    "note": "имя (р. 8) и отчество (р. 9) – одно значение на два места"
+   },
+   {
+    "requisite": "11",
+    "parts": [
+     {
+      "role": "date",
+      "facts": [
+       "fact.person.birth_date"
+      ],
+      "format": "DDMMYY",
+      "groups": [
+       [
+        89,
+        90,
+        94,
+        93,
+        92,
+        91
+       ]
+      ]
+     },
+     {
+      "role": "fact",
+      "facts": [
+       "fact.person.age"
+      ],
+      "groups": [
+       [
+        97,
+        98,
+        99
+       ]
+      ]
+     }
+    ],
+    "note": "дата рождения ДД.ММ.ГГ (ответ В-25) и полных лет; клетка кода возраста [95] не заполняется – в пакете нет сведения о коде возраста"
+   },
+   {
+    "requisite": "20",
+    "parts": [
+     {
+      "role": "text",
+      "place": {
+       "table": 3,
+       "row": 14,
+       "cell": 1,
+       "slot": 0,
+       "span": 1
+      }
+     }
+    ],
+    "note": "место работы, учебы на линейке; клетки справа – код, источника в пакете нет"
+   },
+   {
+    "requisite": "21.1",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        179,
+        180,
+        181
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        182,
+        183
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        184
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        213
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        185,
+        186,
+        187,
+        188,
+        189
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        191
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+   },
+   {
+    "requisite": "21.2",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        216,
+        217,
+        218
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        214,
+        215
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        178
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        219
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        192,
+        193,
+        194,
+        195,
+        196
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        198
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+   },
+   {
+    "requisite": "21.3",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        199,
+        200,
+        201
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        202,
+        203
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        204
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        205
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        206,
+        207,
+        208,
+        209,
+        210
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        212
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п. (буквы слева направо), зн. – примечание к пункту (ответ В-24)"
+   },
+   {
+    "requisite": "28",
+    "groups": [
+     [
+      250,
+      244,
+      245,
+      248,
+      249,
+      246
+     ]
+    ],
+    "note": "шестизначный код"
+   },
+   {
+    "requisite": "sign.investigator",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "investigator",
+      "place": {
+       "table": 3,
+       "row": 54,
+       "cell": 1,
+       "slot": 3,
+       "span": 1
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "ipk": {
+  "status": "draft",
+  "note": "Адреса ячеек – по печати scripts/blanks/cellmap.mjs. Составные адреса (место рождения, адрес, территория) впечатываются одной строкой рядом с номером реквизита. Особые приметы (таблица кодов) не размечены.",
+  "fields": [
+   {
+    "requisite": "02",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 6
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "03",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 1,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "4",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 1,
+       "row": 1,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "05",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 2,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "06",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 2,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "07",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 3,
+       "cell": 2
+      },
+      "size": 14
+     }
+    ]
+   },
+   {
+    "requisite": "08",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 7,
+       "cell": 2
+      },
+      "size": 14
+     }
+    ]
+   },
+   {
+    "requisite": "09",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 11,
+       "cell": 2
+      },
+      "size": 14
+     }
+    ]
+   },
+   {
+    "requisite": "70",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 15,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "10",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 16,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "11",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 17,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "12",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 18,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "13",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 19,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "14",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 20,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "15",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 1,
+       "row": 23,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "16",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 1,
+       "row": 24,
+       "cell": 6
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "17",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 1,
+       "row": 25,
+       "cell": 6
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "18",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "prepend",
+      "place": {
+       "table": 1,
+       "row": 26,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "22",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 1,
+       "row": 27,
+       "cell": 3
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "23",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 28,
+       "cell": 2
+      },
+      "size": 16
+     }
+    ]
+   },
+   {
+    "requisite": "doc_date",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 28,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "78",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 29,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "episode_date",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 29,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "ic_code",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 30,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "79",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 1,
+       "row": 31,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "76",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 1,
+       "row": 32,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "77",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 33,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "28",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 34,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "category",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 36,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "looks_like",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 2,
+       "row": 0,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "sex",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 2,
+       "row": 1,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "height",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 2,
+       "row": 1,
+       "cell": 7
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "build",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 2,
+       "row": 2,
+       "cell": 7
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "hair",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 2,
+       "row": 3,
+       "cell": 7
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "37",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "prepend",
+      "place": {
+       "table": 2,
+       "row": 13,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "38",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 2,
+       "row": 18,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "39",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 2,
+       "row": 19,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "41",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 2,
+       "row": 37,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "42",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 2,
+       "row": 39,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "uk_article",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "44",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 2,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "71",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 3,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "72",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 4,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "74",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 4,
+       "cell": 3
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "73",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 5,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "object_relation",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 7,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "45",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 10,
+       "cell": 6
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "46",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 12,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "47",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 15,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "48",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 18,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "fraud_method",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 21,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "means",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 24,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "disguise",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 27,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "pretext",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 29,
+       "cell": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "51",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 33,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "57",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "prepend",
+      "place": {
+       "table": 3,
+       "row": 36,
+       "cell": 3
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "58",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 39,
+       "cell": 3
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "59",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "cell",
+      "size": 14,
+      "max_len": 900,
+      "place": {
+       "table": 3,
+       "row": 41,
+       "cell": 0
+      }
+     }
+    ],
+    "note": "фабула – в поле под заголовком, шрифтом 7 пт, чтобы строка бланка не раздвигалась"
+   },
+   {
+    "requisite": "identified_date",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 42,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "61",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 43,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "weekday",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 43,
+       "cell": 6
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "daytime",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 44,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "64",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 3,
+       "row": 45,
+       "cell": 2,
+       "slot": 0,
+       "span": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "territory",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 46,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "66",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 47,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "67",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 49,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "68",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 51,
+       "cell": 6
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "65",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 52,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "85",
+    "parts": [
+     {
+      "role": "codes_text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 53,
+       "cell": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "sign.investigator",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "investigator",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 54,
+       "cell": 1
+      },
+      "size": 12
+     }
+    ]
+   },
+   {
+    "requisite": "sign.head",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "head",
+      "mode": "cell",
+      "place": {
+       "table": 3,
+       "row": 54,
+       "cell": 3
+      },
+      "size": 12
+     }
+    ]
+   },
+   {
+    "requisite": "variant",
+    "parts": [
+     {
+      "role": "variant",
+      "mode": "cell",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 2
+      }
+     }
+    ],
+    "note": "вид карты «(лицо – ЛЦ, событие – ПР)»: в бланке стояло «ПР» – заменяется по варианту карточки (замечание 19.09.2026)"
+   }
+  ]
+ },
+ "ipk-in": {
+  "status": "draft",
+  "note": "Карта на иностранцев: места – линейки и ряды клеток «!__!» внутри ячеек таблиц, нумерация подряд по ячейке. Даты в клетках – ДДММГГГГ. Не размечены р. 1 (без линейки), 22 (часы и минуты), 38, 39, подпись начальника и дата передачи (вне таблиц).",
+  "fields": [
+   {
+    "requisite": "2",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 0,
+       "row": 0,
+       "cell": 0,
+       "slot": 0,
+       "span": 2,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "3",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 0,
+       "row": 0,
+       "cell": 0,
+       "slot": 2,
+       "span": 2,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "4",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 0,
+       "row": 0,
+       "cell": 0,
+       "slot": 4
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "5",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 0,
+       "row": 0,
+       "cell": 0,
+       "slot": 5,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "6",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 0,
+       "row": 0,
+       "cell": 0,
+       "slot": 6
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "7",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 0,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "8",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 1,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "9",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 2,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "10",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 3
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "11",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "boxes",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 4
+      }
+     }
+    ],
+    "note": "пол – один знак в клетке"
+   },
+   {
+    "requisite": "12",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 5,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "13",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 6,
+       "span": 2,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "14",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 8,
+       "span": 4,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "15",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 12,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "16",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 13
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "17",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 14,
+       "span": 2,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "18",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 16,
+       "span": 2,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "19",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 18,
+       "span": 3,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "20",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 1,
+       "row": 0,
+       "cell": 0,
+       "slot": 21,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "21",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 0,
+       "cell": 0,
+       "slot": 0,
+       "span": 4,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "23",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 0,
+       "cell": 0,
+       "slot": 6,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "24",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 0,
+       "cell": 0,
+       "slot": 7,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "25",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 0,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "26",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "27",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 2,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "28",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "points",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 3
+      }
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "width": 1,
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 4
+      }
+     },
+     {
+      "role": "qual",
+      "slot": "article",
+      "width": 3,
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 5
+      }
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "width": 1,
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 6
+      }
+     }
+    ],
+    "note": "первая строка «пункты; часть; статья; примечание»; вторая строка (места 7–10) – для второй статьи, не заполняется"
+   },
+   {
+    "requisite": "29",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 11,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "30",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 12
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "31",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 13
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "32",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 14
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "33",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 15,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "34",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 17,
+       "span": 1,
+       "boxes": true
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "35",
+    "parts": [
+     {
+      "role": "date_text",
+      "mode": "boxes",
+      "place": {
+       "table": 3,
+       "row": 0,
+       "cell": 0,
+       "slot": 18
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "36",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 4,
+       "row": 0,
+       "cell": 0,
+       "slot": 0,
+       "span": 1,
+       "boxes": true
+      },
+      "size": 16
+     }
+    ]
+   }
+  ]
+ },
+ "5": {
+  "status": "draft",
+  "fields": [
+   {
+    "requisite": "7.1",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        98,
+        99,
+        100
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        104,
+        105
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        110
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        111
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        116,
+        117,
+        118,
+        119,
+        120
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        132
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п., зн. (примечание к пункту)"
+   },
+   {
+    "requisite": "7.2",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        95,
+        96,
+        97
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        106,
+        107
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        112
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        113
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        121,
+        122,
+        123,
+        124,
+        125
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        134
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п., зн. (примечание к пункту)"
+   },
+   {
+    "requisite": "7.3",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        101,
+        102,
+        103
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        108,
+        109
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        114
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        115
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        126,
+        127,
+        128,
+        129,
+        130
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        136
+       ]
+      ]
+     }
+    ],
+    "note": "ст., зн., ч., зн., п., зн. (примечание к пункту)"
+   },
+   {
+    "requisite": "10",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        141,
+        142,
+        143,
+        144,
+        145,
+        146
+       ]
+      ]
+     }
+    ],
+    "note": "код характеристики (6 клеток); клетки «полных лет» [148,149,150] и ФИО, дата рождения потерпевшего на линейках – сведений в пакете нет"
+   },
+   {
+    "requisite": "21",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        307,
+        304,
+        306,
+        303
+       ]
+      ]
+     },
+     {
+      "role": "fill",
+      "index": 0,
+      "groups": [
+       [
+        313,
+        314,
+        315,
+        316,
+        312,
+        309,
+        311,
+        308
+       ]
+      ]
+     }
+    ],
+    "note": "код и код подразделения"
+   },
+   {
+    "requisite": "sign.investigator",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "investigator",
+      "place": {
+       "table": 1,
+       "row": 32,
+       "cell": 1,
+       "slot": 3,
+       "span": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "4",
+    "parts": [
+     {
+      "role": "fact",
+      "facts": [
+       "fact.case.kusp"
+      ],
+      "digits": true,
+      "groups": [
+       [
+        "4",
+        "a"
+       ]
+      ]
+     },
+     {
+      "role": "date",
+      "facts": [
+       "fact.case.kusp_date"
+      ],
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "4",
+        "b"
+       ]
+      ]
+     }
+    ],
+    "note": "раздел 1: номер КРСП (КУСП) и дата регистрации «год мес. чис.» – впечатываются, если внесены следователем (замечание 19.09.2026)"
+   },
+   {
+    "requisite": "3.2",
+    "groups": [
+     [
+      "3.3",
+      "a"
+     ]
+    ],
+    "note": "дата возбуждения: фигуры 41–49 стоят после текста р. 3.2 (разбор ошибочно отнес их к р. 3.3), проверено по тексту бланка 19.09.2026"
+   },
+   {
+    "requisite": "3.3",
+    "groups": [
+     [
+      "3.3",
+      "b"
+     ]
+    ],
+    "note": "дата совершения преступления: фигуры 50–58"
+   }
+  ]
+ },
+ "6": {
+  "status": "draft",
+  "note": "Раздел 1 заполняет лицо, проводившее расследование; разделы 2 и далее – суд. Клетки р. 1, 3–5 – назначение не установлено, не заполняются. Р. 16.1–17.6 заполняет суд – из карты убраны (разбор относил к ним клетки раздела 3).",
+  "drop": [
+   "1",
+   "16.1",
+   "16.2",
+   "16.3",
+   "16.4",
+   "16.5",
+   "16.6",
+   "17.1",
+   "17.2",
+   "17.3",
+   "17.4",
+   "17.5",
+   "17.6",
+   "3",
+   "4",
+   "5",
+   "6",
+   "8"
+  ],
+  "fields": [
+   {
+    "requisite": "1",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 0,
+       "cell": 1,
+       "slot": 0,
+       "span": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "2",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        "2",
+        "a"
+       ]
+      ]
+     },
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 1,
+       "cell": 1,
+       "slot": 0,
+       "span": 1
+      }
+     }
+    ],
+    "note": "номер дела по клеткам и на линейке"
+   },
+   {
+    "requisite": "3",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 2,
+       "cell": 1,
+       "slot": 0,
+       "span": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "4",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 3,
+       "cell": 1,
+       "slot": 0,
+       "span": 2
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "5",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 4,
+       "cell": 1,
+       "slot": 0,
+       "span": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "6",
+    "parts": [
+     {
+      "role": "date_part",
+      "part": "day",
+      "place": {
+       "table": 2,
+       "row": 5,
+       "cell": 1,
+       "slot": 0
+      }
+     },
+     {
+      "role": "date_part",
+      "part": "month",
+      "place": {
+       "table": 2,
+       "row": 5,
+       "cell": 1,
+       "slot": 1
+      }
+     },
+     {
+      "role": "date_part",
+      "part": "year",
+      "place": {
+       "table": 2,
+       "row": 5,
+       "cell": 1,
+       "slot": 2
+      }
+     },
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        43,
+        42,
+        41,
+        40,
+        47,
+        46,
+        45,
+        44
+       ]
+      ]
+     }
+    ],
+    "note": "дата рождения: на линейках – число, месяц словом, год; в клетках «год мес. чис.»"
+   },
+   {
+    "requisite": "7",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "underscores",
+      "place": {
+       "table": 2,
+       "row": 6,
+       "cell": 1,
+       "slot": 0,
+       "span": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "8",
+    "parts": [
+     {
+      "role": "date_part",
+      "part": "day",
+      "place": {
+       "table": 2,
+       "row": 7,
+       "cell": 1,
+       "slot": 0
+      }
+     },
+     {
+      "role": "date_part",
+      "part": "month",
+      "place": {
+       "table": 2,
+       "row": 7,
+       "cell": 1,
+       "slot": 1
+      }
+     },
+     {
+      "role": "date_part",
+      "part": "year2",
+      "place": {
+       "table": 2,
+       "row": 7,
+       "cell": 1,
+       "slot": 2
+      }
+     },
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        55,
+        54,
+        53,
+        52,
+        59,
+        58,
+        57,
+        56
+       ]
+      ]
+     }
+    ],
+    "note": "дата направления в суд: на линейках и в клетках «год мес. чис.»"
+   },
+   {
+    "requisite": "15",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "stage",
+      "line": 0,
+      "episodes": true,
+      "groups": [
+       [
+        200,
+        201
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "complicity",
+      "line": 0,
+      "episodes": true,
+      "groups": [
+       [
+        212,
+        213
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "article",
+      "line": 0,
+      "episodes": true,
+      "groups": [
+       [
+        150,
+        151,
+        152
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "line": 0,
+      "episodes": true,
+      "groups": [
+       [
+        129,
+        130
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "line": 0,
+      "episodes": true,
+      "groups": [
+       [
+        135
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "line": 0,
+      "episodes": true,
+      "groups": [
+       [
+        138,
+        139,
+        140,
+        141,
+        142
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "stage",
+      "line": 1,
+      "episodes": true,
+      "groups": [
+       [
+        202,
+        203
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "complicity",
+      "line": 1,
+      "episodes": true,
+      "groups": [
+       [
+        214,
+        215
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "article",
+      "line": 1,
+      "episodes": true,
+      "groups": [
+       [
+        153,
+        154,
+        155
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "line": 1,
+      "episodes": true,
+      "groups": [
+       [
+        131,
+        132
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "line": 1,
+      "episodes": true,
+      "groups": [
+       [
+        136
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "line": 1,
+      "episodes": true,
+      "groups": [
+       [
+        144,
+        145,
+        146,
+        147,
+        148
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "stage",
+      "line": 2,
+      "episodes": true,
+      "groups": [
+       [
+        204,
+        205
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "complicity",
+      "line": 2,
+      "episodes": true,
+      "groups": [
+       [
+        216,
+        217
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "article",
+      "line": 2,
+      "episodes": true,
+      "groups": [
+       [
+        156,
+        157,
+        158
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "line": 2,
+      "episodes": true,
+      "groups": [
+       [
+        133,
+        134
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "line": 2,
+      "episodes": true,
+      "groups": [
+       [
+        137
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "line": 2,
+      "episodes": true,
+      "groups": [
+       [
+        159,
+        160,
+        161,
+        162
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "stage",
+      "line": 3,
+      "episodes": true,
+      "groups": [
+       [
+        206,
+        207
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "complicity",
+      "line": 3,
+      "episodes": true,
+      "groups": [
+       [
+        218,
+        219
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "article",
+      "line": 3,
+      "episodes": true,
+      "groups": [
+       [
+        173,
+        174,
+        175
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "line": 3,
+      "episodes": true,
+      "groups": [
+       [
+        164,
+        165
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "line": 3,
+      "episodes": true,
+      "groups": [
+       [
+        170
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "line": 3,
+      "episodes": true,
+      "groups": [
+       [
+        182,
+        183,
+        184,
+        185,
+        186
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "stage",
+      "line": 4,
+      "episodes": true,
+      "groups": [
+       [
+        208,
+        209
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "complicity",
+      "line": 4,
+      "episodes": true,
+      "groups": [
+       [
+        220,
+        221
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "article",
+      "line": 4,
+      "episodes": true,
+      "groups": [
+       [
+        176,
+        177,
+        178
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "line": 4,
+      "episodes": true,
+      "groups": [
+       [
+        166,
+        167
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "line": 4,
+      "episodes": true,
+      "groups": [
+       [
+        171
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "line": 4,
+      "episodes": true,
+      "groups": [
+       [
+        188,
+        189,
+        190,
+        191,
+        192
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "stage",
+      "line": 5,
+      "episodes": true,
+      "groups": [
+       [
+        210,
+        211
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "complicity",
+      "line": 5,
+      "episodes": true,
+      "groups": [
+       [
+        222,
+        223
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "article",
+      "line": 5,
+      "episodes": true,
+      "groups": [
+       [
+        179,
+        180,
+        181
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "line": 5,
+      "episodes": true,
+      "groups": [
+       [
+        168,
+        169
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "line": 5,
+      "episodes": true,
+      "groups": [
+       [
+        172
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "line": 5,
+      "episodes": true,
+      "groups": [
+       [
+        194,
+        195,
+        196,
+        199,
+        197
+       ]
+      ]
+     }
+    ],
+    "note": "Раздел 3 (ответ В-27): шесть строк – по эпизоду обвинительного заключения; столбцы: стадия (2), форма соучастия (2), статья (3), знак – примечание к статье (2), часть (1), пункт (5 клеток, шестая – «/»). В третьей строке одна клетка пункта не найдена среди фигур бланка – пункт пишется в четыре клетки."
+   }
+  ]
+ },
+ "2.1": {
+  "status": "draft",
+  "drop": [
+   "1",
+   "2.1",
+   "14.1",
+   "14.2",
+   "14.3",
+   "14.5",
+   "25.1"
+  ],
+  "note": "Бланк пересохранен заказчиком через .doc (19.09.2026): фигуры VML, номера – по печати indexfill диапазонами по сто. Не заполняются: р. 1 (назначение пяти клеток не установлено), даты р. 23 и 25 (источника в пакете нет), код подразделения р. 26 (нет поля в пакете формы), код возраста р. 12.",
+  "fields": [
+   {
+    "requisite": "2",
+    "groups": [
+     [
+      12
+     ]
+    ]
+   },
+   {
+    "requisite": "7",
+    "groups": [
+     [
+      74
+     ]
+    ]
+   },
+   {
+    "requisite": "8",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 2,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "9",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 3,
+       "cell": 1
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "10",
+    "parts": [
+     {
+      "role": "text",
+      "mode": "append",
+      "place": {
+       "table": 3,
+       "row": 3,
+       "cell": 5
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "11",
+    "groups": [
+     [
+      76
+     ]
+    ]
+   },
+   {
+    "requisite": "12",
+    "parts": [
+     {
+      "role": "date",
+      "facts": [
+       "fact.person.birth_date"
+      ],
+      "format": "DDMMYY",
+      "groups": [
+       [
+        78,
+        79,
+        83,
+        82,
+        81,
+        80
+       ]
+      ]
+     },
+     {
+      "role": "fact",
+      "facts": [
+       "fact.person.age"
+      ],
+      "groups": [
+       [
+        86,
+        87,
+        88
+       ]
+      ]
+     }
+    ],
+    "note": "дата рождения ДД.ММ.ГГ и полных лет"
+   },
+   {
+    "requisite": "13",
+    "groups": [
+     [
+      89,
+      90,
+      91
+     ],
+     [
+      92,
+      93,
+      94
+     ]
+    ]
+   },
+   {
+    "requisite": "14",
+    "parts": [
+     {
+      "role": "qual",
+      "slot": "article",
+      "groups": [
+       [
+        101,
+        102,
+        103
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "asign",
+      "groups": [
+       [
+        104,
+        105
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "part",
+      "groups": [
+       [
+        106
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "psign",
+      "groups": [
+       [
+        96
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "points",
+      "groups": [
+       [
+        107,
+        108,
+        109,
+        110,
+        111
+       ]
+      ]
+     },
+     {
+      "role": "qual",
+      "slot": "point_sign",
+      "groups": [
+       [
+        113
+       ]
+      ]
+     }
+    ],
+    "note": "первая строка квалификации (14.1)"
+   },
+   {
+    "requisite": "15",
+    "groups": [
+     [
+      166
+     ]
+    ]
+   },
+   {
+    "requisite": "16",
+    "groups": [
+     [
+      170,
+      169
+     ]
+    ]
+   },
+   {
+    "requisite": "17",
+    "groups": [
+     [
+      177,
+      171,
+      172,
+      175,
+      176,
+      173
+     ]
+    ]
+   },
+   {
+    "requisite": "18",
+    "groups": [
+     [
+      178,
+      179,
+      180,
+      181,
+      182
+     ],
+     [
+      183,
+      184,
+      185,
+      186,
+      187
+     ],
+     [
+      193,
+      188,
+      191,
+      192,
+      189
+     ]
+    ]
+   },
+   {
+    "requisite": "18.1",
+    "groups": [
+     [
+      194,
+      195,
+      196,
+      197,
+      198
+     ],
+     [
+      199,
+      200,
+      201,
+      202,
+      203
+     ],
+     [
+      209,
+      204,
+      207,
+      208,
+      205
+     ]
+    ]
+   },
+   {
+    "requisite": "19",
+    "groups": [
+     [
+      220,
+      221,
+      222
+     ],
+     [
+      217,
+      218,
+      219
+     ],
+     [
+      214,
+      215,
+      216
+     ],
+     [
+      210,
+      211,
+      212
+     ]
+    ]
+   },
+   {
+    "requisite": "20",
+    "groups": [
+     [
+      232,
+      233,
+      234
+     ],
+     [
+      242,
+      243,
+      244
+     ],
+     [
+      229,
+      230,
+      231
+     ],
+     [
+      226,
+      227,
+      228
+     ],
+     [
+      223,
+      224,
+      225
+     ],
+     [
+      239,
+      240,
+      241
+     ],
+     [
+      235,
+      236,
+      237
+     ]
+    ]
+   },
+   {
+    "requisite": "21",
+    "groups": [
+     [
+      252,
+      253,
+      250,
+      251
+     ]
+    ]
+   },
+   {
+    "requisite": "22",
+    "groups": [
+     [
+      255,
+      254
+     ],
+     [
+      258,
+      257
+     ]
+    ]
+   },
+   {
+    "requisite": "23",
+    "groups": [
+     [
+      261
+     ],
+     [
+      259
+     ]
+    ]
+   },
+   {
+    "requisite": "24",
+    "groups": [
+     [
+      271,
+      272
+     ],
+     [
+      275,
+      274
+     ]
+    ]
+   },
+   {
+    "requisite": "25",
+    "groups": [
+     [
+      285,
+      286
+     ]
+    ]
+   },
+   {
+    "requisite": "26",
+    "groups": [
+     [
+      308,
+      311,
+      312,
+      309
+     ]
+    ]
+   },
+   {
+    "requisite": "27",
+    "groups": [
+     [
+      331,
+      325,
+      326,
+      329,
+      330,
+      327
+     ]
+    ]
+   },
+   {
+    "requisite": "sign.investigator",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "investigator",
+      "place": {
+       "table": 4,
+       "row": 8,
+       "cell": 1,
+       "slot": 3,
+       "span": 1
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "4": {
+  "status": "draft",
+  "drop": [
+   "21.1",
+   "21.3"
+  ],
+  "note": "Ф. 4 сверена контрольным заполнением (номер реквизита в клетках). Вписываются коды; суммы, количества и вес по строкам кодов (дополнительные поля реквизитов) в клетки пока не раскладываются – вписываются от руки. Код подразделения р. 33 не размечен.",
+  "fields": [
+   {
+    "requisite": "21",
+    "groups": [
+     [
+      "21.1",
+      "a"
+     ],
+     [
+      "21.3",
+      "a"
+     ],
+     [
+      "21.3",
+      "d"
+     ]
+    ],
+    "note": "клетки «вид» трех строк; количество и сумма не раскладываются"
+   },
+   {
+    "requisite": "33",
+    "groups": [
+     [
+      "33",
+      "e"
+     ]
+    ],
+    "note": "код; прочие группы строки относятся к р. 32.1"
+   }
+  ]
+ },
+ "3": {
+  "status": "draft",
+  "note": "Места – ячейки листа (печать Excel с адресами). Не размечены коды р. 7, 8, 12 (назначение ячеек не установлено) и р. 11 (дата ознакомления – источника в пакете нет).",
+  "fields": [
+   {
+    "requisite": "1",
+    "groups": [
+     [
+      "S4",
+      "T4"
+     ]
+    ]
+   },
+   {
+    "requisite": "2",
+    "groups": [
+     [
+      "W6"
+     ]
+    ]
+   },
+   {
+    "requisite": "6",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P21",
+        "Q21",
+        "R21",
+        "S21",
+        "T21",
+        "U21",
+        "V21",
+        "W21"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "7.1",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P29",
+        "Q29",
+        "R29",
+        "S29",
+        "T29",
+        "U29",
+        "V29",
+        "W29"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "8.1",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P38",
+        "Q38",
+        "R38",
+        "S38",
+        "T38",
+        "U38",
+        "V38",
+        "W38"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "9",
+    "groups": [
+     [
+      "W39"
+     ]
+    ]
+   },
+   {
+    "requisite": "9.1",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P40",
+        "Q40",
+        "R40",
+        "S40",
+        "T40",
+        "U40",
+        "V40",
+        "W40"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "10",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P42",
+        "Q42",
+        "R42",
+        "S42",
+        "T42",
+        "U42",
+        "V42",
+        "W42"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "12.1",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P50",
+        "Q50",
+        "R50",
+        "S50",
+        "T50",
+        "U50",
+        "V50",
+        "W50"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "12.2",
+    "groups": [
+     [
+      "W52"
+     ]
+    ]
+   },
+   {
+    "requisite": "12.3",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P53",
+        "Q53",
+        "R53",
+        "S53",
+        "T53",
+        "U53",
+        "V53",
+        "W53"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "13",
+    "groups": [
+     [
+      "V54",
+      "W54"
+     ]
+    ]
+   },
+   {
+    "requisite": "13.1",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P60",
+        "Q60",
+        "R60",
+        "S60",
+        "T60",
+        "U60",
+        "V60",
+        "W60"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "15",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        "T63",
+        "U63",
+        "V63",
+        "W63"
+       ]
+      ]
+     },
+     {
+      "role": "fill",
+      "index": 0,
+      "groups": [
+       [
+        "P65",
+        "Q65",
+        "R65",
+        "S65",
+        "T65",
+        "U65",
+        "V65",
+        "W65"
+       ]
+      ]
+     }
+    ],
+    "note": "код и код подразделения"
+   },
+   {
+    "requisite": "16",
+    "groups": [
+     [
+      "U74",
+      "V74",
+      "W74"
+     ]
+    ]
+   },
+   {
+    "requisite": "16.1",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P78",
+        "Q78",
+        "R78",
+        "S78",
+        "T78",
+        "U78",
+        "V78",
+        "W78"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "16.2",
+    "groups": [
+     [
+      "N80"
+     ]
+    ]
+   },
+   {
+    "requisite": "17",
+    "groups": [
+     [
+      "T84",
+      "U84"
+     ],
+     [
+      "V84",
+      "W84"
+     ]
+    ]
+   },
+   {
+    "requisite": "17.1",
+    "parts": [
+     {
+      "role": "date",
+      "format": "YYYYMMDD",
+      "groups": [
+       [
+        "P86",
+        "Q86",
+        "R86",
+        "S86",
+        "T86",
+        "U86",
+        "V86",
+        "W86"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "requisite": "sign.investigator",
+    "parts": [
+     {
+      "role": "signature",
+      "who": "investigator",
+      "mode": "underscores",
+      "place": {
+       "cell": "B92",
+       "slot": 0
+      }
+     }
+    ]
+   },
+   {
+    "requisite": "3",
+    "groups": [
+     [
+      "G10"
+     ],
+     [
+      "H10",
+      "I10"
+     ],
+     [
+      "J10",
+      "K10",
+      "L10",
+      "M10",
+      "N10",
+      "O10",
+      "P10",
+      "Q10"
+     ],
+     [
+      "R10",
+      "S10",
+      "T10",
+      "U10",
+      "V10",
+      "W10"
+     ]
+    ],
+    "note": "номер дела: вид (1), год (2), код подразделения (8), № (6) – строка 10 листа, подписи в строке 11"
+   },
+   {
+    "requisite": "8",
+    "parts": [
+     {
+      "role": "code",
+      "groups": [
+       [
+        "E36"
+       ]
+      ]
+     },
+     {
+      "role": "fill",
+      "index": 0,
+      "digits": true,
+      "groups": [
+       [
+        "G36"
+       ],
+       [
+        "H36",
+        "I36"
+       ],
+       [
+        "J36",
+        "K36",
+        "L36",
+        "M36",
+        "N36",
+        "O36",
+        "P36",
+        "Q36"
+       ],
+       [
+        "R36",
+        "S36",
+        "T36",
+        "U36",
+        "V36",
+        "W36"
+       ]
+      ]
+     }
+    ],
+    "note": "код (1–3) и номер дела, с которым соединено (из которого выделено): вид, год, код подразделения, № – строка 36, подписи в строке 37"
+   },
+   {
+    "requisite": "7.2",
+    "groups": [
+     [
+      "V32",
+      "W32"
+     ]
+    ],
+    "note": "код 01–05, строка 32"
+   },
+   {
+    "requisite": "7.2.1",
+    "groups": [
+     [
+      "P34",
+      "Q34",
+      "R34",
+      "S34",
+      "T34",
+      "U34",
+      "V34",
+      "W34"
+     ]
+    ],
+    "note": "дата «год мес. чис.», строка 34"
+   },
+   {
+    "requisite": "11",
+    "groups": [
+     [
+      "P44",
+      "Q44",
+      "R44",
+      "S44",
+      "T44",
+      "U44",
+      "V44",
+      "W44"
+     ]
+    ],
+    "note": "дата «год мес. чис.», строка 44"
+   },
+   {
+    "requisite": "18",
+    "groups": [
+     [
+      "W88"
+     ]
+    ],
+    "note": "код 1–4, строка 88"
+   },
+   {
+    "requisite": "18.1",
+    "groups": [
+     [
+      "P90",
+      "Q90",
+      "R90",
+      "S90",
+      "T90",
+      "U90",
+      "V90",
+      "W90"
+     ]
+    ],
+    "note": "дата «год мес. чис.», строка 90"
+   }
+  ]
+ }
+}

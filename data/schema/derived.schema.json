@@ -1,0 +1,44 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Производные значения",
+ "type": "object",
+ "required": [
+  "edition",
+  "derived"
+ ],
+ "properties": {
+  "derived": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "sets",
+     "expr",
+     "status_value",
+     "source_note"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "sets": {
+      "type": "string"
+     },
+     "expr": {
+      "type": "object"
+     },
+     "status_value": {
+      "enum": [
+       "default",
+       "hint"
+      ]
+     },
+     "source_note": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

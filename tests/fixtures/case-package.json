@@ -1,0 +1,370 @@
+{
+ "fixture": "case-package/1",
+ "note": "Вымышленное дело для тестов Фазы 1.5, составлено по бланкам; сведений реальных дел и лиц нет. Состав пакетов – tests/golden/package/compositions.json.",
+ "profile": {
+  "organ_name": "Тестовый следственный отдел",
+  "organ_code": "000",
+  "okato": "30401000000",
+  "case_number_format": "NNNNNNNNNNNNNNNNN",
+  "retention_months": 6
+ },
+ "base": {
+  "case": {
+   "facts": {
+    "fact.case.case_number": "12602300000000001"
+   }
+  },
+  "crimes": [
+   {
+    "id": "crime.1",
+    "facts": {
+     "fact.crime.qualification": "п. «в» ч. 2 ст. 158 УК РФ",
+     "fact.crime.crime_date": "2026-02-20"
+    }
+   },
+   {
+    "id": "crime.2",
+    "facts": {
+     "fact.crime.qualification": "ч. 3 ст. 30, ч. 1 ст. 159 УК РФ",
+     "fact.crime.crime_date": "2026-02-25"
+    }
+   }
+  ],
+  "persons": [
+   {
+    "id": "person.1",
+    "label": "А.А.А.",
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ],
+    "attrs": {
+     "foreign": false
+    }
+   },
+   {
+    "id": "person.2",
+    "label": "Б.Б.Б.",
+    "crimes": [
+     "crime.1"
+    ],
+    "attrs": {
+     "foreign": true
+    }
+   }
+  ],
+  "victims": [
+   {
+    "id": "victim.1",
+    "crimes": [
+     "crime.1"
+    ],
+    "attrs": {
+     "foreign": false
+    }
+   }
+  ],
+  "damage": {
+   "attrs": {
+    "material": true,
+    "claim_seizure_arrest": false
+   },
+   "facts": {
+    "fact.damage.amount": 15000
+   }
+  }
+ },
+ "chain": [
+  {
+   "id": "E1",
+   "type": "ev.vud",
+   "date": "2026-03-01",
+   "attrs": {
+    "vud_mode": "fact"
+   },
+   "refs": {
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ],
+    "persons": [],
+    "victims": [
+     "victim.1"
+    ]
+   }
+  },
+  {
+   "id": "E2",
+   "type": "ev.victim_new",
+   "date": "2026-03-10",
+   "add": {
+    "victims": [
+     {
+      "id": "victim.2",
+      "crimes": [
+       "crime.2"
+      ],
+      "attrs": {
+       "foreign": false
+      }
+     }
+    ]
+   },
+   "refs": {
+    "victims": [
+     "victim.2"
+    ]
+   }
+  },
+  {
+   "id": "E3",
+   "type": "ev.person_identified",
+   "date": "2026-03-20",
+   "refs": {
+    "persons": [
+     "person.1"
+    ]
+   }
+  },
+  {
+   "id": "E4",
+   "type": "ev.extend",
+   "date": "2026-04-25",
+   "refs": {}
+  },
+  {
+   "id": "E5",
+   "type": "ev.suspend",
+   "date": "2026-05-01",
+   "attrs": {
+    "ground": "2"
+   },
+   "refs": {
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ],
+    "persons": [
+     "person.1"
+    ]
+   }
+  },
+  {
+   "id": "E6",
+   "type": "ev.resume",
+   "date": "2026-06-01",
+   "refs": {}
+  },
+  {
+   "id": "E7",
+   "type": "ev.person_identified",
+   "date": "2026-06-10",
+   "refs": {
+    "persons": [
+     "person.2"
+    ]
+   }
+  }
+ ],
+ "branches": [
+  {
+   "id": "B-court",
+   "after": "E7",
+   "type": "ev.to_court",
+   "date": "2026-07-01",
+   "refs": {
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ],
+    "persons": [
+     "person.1",
+     "person.2"
+    ]
+   }
+  },
+  {
+   "id": "B-term-nonrehab",
+   "after": "E7",
+   "type": "ev.terminate",
+   "date": "2026-07-01",
+   "attrs": {
+    "ground_type": "non_rehab"
+   },
+   "refs": {
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ],
+    "persons": [
+     "person.1",
+     "person.2"
+    ]
+   }
+  },
+  {
+   "id": "B-term-rehab",
+   "after": "E7",
+   "type": "ev.terminate",
+   "date": "2026-07-01",
+   "attrs": {
+    "ground_type": "rehab"
+   },
+   "refs": {
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ],
+    "persons": [
+     "person.1",
+     "person.2"
+    ]
+   }
+  },
+  {
+   "id": "B-transfer",
+   "after": "E7",
+   "type": "ev.transfer",
+   "date": "2026-07-01",
+   "attrs": {
+    "deregister": true
+   },
+   "refs": {
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ]
+   }
+  },
+  {
+   "id": "B-join",
+   "after": "E7",
+   "type": "ev.join",
+   "date": "2026-07-01",
+   "attrs": {
+    "joined_to": "12602300000000099"
+   },
+   "refs": {}
+  },
+  {
+   "id": "B-split",
+   "after": "E7",
+   "type": "ev.split",
+   "date": "2026-07-01",
+   "attrs": {
+    "new_case_number": "12602300000000002"
+   },
+   "refs": {
+    "crimes": [
+     "crime.2"
+    ],
+    "persons": [
+     "person.1"
+    ],
+    "victims": [
+     "victim.2"
+    ]
+   }
+  },
+  {
+   "id": "B-prosecutor",
+   "after": "E7",
+   "type": "ev.to_prosecutor",
+   "date": "2026-06-20",
+   "refs": {}
+  },
+  {
+   "id": "B-fine",
+   "after": "E7",
+   "type": "ev.court_fine",
+   "date": "2026-06-25",
+   "refs": {
+    "crimes": [
+     "crime.1",
+     "crime.2"
+    ],
+    "persons": [
+     "person.1",
+     "person.2"
+    ]
+   }
+  },
+  {
+   "id": "B-return",
+   "after": "E7",
+   "type": "ev.return",
+   "date": "2026-07-10",
+   "refs": {}
+  },
+  {
+   "id": "B-cancel",
+   "after": "E7",
+   "type": "ev.cancel",
+   "date": "2026-06-15",
+   "refs": {}
+  }
+ ],
+ "separate": [
+  {
+   "id": "S-refusal",
+   "note": "Материал проверки: учетный отказ по нереабилитирующему основанию",
+   "base": {
+    "crimes": [
+     "crime.1"
+    ],
+    "persons": [
+     "person.2"
+    ],
+    "victims": [
+     "victim.1"
+    ]
+   },
+   "type": "ev.refusal",
+   "date": "2026-03-05",
+   "attrs": {
+    "ground_type": "non_rehab"
+   },
+   "refs": {
+    "crimes": [
+     "crime.1"
+    ],
+    "persons": [
+     "person.2"
+    ]
+   }
+  },
+  {
+   "id": "S-vud-person",
+   "note": "Возбуждение дела в отношении лиц",
+   "base": {
+    "crimes": [
+     "crime.1"
+    ],
+    "persons": [
+     "person.1",
+     "person.2"
+    ],
+    "victims": [
+     "victim.1"
+    ]
+   },
+   "type": "ev.vud",
+   "date": "2026-03-01",
+   "attrs": {
+    "vud_mode": "person"
+   },
+   "refs": {
+    "crimes": [
+     "crime.1"
+    ],
+    "persons": [
+     "person.1",
+     "person.2"
+    ],
+    "victims": [
+     "victim.1"
+    ]
+   }
+  }
+ ]
+}

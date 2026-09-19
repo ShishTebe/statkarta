@@ -1,0 +1,21 @@
+{
+ "file": "vud-12.txt",
+ "blank": "3.02",
+ "format": "txt1251",
+ "case_number": null,
+ "vud_date": "2026-01-27",
+ "kusp": "31пр/1-26",
+ "kusp_date": "2026-01-26",
+ "report_source": "prosecutor_materials",
+ "investigator": "Руководитель следственного отдела по Озерному району следственного управления Следственного комитета Российской Федерации по Условной области подполковник юстиции Громов А.Е.",
+ "qualifications": [
+  "30/3/;105/1/",
+  "318/1/"
+ ],
+ "persons": [],
+ "suspect_known": false,
+ "crime_date": "2025-07-21",
+ "crime_place": "Условная обл., г. Приморск, пер. Тихий, д. 4, кв. 1",
+ "damage_amount": null,
+ "victims": []
+}

@@ -1,0 +1,273 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "События дела и состав пакета карточек",
+ "type": "object",
+ "required": [
+  "edition",
+  "status",
+  "object_attrs",
+  "events"
+ ],
+ "properties": {
+  "events": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "final",
+     "cards",
+     "source_note",
+     "status"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^ev\\.[a-z_]+$"
+     },
+     "title": {
+      "type": "string"
+     },
+     "hint": {
+      "type": "string"
+     },
+     "final": {
+      "type": [
+       "boolean",
+       "object"
+      ]
+     },
+     "refs": {
+      "type": "object",
+      "required": [],
+      "properties": {
+       "crimes": {
+        "enum": [
+         "required",
+         "optional",
+         "none"
+        ]
+       },
+       "persons": {
+        "enum": [
+         "required",
+         "optional",
+         "none"
+        ]
+       },
+       "victims": {
+        "enum": [
+         "required",
+         "optional",
+         "none"
+        ]
+       }
+      }
+     },
+     "attrs": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "id",
+        "label",
+        "type"
+       ],
+       "properties": {
+        "id": {
+         "type": "string",
+         "pattern": "^[a-z_]+$"
+        },
+        "label": {
+         "type": "string"
+        },
+        "type": {
+         "enum": [
+          "enum",
+          "boolean",
+          "text",
+          "date"
+         ]
+        },
+        "required": {
+         "type": "boolean"
+        },
+        "options": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "required": [
+           "code",
+           "value"
+          ],
+          "properties": {
+           "code": {
+            "type": "string"
+           },
+           "value": {
+            "type": "string"
+           }
+          }
+         }
+        },
+        "sets": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "sets_facts": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "fact",
+        "from"
+       ],
+       "properties": {
+        "fact": {
+         "type": "string"
+        },
+        "from": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "cards": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "form",
+        "per"
+       ],
+       "properties": {
+        "form": {
+         "type": "string",
+         "pattern": "^(\\d+(\\.\\d+)?|ipk|ipk-in)$"
+        },
+        "variant": {
+         "type": "string"
+        },
+        "per": {
+         "enum": [
+          "case",
+          "crime",
+          "person",
+          "victim",
+          "person_crime",
+          "crime_without_person",
+          "foreign_participant"
+         ]
+        },
+        "when": {
+         "type": "object"
+        },
+        "note": {
+         "type": "string"
+        },
+        "source_note": {
+         "type": "string"
+        },
+        "requisites": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
+        "optional_requisites": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
+        "requisites_note": {
+         "type": "string"
+        },
+        "card_fills": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "required": [
+           "requisite",
+           "index",
+           "from"
+          ],
+          "properties": {
+           "requisite": {
+            "type": "string"
+           },
+           "index": {
+            "type": "integer"
+           },
+           "from": {
+            "type": "string"
+           }
+          }
+         }
+        },
+        "card_facts": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "required": [
+           "fact",
+           "value"
+          ],
+          "properties": {
+           "fact": {
+            "type": "string"
+           },
+           "value": {}
+          }
+         }
+        }
+       }
+      }
+     },
+     "optional_cards": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "form",
+        "per"
+       ],
+       "properties": {
+        "form": {
+         "type": "string",
+         "pattern": "^(\\d+(\\.\\d+)?|ipk|ipk-in)$"
+        },
+        "per": {
+         "type": "string"
+        },
+        "note": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "action": {
+      "enum": [
+       "spawn_case"
+      ]
+     },
+     "reopens": {
+      "type": "boolean"
+     },
+     "source_note": {
+      "type": "string"
+     },
+     "status": {
+      "enum": [
+       "draft",
+       "confirmed"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,1111 @@
+{
+ "form": "2.1",
+ "title": "СТАТИСТИЧЕСКАЯ КАРТОЧКА НА ЛИЦО, ПОДОЗРЕВАЕМОЕ (ОБВИНЯЕМОЕ) В СОВЕРШЕНИИ ПРЕСТУПЛЕНИЯ",
+ "edition": "2026",
+ "effective_from": "2026-01-01",
+ "effective_to": null,
+ "legal_basis": "приказ МВД России от 25.02.2025 № 73",
+ "source": "Карточки/Статистические карточки на 2026.pdf; Карточки/cards_*.docx; через Методики/_СТАТКАРТОЧКИ_MD/model/cards-2026-schema.json",
+ "requisites_count": 30,
+ "requisites": [
+  {
+   "id": "1",
+   "number": "1",
+   "label": "Орган внутренних дел",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "01",
+     "value": "внутренних дел"
+    },
+    {
+     "code": "02",
+     "value": "Следственного комитета Российской Федерации"
+    },
+    {
+     "code": "04",
+     "value": "таможенный"
+    },
+    {
+     "code": "05",
+     "value": "суд"
+    },
+    {
+     "code": "06",
+     "value": "ФСИН"
+    },
+    {
+     "code": "07",
+     "value": "ФСБ"
+    },
+    {
+     "code": "11",
+     "value": "ПС ФСБ"
+    },
+    {
+     "code": "08",
+     "value": "ФССП"
+    },
+    {
+     "code": "10",
+     "value": "ГПН ФПС"
+    },
+    {
+     "code": "14",
+     "value": "ФСКН"
+    },
+    {
+     "code": "09",
+     "value": "иной"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": null,
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 2,
+    "select": "single",
+    "max_codes": 1,
+    "sources": [
+     "Бланк: реквизит «Орган» – выбор одного кода; ячейки заголовка карточки к реквизиту не относятся"
+    ]
+   }
+  },
+  {
+   "id": "2",
+   "number": "2",
+   "label": "Учесть, изменить, снять, в т.ч. в связи с прекращением уголовного дела или уголовного преследования по реабилитирующим основаниям",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "учесть"
+    },
+    {
+     "code": "2",
+     "value": "изменить"
+    },
+    {
+     "code": "3",
+     "value": "снять"
+    },
+    {
+     "code": "4",
+     "value": "снять в связи с прекращением УД/преследования по реабилитирующим основаниям"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": null,
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 1,
+    "select": "single",
+    "max_codes": 1,
+    "sources": [
+     "Бланк: признак учета – один код"
+    ]
+   }
+  },
+  {
+   "id": "3",
+   "number": "3",
+   "label": "Номер уголовного дела: вид, год, № подразделения, регистрационный №",
+   "label_status": "verified",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "РАЗДЕЛ 1. ЗАПОЛНЯЕТСЯ СОТРУДНИКОМ ОРГАНА ВНУТРЕННИХ ДЕЛ ПО ВЕДЕНИЮ РЕГИСТРАЦИОННО-УЧЕТНОЙ И СТАТИСТИЧЕСКОЙ РАБОТЫ",
+   "fills_by": "registrar",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "3.1",
+   "number": "3.1",
+   "label": "Дата возбуждения уголовного дела",
+   "label_status": "verified",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "РАЗДЕЛ 1. ЗАПОЛНЯЕТСЯ СОТРУДНИКОМ ОРГАНА ВНУТРЕННИХ ДЕЛ ПО ВЕДЕНИЮ РЕГИСТРАЦИОННО-УЧЕТНОЙ И СТАТИСТИЧЕСКОЙ РАБОТЫ",
+   "fills_by": "registrar",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "4",
+   "number": "4",
+   "label": "Порядковый номер лица, количество совершенных им преступлений",
+   "label_status": "verified",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "РАЗДЕЛ 1. ЗАПОЛНЯЕТСЯ СОТРУДНИКОМ ОРГАНА ВНУТРЕННИХ ДЕЛ ПО ВЕДЕНИЮ РЕГИСТРАЦИОННО-УЧЕТНОЙ И СТАТИСТИЧЕСКОЙ РАБОТЫ",
+   "fills_by": "registrar",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "5",
+   "number": "5",
+   "label": "Дата направления карточки в ИЦ",
+   "label_status": "verified",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "РАЗДЕЛ 1. ЗАПОЛНЯЕТСЯ СОТРУДНИКОМ ОРГАНА ВНУТРЕННИХ ДЕЛ ПО ВЕДЕНИЮ РЕГИСТРАЦИОННО-УЧЕТНОЙ И СТАТИСТИЧЕСКОЙ РАБОТЫ",
+   "fills_by": "ic",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "6",
+   "number": "6",
+   "label": "Дата поступления карточки в ИЦ",
+   "label_status": "verified",
+   "field_type": "date",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": true,
+   "section": "РАЗДЕЛ 1. ЗАПОЛНЯЕТСЯ СОТРУДНИКОМ ОРГАНА ВНУТРЕННИХ ДЕЛ ПО ВЕДЕНИЮ РЕГИСТРАЦИОННО-УЧЕТНОЙ И СТАТИСТИЧЕСКОЙ РАБОТЫ",
+   "fills_by": "ic",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "7",
+   "number": "7",
+   "label": "Персональные данные не заполняются",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "персональные данные не заполняются"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 1,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "8",
+   "number": "8",
+   "label": "Фамилия",
+   "label_status": "verified",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "9",
+   "number": "9",
+   "label": "Имя",
+   "label_status": "verified",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "10",
+   "number": "10",
+   "label": "Отчество",
+   "label_status": "verified",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "11",
+   "number": "11",
+   "label": "Пол",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "мужской"
+    },
+    {
+     "code": "2",
+     "value": "женский"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 1,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "12",
+   "number": "12",
+   "label": "Дата рождения, полных лет; возраст (на момент совершения преступления)",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "9",
+     "value": "до 14 лет"
+    },
+    {
+     "code": "1",
+     "value": "14-15 лет"
+    },
+    {
+     "code": "2",
+     "value": "16-17 лет"
+    },
+    {
+     "code": "3",
+     "value": "18-24 года"
+    },
+    {
+     "code": "4",
+     "value": "25-29 лет"
+    },
+    {
+     "code": "5",
+     "value": "30-39 лет"
+    },
+    {
+     "code": "8",
+     "value": "40-49 лет"
+    },
+    {
+     "code": "6",
+     "value": "50-59 лет"
+    },
+    {
+     "code": "7",
+     "value": "60 лет и старше"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 1,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "13",
+   "number": "13",
+   "label": "Гражданство (по справочнику № 6)",
+   "label_status": "verified",
+   "field_type": "classifier",
+   "classifier_no": 6,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 3,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "14",
+   "number": "14",
+   "label": "Квалификация преступления (по наиболее тяжкому): ст., зн., ч., п. УК РФ",
+   "label_status": "verified",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "15",
+   "number": "15",
+   "label": "Категория преступления (ст. 15 УК РФ)",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "2",
+     "value": "небольшой тяжести"
+    },
+    {
+     "code": "3",
+     "value": "средней тяжести"
+    },
+    {
+     "code": "1",
+     "value": "тяжкое"
+    },
+    {
+     "code": "4",
+     "value": "особо тяжкое"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 1,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "16",
+   "number": "16",
+   "label": "Преступление коррупционной, общеуголовной; экономической направленности, в т.ч. налоговое преступление",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "10",
+     "value": "коррупционной"
+    },
+    {
+     "code": "01",
+     "value": "общеуголовной"
+    },
+    {
+     "code": "02",
+     "value": "экономической"
+    },
+    {
+     "code": "03",
+     "value": "в т.ч. налоговое преступление"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 2,
+    "select": "overlay",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "17",
+   "number": "17",
+   "label": "Место совершения преступления (по справочнику № 2)",
+   "label_status": "verified",
+   "field_type": "classifier",
+   "classifier_no": 2,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 6,
+    "select": "overlay",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "18",
+   "number": "18",
+   "label": "Предмет преступного посягательства или незаконного оборота (по справочнику № 3)",
+   "label_status": "verified",
+   "field_type": "classifier",
+   "classifier_no": 3,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 5,
+    "select": "overlay",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "18.1",
+   "number": "18.1",
+   "label": "Оружие, боеприпасы и взрывчатые материалы (по справочнику № 4)",
+   "label_status": "verified",
+   "field_type": "classifier",
+   "classifier_no": 4,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 5,
+    "select": "overlay",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "19",
+   "number": "19",
+   "label": "Способ совершения преступления (по справочнику № 12)",
+   "label_status": "verified",
+   "field_type": "classifier",
+   "classifier_no": 12,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 3,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "20",
+   "number": "20",
+   "label": "Дополнительная характеристика преступления (по справочнику № 15)",
+   "label_status": "verified",
+   "field_type": "classifier",
+   "classifier_no": 15,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 3,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "21",
+   "number": "21",
+   "label": "Лицо совершило преступление в составе, с участием, только",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "0300",
+     "value": "группы лиц"
+    },
+    {
+     "code": "0400",
+     "value": "группы лиц по предварительному сговору"
+    },
+    {
+     "code": "0200",
+     "value": "организованной группы"
+    },
+    {
+     "code": "0100",
+     "value": "преступного сообщества (организации)"
+    },
+    {
+     "code": "0010",
+     "value": "взрослых"
+    },
+    {
+     "code": "0020",
+     "value": "только несовершеннолетних"
+    },
+    {
+     "code": "0030",
+     "value": "смешанной с участием несовершеннолетних"
+    },
+    {
+     "code": "0001",
+     "value": "иностранных граждан"
+    },
+    {
+     "code": "0003",
+     "value": "граждан государств-участников СНГ"
+    },
+    {
+     "code": "0002",
+     "value": "лиц без гражданства"
+    },
+    {
+     "code": "0004",
+     "value": "только иностранных граждан"
+    },
+    {
+     "code": "0006",
+     "value": "только граждан СНГ"
+    },
+    {
+     "code": "0005",
+     "value": "только лиц без гражданства"
+    },
+    {
+     "code": "1000",
+     "value": "сформированной на этнической основе"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 4,
+    "select": "overlay",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "22",
+   "number": "22",
+   "label": "Мотив (цель) преступления",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "01",
+     "value": "корыстные побуждения"
+    },
+    {
+     "code": "36",
+     "value": "получение имущественных прав/выгод"
+    },
+    {
+     "code": "02",
+     "value": "наркотических средств"
+    },
+    {
+     "code": "32",
+     "value": "психотропных"
+    },
+    {
+     "code": "03",
+     "value": "сильнодействующих"
+    },
+    {
+     "code": "33",
+     "value": "прекурсоров"
+    },
+    {
+     "code": "04",
+     "value": "спиртных напитков"
+    },
+    {
+     "code": "05",
+     "value": "денежных средств"
+    },
+    {
+     "code": "06",
+     "value": "кредита"
+    },
+    {
+     "code": "07",
+     "value": "транспортным средством"
+    },
+    {
+     "code": "08",
+     "value": "грузом"
+    },
+    {
+     "code": "09",
+     "value": "оружием"
+    },
+    {
+     "code": "24",
+     "value": "взрывными устройствами"
+    },
+    {
+     "code": "25",
+     "value": "взрывчатыми веществами"
+    },
+    {
+     "code": "26",
+     "value": "боеприпасами"
+    },
+    {
+     "code": "10",
+     "value": "сбыт"
+    },
+    {
+     "code": "11",
+     "value": "промысел"
+    },
+    {
+     "code": "12",
+     "value": "сокрытие другого преступления"
+    },
+    {
+     "code": "13",
+     "value": "хулиганские"
+    },
+    {
+     "code": "14",
+     "value": "сексуальные"
+    },
+    {
+     "code": "30",
+     "value": "ревность"
+    },
+    {
+     "code": "31",
+     "value": "ссора"
+    },
+    {
+     "code": "15",
+     "value": "иные бытовые"
+    },
+    {
+     "code": "28",
+     "value": "расовая"
+    },
+    {
+     "code": "18",
+     "value": "национальная"
+    },
+    {
+     "code": "19",
+     "value": "религиозная"
+    },
+    {
+     "code": "34",
+     "value": "идеологическая/политическая"
+    },
+    {
+     "code": "35",
+     "value": "в отношении социальной группы"
+    },
+    {
+     "code": "17",
+     "value": "иная личная заинтересованность"
+    },
+    {
+     "code": "37",
+     "value": "межличностный конфликт"
+    },
+    {
+     "code": "20",
+     "value": "раздел сфер влияния"
+    },
+    {
+     "code": "21",
+     "value": "трансплантация органов"
+    },
+    {
+     "code": "22",
+     "value": "сокрытие доходов/объектов налогообложения"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 2,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "23",
+   "number": "23",
+   "label": "Основание признания лица подозреваемым, обвиняемым; дата принятия решения (производства процессуального действия)",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "1",
+     "value": "задержан в порядке ст. 91, 92 УПК"
+    },
+    {
+     "code": "3",
+     "value": "избрана мера пресечения по ст. 100 УПК"
+    },
+    {
+     "code": "4",
+     "value": "возбуждено УД в отношении (п.1 ч.1 ст.46 УПК)"
+    },
+    {
+     "code": "6",
+     "value": "уведомлен о подозрении (ст. 223.1 УПК; п.4 ч.1 ст.46 УПК)"
+    },
+    {
+     "code": "7",
+     "value": "признано обвиняемым (ч.1 ст.47 УПК)"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 1,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "24",
+   "number": "24",
+   "label": "Применена мера процессуального принуждения",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "01",
+     "value": "подписка о невыезде"
+    },
+    {
+     "code": "02",
+     "value": "личное поручительство"
+    },
+    {
+     "code": "04",
+     "value": "заключение под стражу"
+    },
+    {
+     "code": "05",
+     "value": "залог"
+    },
+    {
+     "code": "06",
+     "value": "наблюдение командования воинской части"
+    },
+    {
+     "code": "07",
+     "value": "домашний арест"
+    },
+    {
+     "code": "03",
+     "value": "присмотр за несовершеннолетним"
+    },
+    {
+     "code": "15",
+     "value": "запрет определенных действий"
+    },
+    {
+     "code": "09",
+     "value": "обязательство о явке"
+    },
+    {
+     "code": "08",
+     "value": "наложение ареста на имущество"
+    },
+    {
+     "code": "10",
+     "value": "привод"
+    },
+    {
+     "code": "11",
+     "value": "временное отстранение от должности"
+    },
+    {
+     "code": "13",
+     "value": "задержание"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 2,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "25",
+   "number": "25",
+   "label": "Результат расследования; дата принятия решения",
+   "label_status": "verified",
+   "field_type": "text",
+   "classifier_no": null,
+   "options": [],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {}
+  },
+  {
+   "id": "25.1",
+   "number": "25.1",
+   "label": "Первоначальное решение о приостановлении предварительного следствия; дата",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "022",
+     "value": "п.2 ч.1 ст.208 УПК"
+    },
+    {
+     "code": "028",
+     "value": "п.3 ч.1 ст.208 УПК"
+    },
+    {
+     "code": "088",
+     "value": "п.3.1 ч.1 ст.208 УПК"
+    },
+    {
+     "code": "023",
+     "value": "п.4 ч.1 ст.208 УПК"
+    },
+    {
+     "code": "100",
+     "value": "из первоначально приостановленных по п.3.1"
+    },
+    {
+     "code": "200",
+     "value": "по п.4 ч.1 ст.208 УПК"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 1. ЗАПОЛНЯЕТСЯ СОТРУДНИКОМ ОРГАНА ВНУТРЕННИХ ДЕЛ ПО ВЕДЕНИЮ РЕГИСТРАЦИОННО-УЧЕТНОЙ И СТАТИСТИЧЕСКОЙ РАБОТЫ",
+   "fills_by": "registrar",
+   "raw": null,
+   "input": {
+    "code_digits": 3,
+    "select": "single",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "26",
+   "number": "26",
+   "label": "Уголовное дело расследовано (разрешен материал) руководителем следственного органа, следователем, дознавателем",
+   "label_status": "verified",
+   "field_type": "enum",
+   "classifier_no": null,
+   "options": [
+    {
+     "code": "0001",
+     "value": "следственных органов СК РФ"
+    },
+    {
+     "code": "0002",
+     "value": "органов внутренних дел"
+    },
+    {
+     "code": "0003",
+     "value": "по расследованию ОПД"
+    },
+    {
+     "code": "1000",
+     "value": "ГУ МВД ЦФО"
+    },
+    {
+     "code": "2000",
+     "value": "СЗФО"
+    },
+    {
+     "code": "9000",
+     "value": "ЮФО"
+    },
+    {
+     "code": "4000",
+     "value": "ПФО"
+    },
+    {
+     "code": "5000",
+     "value": "УФО"
+    },
+    {
+     "code": "6000",
+     "value": "СФО"
+    },
+    {
+     "code": "7000",
+     "value": "ДФО"
+    },
+    {
+     "code": "8000",
+     "value": "СКФО"
+    },
+    {
+     "code": "0010",
+     "value": "ФСБ"
+    },
+    {
+     "code": "0085",
+     "value": "ФСКН"
+    },
+    {
+     "code": "0004",
+     "value": "дознавателем"
+    },
+    {
+     "code": "0005",
+     "value": "ОВД"
+    },
+    {
+     "code": "0024",
+     "value": "полиции"
+    },
+    {
+     "code": "0007",
+     "value": "таможенных органов"
+    },
+    {
+     "code": "0025",
+     "value": "ФССП"
+    },
+    {
+     "code": "0026",
+     "value": "ГПН ФПС"
+    },
+    {
+     "code": "0008",
+     "value": "ФСБ"
+    },
+    {
+     "code": "0027",
+     "value": "ПС ФСБ"
+    },
+    {
+     "code": "0086",
+     "value": "ФСКН"
+    },
+    {
+     "code": "0014",
+     "value": "ФСИН"
+    },
+    {
+     "code": "0015",
+     "value": "судьей"
+    }
+   ],
+   "multiple": null,
+   "has_text": false,
+   "has_date": false,
+   "section": "РАЗДЕЛ 2. ЗАПОЛНЯЕТСЯ ЛИЦОМ, ПРОИЗВОДЯЩИМ ПРЕДВАРИТЕЛЬНОЕ РАССЛЕДОВАНИЕ УГОЛОВНОГО ДЕЛА",
+   "fills_by": "investigator",
+   "raw": null,
+   "input": {
+    "code_digits": 4,
+    "select": "overlay",
+    "max_codes": 1
+   }
+  },
+  {
+   "id": "27",
+   "number": "27",
+   "label": "Лицо, совершившее преступление, установлено (служба по справочнику № 14)",
+   "label_status": "verified",
+   "field_type": "classifier",
+   "classifier_no": 14,
+   "options": [],
+   "multiple": null,
+   "has_text": true,
+   "has_date": false,
+   "section": "РАЗДЕЛ 3. ЗАПОЛНЯЕТСЯ НАЧАЛЬНИКОМ ОРГАНА ВНУТРЕННИХ ДЕЛ",
+   "fills_by": "head",
+   "raw": null,
+   "input": {
+    "code_digits": 6,
+    "select": "overlay",
+    "max_codes": 1
+   }
+  }
+ ]
+}

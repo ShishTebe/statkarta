@@ -1,0 +1,82 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Сопоставление фактов и реквизитов",
+ "type": "object",
+ "required": [
+  "edition",
+  "mapping"
+ ],
+ "properties": {
+  "mapping": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "form",
+     "requisite",
+     "source_note",
+     "status"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "form": {
+      "type": "string"
+     },
+     "requisite": {
+      "type": "string"
+     },
+     "value_from": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "value_hint_from": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "status_value": {
+      "enum": [
+       "fills_ic",
+       "fills_registrar",
+       "fills_court",
+       "default",
+       "hint"
+      ]
+     },
+     "source_note": {
+      "type": "string"
+     },
+     "match": {
+      "enum": [
+       "shared",
+       "direct"
+      ]
+     },
+     "scope": {
+      "enum": [
+       "case",
+       "crime",
+       "person",
+       "victim",
+       "card",
+       "event",
+       "profile"
+      ]
+     },
+     "status": {
+      "enum": [
+       "draft",
+       "approved"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

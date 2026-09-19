@@ -1,0 +1,87 @@
+{
+ "version": "2026.1",
+ "built": "2026-09-19",
+ "note": "Эталонные бланки карточек без образцов заполнения и без свойств файла (автор и т. п.). Заполняются вставкой текста в существующие места по картам раскладки data/layout/2026. Публикуются по решению заказчика от 20.09.2026 (ответ В-44).",
+ "blanks": [
+  {
+   "form": "1",
+   "file": "cards_1.docx",
+   "source": "cards_1.docx",
+   "bytes": 65793,
+   "sha256": "b2634981c6ac1da0121100da57430a103244b33c30d8035fb55dcef62c6d16f1",
+   "scrubbed": 1
+  },
+  {
+   "form": "1.1",
+   "file": "cards_1.1.docx",
+   "source": "cards_1.1.docx",
+   "bytes": 56672,
+   "sha256": "a968a0e3e4e0807904d30b2e08af56690376ce977dcb950b6a05620d0c821cfc",
+   "scrubbed": 0
+  },
+  {
+   "form": "2",
+   "file": "cards_2.docx",
+   "source": "cards_2.docx",
+   "bytes": 68591,
+   "sha256": "fc3c0dbc50581a14ff4cca48862d9b409991a94449bd07dc830868a0e7969c81",
+   "scrubbed": 0
+  },
+  {
+   "form": "2.1",
+   "file": "cards_2.1.docx",
+   "source": "cards_2.1-vml.docx",
+   "bytes": 250406,
+   "sha256": "0f26535b6412c78c09e0726fa0c758855827aa188e3aac0bf0ee97dc34324f0e",
+   "scrubbed": 0
+  },
+  {
+   "form": "3",
+   "file": "cards_3.xlsx",
+   "source": "cards_3.xlsx",
+   "bytes": 22708,
+   "sha256": "e4589cef91aaf76a161b0e5ed0aaf9d9f71044ccb5ec6a71c50d07d9d73e7449",
+   "scrubbed": 27
+  },
+  {
+   "form": "4",
+   "file": "cards_4.docx",
+   "source": "cards_4.docx",
+   "bytes": 82184,
+   "sha256": "b8d3a1101564ba0eade82a2dd838973bca91d120103982b40e78df0a2fe2548a",
+   "scrubbed": 0
+  },
+  {
+   "form": "5",
+   "file": "cards_5.docx",
+   "source": "cards_5.docx",
+   "bytes": 63255,
+   "sha256": "d66062b1f24c486299f94d292a2d83fc54fac9ceec31d541850f47d3c57412aa",
+   "scrubbed": 0
+  },
+  {
+   "form": "6",
+   "file": "cards_6.docx",
+   "source": "cards_6.docx",
+   "bytes": 42266,
+   "sha256": "278f202325c1b3960a145e2450bf10f797b17e119f1a935f67b8751e8fe2995e",
+   "scrubbed": 0
+  },
+  {
+   "form": "ipk",
+   "file": "ipk.docx",
+   "source": "ИПК.docx",
+   "bytes": 55505,
+   "sha256": "04c628d3a5f3fde1db183fea41673f184689d23a3de322b81a0d5bc0d07a3794",
+   "scrubbed": 26
+  },
+  {
+   "form": "ipk-in",
+   "file": "ipk-in.docx",
+   "source": "ИПК иностранец.docx",
+   "bytes": 15388,
+   "sha256": "0d32ce9fe89ed3a3517c5c8ae9230b7950c2f4b5632f6543be55043e78379327",
+   "scrubbed": 0
+  }
+ ]
+}

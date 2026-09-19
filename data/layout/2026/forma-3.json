@@ -1,0 +1,782 @@
+{
+ "form": "3",
+ "blank": "cards_3.xlsx",
+ "blank_sha256": "e4589cef91aaf76a161b0e5ed0aaf9d9f71044ccb5ec6a71c50d07d9d73e7449",
+ "part": "xl/worksheets/sheet1.xml",
+ "kind": "xlsx",
+ "map_status": "draft",
+ "source_note": "Книга Excel: места – адреса ячеек листа по печати Excel с подписанными адресами",
+ "fields": [
+  {
+   "requisite": "1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "S4",
+     "T4"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "2",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "W6"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "3",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "G10"
+    ],
+    [
+     "H10",
+     "I10"
+    ],
+    [
+     "J10",
+     "K10",
+     "L10",
+     "M10",
+     "N10",
+     "O10",
+     "P10",
+     "Q10"
+    ],
+    [
+     "R10",
+     "S10",
+     "T10",
+     "U10",
+     "V10",
+     "W10"
+    ]
+   ],
+   "note": "номер дела: вид (1), год (2), код подразделения (8), № (6) – строка 10 листа, подписи в строке 11"
+  },
+  {
+   "requisite": "6",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P21",
+       "Q21",
+       "R21",
+       "S21",
+       "T21",
+       "U21",
+       "V21",
+       "W21"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P21",
+     "Q21",
+     "R21",
+     "S21",
+     "T21",
+     "U21",
+     "V21",
+     "W21"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "7.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P29",
+       "Q29",
+       "R29",
+       "S29",
+       "T29",
+       "U29",
+       "V29",
+       "W29"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P29",
+     "Q29",
+     "R29",
+     "S29",
+     "T29",
+     "U29",
+     "V29",
+     "W29"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "7.2",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "V32",
+     "W32"
+    ]
+   ],
+   "note": "код 01–05, строка 32"
+  },
+  {
+   "requisite": "7.2.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "P34",
+     "Q34",
+     "R34",
+     "S34",
+     "T34",
+     "U34",
+     "V34",
+     "W34"
+    ]
+   ],
+   "note": "дата «год мес. чис.», строка 34"
+  },
+  {
+   "requisite": "8",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "code",
+     "groups": [
+      [
+       "E36"
+      ]
+     ]
+    },
+    {
+     "role": "fill",
+     "index": 0,
+     "digits": true,
+     "groups": [
+      [
+       "G36"
+      ],
+      [
+       "H36",
+       "I36"
+      ],
+      [
+       "J36",
+       "K36",
+       "L36",
+       "M36",
+       "N36",
+       "O36",
+       "P36",
+       "Q36"
+      ],
+      [
+       "R36",
+       "S36",
+       "T36",
+       "U36",
+       "V36",
+       "W36"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "E36"
+    ],
+    [
+     "G36"
+    ],
+    [
+     "H36",
+     "I36"
+    ],
+    [
+     "J36",
+     "K36",
+     "L36",
+     "M36",
+     "N36",
+     "O36",
+     "P36",
+     "Q36"
+    ],
+    [
+     "R36",
+     "S36",
+     "T36",
+     "U36",
+     "V36",
+     "W36"
+    ]
+   ],
+   "note": "код (1–3) и номер дела, с которым соединено (из которого выделено): вид, год, код подразделения, № – строка 36, подписи в строке 37"
+  },
+  {
+   "requisite": "8.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P38",
+       "Q38",
+       "R38",
+       "S38",
+       "T38",
+       "U38",
+       "V38",
+       "W38"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P38",
+     "Q38",
+     "R38",
+     "S38",
+     "T38",
+     "U38",
+     "V38",
+     "W38"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "9",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "W39"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "9.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P40",
+       "Q40",
+       "R40",
+       "S40",
+       "T40",
+       "U40",
+       "V40",
+       "W40"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P40",
+     "Q40",
+     "R40",
+     "S40",
+     "T40",
+     "U40",
+     "V40",
+     "W40"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "10",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P42",
+       "Q42",
+       "R42",
+       "S42",
+       "T42",
+       "U42",
+       "V42",
+       "W42"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P42",
+     "Q42",
+     "R42",
+     "S42",
+     "T42",
+     "U42",
+     "V42",
+     "W42"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "11",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "P44",
+     "Q44",
+     "R44",
+     "S44",
+     "T44",
+     "U44",
+     "V44",
+     "W44"
+    ]
+   ],
+   "note": "дата «год мес. чис.», строка 44"
+  },
+  {
+   "requisite": "12.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P50",
+       "Q50",
+       "R50",
+       "S50",
+       "T50",
+       "U50",
+       "V50",
+       "W50"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P50",
+     "Q50",
+     "R50",
+     "S50",
+     "T50",
+     "U50",
+     "V50",
+     "W50"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "12.2",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "W52"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "12.3",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P53",
+       "Q53",
+       "R53",
+       "S53",
+       "T53",
+       "U53",
+       "V53",
+       "W53"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P53",
+     "Q53",
+     "R53",
+     "S53",
+     "T53",
+     "U53",
+     "V53",
+     "W53"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "13",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "V54",
+     "W54"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "13.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P60",
+       "Q60",
+       "R60",
+       "S60",
+       "T60",
+       "U60",
+       "V60",
+       "W60"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P60",
+     "Q60",
+     "R60",
+     "S60",
+     "T60",
+     "U60",
+     "V60",
+     "W60"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "15",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "code",
+     "groups": [
+      [
+       "T63",
+       "U63",
+       "V63",
+       "W63"
+      ]
+     ]
+    },
+    {
+     "role": "fill",
+     "index": 0,
+     "groups": [
+      [
+       "P65",
+       "Q65",
+       "R65",
+       "S65",
+       "T65",
+       "U65",
+       "V65",
+       "W65"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "T63",
+     "U63",
+     "V63",
+     "W63"
+    ],
+    [
+     "P65",
+     "Q65",
+     "R65",
+     "S65",
+     "T65",
+     "U65",
+     "V65",
+     "W65"
+    ]
+   ],
+   "note": "код и код подразделения"
+  },
+  {
+   "requisite": "16",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "U74",
+     "V74",
+     "W74"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "16.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P78",
+       "Q78",
+       "R78",
+       "S78",
+       "T78",
+       "U78",
+       "V78",
+       "W78"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P78",
+     "Q78",
+     "R78",
+     "S78",
+     "T78",
+     "U78",
+     "V78",
+     "W78"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "16.2",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "N80"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "17",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "T84",
+     "U84"
+    ],
+    [
+     "V84",
+     "W84"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "17.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date",
+     "format": "YYYYMMDD",
+     "groups": [
+      [
+       "P86",
+       "Q86",
+       "R86",
+       "S86",
+       "T86",
+       "U86",
+       "V86",
+       "W86"
+      ]
+     ]
+    }
+   ],
+   "groups": [
+    [
+     "P86",
+     "Q86",
+     "R86",
+     "S86",
+     "T86",
+     "U86",
+     "V86",
+     "W86"
+    ]
+   ],
+   "note": null
+  },
+  {
+   "requisite": "18",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "W88"
+    ]
+   ],
+   "note": "код 1–4, строка 88"
+  },
+  {
+   "requisite": "18.1",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "groups": [
+    [
+     "P90",
+     "Q90",
+     "R90",
+     "S90",
+     "T90",
+     "U90",
+     "V90",
+     "W90"
+    ]
+   ],
+   "note": "дата «год мес. чис.», строка 90"
+  },
+  {
+   "requisite": "sign.investigator",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "investigator",
+     "mode": "underscores",
+     "place": {
+      "cell": "B92",
+      "slot": 0
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+# Материалы, не допускаемые к открытой публикации до решения заказчика (риск П-1)
+data-private/
+node_modules/
+dist/
+.DS_Store
+tests/.core-bundle*.mjs
+dist-private/
+dist-web/
+__pycache__/

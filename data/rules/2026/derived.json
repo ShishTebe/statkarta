@@ -1,0 +1,65 @@
+{
+ "edition": "2026",
+ "status": "draft",
+ "review": "требует предметной ревизии (риск Д-4). Сгенерировано scripts/build_rules.py из пакета форм.",
+ "derived": [
+  {
+   "id": "d.category",
+   "sets": "fact.crime.category",
+   "expr": {
+    "fn": "uk.category",
+    "args": [
+     "fact.crime.qualification"
+    ]
+   },
+   "map_codes": {
+    "small": "2",
+    "medium": "3",
+    "grave": "1",
+    "especially_grave": "4"
+   },
+   "status_value": "default",
+   "source_note": "ст. 15 УК РФ; перечни № 4–7 (указание от 28.07.2025 № 147); коды реквизита «Категория преступления» бланков ф. 1, 2, 2.1"
+  },
+  {
+   "id": "d.attempt",
+   "sets": "fact.crime.attempt",
+   "expr": {
+    "fn": "uk.stage",
+    "args": [
+     "fact.crime.qualification"
+    ]
+   },
+   "status_value": "default",
+   "source_note": "Наличие ст. 30 УК РФ в квалификации: ч. 1 – приготовление (1), ч. 3 – покушение (2)"
+  },
+  {
+   "id": "d.corruption_hint",
+   "sets": "fact.crime.orientation",
+   "expr": {
+    "fn": "uk.in_list",
+    "args": [
+     "fact.crime.qualification",
+     23
+    ]
+   },
+   "when_true_code": "10",
+   "status_value": "hint",
+   "source_note": "Перечень № 23 (коррупционная направленность) – только подсказка, требует проверки признаков п. 1 перечня"
+  },
+  {
+   "id": "d.economic_hint",
+   "sets": "fact.crime.orientation",
+   "expr": {
+    "fn": "uk.in_list",
+    "args": [
+     "fact.crime.qualification",
+     2
+    ]
+   },
+   "when_true_code": "02",
+   "status_value": "hint",
+   "source_note": "Перечень № 2 (экономическая направленность) – подсказка, отнесение зависит от дополнительных условий перечня"
+  }
+ ]
+}

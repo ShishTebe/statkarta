@@ -1,0 +1,1534 @@
+{
+ "form": "ipk",
+ "blank": "ipk.docx",
+ "blank_sha256": "04c628d3a5f3fde1db183fea41673f184689d23a3de322b81a0d5bc0d07a3794",
+ "part": "word/document.xml",
+ "map_status": "draft",
+ "source_note": "Бланк-таблица: места задаются адресами ячеек (scripts/blanks/cellmap.mjs)",
+ "fields": [
+  {
+   "requisite": "02",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "03",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 1,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "4",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 1,
+      "row": 1,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "05",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 2,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "06",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 2,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "07",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 3,
+      "cell": 2
+     },
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "08",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 7,
+      "cell": 2
+     },
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "09",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 11,
+      "cell": 2
+     },
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "70",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 15,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "10",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 16,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "11",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 17,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "12",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 18,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "13",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 19,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "14",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 20,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "15",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 1,
+      "row": 23,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "16",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 1,
+      "row": 24,
+      "cell": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "17",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 1,
+      "row": 25,
+      "cell": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "18",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "prepend",
+     "place": {
+      "table": 1,
+      "row": 26,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "22",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 1,
+      "row": 27,
+      "cell": 3
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "23",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 28,
+      "cell": 2
+     },
+     "size": 16,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "doc_date",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 28,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "78",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 29,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "episode_date",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 29,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "ic_code",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 30,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "79",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 1,
+      "row": 31,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "76",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 1,
+      "row": 32,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "77",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 33,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "28",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 34,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "category",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 36,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "looks_like",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 2,
+      "row": 0,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "sex",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 2,
+      "row": 1,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "height",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 2,
+      "row": 1,
+      "cell": 7
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "build",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 2,
+      "row": 2,
+      "cell": 7
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "hair",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 2,
+      "row": 3,
+      "cell": 7
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "37",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "prepend",
+     "place": {
+      "table": 2,
+      "row": 13,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "38",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 2,
+      "row": 18,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "39",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 2,
+      "row": 19,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "41",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 2,
+      "row": 37,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "42",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 2,
+      "row": 39,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "uk_article",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 0,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "44",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 2,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "71",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 3,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "72",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 4,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "74",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 4,
+      "cell": 3
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "73",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 5,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "object_relation",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 7,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "45",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 10,
+      "cell": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "46",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 12,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "47",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 15,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "48",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 18,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "fraud_method",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 21,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "means",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 24,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "disguise",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 27,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "pretext",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 29,
+      "cell": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "51",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 33,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "57",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "prepend",
+     "place": {
+      "table": 3,
+      "row": 36,
+      "cell": 3
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "58",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 39,
+      "cell": 3
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "59",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "cell",
+     "size": 14,
+     "max_len": 900,
+     "place": {
+      "table": 3,
+      "row": 41,
+      "cell": 0
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "фабула – в поле под заголовком, шрифтом 7 пт, чтобы строка бланка не раздвигалась"
+  },
+  {
+   "requisite": "identified_date",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 42,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "61",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "date_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 43,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "weekday",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 43,
+      "cell": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "daytime",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 44,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "64",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "underscores",
+     "place": {
+      "table": 3,
+      "row": 45,
+      "cell": 2,
+      "slot": 0,
+      "span": 4
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "territory",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 46,
+      "cell": 1
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "66",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 47,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "67",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 49,
+      "cell": 5
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "68",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 51,
+      "cell": 6
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "65",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 52,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "85",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "codes_text",
+     "mode": "append",
+     "place": {
+      "table": 3,
+      "row": 53,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "sign.investigator",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "investigator",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 54,
+      "cell": 1
+     },
+     "size": 12,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "sign.head",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "head",
+     "mode": "cell",
+     "place": {
+      "table": 3,
+      "row": 54,
+      "cell": 3
+     },
+     "size": 12,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": null
+  },
+  {
+   "requisite": "variant",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "variant",
+     "mode": "cell",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 2
+     },
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "вид карты «(лицо – ЛЦ, событие – ПР)»: в бланке стояло «ПР» – заменяется по варианту карточки (замечание 19.09.2026)"
+  }
+ ]
+}

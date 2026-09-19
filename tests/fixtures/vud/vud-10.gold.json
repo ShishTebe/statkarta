@@ -1,0 +1,26 @@
+{
+ "file": "vud-10.docx",
+ "blank": "3.01",
+ "format": "docx",
+ "case_number": "12657230000001333",
+ "vud_date": "2026-03-02",
+ "kusp": "29пр/1-26",
+ "kusp_date": "2026-02-28",
+ "report_source": null,
+ "investigator": "Следователь следственного отдела по городу Энску следственного управления Следственного комитета Российской Федерации по Условной области лейтенант юстиции Кораблев Д.С.",
+ "qualifications": [
+  "290/5/"
+ ],
+ "persons": [],
+ "suspect_known": false,
+ "crime_date": "2025-08-19",
+ "crime_place": "Условная обл., г. Энск, ул. Портовая, д. 8",
+ "damage_amount": null,
+ "victims": [
+  {
+   "surname": "Юдина",
+   "first_name": "Мария",
+   "patronymic": "Сергеевна"
+  }
+ ]
+}

@@ -1,0 +1,3174 @@
+{
+ "edition": "2026",
+ "status": "draft",
+ "review": "требует предметной ревизии (риск Д-4). Сгенерировано scripts/build_rules.py из пакета форм.",
+ "facts": [
+  {
+   "id": "fact.case.case_number",
+   "entity": "court",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Номер уголовного дела, присвоенный правоохранительным органом: вид, год, № подразделения, регистрационный №",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.ipk_in_r1",
+   "entity": "case",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Территориальный орган МВД России, ИЦ, где подлежит учету",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.ipk_in_r27",
+   "entity": "case",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Подследственность",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.ipk_in_r29",
+   "entity": "case",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "№ отказного материала",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.ipk_in_r3",
+   "entity": "case",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "№ по КУСП; № дополнительного преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.ipk_in_r30",
+   "entity": "case",
+   "scope": "case",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата отказа в возбуждении УД",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.ipk_in_r4",
+   "entity": "case",
+   "scope": "case",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата регистрации",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.ipk_ric_code",
+   "entity": "case",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Код территориального органа и ИЦ, где подлежит учету",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.organ",
+   "entity": "crime",
+   "scope": "case",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Орган",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.organ_name",
+   "entity": "court",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Наименование органа, проводившего расследование",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.record_kind.opt55b84a",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Учесть, изменить, снять",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.record_kind.optf8ef5b",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Учесть, изменить, снять, в т.ч. в связи с прекращением уголовного дела или уголовного преследования по реабилитирующим основаниям",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.vud_date.date",
+   "entity": "case",
+   "scope": "case",
+   "type": "date",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Дата возбуждения уголовного дела",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.vud_date.opte034c7",
+   "entity": "crime",
+   "scope": "case",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата возбуждения уголовного дела, вынесения постановления об отказе в возбуждении уголовного дела",
+   "status": "draft"
+  },
+  {
+   "id": "fact.court.qualification",
+   "entity": "court",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 1: статья, знак, часть, пункт; стадия, форма соучастия, категория соучастника",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.attempt",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "По ст. 30 УК РФ: приготовление, покушение",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.category",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Категория преступления (ст. 15 УК РФ)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.citizenship",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено в составе группы; с участием, только иностранных граждан, лиц без гражданства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.crime_date",
+   "entity": "case",
+   "scope": "crime",
+   "type": "date",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Дата совершения преступления (происшествия)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.extra_char",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 15,
+   "shared": true,
+   "label": "Дополнительная характеристика преступления (по справочнику № 15)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.fabula",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Описание (краткая фабула) преступления, место, дата и время его совершения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.intoxication",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено в состоянии опьянения; лицом, состоящим на учете, хроническим алкоголиком, потребителем наркотических средств, токсикоманом",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_in_r21",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Предмет преступного посягательства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_in_r22",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Время совершения преступления (происшествия): часов, минут",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_in_r23",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место преступления (происшествия)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_in_r24",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Способ совершения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_in_r5",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Вид преступления (происшествия)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r44",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Вид преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r45",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Отношение к преступлению",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r46",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Совершено",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r47",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Способ проникновения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r48",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Способ насильственных действий",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r51",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "В отношении",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r57",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Предмет посягательства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r58",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r64",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место совершения: республика; край, область; район; населенный пункт; улица; дом",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r66",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Связи лица",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r67",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "По делу имеются",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r68",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Способ сокрытия преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r71",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Характер преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r72",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Наименование юридического лица",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r73",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Фактический адрес юридического лица",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r74",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Огрн",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_r78",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Номер эпизода",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_rdaytime",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Время совершения преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_rdisguise",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Под видом",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_rfraud_method",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Способ мошенничества",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_ridentified_date",
+   "entity": "case",
+   "scope": "crime",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата установления лица",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_rmeans",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Средства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_robject_relation",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Отношение к объекту учета",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_rpretext",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Под предлогом",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_rterritory",
+   "entity": "case",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Территория",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ipk_rweekday",
+   "entity": "case",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "День недели",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.laundering_predicate",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Квалификация преступления, предшествовавшего легализации (отмыванию) денежных средств и иного имущества",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.method",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 12,
+   "shared": true,
+   "label": "Способ совершения преступления (по справочнику № 12)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.motive",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Мотив (цель) преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.new_regions",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Преступление совершено после принятия в РФ, до принятия в РФ на территории Донецкой Народной Республики, Луганской Народной Республики, Запорожской области, Херсонской области",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.okato",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Место совершения преступления по ОКАТО",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.opf",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 11,
+   "shared": true,
+   "label": "Организационно-правовая форма хозяйствующего субъекта (по справочнику № 11)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.orientation",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Преступление коррупционной, общеуголовной; экономической направленности, в т.ч. налоговое преступление",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.ownership",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Форма собственности, в отношении которой совершено преступное посягательство",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.place",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 2,
+   "shared": true,
+   "label": "Место совершения преступления (по справочнику № 2)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.public_place.opt5e3a7e",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено: серийно; в общественном месте; вне населенного пункта",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.public_place.optf6829d",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "В общественном месте; вне населенного пункта",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.qualification",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Квалификация преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.service.spr14",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 14,
+   "shared": false,
+   "label": "Силы и средства, установившие лицо или предотвратившие преступление (одна служба) (по справочнику № 14)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.service.text",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Служба, способствовавшая раскрытию преступлений (коды реквизита 34)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.size",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Преступление совершено в крупном, особо крупном, значительном размере; причинен значительный, крупный, особо крупный ущерб",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.subject",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 3,
+   "shared": true,
+   "label": "Предмет преступного посягательства или незаконного оборота (по справочнику № 3)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.crime.weapon",
+   "entity": "crime",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 4,
+   "shared": true,
+   "label": "Оружие, боеприпасы и взрывчатые материалы (по справочнику № 4)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r10",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело возбуждено",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r10_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело возбуждено при отмене постановления об отказе в возбуждении уголовного дела, после отмены постановления о возбуждении уголовного дела",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r10_2",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление ранее было укрыто от учета (не учтено)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r10_3",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 14,
+   "shared": false,
+   "label": "Факт укрытия преступления допущен (по справочнику № 14)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r21",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено в: республиканском, краевом или областном центре; городе, поселке городского типа, сельской местности, за пределами России; в зоне",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r22",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 1,
+   "shared": false,
+   "label": "Вид экономической деятельности, в ходе осуществления которой совершено преступление (по классификатору № 1)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r25",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Предварительная оценка ущерба, причиненного федеральному бюджету; сумма взятки, подкупа, незаконного вознаграждения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r25_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "На момент возбуждения уголовного дела изъято наркотических средств, психотропных или сильнодействующих веществ, прекурсоров, наркосодержащих растений (либо их частей) (по справочнику № 8)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r25_2",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Изъято наркотических средств: вид, код по справочнику № 8 (например, героин – 3114), количество в миллиграммах",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r25_3",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Изъято прекурсоров: вид, код по справочнику № 8, количество в килограммах",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r25_4",
+   "entity": "crime",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уничтожено (изъято) наркосодержащих растений при выявлении их посевов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r25_5",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Выявлено: незаконных нарколабораторий, других мест незаконного производства, изготовления или переработки",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r28",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено с использованием, в т.ч. с применением",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r29",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Характеристика охраны объекта",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r29_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Результаты осмотра места происшествия",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r31",
+   "entity": "victims",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Количество юридических лиц, которым причинен материальный ущерб имуществу и деловой репутации",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r32",
+   "entity": "victims",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Личность потерпевшего не установлена; ущерб причинен юридическому лицу, государству; № дела по установлению личности погибшего",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r33",
+   "entity": "victims",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Характеристика потерпевших",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r40",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело находится в производстве (материал разрешен)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r8",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление предотвращено на стадии приготовления, покушения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r9",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 14,
+   "shared": false,
+   "label": "Преступление выявлено (наличие состава преступления установлено) (по справочнику № 14)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1.r9_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "По оперативным данным, с помощью оперативно-технических мероприятий, с применением технических средств; подозреваемый установлен в течение 24 часов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r11",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено со связями: коррумпированными, международными, межрегиональными",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r12",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено участником организованной группы, преступного сообщества (организации), женщиной, несовершеннолетним, малолетним, по найму (по заказу)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r14",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено лицом, ранее совершавшим преступление",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r15",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено лицом, ранее судимым",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r16",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Рецидив преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r17",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено обвиняемым с мерой пресечения, не связанной с содержанием под стражей; лицом, находящимся в розыске",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r20",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место проживания",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r25",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 16,
+   "shared": false,
+   "label": "Решение по преступлению (по справочнику № 16), дата",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r25_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 16,
+   "shared": false,
+   "label": "Судебное решение (по справочнику № 16), дата",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r25_2",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Решение по преступлению (первоначальное приостановление дела), дата",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r27",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление выявлено в ходе расследования, дознания; явка с повинной",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r28",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Установленная сумма материального ущерба",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r28_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "По преступлению принималось решение о приостановлении операций с денежными средствами, электронными денежными средствами, денежными средствами, внесенными в качестве аванса за услуги связи, в порядке ст. 115.2 УПК РФ",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r29",
+   "entity": "crime",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 4,
+   "shared": false,
+   "label": "Орудия и средства преступления: оружие, взрывчатые материалы и боеприпасы (по справочнику № 4)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r30",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Орудия и средства преступления: технические средства снятия информации",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r31",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Применение криминалистических средств и методов при установлении лица",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r32",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Использование оперативно-справочных, криминалистических, розыскных, дактилоскопических и иных учетов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r32_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Использование аппаратно-программных средств и комплексов ЕИТКС, технических средств",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r33",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело расследовано (разрешен материал)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r33_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Решение принято судьей",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r35",
+   "entity": "crime",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Сообщение; № рабочего дела; наименование ОВД (аппарата министерства)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r35_1",
+   "entity": "crime",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Первоначальная информация представлена спецаппаратом (коды реквизита 35)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r36",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Применялись",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f1_1.r37",
+   "entity": "crime",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата утверждения руководителем следственного органа, начальником подразделения дознания, прокурором принятого решения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r15",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место проживания; адрес проживания",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r20",
+   "entity": "person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место работы, учебы",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r27",
+   "entity": "crime_by_person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо задерживалось в порядке ст. 91, 92 УПК РФ; мера пресечения заключение под стражу избиралась",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r30",
+   "entity": "crime_by_person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Вид экономической деятельности, в ходе осуществления которой лицо совершило преступление (по классификатору № 1)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r36_1",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо является потребителем наркотических средств; являлось подставным лицом, координатором подставных лиц",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r39",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо совершило преступление со связями: коррумпированными, международными, межрегиональными",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r40",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Признано: исполнителем, организатором, подстрекателем, пособником",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r41",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Являлось участником организованной группы, преступного сообщества (организации); совершило серию аналогичных преступлений, преступление по найму (заказу)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r42",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Находясь под следствием, с мерой пресечения, не связанной с арестом, в розыске; мера пресечения содержание под стражей изменена",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r43",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Совершило два и более преступления, но к уголовной ответственности за них не привлекалось",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r44",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо, ранее совершавшее преступления, привлекалось к уголовной ответственности два, три и более раза",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r46",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Совершило рецидив, опасный, особо опасный",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r47",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Ранее содержалось в ИУ, в т.ч. данной области, края, республики",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r48",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Совершило преступление после освобождения из ИУ, в период неотбытой части наказания, условного осуждения, пробации, отбывания наказания",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r49",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Освобождалось от уголовной ответственности, от наказания; судимость погашена",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r50",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Ранее совершало преступление",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r51",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Результат расследования",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r51_1",
+   "entity": "person",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 16,
+   "shared": false,
+   "label": "Судебное решение (по справочнику № 16)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r52",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "На лицо содержится информация в АБД",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r53",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "К лицу ранее применялись меры административного воздействия",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r54",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело расследовано (разрешен материал)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r54_1",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Решение принято судьей",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r55",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо, совершившее преступление, состояло на учете; объявлялось в розыск по данному делу",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r7",
+   "entity": "person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Фамилия",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2.r8",
+   "entity": "person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Имя (реквизит 8), отчество (реквизит 9)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r10",
+   "entity": "person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Отчество",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r23",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Основание признания лица подозреваемым, обвиняемым; дата принятия решения (производства процессуального действия)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r24",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Применена мера процессуального принуждения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r25",
+   "entity": "person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Результат расследования; дата принятия решения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r26",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело расследовано (разрешен материал) руководителем следственного органа, следователем, дознавателем",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r7",
+   "entity": "person",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Персональные данные не заполняются",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r8",
+   "entity": "person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Фамилия",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f2_1.r9",
+   "entity": "person",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Имя",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r10",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата, до которой продлен срок расследования",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r11",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата передачи дела для ознакомления обвиняемого и его защитника",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r12",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дело приостановлено",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r12_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 12)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r12_2",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дело передано прокурору",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r12_3",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 12.2)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r13",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дело направлено прокурором в суд; прекращено; передано в компетентные органы иностранного государства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r13_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 13)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r15",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Решение принято",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r16",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Принято к производству после возвращения дела на дополнительное расследование",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r16_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия к производству",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r16_2",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело направлено в суд после отмены решения о возвращении на дополнительное расследование в порядке ст. 237 УПК РФ, дата принятия решения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r17",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Возобновлено производство по ранее прекращенному, ранее приостановленному делу",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r17_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 17)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r18",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Отмена постановления о приостановлении, о прекращении",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r18_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 18)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r7",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело передано / поступило по подследственности (территориальности)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r7_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 7)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r7_2",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Информация о другом регионе (талон-уведомление)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r7_2_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата поступления уголовного дела (к реквизиту 7.2)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r8",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Соединено с делом, в т.ч. по признаку серийности; выделено из дела",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r8_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 8)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r9",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Продлен срок расследования",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f3.r9_1",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения (к реквизиту 9)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r10",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Установленная сумма материального ущерба",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r11",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Добровольно погашено (как до возбуждения уголовного дела, так и в процессе следствия)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r11_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Возмещен ущерб (как до возбуждения дела, так и в процессе предварительного расследования)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r11_2",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Сумма погашенной задолженности",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r12",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Наложен арест на имущество (денежные средства), на транспортное средство",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r12_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Сумма денежных средств, электронных денежных средств, денежных средств, внесенных в качестве аванса за услуги связи, операции с которыми приостанавливались в порядке ст. 115.2 УПК РФ",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r13",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Сумма штрафных санкций",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r15",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Сведения об изъятии имущества, денег, ценностей и предметов преступной деятельности: изъято имущества, денег, ценностей на сумму",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r16",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято имущества, денег, сберкнижек, ценных бумаг, кредитных карточек, чековых книжек, иных платежных документов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r17",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято ценных бумаг, кредитных карточек, чековых книжек, иных платежных документов зарубежных фирм и банков",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r18",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 7,
+   "shared": false,
+   "label": "Изъято иностранной валюты (по справочнику № 7)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r19",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято продовольствия, похищенных (угнанных) транспортных средств, этилового спирта, алкогольной продукции",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r20",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято предметов антиквариата",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r21",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято культурных, исторических ценностей",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r22",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято драгоценных металлов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r23",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято драгоценных камней",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r23_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято необработанных драгоценных камней",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r23_2",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято полудрагоценных камней, необработанных полудрагоценных камней",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r24",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято цветных, черных, редкоземельных металлов, нефти, нефтепродуктов и ГСМ, леса и лесоматериалов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r24_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято лома металлов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r25",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято радиоактивных материалов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r26",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 4,
+   "shared": false,
+   "label": "Изъято оружия, боеприпасов, взрывчатых материалов (по справочнику № 4)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r27",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Изъято наркотических средств, психотропных или сильнодействующих веществ, наркосодержащих растений (либо их частей) (по справочнику № 8)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r27_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Изъято наркотических средств: вид, код по справочнику № 8 (например, героин – 3114), количество в миллиграммах",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r27_2",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Изъято прекурсоров (по справочнику № 8)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r27_3",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уничтожено (изъято) наркосодержащих растений при выявлении их посевов",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r27_4",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Количество выявленных незаконных нарколабораторий, других мест незаконного производства, изготовления или переработки",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r28",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 8,
+   "shared": false,
+   "label": "Изъято инструментов, оборудования, используемых для изготовления наркотических средств или психотропных веществ",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r29",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято используемых преступниками при совершении преступлений технических средств, транспортных средств, средств личной защиты",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r29_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято материалов террористического или экстремистского характера",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r29_2",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято банковских карт (иных средств платежа), сим-карт",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r30",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято поддельных денег, иностранной валюты, ценных бумаг, финансово-платежных документов, кредитных карточек",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r30_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято поддельных, строка 1: вид (код реквизита 30), количество штук, сумма",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r30_2",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято поддельных, строка 2: вид (код реквизита 30), количество штук, сумма",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r30_3",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято поддельных, строка 3: вид (код реквизита 30), количество штук, сумма",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r30_4",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Изъято поддельных, строка 4: вид (код реквизита 30), количество штук, сумма",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r31",
+   "entity": "damage",
+   "scope": "card",
+   "type": "classifier",
+   "classifier_no": 7,
+   "shared": false,
+   "label": "Изъято поддельных купюр (по справочнику № 7)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r32",
+   "entity": "damage",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Предъявлен гражданский иск на сумму",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r32_1",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Вещественные доказательства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f4.r33",
+   "entity": "damage",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело расследовано (разрешен материал)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f5.r10",
+   "entity": "victim",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Характеристика потерпевшего (физического лица)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f5.r11",
+   "entity": "victim",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Материальный ущерб причинен физическому, юридическому лицу; размер причиненного материального ущерба",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f5.r18",
+   "entity": "crime",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Преступление совершено в: республиканском, краевом или областном центре; городе, поселке городского типа, сельской местности, за пределами России; в зоне",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f5.r21",
+   "entity": "victim",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Уголовное дело находится в производстве (материал разрешен)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f5.r8",
+   "entity": "victim",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Потерпевший является физическим, юридическим лицом",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f6.r7",
+   "entity": "court",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место рождения (обвиняемого): республика, край, область, район, город, поселок, деревня, село",
+   "status": "draft"
+  },
+  {
+   "id": "fact.f6.r8",
+   "entity": "court",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата направления уголовного дела в суд",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_in_r34",
+   "entity": "case",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Решение по УД",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_in_r35",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения по УД",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_in_r37",
+   "entity": "case",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дополнительные сведения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_in_r38",
+   "entity": "case",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Карту заполнил (должность, ФИО, телефон)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_in_r39",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата заполнения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_in_rhead_sign",
+   "entity": "case",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Начальник органа (ФИО, подпись)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_in_rtransfer_date",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата передачи Карты-ИГ ответственному лицу",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_r22",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Вид документа",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_r28",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Подследственность",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_r65",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Отметка о коррекции и снятии",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_r76",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Решение по УД / отказному материалу",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_r77",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата принятия решения по УД / отказному материалу",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_r85",
+   "entity": "case",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Основание снятия с учета",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_rdoc_date",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата документа",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_repisode_date",
+   "entity": "case",
+   "scope": "card",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата выявления эпизода",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_rfilled_by",
+   "entity": "case",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Заполнил: должность, фамилия, подпись",
+   "status": "draft"
+  },
+  {
+   "id": "fact.fipk_rhead_sign",
+   "entity": "case",
+   "scope": "card",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Руководитель: должность, фамилия, подпись",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.age",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Дата рождения, полных лет; возраст (на момент совершения преступления)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.arrival_purpose",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Цель приезда для иностранных граждан и лиц без гражданства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.birth_date",
+   "entity": "court",
+   "scope": "person",
+   "type": "date",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Дата рождения (обвиняемого)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.citizenship.opt27ecf8",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо совершило преступление в составе группы; с участием, только иностранных граждан, лиц без гражданства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.citizenship.spr6",
+   "entity": "person",
+   "scope": "person",
+   "type": "classifier",
+   "classifier_no": 6,
+   "shared": true,
+   "label": "Гражданство лица, совершившего преступление (по справочнику № 6)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.education",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Образование",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.first_name",
+   "entity": "court",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Имя (обвиняемого)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.group",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо совершило преступление в составе, с участием, только",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.intoxication",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо совершило преступление в состоянии опьянения; являясь хроническим алкоголиком, потребителем наркотических средств и психотропных веществ, токсикоманом",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r11",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Пол",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r12",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Гражданство",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r13",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место рождения: страна, республика; край, область, район, город, населенный пункт",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r14",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Паспорт (или иной документ): тип документа; № документа; дата выдачи; кем выдан",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r15",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Страна выбытия",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r16",
+   "entity": "case",
+   "scope": "person",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата въезда",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r17",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Цель въезда, статус",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r18",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место работы, учебы: тип предприятия (учреждения); наименование",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r19",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Сведения о регистрации по месту жительства: страна, республика, субъект Российской Федерации; край, область, район; город, населенный пункт",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r20",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Процессуальный статус (подозреваемый, обвиняемый, потерпевший)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r31",
+   "entity": "case",
+   "scope": "person",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата задержания",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r32",
+   "entity": "case",
+   "scope": "person",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата предъявления обвинения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_in_r33",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Мера пресечения: вид; дата",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r06",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Паспорт (другой документ, удостоверение личности, свидетельство)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r07",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место рождения: республика; край, область; район; населенный пункт",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r08",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Адрес: республика; край, область; район; населенный пункт; улица; дом; корпус; квартира; микрорайон; административный участок",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r09",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Адрес фактического проживания: республика; край, область; район; населенный пункт; улица; дом; корпус; квартира; микрорайон; административный участок",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r10",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Национальность",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r11",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Место работы",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r12",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Специальность",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r13",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Клички",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r14",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Выезжает, посещает (республика, край, область, район, населенный пункт, улица, дом, корпус или наименование объекта)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r15",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Порочные наклонности",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r16",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Интересы",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r17",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Имеет навык",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r18",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Знает язык",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r37",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Особенности внешности",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r38",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Особенности поведения",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r39",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Группа крови, резус",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r41",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Описание иных характерных признаков",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r42",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Примерный год рождения неустановленного лица",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_r70",
+   "entity": "case",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Гражданство",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_rbuild",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Телосложение",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_rcategory",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Категория",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_rhair",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Волосы",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_rheight",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Рост",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_rlooks_like",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Внешне похож на",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_rmarks",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Особые приметы и татуировки: код расположения, код приметы (татуировки), описание",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.ipk_rsex",
+   "entity": "case",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Пол",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.motive.opt2d3b50",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Мотив (цель) преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.motive.opt4b44f4",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Мотив (цель) преступления",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.nationality",
+   "entity": "person",
+   "scope": "person",
+   "type": "classifier",
+   "classifier_no": 5,
+   "shared": true,
+   "label": "Национальность (по справочнику № 5)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.patronymic",
+   "entity": "court",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Отчество (обвиняемого)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.position",
+   "entity": "person",
+   "scope": "person",
+   "type": "classifier",
+   "classifier_no": 10,
+   "shared": true,
+   "label": "Должностное положение (по справочнику № 10)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.prev_citizenship",
+   "entity": "person",
+   "scope": "person",
+   "type": "classifier",
+   "classifier_no": 6,
+   "shared": true,
+   "label": "Гражданство, предшествовавшее получению гражданства Российской Федерации (по справочнику № 6)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.record",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Ранее судимо",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.residence_country",
+   "entity": "person",
+   "scope": "person",
+   "type": "classifier",
+   "classifier_no": 6,
+   "shared": true,
+   "label": "Страна проживания (по справочнику № 6)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.service",
+   "entity": "person",
+   "scope": "person",
+   "type": "classifier",
+   "classifier_no": 14,
+   "shared": true,
+   "label": "Лицо, совершившее преступление, установлено (служба по справочнику № 14)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.sex",
+   "entity": "person",
+   "scope": "person",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Пол",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.social_status",
+   "entity": "person",
+   "scope": "person",
+   "type": "classifier",
+   "classifier_no": 9,
+   "shared": true,
+   "label": "Социальное положение лица, совершившего преступление (по справочнику № 9)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.person.surname",
+   "entity": "court",
+   "scope": "person",
+   "type": "text",
+   "classifier_no": null,
+   "shared": true,
+   "label": "Фамилия (обвиняемого)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victim.arrival_purpose",
+   "entity": "victim",
+   "scope": "victim",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Цель приезда для иностранных граждан и лиц без гражданства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victim.citizenship",
+   "entity": "victim",
+   "scope": "victim",
+   "type": "classifier",
+   "classifier_no": 6,
+   "shared": false,
+   "label": "Гражданство (по справочнику № 6)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victim.position",
+   "entity": "victim",
+   "scope": "victim",
+   "type": "classifier",
+   "classifier_no": 10,
+   "shared": false,
+   "label": "Должностное положение (по справочнику № 10)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victim.residence_country",
+   "entity": "victim",
+   "scope": "victim",
+   "type": "classifier",
+   "classifier_no": 6,
+   "shared": false,
+   "label": "Страна проживания (по справочнику № 6)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victim.sex",
+   "entity": "victim",
+   "scope": "victim",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Пол потерпевшего",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victim.social_status",
+   "entity": "victim",
+   "scope": "victim",
+   "type": "classifier",
+   "classifier_no": 9,
+   "shared": false,
+   "label": "Социальное положение (по справочнику № 9)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victims.arrival_purpose",
+   "entity": "victims",
+   "scope": "crime",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Цель приезда для иностранных граждан и лиц без гражданства",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victims.citizenship",
+   "entity": "victims",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 6,
+   "shared": false,
+   "label": "Гражданство потерпевшего (по справочнику № 6)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victims.position",
+   "entity": "victims",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 10,
+   "shared": false,
+   "label": "Должностное положение потерпевшего (по справочнику № 10)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victims.residence_country",
+   "entity": "victims",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 6,
+   "shared": false,
+   "label": "Страна проживания потерпевшего (по справочнику № 6)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victims.social_status",
+   "entity": "victims",
+   "scope": "crime",
+   "type": "classifier",
+   "classifier_no": 9,
+   "shared": false,
+   "label": "Социальное положение потерпевшего (по справочнику № 9)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.victims.victims_count",
+   "entity": "victims",
+   "scope": "crime",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Количество потерпевших",
+   "status": "draft"
+  },
+  {
+   "id": "fact.case.kusp",
+   "entity": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Номер регистрации сообщения о преступлении в регистрационном документе, дата",
+   "status": "draft",
+   "service": true,
+   "scope": "case"
+  },
+  {
+   "id": "fact.case.vud_date",
+   "entity": "case",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата возбуждения уголовного дела",
+   "status": "draft",
+   "service": true,
+   "scope": "case"
+  },
+  {
+   "id": "fact.case.kusp_date",
+   "entity": "case",
+   "type": "date",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Дата регистрации сообщения о преступлении",
+   "status": "draft",
+   "service": true,
+   "scope": "case"
+  },
+  {
+   "id": "fact.case.investigator",
+   "entity": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Следователь (должность, Ф.И.О.)",
+   "status": "draft",
+   "service": true,
+   "scope": "case"
+  },
+  {
+   "id": "fact.case.suspect_known",
+   "entity": "case",
+   "type": "boolean",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Лицо установлено на момент возбуждения дела",
+   "status": "draft",
+   "service": true,
+   "scope": "case"
+  },
+  {
+   "id": "fact.case.report_source",
+   "entity": "case",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Повод к возбуждению дела",
+   "status": "draft",
+   "service": true,
+   "scope": "case"
+  },
+  {
+   "id": "fact.damage.amount",
+   "entity": "damage",
+   "type": "number",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Сумма ущерба, руб.",
+   "status": "draft",
+   "service": true,
+   "scope": "case"
+  }
+ ]
+}
