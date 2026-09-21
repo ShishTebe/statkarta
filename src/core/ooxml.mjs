@@ -287,7 +287,7 @@ export function fillShapes(xml, edits, opts = {}) {
 //   остается как в бланке;
 // – текст длиннее линейки печатается уменьшенным шрифтом, чтобы уместиться в ее длину.
 // Текст ставится отдельным прогоном с оформлением того прогона, где начиналась линейка.
-export function setUnderscoreText(xml, path, text, { slot = 0, span = 1, minHalfPoints = 11, boxes = false } = {}) {
+export function setUnderscoreText(xml, path, text, { slot = 0, span = 1, minHalfPoints = 11, boxes = false, size: fixedSize = null } = {}) {
   const tc = findTableCell(xml, path);
   const parts = [];
   const re = /<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g;
@@ -329,7 +329,8 @@ export function setUnderscoreText(xml, path, text, { slot = 0, span = 1, minHalf
     ? xml.lastIndexOf('<w:r>', first.start) : xml.lastIndexOf('<w:r ', first.start);
   const rPr = /^<w:r\b[^>]*>(<w:rPr>[\s\S]*?<\/w:rPr>)?/.exec(xml.slice(runStart))?.[1] ?? '';
   const baseSize = Number(/<w:sz w:val="(\d+)"/.exec(rPr)?.[1] ?? 20);
-  const size = value.length > capacity ? Math.max(minHalfPoints, Math.floor(baseSize * capacity / value.length)) : baseSize;
+  // размер задан картой бланка (р. 12 ф. 1 – 6 пт) или подбирается, чтобы текст уместился на линейках
+  const size = fixedSize ?? (value.length > capacity ? Math.max(minHalfPoints, Math.floor(baseSize * capacity / value.length)) : baseSize);
   const ownPr = rPr
     ? rPr.replace(/<w:spacing w:val="[^"]*"\/>/, '').replace(/<w:sz w:val="\d+"\/>/, `<w:sz w:val="${size}"/>`).replace(/<w:szCs w:val="\d+"\/>/, `<w:szCs w:val="${size}"/>`)
       .replace(/<w:u w:val="[^"]*"\/>/, '')

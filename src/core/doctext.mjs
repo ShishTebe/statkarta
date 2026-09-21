@@ -108,15 +108,10 @@ export function rtfText(bytes) {
 
 // ---------- .pdf с текстовым слоем ----------
 
+// через Response: так поток читается и в Safari (асинхронный перебор потока там поддерживается не везде)
 async function unpack(bytes, format) {
-  const out = [];
-  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream(format));
-  for await (const chunk of stream) out.push(chunk);
-  const size = out.reduce((n, c) => n + c.length, 0);
-  const res = new Uint8Array(size);
-  let at = 0;
-  for (const c of out) { res.set(c, at); at += c.length; }
-  return res;
+  const src = new Blob([bytes]).stream().pipeThrough(new DecompressionStream(format));
+  return new Uint8Array(await new Response(src).arrayBuffer());
 }
 
 // потоки PDF сжаты zlib (deflate); в старых файлах встречается и «сырой» deflate

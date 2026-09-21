@@ -16,11 +16,13 @@ const KIND_ADD = { crimes: 'Добавить эпизод', persons: 'Добав
 const KIND_ONE = { crimes: 'crime', persons: 'person', victims: 'victim' };
 const STATE_RU = { ready: 'готова', errors: 'есть ошибки', defaults: 'есть умолчания', incomplete: 'есть незаполненные' };
 const MANUAL_EVENT = 'ev.manual';
+const FORM_ORDER = ['1', '1.1', '2', '2.1', '3', '4', '5', '6', 'ipk', 'ipk-in'];
 
 const state = {
   view: 'case', tab: 'objects', kase: null, cases: [], evId: null, cardKey: null, onlyEmpty: false, qualText: null, pendingImport: null,
   profile: profileLoad(), saved: [], notices: [], dirty: false, password: null, printAll: false,
   addEv: null, cls: { no: 2, q: '', sel: null }, blank: { form: '1', req: null, q: '' }, sheet: null, busy: null,
+  qCard: null, qFocus: null,
   doc: null, // разбор постановления: только в памяти вкладки, в файл дела не сохраняется
 };
 
@@ -221,8 +223,8 @@ function startView() {
       h('button', { class: 'btn primary', onclick: newCase }, 'Новое дело'),
       h('button', { class: 'btn', onclick: () => { newCase(); state.tab = 'document'; render(); } }, 'Новое дело по постановлению о ВУД'),
       h('button', { class: 'btn', onclick: newSingleCard }, 'Одна карточка (быстрый режим)'),
-      h('button', { class: 'btn', onclick: importCaseFile }, 'Открыть файл дела')),
-    h('p', { class: 'small muted' }, 'Новое дело – объекты учета, события и пакеты карточек. По постановлению о ВУД – программа найдет в нем номер дела, даты, КРСП, квалификацию и лицо, вы подтвердите. Быстрый режим – одна карточка без события, как в версии 0.2.')));
+      h('button', { class: 'btn', onclick: importCaseFile }, 'Открыть файл дела или документ')),
+    h('p', { class: 'small muted' }, 'Новое дело – объекты учета, события и пакеты карточек. По постановлению о ВУД – программа найдет в нем номер дела, даты, КРСП, квалификацию и лицо, вы подтвердите. «Открыть файл дела или документ» принимает и сохраненный файл дела, и документ (.docx, .txt, .rtf, .pdf): по документу откроется новое дело. Быстрый режим – одна карточка без события.')));
   if (state.pendingImport) {
     put(wrap, h('div', { class: 'panel' }, h('h2', {}, 'Открыть файл дела'),
       h('p', { class: 'small' }, 'Файл зашифрован: введите пароль, которым он был выгружен.'),
@@ -287,18 +289,33 @@ async function openSaved(rec) {
   }
 }
 
+// «Открыть файл»: файл дела СтатКарты (зашифрованный) или документ дела – постановление и т. п.
 async function importCaseFile() {
-  const text = await pickFile();
-  if (!text) return;
-  try {
-    const rec = JSON.parse(text);
-    if (rec?.format !== 'statkarta-case') throw new Error('Это не файл дела СтатКарты');
-    state.pendingImport = { rec, error: null };
-  } catch (e) {
-    state.pendingImport = null;
-    alert(e.message === 'Это не файл дела СтатКарты' ? e.message : 'Файл не читается');
+  const f = await pickFileBytes('.json,.statkarta,.docx,.txt,.rtf,.pdf,.doc');
+  if (!f) return;
+  const head = new TextDecoder().decode(f.bytes.subarray(0, 64)).trimStart();
+  if (head.startsWith('{')) {
+    try {
+      const rec = JSON.parse(new TextDecoder().decode(f.bytes));
+      if (rec?.format !== 'statkarta-case') throw new Error('Это не файл дела СтатКарты');
+      state.pendingImport = { rec, error: null };
+    } catch (e) {
+      state.pendingImport = null;
+      alert(e.message === 'Это не файл дела СтатКарты' ? e.message : 'Файл дела не читается');
+    }
+    render();
+    return;
   }
-  render();
+  // документ дела: новое дело и разбор документа на вкладке «Документ дела»
+  newCase();
+  state.tab = 'document';
+  try {
+    const { text } = await fileText(f.name, f.bytes);
+    parseDocText(f.name, text);
+  } catch (e) {
+    state.doc = { name: f.name, res: null, dec: null, error: e.message };
+    render();
+  }
 }
 
 async function openImported() {
@@ -577,16 +594,30 @@ function eventsView() {
     return h('tr', { class: state.evId === ev.id ? 'sel' : '', onclick: () => { state.evId = ev.id; state.cardKey = null; render(); } },
       h('td', { class: 'num' }, isoToRu(ev.date)),
       h('td', {}, eventTitle(ev.type), isFinal(ev) ? h('span', { class: 'badge b-unknown' }, ' финальное') : null),
-      h('td', { class: 'small' }, `карточек ${cards.length}${issued ? `, выставлено ${issued}` : ''}`));
+      h('td', { class: 'small' }, `карточек ${cards.length}${issued ? `, выставлено ${issued}` : ''}`),
+      h('td', {}, h('button', { class: 'btn small danger', title: 'Удалить событие', onclick: (e) => { e.stopPropagation(); deleteEvent(ev); } }, 'Удалить')));
   });
   put(box, h('div', { class: 'panel' }, h('h2', {}, 'События дела'),
     c.events.length ? h('div', { class: 'table-wrap' }, h('table', { class: 'list' },
-      h('thead', {}, h('tr', {}, h('th', {}, 'Дата'), h('th', {}, 'Событие'), h('th', {}, 'Пакет'))), h('tbody', {}, ...rows)))
+      h('thead', {}, h('tr', {}, h('th', {}, 'Дата'), h('th', {}, 'Событие'), h('th', {}, 'Пакет'), h('th', {}, ''))), h('tbody', {}, ...rows)))
       : h('p', { class: 'muted small' }, 'Событий нет. Добавьте событие – программа предложит состав пакета карточек.'),
     addEventForm()));
   const ev = curEvent();
   if (ev) put(box, packageView(ev));
   return box;
+}
+
+// Удаление события (например, добавленного по ошибке второй раз); выставленные карточки – с отдельным предупреждением
+function deleteEvent(ev) {
+  const issued = ev.cards.filter((k) => k.issued).length;
+  const msg = issued
+    ? `У события «${eventTitle(ev.type)}» от ${isoToRu(ev.date)} есть выставленные карточки (${issued}). Удалить событие вместе с ними? Отметки о выставлении пропадут.`
+    : `Удалить событие «${eventTitle(ev.type)}» от ${isoToRu(ev.date)} и его карточки?`;
+  if (!confirm(msg)) return;
+  C().events = C().events.filter((x) => x.id !== ev.id);
+  if (state.evId === ev.id) { state.evId = C().events.at(-1)?.id ?? null; state.cardKey = null; }
+  touch();
+  render();
 }
 
 function addEventForm() {
@@ -696,12 +727,7 @@ function packageView(ev) {
   put(box, h('div', { class: 'row' },
     h('button', { class: 'btn primary', onclick: () => { state.tab = 'questions'; render(); } }, 'Опросник пакета'),
     h('button', { class: 'btn', onclick: () => { state.tab = 'memos'; render(); } }, 'Памятки пакета'),
-    ev.cards.some((k) => k.issued) ? null : h('button', { class: 'btn small danger', onclick: () => {
-      if (!confirm('Удалить событие и его карточки?')) return;
-      C().events = C().events.filter((x) => x.id !== ev.id);
-      state.evId = C().events.at(-1)?.id ?? null;
-      touch(); render();
-    } }, 'Удалить событие')));
+    h('button', { class: 'btn small danger', onclick: () => deleteEvent(ev) }, 'Удалить событие')));
   return box;
 }
 
@@ -735,15 +761,58 @@ function packageQuestionsView() {
   const ev = curEvent();
   if (!ev) return h('div', { class: 'panel' }, h('p', { class: 'muted' }, 'Выберите событие на вкладке «События и пакет».'));
   const pq = packageQuestions(IX, C(), ev, state.profile);
+  const cards = activeCards(ev);
+  if (state.qCard && !cards.some((k) => k.key === state.qCard)) state.qCard = null;
+  const open = (it) => !(it.answer || it.derived || it.origin || it.disabled);
+  const ofCard = (it) => !state.qCard || it.cards.includes(state.qCard);
+  const all = pq.groups.flatMap((g) => g.items);
+  // вопросы только этой карточки: их можно отложить, не задев другие карточки пакета
+  const own = state.qCard ? all.filter((it) => open(it) && it.cards.length === 1 && it.cards[0] === state.qCard) : [];
+  const shared = state.qCard ? all.filter((it) => open(it) && it.cards.includes(state.qCard) && it.cards.length > 1).length : 0;
   const box = h('div', { class: 'panel questions' });
   put(box, h('div', { class: 'toolbar' },
     h('strong', {}, `Закрыто реквизитов: ${pq.closed} из ${pq.total}`),
+    h('label', { class: 'small' }, 'Карточка: ',
+      h('select', { onchange: (e) => { state.qCard = e.target.value || null; state.qFocus = null; rerender(); } },
+        h('option', { value: '' }, 'все карточки пакета'),
+        ...cards.map((k) => h('option', { value: k.key, selected: state.qCard === k.key ? true : null }, cardTitle(IX, C(), k))))),
     h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: state.onlyEmpty, onchange: (e) => { state.onlyEmpty = e.target.checked; rerender(); } }), ' только без ответа'),
     h('div', { class: 'spacer' }),
     h('button', { class: 'btn primary', onclick: () => { state.tab = 'memos'; render(); scrollTo(0, 0); } }, 'Памятки пакета')));
+  if (state.qCard) {
+    put(box, h('div', { class: 'row toolbar small' },
+      h('button', { class: 'btn small', disabled: !own.length, onclick: () => {
+        for (const it of own) setPackageAnswer(C(), ev, it, 'unknown');
+        touch(); rerender();
+      } }, `Отложить вопросы этой карточки: уточнить позже (${own.length})`),
+      h('span', { class: 'muted' }, shared ? `Еще ${shared} вопр. нужны и другим карточкам пакета – они не откладываются.` : '')));
+  }
   put(box, h('button', { class: 'btn primary floating', onclick: () => { state.tab = 'memos'; render(); scrollTo(0, 0); } }, 'Памятки'));
+  // порядок вопросов – как реквизиты в бланке карточки (замечание 22.09.2026)
+  const orderOf = (it, cardKeyValue = null) => {
+    const own = it.requisites.filter((r) => !cardKeyValue || r.card === cardKeyValue);
+    let best = [Infinity, Infinity];
+    for (const r of own) {
+      const keys = [...(IX.reqs.get(r.form)?.keys() ?? [])];
+      const pos = [FORM_ORDER.indexOf(r.form), keys.indexOf(r.id)];
+      if (pos[0] < best[0] || (pos[0] === best[0] && pos[1] < best[1])) best = pos;
+    }
+    return best;
+  };
+  const byOrder = (cardKeyValue) => (a, b) => {
+    const x = orderOf(a, cardKeyValue);
+    const y = orderOf(b, cardKeyValue);
+    return x[0] - y[0] || x[1] - y[1];
+  };
+  const visible = (it) => ofCard(it) && !(state.onlyEmpty && (it.answer || it.derived || it.origin));
+  if (state.qCard) {
+    // одна карточка – один список в порядке ее реквизитов; у вопроса – к чему он относится
+    const items = pq.groups.flatMap((g) => g.items.filter(visible).map((it) => ({ it, group: g.title }))).sort((a, b) => byOrder(state.qCard)(a.it, b.it));
+    for (const { it, group } of items) put(box, card(it, ev, { cardKey: state.qCard, group }));
+    return box;
+  }
   for (const g of pq.groups) {
-    const items = g.items.filter((it) => !(state.onlyEmpty && (it.answer || it.derived || it.origin)));
+    const items = g.items.filter(visible).sort(byOrder(null));
     if (!items.length) continue;
     put(box, h('h3', { class: 'group' }, g.title));
     for (const it of items) put(box, card(it, ev));
@@ -757,7 +826,7 @@ function answerItem(it, ev, status, value) {
   rerender();
 }
 
-function card(it, ev) {
+function card(it, ev, { cardKey: onlyCard = null, group = null } = {}) {
   const { q, answer: a, derived: d } = it;
   const type = q.answer.type;
   const dis = it.disabled;
@@ -766,8 +835,14 @@ function card(it, ev) {
   const byCard = new Map();
   for (const r of it.requisites) byCard.set(r.cardTitle, [...(byCard.get(r.cardTitle) ?? []), `р. ${r.number}`]);
   const why = byCard.size ? `Закрывает: ${[...byCard].map(([t, ns]) => `${t} – ${ns.join(', ')}`).join('; ')}` : normText(q.why);
-  const el = h('div', { class: `card ${cls}`, 'data-fact': it.key },
-    h('div', { class: 'q' }, title), h('div', { class: 'why' }, why));
+  const reqKeys = it.requisites.map((r) => `${r.card}|${r.number}`).join(' ');
+  const focused = state.qFocus && it.requisites.some((r) => r.card === state.qFocus.card && r.number === state.qFocus.number);
+  // в списке одной карточки – номер реквизита впереди, как в бланке, и к какому объекту вопрос
+  const nums = onlyCard ? it.requisites.filter((r) => r.card === onlyCard).map((r) => r.number) : [];
+  const el = h('div', { class: `card ${cls}${focused ? ' focus' : ''}`, 'data-fact': it.key, 'data-reqs': reqKeys },
+    h('div', { class: 'q' }, nums.length ? h('span', { class: 'reqno' }, `р. ${nums.join(', ')} `) : null, title,
+      onlyCard && group && group !== 'Дело' && !group.startsWith('Карточка') ? h('span', { class: 'muted small' }, ` – ${group}`) : null),
+    h('div', { class: 'why' }, why));
   const req = it.requisite;
   const inp = it.input ?? {};
   const modeText = inp.select === 'multiple' ? `Можно выбрать до ${inp.max_codes} кодов (полей в бланке: ${inp.max_codes})`
@@ -1230,7 +1305,7 @@ function blankPanel(memo, ev, card) {
       : `ред. ${memo.edition}; заполненный файл для этой формы пока не собирается`)));
   if (!plan.ready) {
     put(box, h('div', { class: 'checks' }, ...plan.blockers.map((b) => h('div', { class: 'item error' },
-      h('strong', {}, 'Печать закрыта: '), b))));
+      h('strong', {}, 'Печать закрыта: '), b, fixButton(memo, b)))));
   }
   if (plan.warnings.length) {
     put(box, h('details', { class: 'notes' }, h('summary', {}, `Проверьте перед подписью: ${plan.warnings.length}`),
@@ -1238,6 +1313,24 @@ function blankPanel(memo, ev, card) {
   }
   put(box, sheetNodes(blankSheet(IX, memo, res.layout, plan, { profile: state.profile }), { preview: true }));
   return box;
+}
+
+// Быстрое исправление: из ошибки бланка – к вопросу опросника по этому реквизиту этой карточки
+function fixButton(memo, message) {
+  const number = /реквизит[а-я]*\s+([\d.]+)/iu.exec(message)?.[1];
+  if (!number) return null;
+  return h('button', { class: 'btn small', style: 'margin-left:.5rem', onclick: () => goFix(memo.card, number) }, 'Исправить');
+}
+
+function goFix(cardKeyValue, number) {
+  state.tab = 'questions';
+  state.qCard = cardKeyValue;
+  state.qFocus = { card: cardKeyValue, number };
+  state.onlyEmpty = false;
+  render();
+  const el = [...document.querySelectorAll('[data-reqs]')].find((x) => x.getAttribute('data-reqs').split(' ').includes(`${cardKeyValue}|${number}`));
+  if (el) { el.scrollIntoView({ block: 'center' }); el.querySelector('input, textarea, select')?.focus({ preventScroll: true }); }
+  else state.notices.push(`Реквизит ${number} заполняется не в опроснике: откройте памятку карточки и впишите значение в строке реквизита.`);
 }
 
 function cellsRow(groups) {

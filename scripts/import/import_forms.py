@@ -204,7 +204,7 @@ def apply_labels(fid, reqs):
     """Наименования реквизитов, сверенные вручную с бланком (form-labels-2026.json), и очистка вариантов."""
     spec = LABELS.get(fid, {})
     ids = {r["id"] for r in reqs}
-    for key in ("labels", "options", "fix"):
+    for key in ("labels", "options", "fix", "options_add"):
         for rid in spec.get(key, {}):
             if rid not in ids:
                 sys.exit(f"form-labels ф. {fid} р. {rid}: реквизит не найден")
@@ -217,6 +217,16 @@ def apply_labels(fid, reqs):
             r["label"] = spec["labels"][r["id"]]
             r["label_status"] = "verified"
         r.update(spec.get("fix", {}).get(r["id"], {}))
+        # варианты бланка информационного центра, которых нет в источнике (региональные коды подразделений)
+        for add in spec.get("options_add", {}).get(r["id"], []):
+            at = next((i for i, o in enumerate(r["options"]) if o["code"] == add["after"]), None)
+            if at is None:
+                sys.exit(f"form-labels ф. {fid} р. {r['id']}: для дополнения нет варианта {add['after']}")
+            opt = {"code": add["code"], "value": add["value"]}
+            if add.get("hint"):
+                opt["hint"] = add["hint"]
+            r["options"].insert(at + 1 + sum(1 for x in spec["options_add"][r["id"]][:spec["options_add"][r["id"]].index(add)] if x["after"] == add["after"]), opt)
+            LOG.append(f"ф. {fid} р. {r['id']}: добавлен вариант бланка {add['code']} «{add['value']}»")
         fixes = spec.get("options", {}).get(r["id"], {})
         for o in r["options"]:
             # исправление варианта: по коду или по «группа|код» (одинаковые коды в разных группах);

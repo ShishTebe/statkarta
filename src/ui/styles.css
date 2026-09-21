@@ -160,3 +160,5 @@ table.doc-found td { vertical-align: top; }
 table.doc-found mark { background: var(--accent-soft); color: inherit; border-radius: 3px; padding: 0 .15rem; }
 table.doc-found input.search, table.doc-found textarea.search { width: 100%; min-width: 12rem; }
 .item.warning { color: var(--warn); margin: .2rem 0; }
+.questions .card.focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+.questions .card .reqno { font-weight: 600; color: var(--accent); }

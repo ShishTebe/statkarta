@@ -137,7 +137,7 @@
      "facts": [
       "fact.case.kusp"
      ],
-     "digits": true,
+     "lead_number": true,
      "groups": [
       [
        59,

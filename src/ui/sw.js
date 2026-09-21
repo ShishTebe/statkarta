@@ -5,7 +5,8 @@ const CACHE = '__CACHE__';
 const FILES = __FILES__;
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)));
+  // cache: 'reload' – мимо кэша браузера, иначе новая версия может взять старую страницу
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })))));
 });
 
 self.addEventListener('activate', (e) => {

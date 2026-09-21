@@ -142,6 +142,8 @@ function planParts(row, field, memo) {
     } else if (part.role === 'fact') {
       const v = blankFactValue(memo, part);
       value = v === null ? '' : String(Array.isArray(v) ? v.map(keyCode).join('') : v).replace(part.digits ? /\D/g : /\s+/g, '');
+      // номер КРСП «93пр-26»: в клетки идет только номер до букв, год после дефиса не вписывается
+      if (part.lead_number && v !== null) value = /\d+/.exec(String(v))?.[0] ?? '';
     } else if (part.role === 'variant') {
       // вид карты (ИПК-ЛЦ, ИПК-ПР) – по варианту карточки пакета
       const text = IPK_VARIANT_MARK[memo?.variant];

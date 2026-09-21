@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
- "data_version": "2026.3.0-draft",
+ "data_version": "2026.3.1-draft",
  "edition": "2026",
  "effective_from": "2026-01-01",
- "generated": "2026-09-19",
+ "generated": "2026-09-21",
  "changelog": "docs/CHANGELOG.md",
  "status": "draft – требует предметной приемки",
  "files": [
@@ -156,8 +156,8 @@
   },
   {
    "path": "data/forms/2026/forma-1.json",
-   "sha256": "2999e215e74bc9a62cf3104e8dc94092be48a1b51a49472078ec9ec411c08ce2",
-   "bytes": 100074,
+   "sha256": "95ef5f53380443a3f239318607cc1a77e01f24298632ed7b0ce3f8cb51cafd91",
+   "bytes": 101565,
    "schema": "form",
    "public": true
   },
@@ -233,8 +233,8 @@
   },
   {
    "path": "data/layout/2026/forma-1.json",
-   "sha256": "a1952afc57bc6ccb92ebb145482d89d4d32a7aa74e13568163048f825084a739",
-   "bytes": 29168,
+   "sha256": "734bfb01337adf2c267277611d46eaada8f3d52c3ab4dae92002b0fb43bcdb40",
+   "bytes": 29407,
    "schema": null,
    "public": true
   },
@@ -268,8 +268,8 @@
   },
   {
    "path": "data/layout/2026/forma-5.json",
-   "sha256": "56456abd4c3d0be5421fe91f0edcca63a7a1cd51a168101acac72bd88ee855c3",
-   "bytes": 16372,
+   "sha256": "84712b7fd61b944df3fd9cc21ca960703e0e40d5b015b20060f3b5e2235d7cfa",
+   "bytes": 16377,
    "schema": null,
    "public": true
   },
@@ -338,8 +338,8 @@
   },
   {
    "path": "data/rules/2026/extract.json",
-   "sha256": "0468f9b5577695793850959e54838fe4fc72a8bff3cc37c2c4c6e894a3010adc",
-   "bytes": 15849,
+   "sha256": "4acd654bb4123b607620644bdb554a8e356b83c93113b8cc19839f12aea499aa",
+   "bytes": 15920,
    "schema": "extract",
    "public": true
   },
