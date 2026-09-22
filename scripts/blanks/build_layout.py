@@ -121,10 +121,13 @@ def apply_corrections(form):
         if "parts" in fix:
             entry["parts"] = []
             for part in fix["parts"]:
-                p = {k: v for k, v in part.items() if k != "groups"}
+                p = {k: v for k, v in part.items() if k not in ("groups", "fills")}
                 p["groups"] = resolve(part.get("groups", []), part.get("sort") == "index")
+                # ряды «код – сумма» (р. 28 ф. 1.1): клетки суммы идут отдельным списком
+                if "fills" in part:
+                    p["fills"] = resolve(part["fills"], part.get("sort") == "index")
                 entry["parts"].append(p)
-            entry["groups"] = [g for p in entry["parts"] for g in p["groups"]]
+            entry["groups"] = [g for p in entry["parts"] for g in (p["groups"] + p.get("fills", []))]
         if "parts_add" in fix:
             # дополнительные части к клеткам реквизита (наименование подразделения в р. 1)
             if "parts" not in entry:

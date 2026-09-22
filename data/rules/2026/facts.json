@@ -654,7 +654,7 @@
    "status": "draft"
   },
   {
-   "id": "fact.crime.service.spr14",
+   "id": "fact.crime.service",
    "entity": "crime",
    "scope": "crime",
    "type": "classifier",
@@ -664,11 +664,11 @@
    "status": "draft"
   },
   {
-   "id": "fact.crime.service.text",
+   "id": "fact.crime.service_help",
    "entity": "crime",
    "scope": "crime",
-   "type": "text",
-   "classifier_no": null,
+   "type": "classifier",
+   "classifier_no": 14,
    "shared": false,
    "label": "Служба, способствовавшая раскрытию преступлений (коды реквизита 34)",
    "status": "draft"

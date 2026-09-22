@@ -144,6 +144,10 @@ const CHECK_CASES = {
     ['1', { 'fact.crime.fabula': 'а'.repeat(451) }],
     ['1', { 'fact.crime.fabula': 'а'.repeat(450) }],
   ],
+  'c.case_number_17': [
+    ['1', { 'fact.case.case_number': '1240230000104' }],
+    ['1', { 'fact.case.case_number': '12402300001000045' }],
+  ],
   'c.victims_count_vs_f5': [
     ['1', { 'fact.victims.victims_count': '2' }, ['1']],
     ['1', { 'fact.victims.victims_count': '2' }, ['1', '5']],

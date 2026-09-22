@@ -42,3 +42,15 @@ export function setXlsxUnderscores(sheet, sharedStrings, ref, value, { slot = 0 
   return setXlsxCell(sheet, ref, next.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
 }
 
+
+// Заменить напечатанную надпись и линейку за ней значением (строка подписи ф. 3):
+// «Фамилия, подпись лица, ведущего расследование______» → «Следователь … И.О. Фамилия».
+// Пробелы внутри надписи бланка сверяются без учета их числа (замечание от 23.09.2026).
+export function setXlsxCaption(sheet, sharedStrings, ref, caption, value) {
+  const text = xlsxCellText(sheet, sharedStrings, ref);
+  const rx = new RegExp(String(caption).trim().split(/\s+/).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+') + '\\s*_*', 'u');
+  const m = rx.exec(text);
+  if (!m) throw new Error(`В ячейке ${ref} нет надписи «${caption}»`);
+  const next = text.slice(0, m.index) + value + text.slice(m.index + m[0].length);
+  return setXlsxCell(sheet, ref, next.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
+}

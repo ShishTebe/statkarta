@@ -31,6 +31,7 @@ export function selectionProblem(requisite, codes) {
   const inp = requisite?.input ?? {};
   const list = codes.map(String);
   if (!list.length) return null;
+  if (inp.select === 'overlay_slots') return overlaySlotsProblem(requisite, list);
   if (inp.select === 'overlay') {
     for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++)
       if (overlayConflict(list[i], list[j])) return `коды ${list[i]} и ${list[j]} занимают одни и те же разряды – наложить нельзя`;
@@ -38,5 +39,32 @@ export function selectionProblem(requisite, codes) {
   }
   const max = inp.max_codes ?? 1;
   if (list.length > max) return `выбрано ${list.length} кодов, а в бланке ${max === 1 ? 'одно поле' : `полей: ${max}`}`;
+  return null;
+}
+
+// Наложение по слотам (р. 31 ф. 1.1): код бланка складывается ровно из двух чисел разных
+// разрядов (30 + 01 = 31), таких кодов в реквизите бывает несколько (31, 41, 14).
+// Значение реквизита – коды подряд, по два на слот; здесь они разбираются по парам.
+// Замечание пользователя от 23.09.2026.
+export function overlaySlots(codes) {
+  const out = [];
+  for (let i = 0; i < codes.length; i += 2) out.push(codes.slice(i, i + 2).filter(Boolean));
+  return out.filter((pair) => pair.length);
+}
+
+// Разряд кода наложения: номер первого разряда, отличного от нуля («30» – 0, «01» – 1)
+export function overlayRank(code) {
+  const p = nonzeroPositions(code);
+  return p.length ? p[0] : -1;
+}
+
+export function overlaySlotsProblem(requisite, codes) {
+  const slots = overlaySlots(codes);
+  const max = requisite?.input?.max_codes ?? requisite?.input?.fields ?? 1;
+  if (slots.length > max) return `выбрано ${slots.length} кодов, а в бланке ${max === 1 ? 'одно поле' : `полей: ${max}`}`;
+  for (const pair of slots) {
+    if (pair.length < 2) return `код ${pair[0]} не дополнен вторым числом: в бланк ставится сумма двух чисел (например 30 + 01 = 31)`;
+    if (overlayRank(pair[0]) === overlayRank(pair[1])) return `коды ${pair[0]} и ${pair[1]} занимают один разряд – сложить их нельзя`;
+  }
   return null;
 }

@@ -5,7 +5,7 @@
 
 import { readZip, entryText, replaceEntry, writeZip, sha256Hex } from './zip.mjs';
 import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText, stripFragment, findParagraph } from './ooxml.mjs';
-import { setXlsxCell, setXlsxUnderscores, XLSX_SHEET } from './xlsxfill.mjs';
+import { setXlsxCell, setXlsxUnderscores, setXlsxCaption, XLSX_SHEET } from './xlsxfill.mjs';
 
 export const CELL_FONT_HALF_POINTS = 16;   // 8 пунктов – как в клетках самого бланка
 
@@ -29,7 +29,11 @@ export async function fillDocx(bytes, layout, edits, cellEdits = []) {
     let sheet = await entryText(sheetEntry);
     const ss = await entryText(entries.find((e) => e.name === 'xl/sharedStrings.xml'));
     for (const e of edits) sheet = setXlsxCell(sheet, e.shape, e.text);
-    for (const e of cellEdits) sheet = setXlsxUnderscores(sheet, ss, e.place.cell, e.text, { slot: e.place.slot ?? 0 });
+    for (const e of cellEdits) {
+      sheet = e.mode === 'caption'
+        ? setXlsxCaption(sheet, ss, e.place.cell, e.caption, e.text)
+        : setXlsxUnderscores(sheet, ss, e.place.cell, e.text, { slot: e.place.slot ?? 0 });
+    }
     await replaceEntry(entries, XLSX_SHEET, new TextEncoder().encode(sheet));
     return writeZip(entries);
   }

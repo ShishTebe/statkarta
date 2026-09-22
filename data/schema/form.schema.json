@@ -162,7 +162,8 @@
         "enum": [
          "single",
          "multiple",
-         "overlay"
+         "overlay",
+         "overlay_slots"
         ]
        },
        "max_codes": {
@@ -195,6 +196,9 @@
           },
           "unit": {
            "type": "string"
+          },
+          "digits_exact": {
+           "type": "integer"
           },
           "for_code": {
            "type": "string"

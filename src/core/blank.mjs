@@ -3,9 +3,10 @@
 // в список «место бланка → знак» и в список замечаний. Сборкой .docx занимается docx.mjs,
 // печатной копией – интерфейс.
 
-import { composeOverlay } from './codes.mjs';
+import { composeOverlay, overlaySlots } from './codes.mjs';
 import { keyCode } from './pack.mjs';
 import { parseQualification } from './uk.mjs';
+import { ruToIso } from './text.mjs';
 
 const BLANK_FILLED = new Set(['fill', 'default', 'hint']);
 // Раздел 1 (работник регистрационного учета) впечатывается, если сведения внесены следователем
@@ -19,7 +20,11 @@ const IPK_VARIANT_MARK = { lc: 'ЛЦ', pr: 'ПР' };
 function blankCodesOf(row) {
   if (!Array.isArray(row.value)) return [];
   const codes = row.value.map(keyCode).filter(Boolean);
-  if (row.requisite?.input?.select === 'overlay' && codes.length > 1) return [composeOverlay(codes)];
+  const select = row.requisite?.input?.select;
+  // р. 31 ф. 1.1: код ставится наложением двух чисел (30 + 01 = 31), таких кодов может быть
+  // несколько (31, 41, 14) – замечание от 23.09.2026
+  if (select === 'overlay_slots') return overlaySlots(codes).map((pair) => composeOverlay(pair));
+  if (select === 'overlay' && codes.length > 1) return [composeOverlay(codes)];
   return codes;
 }
 
@@ -42,9 +47,12 @@ function blankDateParts(iso, groups) {
 }
 
 // ---- Составные реквизиты: части с назначением (карта раскладки, поле parts) ----
-// role: code – код(ы) реквизита; date – дата из сведений дела; fill – дополнительное поле
-// реквизита (код подразделения, сумма и т. п.); qual – ячейка квалификации (статья, знак, часть,
-// знак, пункты); text – текстовое место бланка (ячейка таблицы).
+// role: code – код(ы) реквизита; date – дата из сведений дела или из дополнительного поля
+// карточки (date_fill – номер поля, дата в нем записана как ДД.ММ.ГГГГ); fill – дополнительное
+// поле реквизита (код подразделения, сумма и т. п.; digits_exact реквизита задает обязательное
+// число цифр); code_rows – ряды «код – значение поля» (р. 28 ф. 1.1: вид ущерба и его сумма,
+// клетки суммы – в fills); qual – ячейка квалификации (статья, знак, часть, знак, пункты;
+// line – строка реквизита); text – текстовое место бланка (ячейка таблицы).
 
 function blankFactValue(memo, part) {
   for (const fid of [].concat(part.facts ?? [])) {
@@ -102,7 +110,7 @@ function blankQualSlot(text, slot, line = 0, episodes = false) {
   const [part = '', psign = ''] = (ref.parts[0] ?? '').split('.');
   // пункт с примечанием («е.1»): буквы пунктов – в клетки «п.», цифра примечания – в клетку «зн.»
   // (ответ В-24 от 17.09.2026)
-  const letters = ref.points.map((x) => String(x).split('.')[0]).join('');
+  const letters = ref.points.map((x) => String(x).split('.')[0].replace(/[^\p{L}]/gu, '')).join('');
   const pointSign = ref.points.map((x) => String(x).split('.')[1] ?? '').find(Boolean) ?? '';
   return { article, asign, part, psign, points: letters, point_sign: pointSign }[slot] ?? '';
 }
@@ -133,12 +141,65 @@ function planParts(row, field, memo) {
       continue;
     }
     if (part.role === 'date') {
-      const iso = blankFactValue(memo, part) ?? (typeof row?.value === 'string' ? row.value : null);
+      // дата решения вводится в дополнительное поле реквизита (р. 25 и 25.1 ф. 1.1,
+      // замечание от 23.09.2026): в поле она записана как ДД.ММ.ГГГГ
+      const typed = part.date_fill !== undefined ? String(fillsOf[part.date_fill] ?? '').trim() : '';
+      const fromFill = typed ? ruToIso(typed) : null;
+      if (typed && !fromFill) {
+        out.notes.push(`реквизит ${field.requisite}: дата «${typed}» не разобрана – укажите ее в виде ДД.ММ.ГГГГ`);
+        out.blocked = true;
+        continue;
+      }
+      const iso = blankFactValue(memo, part) ?? fromFill ?? (typeof row?.value === 'string' ? row.value : null);
       const time = part.time_fill !== undefined ? fillsOf[part.time_fill] : null;
       value = blankDateDigits(iso, part.format, time) ?? '';
       align = 'left';
     } else if (part.role === 'fill') {
       value = String(fillsOf[part.index] ?? '').replace(part.digits ? /\D/g : /\s+/g, '');
+      const need = row?.requisite?.input?.fills?.[part.index]?.digits_exact ?? null;
+      if (need && value && value.replace(/\D/g, '').length !== need) {
+        // номер уголовного дела – всегда 17 цифр (ответ В-34); неполный номер в бланк не идет
+        out.notes.push(`реквизит ${field.requisite}: в номере ${value.replace(/\D/g, '').length} цифр,`
+          + ` а номер уголовного дела состоит из ${need} цифр – исправьте номер`);
+        out.blocked = true;
+        continue;
+      }
+    } else if (part.role === 'code_rows') {
+      // ряды «код – сумма» (р. 28 ф. 1.1): в каждом ряду бланка свой вид ущерба и своя сумма;
+      // сумма берется из дополнительного поля, отмеченного тем же кодом (замечание от 23.09.2026)
+      if (!row || !BLANK_FILLED.has(row.status)) continue;
+      const codes = blankCodesOf(row);
+      const specs = row.requisite?.input?.fills ?? [];
+      const rows = part.groups ?? [];
+      const sums = part.fills ?? [];
+      codes.forEach((code, i) => {
+        if (!rows[i]) {
+          out.notes.push(`реквизит ${field.requisite}: код ${code} не помещается в отведенные бланком клетки`);
+          out.blocked = true;
+          return;
+        }
+        const res = blankIntoCells(rows[i], code);
+        if (res.overflow) {
+          out.notes.push(`реквизит ${field.requisite}: код ${code} не помещается в отведенные бланком клетки`);
+          out.blocked = true;
+          return;
+        }
+        out.edits.push(...res.edits);
+        texts.push(code);
+        const si = specs.findIndex((f) => [f.for_code, ...(f.for_codes ?? [])].filter(Boolean).includes(code));
+        // сумма в карточке – в рублях: копейки в клетки бланка не вписываются
+        const sum = si < 0 ? '' : String(fillsOf[si] ?? '').replace(/[.,]\d*$/, '').replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+        if (!sum || !sums[i]) return;
+        const sres = blankIntoCells(sums[i], sum);
+        if (sres.overflow) {
+          out.notes.push(`реквизит ${field.requisite}: сумма «${sum}» не помещается в отведенные бланком клетки (${sums[i].length})`);
+          out.blocked = true;
+          return;
+        }
+        out.edits.push(...sres.edits);
+        texts.push(sum);
+      });
+      continue;
     } else if (part.role === 'fact') {
       const v = blankFactValue(memo, part);
       value = v === null ? '' : String(Array.isArray(v) ? v.map(keyCode).join('') : v).replace(part.digits ? /\D/g : /\s+/g, '');
@@ -399,7 +460,7 @@ export function blankSheet(ix, memo, layout, plan, { profile = {} } = {}) {
     const row = rows.get(r.id);
     const title = r.section || '';
     if (!sections.length || sections.at(-1).title !== title) sections.push({ title, rows: [] });
-    const layoutGroups = field?.parts ? field.parts.flatMap((p) => p.groups ?? []) : (field?.groups ?? []);
+    const layoutGroups = field?.parts ? field.parts.flatMap((p) => [...(p.groups ?? []), ...(p.fills ?? [])]) : (field?.groups ?? []);
     const groups = layoutGroups.map((g) => g.map((shape) => chars.get(shape) ?? ''));
     // Значение показывается и тогда, когда карта раскладки для формы еще не готова: в этом
     // случае клеток нет, а значение печатается текстом – его вписывают в бланк от руки.

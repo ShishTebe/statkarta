@@ -230,6 +230,13 @@ export function displayOf(ix, r, value) {
       const o = r.options?.find((x) => optKey(x) === k) ?? r.options?.find((x) => x.code === code);
       return { code, title: codeTitle(ix, r, code, o) };
     });
+    if (r.input?.select === 'overlay_slots') {
+      // код бланка складывается из двух чисел (30 + 01 = 31); слотов бывает несколько
+      return overlaySlots(parts.map((p) => p.code)).map((pair) => {
+        const titles = pair.map((c) => parts.find((p) => p.code === c)?.title ?? '');
+        return `${composeOverlay(pair)} = ${pair.map((c, i) => `${c} (${titles[i]})`).join(' + ')}`;
+      }).join('; ');
+    }
     if (r.input?.select === 'overlay' && parts.length > 1) {
       return `${composeOverlay(parts.map((p) => p.code))} = ${parts.map((p) => `${p.code} (${p.title})`).join(' + ')}`;
     }

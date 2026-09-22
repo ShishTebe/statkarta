@@ -116,6 +116,12 @@ def entity(form, number):
     return "case"
 
 
+# Реквизиты с тем же ключевым словом и справочником, что и соседний, но о другом сведении:
+# ф. 1.1 р. 34 – служба, установившая лицо; р. 34.1 – служба, способствовавшая раскрытию
+# (замечание пользователя от 23.09.2026). Ключ задается явно, иначе они стали бы одним фактом.
+FORM_KEY = {("1.1", "34.1"): "crime.service_help.spr14"}
+
+
 def keyword(label):
     l = label.lower().replace("ё", "е")
     for k, rx in KEYWORDS:
@@ -155,6 +161,9 @@ def main():
             if f["form"] in ("ipk", "ipk-in"):
                 sig = f"spr{r['classifier_no']}" if r["classifier_no"] else ("opt" + hashlib.md5(",".join(sorted({o["code"] for o in r["options"]})).encode()).hexdigest()[:6] if r["options"] else r["field_type"])
                 groups.setdefault(ipk_key(f, r, sig), []).append((f, r))
+                continue
+            if (f["form"], r["id"]) in FORM_KEY:
+                groups.setdefault(FORM_KEY[(f["form"], r["id"])], []).append((f, r))
                 continue
             k = keyword(r["label"])
             ent = SHARE_GROUPS[entity(f["form"], r["number"])]
@@ -274,6 +283,11 @@ def main():
          "when": {"field_type": "enum"}, "assert": {"fn": "form.has_option", "args": ["req.*"]},
          "message": "Код отсутствует среди вариантов реквизита в бланке",
          "source_note": "Бланки ред. 2026"},
+        {"id": "c.case_number_17", "forms": ["1", "1.1", "2", "2.1", "3", "4", "5", "6"], "severity": "error",
+         "when": {"exists": "fact.case.case_number"},
+         "assert": {"matches": ["fact.case.case_number", "^(?:\\D*\\d){17}\\D*$"]},
+         "message": "Номер уголовного дела состоит из 17 цифр – проверьте номер, карточку с неполным номером учесть нельзя",
+         "source_note": "Ответ пользователя В-34 от 20.09.2026; бланки: 17 клеток номера дела (замечание от 23.09.2026)"},
         {"id": "c.victims_count_vs_f5", "forms": ["1"], "severity": "warning",
          "when": {"gt": ["req.30", 0]}, "assert": {"fn": "case.has_form", "args": ["5"]},
          "message": "Указаны потерпевшие – по каждому потерпевшему физическому лицу составляется карточка ф. 5",

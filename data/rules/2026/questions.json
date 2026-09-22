@@ -1853,7 +1853,7 @@
    "review": "pending"
   },
   {
-   "id": "q.crime.service.spr14",
+   "id": "q.crime.service",
    "text": "Силы и средства, установившие лицо или предотвратившие преступление (одна служба) (по справочнику № 14)?",
    "why": "ф. 1.1 р. 34",
    "forms": [
@@ -1867,18 +1867,18 @@
    },
    "ask_when": {
     "not_derived": [
-     "fact.crime.service.spr14"
+     "fact.crime.service"
     ]
    },
    "sets": [
-    "fact.crime.service.spr14"
+    "fact.crime.service"
    ],
    "allow_unknown": true,
    "status": "draft",
    "review": "pending"
   },
   {
-   "id": "q.crime.service.text",
+   "id": "q.crime.service_help",
    "text": "Служба, способствовавшая раскрытию преступлений (коды реквизита 34)?",
    "why": "ф. 1.1 р. 34.1",
    "forms": [
@@ -1886,16 +1886,17 @@
    ],
    "entity": "crime",
    "answer": {
-    "type": "text",
-    "multiple": null
+    "type": "classifier",
+    "multiple": null,
+    "classifier_no": 14
    },
    "ask_when": {
     "not_derived": [
-     "fact.crime.service.text"
+     "fact.crime.service_help"
     ]
    },
    "sets": [
-    "fact.crime.service.text"
+    "fact.crime.service_help"
    ],
    "allow_unknown": true,
    "status": "draft",

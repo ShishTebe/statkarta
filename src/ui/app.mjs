@@ -878,7 +878,8 @@ function card(it, ev, { cardKey: onlyCard = null, group = null } = {}) {
   const req = it.requisite;
   const inp = it.input ?? {};
   const modeText = inp.select === 'multiple' ? `Можно выбрать до ${inp.max_codes} кодов (полей в бланке: ${inp.max_codes})`
-    : inp.select === 'overlay' ? 'Коды накладываются по разрядам: можно выбрать несколько кодов разных разрядов, например 2000 + 0030 = 2030'
+    : inp.select === 'overlay_slots' ? `Код ставится наложением двух чисел (30 + 01 = 31); таких кодов в бланке до ${inp.max_codes ?? inp.fields ?? 1}`
+      : inp.select === 'overlay' ? 'Коды накладываются по разрядам: можно выбрать несколько кодов разных разрядов, например 2000 + 0030 = 2030'
       : inp.select === 'single' ? 'Выбирается один код' : null;
   if (modeText) put(el, h('div', { class: 'mode small' }, modeText));
   if (it.origin) put(el, h('div', { class: 'hint small' }, `Подставлено: ${it.origin}. Ответ здесь заменит подстановку.`));
@@ -887,6 +888,7 @@ function card(it, ev, { cardKey: onlyCard = null, group = null } = {}) {
   const clsNo = lookupOf(req) ?? q.answer.classifier_no;
   if (it.factId === 'fact.crime.qualification') put(body, qualificationInput(it, ev));
   else if (type === 'classifier' || clsNo) put(body, classifierInput(it, ev, clsNo));
+  else if (inp.select === 'overlay_slots' && it.options.length) put(body, overlaySlotsInput(it, ev));
   else if (it.options.length) put(body, enumInput(it, ev));
   else if (type === 'date' || req?.field_type === 'date') put(body, dateInput(it, ev));
   else put(body, textInput(it, ev));
@@ -947,6 +949,17 @@ function addCode(it, ev, key) {
   const inp = it.input ?? {};
   let keys = currentKeys(it).filter((k) => k !== key);
   const code = keyCode(key);
+  if (inp.select === 'overlay_slots') {
+    // подсказка добавляет число в первое поле, где этого разряда еще нет (р. 31 ф. 1.1)
+    const rows = [];
+    for (let i = 0; i < keys.length; i += 2) rows.push(keys.slice(i, i + 2));
+    const free = rows.find((r) => !r.some((k) => overlayRank(keyCode(k)) === overlayRank(code)));
+    if (free) free.push(key);
+    else if (rows.length < (inp.max_codes ?? inp.fields ?? 1)) rows.push([key]);
+    else return;
+    answerItem(it, ev, 'answered', rows.flat());
+    return;
+  }
   if (inp.select === 'overlay') keys = keys.filter((k) => !overlayConflict(keyCode(k), code));
   else if ((inp.max_codes ?? 1) <= 1) keys = [];
   else if (keys.length >= inp.max_codes) keys = keys.slice(keys.length - inp.max_codes + 1);
@@ -972,6 +985,41 @@ function composedLine(it) {
   const keys = currentKeys(it);
   if ((it.input?.select !== 'overlay') || keys.length < 2) return null;
   return h('div', { class: 'composed' }, h('strong', {}, `Код в карточку: ${composeOverlay(keys.map(keyCode))}`), ` = ${keys.map(keyCode).join(' + ')}`);
+}
+
+// Наложение по слотам (р. 31 ф. 1.1, замечание от 23.09.2026): в каждом поле бланка стоит сумма
+// двух чисел разных разрядов (30 + 01 = 31); полей бывает несколько, одно и то же число может
+// входить в разные поля, поэтому выбор – не отметки списка, а пары выпадающих списков.
+function overlaySlotsInput(it, ev) {
+  const inp = it.input ?? {};
+  const max = inp.max_codes ?? inp.fields ?? 1;
+  const ranks = [...new Set(it.options.map((o) => overlayRank(o.code)))].sort((a, b) => a - b);
+  const keys = currentKeys(it);
+  const rows = [];
+  for (let i = 0; i < keys.length; i += 2) rows.push(keys.slice(i, i + 2));
+  if (rows.length < max) rows.push([]);
+  const commit = () => {
+    const next = rows.flatMap((r) => ranks.map((rk) => r.find((k) => overlayRank(keyCode(k)) === rk)).filter(Boolean));
+    answerItem(it, ev, next.length ? 'answered' : null, next);
+  };
+  const wrap = h('div', { class: 'slots' });
+  rows.forEach((row, i) => {
+    const cells = ranks.map((rk) => {
+      const cur = row.find((k) => overlayRank(keyCode(k)) === rk) ?? '';
+      const list = it.options.filter((o) => overlayRank(o.code) === rk);
+      return h('select', { onchange: (e) => {
+        rows[i] = [...row.filter((k) => overlayRank(keyCode(k)) !== rk), ...(e.target.value ? [e.target.value] : [])];
+        commit();
+      } }, h('option', { value: '', selected: !cur }, 'не выбрано'),
+      ...list.map((o) => h('option', { value: optKey(o), selected: optKey(o) === cur, title: o.value }, `${o.code} – ${shortLabel(sentenceCase(o.value), 60)}`)));
+    });
+    const composed = row.length === 2 ? composeOverlay(row.map(keyCode)) : '';
+    put(wrap, h('div', { class: 'row slot' }, h('span', { class: 'muted small' }, `Поле ${i + 1}: `),
+      ...cells.flatMap((c, j) => (j ? [h('span', { class: 'muted' }, '+'), c] : [c])),
+      composed ? h('span', { class: 'composed' }, ` = ${composed}`) : null,
+      row.length ? h('button', { class: 'btn small', onclick: () => { rows.splice(i, 1); commit(); } }, 'Убрать') : null));
+  });
+  return wrap;
 }
 
 function enumInput(it, ev) {
@@ -1066,9 +1114,15 @@ function fillsInput(it, ev) {
     }
     const forCodes = [f.for_code, ...(f.for_codes ?? [])].filter(Boolean);
     const active = !forCodes.length || forCodes.some((x) => codes.includes(x));
+    // номер уголовного дела – всегда 17 цифр (ответ В-34): неполный номер в бланк не впечатывается
+    const digits = String(vals[i] ?? '').replace(/\D/g, '').length;
+    const wrong = f.digits_exact && vals[i] && digits !== f.digits_exact
+      ? `В номере ${digits} цифр, а номер уголовного дела состоит из ${f.digits_exact} цифр – бланк с таким номером не выгружается`
+      : f.type === 'date' && vals[i] && !ruToIso(String(vals[i]).trim()) ? 'Дата в формате ДД.ММ.ГГГГ' : null;
     put(wrap, h('label', { class: `fill ${active ? '' : 'blocked'}` }, h('span', {}, fillLabel(IX.reqs.get(first.form).get(first.id), f), forCodes.length ? h('span', { class: 'muted' }, ` (для кода ${forCodes.join(', ')})`) : null),
-      h('input', { type: 'text', inputmode: f.type === 'number' ? 'decimal' : null, value: vals[i] ?? '', placeholder: f.unit ?? '', disabled: !active,
+      h('input', { type: 'text', inputmode: f.type === 'number' || f.digits_exact ? 'decimal' : null, value: vals[i] ?? '', placeholder: f.unit ?? '', disabled: !active,
         onchange: (e) => { for (const t of targets) setCardFill(ev, t.card, t.id, i, e.target.value.trim()); touch(); rerender(); } }),
+      wrong ? h('span', { class: 'err' }, wrong) : null,
       f.unit ? h('span', { class: 'muted' }, f.unit) : null,
       f.type === 'date' && active ? todayButton((iso) => { for (const t of targets) setCardFill(ev, t.card, t.id, i, isoToRu(iso)); touch(); rerender(); }) : null));
   });
@@ -1109,7 +1163,8 @@ function qualText(model) {
   const parts = model.rows.filter((r) => String(r.article).trim()).map((r) => {
     const art = String(r.article).trim() + (String(r.asign).trim() ? `.${String(r.asign).trim()}` : '');
     const part = String(r.part).trim() ? `ч. ${String(r.part).trim()}${String(r.psign).trim() ? `.${String(r.psign).trim()}` : ''} ` : '';
-    const pts = String(r.points).split(/[,;]/).map((x) => x.trim().replace(/^[«"]|[»"]$/g, '')).filter(Boolean);
+    // пункты разделяют запятой или пробелом: «а д» – это два пункта (замечание от 23.09.2026)
+    const pts = String(r.points).split(/[,;\s]+/).map((x) => x.trim().replace(/^[«"]|[»"]$/g, '')).filter(Boolean);
     const pstr = pts.length ? `${pts.length > 1 ? 'пп.' : 'п.'} ${pts.map((x) => `«${x}»`).join(', ')} ` : '';
     return `${pstr}${part}ст. ${art}`;
   });
@@ -1828,7 +1883,11 @@ function demoFullCard(formId) {
     if (!it.cards.includes(card.key) || it.answer) continue;
     const no = it.requisite?.classifier_no;
     if (no && IX.classifiers.get(no)) setPackageAnswer(c, ev, it, 'answered', [`|${IX.classifiers.get(no).entries[0].code}`]);
-    else if (it.options.length) setPackageAnswer(c, ev, it, 'answered', [optKey(it.options[0])]);
+    else if (it.input?.select === 'overlay_slots' && it.options.length) {
+      // код наложением: в поле бланка нужны два числа разных разрядов (р. 31 ф. 1.1)
+      const ranks = [...new Set(it.options.map((o) => overlayRank(o.code)))].sort((a, b) => a - b);
+      setPackageAnswer(c, ev, it, 'answered', ranks.map((rk) => optKey(it.options.find((o) => overlayRank(o.code) === rk))));
+    } else if (it.options.length) setPackageAnswer(c, ev, it, 'answered', [optKey(it.options[0])]);
     else if (it.requisite?.field_type === 'date' || it.q.answer.type === 'date') setPackageAnswer(c, ev, it, 'answered', '2026-08-20');
     else setPackageAnswer(c, ev, it, 'answered', '[пример]');
   }
