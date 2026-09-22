@@ -108,7 +108,8 @@ export function importDoc(ix, c, res, decisions) {
     const d = decisions.victims?.[i];
     if (!d?.accept || !d.label) return;
     let victim = c.victims.find((x) => x.label === d.label);
-    if (!victim) victim = addObject(c, 'victim', { label: d.label, crimes: [] });
+    // организация – признак «юридическое лицо»: ф. 5 на нее не составляется (ответ В-51)
+    if (!victim) victim = addObject(c, 'victim', { label: d.label, crimes: [], attrs: v.legal ? { legal_entity: true } : {} });
     for (const id of log.crimes.length ? log.crimes : c.crimes.map((x) => x.id)) if (!victim.crimes.includes(id)) victim.crimes.push(id);
     if (!log.victims.includes(victim.id)) log.victims.push(victim.id);
   });

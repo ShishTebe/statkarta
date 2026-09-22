@@ -125,6 +125,13 @@ def apply_corrections(form):
                 p["groups"] = resolve(part.get("groups", []), part.get("sort") == "index")
                 entry["parts"].append(p)
             entry["groups"] = [g for p in entry["parts"] for g in p["groups"]]
+        if "parts_add" in fix:
+            # дополнительные части к клеткам реквизита (наименование подразделения в р. 1)
+            if "parts" not in entry:
+                entry["parts"] = [{"role": "code", "groups": entry.get("groups", base.get("groups", []))}]
+                entry["groups"] = entry["parts"][0]["groups"]
+            for part in fix["parts_add"]:
+                entry["parts"].append({**part, "groups": resolve(part.get("groups", []))})
         entry["note"] = fix.get("note")
         fields[fix["requisite"]] = entry
     known = json.loads((ROOT / f"data/forms/2026/{FILE_NAME[form]}.json").read_text())

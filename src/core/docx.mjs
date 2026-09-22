@@ -4,7 +4,7 @@
 // бланка (критерий A1.6-4): если бланк не тот, файл не собирается.
 
 import { readZip, entryText, replaceEntry, writeZip, sha256Hex } from './zip.mjs';
-import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars } from './ooxml.mjs';
+import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText } from './ooxml.mjs';
 import { setXlsxCell, setXlsxUnderscores, XLSX_SHEET } from './xlsxfill.mjs';
 
 export const CELL_FONT_HALF_POINTS = 16;   // 8 пунктов – как в клетках самого бланка
@@ -40,13 +40,16 @@ export async function fillDocx(bytes, layout, edits, cellEdits = []) {
   if (edits.length) xml = fillShapes(xml, edits, { size: CELL_FONT_HALF_POINTS, force: true });
   // В одной ячейке места нумеруются подряд, а вписанный текст убирает подчеркивания –
   // поэтому места заполняются с конца ячейки, чтобы номера оставшихся не сдвигались.
-  const ordered = [...cellEdits].sort((a, b) => (a.place.table - b.place.table) || (a.place.row - b.place.row)
-    || (a.place.cell - b.place.cell) || ((b.place.slot ?? 0) - (a.place.slot ?? 0)));
+  const key = (p) => [p.table ?? 999, p.row ?? 0, p.cell ?? 0];
+  const ordered = [...cellEdits].sort((a, b) => (key(a.place)[0] - key(b.place)[0]) || (key(a.place)[1] - key(b.place)[1])
+    || (key(a.place)[2] - key(b.place)[2]) || ((b.place.slot ?? 0) - (a.place.slot ?? 0)));
   for (const e of ordered) {
     if (e.mode === 'cell') xml = setCellText(xml, e.place, e.text, { size: e.size ?? null });
     else if (e.mode === 'append') xml = appendCellText(xml, e.place, e.text, { size: e.size ?? null });
     else if (e.mode === 'prepend') xml = prependCellText(xml, e.place, e.text, { size: e.size ?? null });
     else if (e.mode === 'boxes') xml = setBoxChars(xml, e.place, e.text, { slot: e.place.slot ?? 0 });
+    else if (e.mode === 'caption') xml = replaceCaption(xml, e.place, e.caption, e.text, { size: e.size ?? null });
+    else if (e.mode === 'para') xml = setCellParagraphText(xml, e.place, e.place.para ?? 0, e.text, { size: e.size ?? null });
     else xml = setUnderscoreText(xml, e.place, e.text, { slot: e.place.slot ?? 0, span: e.place.span ?? 1, boxes: Boolean(e.place.boxes), size: e.size ?? null });
   }
   await replaceEntry(entries, part, new TextEncoder().encode(xml));

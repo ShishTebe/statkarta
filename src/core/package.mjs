@@ -112,7 +112,8 @@ export function isFinalEvent(ix, c, ev) {
 export function applyEventFacts(ix, c, ev) {
   const def = eventsIndex(ix).byId.get(ev.type);
   for (const s of def?.sets_facts ?? []) {
-    const v = s.from.startsWith('event.') ? eventValue(ev, s.from) : null;
+    // значение из события (дата) или постоянное значение события (вид в ф. 1 р. 11)
+    const v = s.value !== undefined ? s.value : s.from?.startsWith('event.') ? eventValue(ev, s.from) : null;
     if (v !== null && v !== undefined && v !== '') setFactVersion(c, c.case, s.fact, 'answered', v, ev.id);
   }
 }

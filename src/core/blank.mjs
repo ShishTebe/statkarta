@@ -144,6 +144,18 @@ function planParts(row, field, memo) {
       value = v === null ? '' : String(Array.isArray(v) ? v.map(keyCode).join('') : v).replace(part.digits ? /\D/g : /\s+/g, '');
       // номер КРСП «93пр-26»: в клетки идет только номер до букв, год после дефиса не вписывается
       if (part.lead_number && v !== null) value = /\d+/.exec(String(v))?.[0] ?? '';
+    } else if (part.role === 'profile_text') {
+      // сведение профиля органа (наименование подразделения в р. 1 – замечание 22.09.2026)
+      const text = String(memo?.profileOptions?.[part.key] ?? '').trim();
+      if (!text) continue;
+      if (part.max_len && text.length > part.max_len) {
+        out.notes.push(`реквизит ${field.requisite}: наименование подразделения длиннее ${part.max_len} знаков – сократите его в профиле органа`);
+        out.blocked = true;
+        continue;
+      }
+      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text, mode: part.mode ?? 'underscores', size: part.size ?? null }];
+      texts.push(text);
+      continue;
     } else if (part.role === 'variant') {
       // вид карты (ИПК-ЛЦ, ИПК-ПР) – по варианту карточки пакета
       const text = IPK_VARIANT_MARK[memo?.variant];
@@ -165,9 +177,9 @@ function planParts(row, field, memo) {
     } else if (part.role === 'signature') {
       const sign = (memo?.signatures ?? []).find((x) => x.id === part.who);
       const on = { investigator: memo?.profileOptions?.blank_sign_investigator !== false,
-        head: memo?.profileOptions?.blank_sign_head === true, prosecutor: memo?.profileOptions?.blank_sign_prosecutor === true };
+        head: memo?.profileOptions?.blank_sign_head !== false, prosecutor: memo?.profileOptions?.blank_sign_prosecutor === true };
       if (!sign?.value || !on[part.who]) continue;
-      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text: sign.value, mode: part.mode ?? 'underscores', size: part.size ?? null }];
+      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text: sign.value, mode: part.mode ?? 'underscores', size: part.size ?? null, caption: part.caption ?? null }];
       texts.push(sign.value);
       continue;
     } else if (part.role === 'date_part') {
@@ -369,7 +381,7 @@ export function planBlank(memo, layout, { state = null, profile = null } = {}) {
 // только если это отмечено в профиле органа. Незаполненная строка остается пустой под подпись.
 export function blankSignatures(memo, profile = {}) {
   const on = { investigator: profile.blank_sign_investigator !== false,
-    head: profile.blank_sign_head === true, prosecutor: profile.blank_sign_prosecutor === true };
+    head: profile.blank_sign_head !== false, prosecutor: profile.blank_sign_prosecutor === true };
   return (memo.signatures ?? []).map((s) => ({ id: s.id, label: s.label,
     value: on[s.id] ? s.value : '', printed: Boolean(on[s.id]) }));
 }

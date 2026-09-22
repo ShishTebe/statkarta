@@ -383,6 +383,22 @@ export function accusativeToNominative([surname, first, patr]) {
   };
 }
 
+// Потерпевшие-организации (ответ В-51): наименование до адреса, ИНН, скобок и оборота «расположенное»
+function orgsField(rule, text, parts) {
+  const out = [];
+  for (const range of rule.parts.map((x) => parts[x])) {
+    for (const h of scan(rule, text, range)) {
+      let name = h.g.v.replace(/\s+/g, ' ').trim();
+      name = name.split(/\s*\(|,\s*(?:расположенн|юридическ|ИНН|ОГРН|адрес|в лице|в размере|на сумму)|,\s*\d{6}|\s+потерпевш|\s+о чем/iu)[0].replace(/[,;.]+$/, '').trim();
+      if (name.length < 3 || out.some((v) => v.label === name)) continue;
+      const start = text.indexOf(h.g.v, h.m.index);
+      out.push({ key: `org.${out.length + 1}`, label: name.slice(0, 150), legal: true, names: null, how: 'организация', text: name,
+        confidence: rule.confidence, fragment: fragmentOf(text, start, start + Math.min(h.g.v.length, name.length)) });
+    }
+  }
+  return out;
+}
+
 // Потерпевшие – только подсказка (низкая уверенность, ответ В-41): «потерпевшему …», «потерпевшая …»
 // Фамилия при инициалах в косвенном падеже – только однозначные окончания; иначе как в тексте
 export function surnameToNominative(w) {
@@ -603,6 +619,10 @@ export function extractDoc(sourceText, { rules = [], documents = [], optionsOf =
     }
     if (rule.kind === 'person') {
       res.persons.push(...personsField(rule, text, parts));
+      continue;
+    }
+    if (rule.kind === 'orgs') {
+      res.victims.push(...orgsField(rule, text, parts));
       continue;
     }
     const f = rule.kind === 'fabula' ? fabulaField(rule, text, parts)

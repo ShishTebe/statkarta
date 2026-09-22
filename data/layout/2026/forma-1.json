@@ -11,6 +11,39 @@
    "kind": "code_cells",
    "fills_by": "investigator",
    "label": "Орган",
+   "in_form": true,
+   "parts": [
+    {
+     "role": "code",
+     "groups": [
+      [
+       5,
+       6
+      ],
+      [
+       15,
+       13,
+       12,
+       11,
+       10
+      ]
+     ]
+    },
+    {
+     "role": "profile_text",
+     "key": "card_unit_name",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 1,
+      "para": 0
+     },
+     "mode": "para",
+     "size": 16,
+     "max_len": 90,
+     "groups": []
+    }
+   ],
    "groups": [
     [
      5,
@@ -24,7 +57,7 @@
      10
     ]
    ],
-   "in_form": true
+   "note": "замечание 22.09.2026"
   },
   {
    "requisite": "2",
@@ -1822,11 +1855,55 @@
       "slot": 2,
       "span": 1
      },
+     "mode": "caption",
+     "caption": "Фамилия, подпись лица, ведущего расследование уголовного дела",
      "groups": []
     }
    ],
    "groups": [],
-   "note": "фамилия лица, ведущего расследование (ответ В-16)"
+   "note": "фамилия лица, ведущего расследование (ответ В-16); надпись «Фамилия, подпись лица, ведущего расследование уголовного дела» и линейка заменяются строкой «должность, звание, инициалы и фамилия» (замечание 22.09.2026)"
+  },
+  {
+   "requisite": "sign.head",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "head",
+     "place": {
+      "anchor": "начальник органа (подразделения) дознания",
+      "slot": 0
+     },
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "строка подписи (руководитель) – должность, звание, инициалы и фамилия из профиля (замечание 22.09.2026)"
+  },
+  {
+   "requisite": "sign.prosecutor",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "prosecutor",
+     "place": {
+      "anchor": "Прокурор ___",
+      "slot": 0
+     },
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "строка подписи (прокурор) – должность, звание, инициалы и фамилия из профиля (замечание 22.09.2026)"
   }
  ]
 }

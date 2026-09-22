@@ -122,14 +122,17 @@
       "items": {
        "type": "object",
        "required": [
-        "fact",
-        "from"
+        "fact"
        ],
        "properties": {
         "fact": {
          "type": "string"
         },
         "from": {
+         "type": "string"
+        },
+        "value": {},
+        "note": {
          "type": "string"
         }
        }

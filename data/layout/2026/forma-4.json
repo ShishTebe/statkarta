@@ -11,6 +11,39 @@
    "kind": "code_cells",
    "fills_by": "investigator",
    "label": "Орган",
+   "in_form": true,
+   "parts": [
+    {
+     "role": "code",
+     "groups": [
+      [
+       2,
+       3
+      ],
+      [
+       12,
+       10,
+       9,
+       8,
+       7
+      ]
+     ]
+    },
+    {
+     "role": "profile_text",
+     "key": "card_unit_name",
+     "place": {
+      "table": 1,
+      "row": 0,
+      "cell": 1,
+      "slot": 0
+     },
+     "mode": "underscores",
+     "size": 16,
+     "max_len": 90,
+     "groups": []
+    }
+   ],
    "groups": [
     [
      2,
@@ -24,7 +57,7 @@
      7
     ]
    ],
-   "in_form": true
+   "note": "замечание 22.09.2026"
   },
   {
    "requisite": "2",
@@ -1910,6 +1943,49 @@
     ]
    ],
    "note": "код; прочие группы строки относятся к р. 32.1"
+  },
+  {
+   "requisite": "sign.head",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "head",
+     "place": {
+      "anchor": "(начальник подразделения органа дознания)",
+      "slot": 1
+     },
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "строка подписи (руководитель) – должность, звание, инициалы и фамилия из профиля (замечание 22.09.2026)"
+  },
+  {
+   "requisite": "sign.investigator",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "investigator",
+     "place": {
+      "anchor": "Фамилия, подпись лица, ведущего расследование"
+     },
+     "mode": "caption",
+     "caption": "Фамилия, подпись лица, ведущего расследование",
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "надпись и линейка заменяются строкой «должность, звание, инициалы и фамилия» (замечание 22.09.2026)"
   }
  ]
 }

@@ -712,6 +712,29 @@
    ],
    "groups": [],
    "note": null
+  },
+  {
+   "requisite": "sign.head",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "head",
+     "place": {
+      "table": 4,
+      "row": 9,
+      "cell": 1,
+      "slot": 0
+     },
+     "size": 14,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "строка подписи (руководитель) – должность, звание, инициалы и фамилия из профиля (замечание 22.09.2026)"
   }
  ]
 }

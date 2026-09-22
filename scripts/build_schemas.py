@@ -79,7 +79,7 @@ SCHEMAS = {
         "attrs": arr(obj(["id", "label", "type"], {"id": {"type": "string", "pattern": "^[a-z_]+$"}, "label": STR,
                                                    "type": enum("enum", "boolean", "text", "date"), "required": {"type": "boolean"},
                                                    "options": arr(obj(["code", "value"], {"code": STR, "value": STR})), "sets": STR})),
-        "sets_facts": arr(obj(["fact", "from"], {"fact": STR, "from": STR})),
+        "sets_facts": arr(obj(["fact"], {"fact": STR, "from": STR, "value": {}, "note": STR})),
         "cards": arr(obj(["form", "per"], {"form": FORM_ID, "variant": STR,
                                            "per": enum("case", "crime", "person", "victim", "person_crime", "crime_without_person", "foreign_participant"),
                                            "when": {"type": "object"}, "note": STR, "source_note": STR,
@@ -95,7 +95,7 @@ SCHEMAS = {
         "id": {"type": "string", "pattern": "^a\\."}, "facts": arr(STR, minItems=1), "disabled_when": {"type": "object"}, "reason": STR, "source_note": STR})),
     "extract": top("Правила извлечения", "extract", obj(["id", "doc_type", "field", "label", "kind", "parts", "patterns", "confidence"], {
         "id": {"type": "string", "pattern": "^x\\."}, "doc_type": STR, "field": NSTR, "label": STR,
-        "kind": enum("text", "date", "time", "number", "enum", "case_number", "episodes", "fabula", "victims", "person", "citation", "term"),
+        "kind": enum("text", "date", "time", "number", "enum", "case_number", "episodes", "fabula", "victims", "person", "citation", "term", "orgs"),
         "parts": arr(enum("title", "header", "intro", "descriptive", "resolutive"), minItems=1),
         "fallback_parts": arr(enum("title", "header", "intro", "descriptive", "resolutive")),
         "patterns": arr(STR, minItems=1), "values": arr(STR), "confidence": enum("high", "medium", "low"),

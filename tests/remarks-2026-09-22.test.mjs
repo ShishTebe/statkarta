@@ -59,3 +59,68 @@ test('Р. 40 ф. 1: местные подразделения из бланка 
   for (const code of ['0018', '0017', '0019']) assert.ok(codes.includes(code), code);
   assert.equal(codes.indexOf('0018'), codes.indexOf('0001') + 1, 'после «следственных органов СК РФ (0001)»');
 });
+
+// ---------- Вторая партия замечаний 22.09.2026 ----------
+
+const PROFILE_FULL = { ...PROFILE, card_unit_name: 'СО по г. Энску СУ СК России по Условной области',
+  investigator_position: 'следователь', investigator_rank: 'капитан юстиции', investigator_fio: 'И.И. Иванов',
+  head_position: 'руководитель следственного отдела', head_rank: 'полковник юстиции', head_fio: 'П.П. Петров',
+  prosecutor_position: 'заместитель прокурора', prosecutor_rank: 'советник юстиции', prosecutor_fio: 'С.С. Сидоров', blank_sign_prosecutor: true };
+
+async function filledForm1(profile) {
+  const c = core.createCase2({ today: '2026-09-22' });
+  const crime = core.addObject(c, 'crime');
+  core.setFactVersion(c, crime, 'fact.crime.qualification', 'answered', 'ч. 1 ст. 105 УК РФ');
+  const ev = core.addEvent(c, { type: 'ev.vud', date: '2026-09-12', attrs: { vud_mode: 'fact' }, refs: { crimes: [crime.id] } });
+  core.applyEventFacts(ix, c, ev);
+  core.syncPackage(ix, c, ev);
+  const memo = [...core.buildPackageMemos(ix, c, ev, profile).values()].find((m) => m.form === '1');
+  const layout = layoutOf('forma-1.json');
+  const plan = core.planBlank(memo, layout, { profile });
+  const bytes = await core.fillDocx(new Uint8Array(fs.readFileSync(path.join(ROOT, 'data/blanks/2026', layout.blank))), layout, plan.edits, plan.cellEdits);
+  const xml = await core.entryText(core.readZip(bytes).find((e) => e.name === 'word/document.xml'));
+  return { memo, plan, plain: xml.replace(/<\/w:p>/g, '\n').replace(/<[^>]+>/g, '') };
+}
+
+test('Р. 11 ф. 1: вид проставляется по событию – ВУД 1, учетный отказ 3', () => {
+  const c = core.createCase2({ today: '2026-09-22' });
+  const crime = core.addObject(c, 'crime');
+  const vud = core.addEvent(c, { type: 'ev.vud', date: '2026-09-12', attrs: { vud_mode: 'fact' }, refs: { crimes: [crime.id] } });
+  core.applyEventFacts(ix, c, vud);
+  assert.deepEqual(core.factAt(c, c.case, 'fact.case.vud_date.opte034c7').value, ['|1']);
+  const c2 = core.createCase2({ today: '2026-09-22' });
+  const cr2 = core.addObject(c2, 'crime');
+  const ref = core.addEvent(c2, { type: 'ev.refusal', date: '2026-09-14', attrs: { ground_type: 'non_rehab' }, refs: { crimes: [cr2.id] } });
+  core.applyEventFacts(ix, c2, ref);
+  assert.deepEqual(core.factAt(c2, c2.case, 'fact.case.vud_date.opte034c7').value, ['|3']);
+  assert.equal(core.factAt(c2, c2.case, 'fact.case.vud_date').value, '2026-09-14');
+});
+
+test('Р. 1: наименование подразделения из профиля; подписи следователя, руководителя и прокурора', async () => {
+  const { plain } = await filledForm1(PROFILE_FULL);
+  assert.match(plain, /СО по г\. Энску СУ СК России по Условной области\s*\n\s*орган: внутренних дел/);
+  assert.ok(!/Фамилия, подпись лица, ведущего расследование/.test(plain), 'надпись заменена строкой следователя');
+  assert.match(plain, /следователь капитан юстиции И\.И\. Иванов/);
+  assert.match(plain, /руководитель следственного отдела полковник юстиции П\.П\. Петров/);
+  assert.match(plain, /заместитель прокурора советник юстиции С\.С\. Сидоров/);
+  const { plan } = await filledForm1({ ...PROFILE_FULL, card_unit_name: 'а'.repeat(95) });
+  assert.ok(plan.blockers.some((b) => /длиннее 90 знаков/.test(b)));
+  const bare = await filledForm1({ organ_code: '02', unit_code: '02300003' });
+  assert.match(bare.plain, /Фамилия, подпись лица, ведущего расследование/, 'без данных профиля надпись остается');
+});
+
+test('В-51: потерпевший-организация извлекается и не получает ф. 5', () => {
+  const text = 'ПОСТАНОВЛЕНИЕ\nо признании потерпевшим\nг. Энск\t11.03.2026\nСледователь отдела, рассмотрев материалы уголовного дела № 12600000000000001,\nУСТАНОВИЛ:\nПричинен вред.\nПОСТАНОВИЛ:\nПризнать потерпевшим юридическое лицо – Государственное бюджетное учреждение «Условная больница» (сокращенное наименование – ГБУ «УБ»), расположенное по адресу: г. Энск, о чем объявить его представителю.';
+  const res = core.extractDoc(text, { rules: pack.rules.extract, documents: pack.documents, optionsOf: (f, r) => core.optionsOf(ix, f, r) });
+  assert.deepEqual(res.victims.map((v) => [v.label, v.legal]), [['Государственное бюджетное учреждение «Условная больница»', true]]);
+  const c = core.createCase2({ today: '2026-09-22' });
+  const crime = core.addObject(c, 'crime');
+  const ev0 = core.addEvent(c, { type: 'ev.vud', date: '2026-03-01', attrs: { vud_mode: 'fact' }, refs: { crimes: [crime.id] } });
+  core.syncPackage(ix, c, ev0);
+  const dec = core.defaultDecisions(res);
+  dec.victims[0].accept = true;
+  const log = core.importDoc(ix, c, res, dec);
+  assert.equal(c.victims[0].attrs.legal_entity, true);
+  const ev = core.getEvent(c, log.event);
+  assert.ok(!ev.cards.some((k) => k.form === '5'), 'ф. 5 на организацию не составляется');
+});

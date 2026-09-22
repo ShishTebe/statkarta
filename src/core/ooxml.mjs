@@ -287,8 +287,25 @@ export function fillShapes(xml, edits, opts = {}) {
 //   остается как в бланке;
 // – текст длиннее линейки печатается уменьшенным шрифтом, чтобы уместиться в ее длину.
 // Текст ставится отдельным прогоном с оформлением того прогона, где начиналась линейка.
+// Абзац вне таблиц по его тексту (строки подписей руководителя и прокурора в ф. 1, 1.1, 4):
+// берется самый вложенный абзац, в собранном тексте которого есть anchor
+export function findParagraph(xml, anchor) {
+  const rx = /<w:p[ >]/g;
+  let m;
+  while ((m = rx.exec(xml))) {
+    const r = elementRange(xml, m.index);
+    const inner = xml.slice(r.start, r.end);
+    if (/<w:p[ >]/.test(inner.slice(4))) continue;
+    const text = [...inner.matchAll(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g)].map((x) => x[1]).join('');
+    if (text.includes(anchor)) return { start: r.start, end: r.end, inner: [r.start, r.end] };
+  }
+  throw new Error(`В бланке нет абзаца «${anchor}»`);
+}
+
+const placeRange = (xml, path) => (path.anchor ? findParagraph(xml, path.anchor) : findTableCell(xml, path));
+
 export function setUnderscoreText(xml, path, text, { slot = 0, span = 1, minHalfPoints = 11, boxes = false, size: fixedSize = null } = {}) {
-  const tc = findTableCell(xml, path);
+  const tc = placeRange(xml, path);
   const parts = [];
   const re = /<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g;
   re.lastIndex = tc.inner[0];
@@ -347,6 +364,67 @@ export function setUnderscoreText(xml, path, text, { slot = 0, span = 1, minHalf
     out = out.slice(0, e.start) + insert + out.slice(e.end);
   }
   return out;
+}
+
+// Заменить напечатанную подпись и линейку за ней значением: «Фамилия, подпись лица, ведущего
+// расследование уголовного дела ______» → «Следователь … И.О. Фамилия» (замечание 22.09.2026).
+// Остальной текст места (дата передачи карточки, «____» 20__ г.) остается как в бланке.
+export function replaceCaption(xml, path, caption, text, { size = null } = {}) {
+  const tc = placeRange(xml, path);
+  const parts = [];
+  const re = /<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g;
+  re.lastIndex = tc.inner[0];
+  let m = re.exec(xml);
+  while (m && m.index < tc.inner[1]) {
+    const start = m.index + m[0].indexOf('>') + 1;
+    parts.push({ start, end: start + m[1].length, text: m[1] });
+    m = re.exec(xml);
+  }
+  const joined = parts.map((q) => q.text).join('');
+  const at = joined.indexOf(caption);
+  if (at < 0) throw new Error(`В месте бланка нет надписи «${caption}»`);
+  const tail = /^[\s_]*_+/.exec(joined.slice(at + caption.length));
+  const end = at + caption.length + (tail ? tail[0].length : 0);
+  const edits = [];
+  let pos = 0;
+  for (const q of parts) {
+    const from = Math.max(at, pos);
+    const to = Math.min(end, pos + q.text.length);
+    if (to > from) edits.push({ start: q.start + (from - pos), end: q.start + (to - pos) });
+    pos += q.text.length;
+  }
+  edits.sort((x, y) => y.start - x.start);
+  const first = edits.at(-1);
+  const runStart = Math.max(xml.lastIndexOf('<w:r>', first.start), xml.lastIndexOf('<w:r ', first.start));
+  const rPr = /^<w:r\b[^>]*>(<w:rPr>[\s\S]*?<\/w:rPr>)?/.exec(xml.slice(runStart))?.[1] ?? '';
+  let ownPr = (rPr || '<w:rPr></w:rPr>').replace(/<w:u w:val="[^"]*"\/>/, '');
+  if (size) ownPr = ownPr.replace(/<w:sz(?:Cs)? w:val="\d+"\/>/g, '').replace('</w:rPr>', `<w:sz w:val="${size}"/><w:szCs w:val="${size}"/></w:rPr>`);
+  let out = xml;
+  for (const e of edits) {
+    const insert = e === first ? `</w:t></w:r><w:r>${ownPr}<w:t xml:space="preserve">${escapeXml(text)} </w:t></w:r><w:r>${rPr}<w:t xml:space="preserve">` : '';
+    out = out.slice(0, e.start) + insert + out.slice(e.end);
+  }
+  return out;
+}
+
+// Вписать текст в пустой абзац ячейки (р. 1 ф. 1: первая строка ячейки без линейки)
+export function setCellParagraphText(xml, path, index, text, { size = null } = {}) {
+  const tc = placeRange(xml, path);
+  let at = tc.inner[0];
+  for (let i = 0; i <= index; i++) {
+    const p = xml.indexOf('<w:p', at);
+    if (p < 0 || p > tc.inner[1]) throw new Error(`В ячейке нет абзаца № ${index + 1}`);
+    if (i === index) {
+      const r = elementRange(xml, p);
+      const run0 = `<w:r><w:rPr>${size ? `<w:sz w:val="${size}"/><w:szCs w:val="${size}"/>` : ''}</w:rPr><w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r>`;
+      if (r.selfClosing) return xml.slice(0, r.start) + xml.slice(r.start, r.end - 2) + `>${run0}</w:p>` + xml.slice(r.end);
+      const close = r.end - '</w:p>'.length;
+      const run = `<w:r><w:rPr>${size ? `<w:sz w:val="${size}"/><w:szCs w:val="${size}"/>` : ''}</w:rPr><w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r>`;
+      return xml.slice(0, close) + run + xml.slice(close);
+    }
+    at = elementRange(xml, p).end;
+  }
+  return xml;
 }
 
 // Дописать значение в ячейку таблицы после напечатанного наименования (бланк без линейки:

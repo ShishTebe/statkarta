@@ -22,7 +22,7 @@ const state = {
   view: 'case', tab: 'objects', kase: null, cases: [], evId: null, cardKey: null, onlyEmpty: false, qualText: null, pendingImport: null,
   profile: profileLoad(), saved: [], notices: [], dirty: false, password: null, printAll: false,
   addEv: null, cls: { no: 2, q: '', sel: null }, blank: { form: '1', req: null, q: '' }, sheet: null, busy: null,
-  qCard: null, qFocus: null,
+  qCard: null, qFocus: null, qChecked: null,
   doc: null, // разбор постановления: только в памяти вкладки, в файл дела не сохраняется
 };
 
@@ -487,7 +487,8 @@ function documentView() {
       return h('tr', {},
         h('td', {}, h('input', { type: 'checkbox', checked: d.accept, 'aria-label': `Потерпевший ${i + 1}`, onchange: (ev) => { d.accept = ev.target.checked; } })),
         h('td', {}, h('input', { class: 'search', value: d.label, onchange: (ev) => { d.label = ev.target.value.trim(); } }),
-          v.how === 'именительный' ? null : h('div', { class: 'src' }, `в тексте: «${v.text}»${v.how === 'восстановлен' ? '; падеж восстановлен по окончаниям' : ''} – проверьте`)),
+          v.legal ? h('div', { class: 'src' }, 'организация – ф. 5 на нее не составляется')
+            : v.how === 'именительный' ? null : h('div', { class: 'src' }, `в тексте: «${v.text}»${v.how === 'восстановлен' ? '; падеж восстановлен по окончаниям' : ''} – проверьте`)),
         h('td', {}, confBadge(v.confidence)),
         h('td', {}, sourceNode(v.fragment)));
     });
@@ -809,6 +810,7 @@ function packageQuestionsView() {
     // одна карточка – один список в порядке ее реквизитов; у вопроса – к чему он относится
     const items = pq.groups.flatMap((g) => g.items.filter(visible).map((it) => ({ it, group: g.title }))).sort((a, b) => byOrder(state.qCard)(a.it, b.it));
     for (const { it, group } of items) put(box, card(it, ev, { cardKey: state.qCard, group }));
+    put(box, questionsFooter(ev, state.qCard));
     return box;
   }
   for (const g of pq.groups) {
@@ -817,6 +819,37 @@ function packageQuestionsView() {
     put(box, h('h3', { class: 'group' }, g.title));
     for (const it of items) put(box, card(it, ev));
   }
+  put(box, h('div', { class: 'panel q-footer' }, h('p', { class: 'small muted' }, 'Чтобы проверить реквизиты, отметить карточку выставленной и скачать ее бланк прямо отсюда, выберите карточку вверху опросника.')));
+  return box;
+}
+
+// Внизу опросника по одной карточке: проверка реквизитов, отметка «выставлена», бланк (замечание 22.09.2026)
+function questionsFooter(ev, cardKeyValue) {
+  const memo = buildPackageMemos(IX, C(), ev, state.profile).get(cardKeyValue);
+  const k = ev.cards.find((x) => x.key === cardKeyValue);
+  if (!memo || !k) return h('div');
+  const res = BLANKS ? blankPlan(memo) : null;
+  const problems = [
+    ...memo.checks.filter((x) => x.severity === 'error').map((x) => ({ text: `Контроль: ${x.message}`, number: /[Рр]еквизит[а-я]*\s+([\d.]+)/u.exec(x.message)?.[1] })),
+    ...(res && !res.plan.ready ? res.plan.blockers.map((b) => ({ text: b, number: /реквизит[а-я]*\s+([\d.]+)/iu.exec(b)?.[1] })) : []),
+  ];
+  const warns = [...memo.checks.filter((x) => x.severity !== 'error').map((x) => x.message), ...(res?.plan.warnings ?? [])];
+  const box = h('div', { class: 'panel q-footer' }, h('h3', {}, `Карточка ${memo.cardTitle}`));
+  if (state.qChecked === cardKeyValue) {
+    put(box, problems.length
+      ? h('div', { class: 'checks' }, ...problems.map((p) => h('div', { class: 'item error' }, p.text,
+        p.number ? h('button', { class: 'btn small', style: 'margin-left:.5rem', onclick: () => goFix(cardKeyValue, p.number) }, 'Исправить') : null)))
+      : h('p', { class: 'small' }, 'Ошибок нет: бланк можно скачать и распечатать.'));
+    if (warns.length) put(box, h('details', { class: 'notes' }, h('summary', {}, `Проверьте перед подписью: ${warns.length}`), h('ul', {}, ...warns.map((w) => h('li', {}, w)))));
+  }
+  const ready = res ? res.plan.ready : false;
+  put(box, h('div', { class: 'row toolbar' },
+    h('button', { class: 'btn', onclick: () => { state.qChecked = cardKeyValue; rerender(); } }, 'Проверить реквизиты'),
+    k.issued
+      ? h('button', { class: 'btn', onclick: () => { unissueCard(C(), ev, k); touch(); rerender(); } }, `Выставлена ${isoToRu(k.issued.date)} – снять отметку`)
+      : h('button', { class: 'btn', onclick: () => { issueCard(IX, C(), ev, k, state.profile); touch(); rerender(); } }, 'Отметить выставленной'),
+    BLANKS ? h('button', { class: `btn primary ${ready ? '' : 'blocked'}`, disabled: !ready, title: ready ? '' : 'Сначала исправьте ошибки – нажмите «Проверить реквизиты»',
+      onclick: () => saveBlank(memo, ev).catch((e) => { state.notices.push(`Бланк не собран: ${e.message}`); render(); }) }, memo.form === '3' ? 'Скачать бланк .xlsx' : 'Скачать бланк .docx') : null));
   return box;
 }
 
@@ -1554,6 +1587,17 @@ function unitPicker(p, key, nameKey, label, hint) {
   return box;
 }
 
+// Наименование подразделения для р. 1 карточек: одна строка бланка – не более 90 знаков (замечание 22.09.2026)
+const CARD_UNIT_MAX = 90;
+function unitNameField(p) {
+  const counter = h('div', { class: 'small muted' });
+  const upd = (v) => { counter.textContent = `${v.length} из ${CARD_UNIT_MAX} знаков – строка р. 1 бланка вмещает не больше, иначе наименование перенесется и сольется с перечнем органов`; counter.className = `small ${v.length > CARD_UNIT_MAX ? 'err' : 'muted'}`; };
+  const inp = h('input', { class: 'search', maxlength: String(CARD_UNIT_MAX), value: p.card_unit_name ?? '', placeholder: 'например: СО по г. Энску СУ СК России по Условной области',
+    oninput: (e) => upd(e.target.value), onchange: (e) => { p.card_unit_name = e.target.value.trim(); } });
+  upd(p.card_unit_name ?? '');
+  return h('label', { class: 'small' }, 'Наименование подразделения для р. 1 карточек (одна строка бланка)', inp, counter);
+}
+
 function profileView() {
   const p = { ...state.profile };
   const organOptions = IX.reqs.get('1').get('1').options;
@@ -1568,6 +1612,7 @@ function profileView() {
     h('div', { class: 'panel' }, h('h2', {}, 'Профиль органа'),
       h('p', { class: 'small muted' }, 'Профиль хранится на устройстве отдельно от дел и не содержит сведений дела (FR-36). Сведения подставляются во все карточки пакета.'),
       field('Наименование органа (ф. 6 р. 1, ИПК р. 79, карта на иностранца р. 2)', 'organ_name'),
+      unitNameField(p),
       h('label', { class: 'small' }, 'Орган (реквизит 1 бланков)',
         h('select', { onchange: (e) => { p.organ_code = e.target.value || undefined; } },
           h('option', { value: '' }, 'не выбран'), ...organOptions.map((o) => h('option', { value: o.code, selected: p.organ_code === o.code }, `${o.code} – ${o.value}`)))),
@@ -1601,7 +1646,7 @@ function profileView() {
     h('div', { class: 'panel' }, h('h2', {}, 'Работа с делом'),
       h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.date_today !== false, onchange: (e) => { p.date_today = e.target.checked; } }), ' дата составления – сегодняшняя'),
       h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_investigator !== false, onchange: (e) => { p.blank_sign_investigator = e.target.checked; } }), ' печатать в бланке расшифровку подписи лица, ведущего расследование'),
-      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_head === true, onchange: (e) => { p.blank_sign_head = e.target.checked; } }), ' печатать в бланке строку руководителя'),
+      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_head !== false, onchange: (e) => { p.blank_sign_head = e.target.checked; } }), ' печатать в бланке строку руководителя'),
       h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_prosecutor === true, onchange: (e) => { p.blank_sign_prosecutor = e.target.checked; } }), ' печатать в бланке строку прокурора'),
       h('label', { class: 'small' }, 'Срок хранения дела после финального события, месяцев ',
         h('input', { type: 'text', inputmode: 'numeric', style: 'max-width:5rem', value: String(p.retention_months ?? 6), onchange: (e) => { p.retention_months = Number(e.target.value) || 6; } })),
