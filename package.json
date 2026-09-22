@@ -1,6 +1,6 @@
 {
   "name": "statkarta",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "private": true,
   "description": "СтатКарта – офлайн-помощник по заполнению статистических карточек первичного учета преступлений",
   "type": "module",
@@ -11,7 +11,7 @@
     "validate": "node scripts/validate-data.mjs",
     "manifest": "node scripts/build-manifest.mjs",
     "build:data": "python3 scripts/build_data.py",
-    "test": "node --test tests/phase1.test.mjs tests/phase15.test.mjs tests/phase16.test.mjs tests/remarks-2026-09-19.test.mjs tests/phase2.test.mjs tests/phase3.test.mjs tests/remarks-2026-09-22.test.mjs",
+    "test": "node --test tests/phase1.test.mjs tests/phase15.test.mjs tests/phase16.test.mjs tests/remarks-2026-09-19.test.mjs tests/phase2.test.mjs tests/phase3.test.mjs tests/remarks-2026-09-22.test.mjs tests/revision-2026-09-22.test.mjs",
     "fixtures:vud": "node scripts/fixtures/make-vud-corpus.mjs",
     "fixtures:docs": "node scripts/fixtures/make-docs-corpus.mjs",
     "build:app": "node scripts/build-app.mjs",

@@ -7,8 +7,8 @@
    `data/schema/classifier.schema.json`: код, наименование, раздел.
 3. **Редакция.** Новую редакцию записать в `data/classifiers/<год>/`, прежней проставить
    `effective_to`. Коды не переиспользуются молча: исключенный код остается в старой редакции.
-4. **Справочник № 17** (реестр подразделений) хранится в `data-private/` до решения заказчика
-   о публикации. Импорт из Excel – `scripts/import/import_classifiers.py`.
+4. **Справочник № 17** (реестр подразделений) хранится в `data-private/` и по решению заказчика
+   (ответ В-44 от 20.09.2026) не публикуется. Импорт из Excel – `scripts/import/import_classifiers.py`.
 5. **Перечни статей УК.** При новом указании о перечнях: распознать скан локально
    (`scripts/ocr/vision-ocr.swift`, только macOS), сохранить текст в `data-private/sources/`,
    запустить `scripts/import/parse_lists.py`, разобрать журнал `docs/import-log-uk-<год>.md`.
