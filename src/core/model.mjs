@@ -4,7 +4,7 @@ export const CASE_SCHEMA = 'case/2';
 export const OBJECT_KINDS = { crime: 'crimes', person: 'persons', victim: 'victims' };
 export const OBJECT_TITLE = { crime: 'Эпизод', person: 'Лицо', victim: 'Потерпевший' };
 export const MODE_RU = { new: 'учесть', change: 'изменить', remove: 'снять' };
-export const ORIGIN_RU = { rule: 'по правилу', manual_add: 'добавлена вручную', change: 'изменение выставленной' };
+export const ORIGIN_RU = { rule: 'по правилу', manual_add: 'добавлена вручную', change: 'на основании выставленной' };
 
 export function randomId(prefix) {
   const b = new Uint8Array(6);

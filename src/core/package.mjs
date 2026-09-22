@@ -271,7 +271,7 @@ export function spawnCase(ix, c, ev, { today = todayIso() } = {}) {
 
 // ---- проекция дела на карточку ----
 
-function modeRequisite(ix, form) {
+export function modeRequisite(ix, form) {
   const mc = eventsIndex(ix).modeCodes;
   const explicit = mc.requisite?.[form];
   const req = explicit ?? mc.requisite?.default ?? '2';
@@ -649,11 +649,12 @@ export function changeProposals(ix, c, profile = {}) {
   return out;
 }
 
-export function createChangeCard(c, evId, baseKey) {
+// Карточка на основании выставленной: корректирующая (mode «change») или отменяющая (mode «remove»)
+export function createChangeCard(c, evId, baseKey, mode = 'change') {
   const ev = getEvent(c, evId);
   const base = ev.cards.find((k) => k.key === baseKey);
   const n = ev.cards.filter((k) => k.based_on === baseKey).length + 1;
-  const card = { key: `${baseKey}#change${n}`, form: base.form, variant: base.variant, of: { ...base.of }, mode: 'change', origin: 'change',
+  const card = { key: `${baseKey}#${mode}${n}`, form: base.form, variant: base.variant, of: { ...base.of }, mode, origin: 'change',
     based_on: baseKey, rule: null, note: null, facts: JSON.parse(JSON.stringify(base.facts ?? {})), fills: JSON.parse(JSON.stringify(base.fills ?? {})), issued: null };
   ev.cards.push(card);
   return card;
