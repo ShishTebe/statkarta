@@ -410,10 +410,41 @@ function quickView() {
     h('p', { class: 'small muted' }, 'Карточка без дела: реквизиты – в порядке бланка, внизу – проверка, печать копии и заполненный файл бланка. Орган и подписи берутся из профиля органа. Дело не заводится и не сохраняется: после закрытия вкладки сведения пропадут.'),
     h('div', { class: 'row toolbar' },
       h('button', { class: 'btn', onclick: () => { if (leaveQuick()) { state.view = 'quick'; render(); } } }, 'Другая карточка'),
+      h('button', { class: 'btn', title: 'Карточка и сведения станут делом: его можно сохранить под паролем', onclick: quickToCase }, 'Перенести в дело'),
       h('button', { class: 'btn', onclick: () => { if (leaveQuick()) { state.view = 'start'; render(); } } }, 'Завершить'))));
+  put(box, h('details', { class: 'notes quick-doc', open: state.doc ? true : null }, h('summary', {}, 'Подставить сведения из документа (постановление о ВУД и др.)'), documentView({ quick: true })));
   state.qCard = k.key;
   put(box, packageQuestionsView({ quick: true }));
   return box;
+}
+
+// Быстрый режим: документ переносится в дело карточки, карточка привязывается к его объектам (В-66)
+function quickImport(res, dec) {
+  const c = C();
+  const ev = curEvent();
+  // заготовки объектов освобождаются: пустой эпизод без событий занимает первый эпизод документа
+  const keep = ev.refs;
+  ev.refs = { crimes: [], persons: [], victims: [] };
+  const log = importDoc(IX, c, res, dec);
+  ev.refs = keep;
+  rebindQuickCard(c, ev, log);
+  state.evId = ev.id;
+  state.doc = null;
+  state.notices.push(`Подставлено сведений: ${log.set.length}; эпизодов: ${log.crimes.length}; лиц: ${log.persons.length}; потерпевших: ${log.victims.length}. Карточка привязана к первому эпизоду${log.persons.length ? ', лицу' : ''}${log.victims.length ? ' и потерпевшему' : ''} документа; остальные объекты пригодятся, если перенести карточку в дело.`);
+  touch();
+  render();
+  scrollTo(0, 0);
+}
+
+// Быстрый режим → дело: то же дело без признака «быстрый», в списке открытых дел (В-68)
+function quickToCase() {
+  const c = C();
+  if (!c?.quick) return;
+  delete c.quick;
+  c.title = 'Дело';
+  state.notices.push('Карточка перенесена в дело: событие «Одна карточка (без события)» с этой карточкой. Дело можно сохранить на вкладке «Сохранение и журнал».');
+  activate(c, { tab: 'print' });
+  render();
 }
 
 function leaveQuick() {
@@ -525,7 +556,7 @@ function factOptionLabel(fid, value) {
   return q?.answer?.options?.find((o) => o.code === code)?.value ?? null;
 }
 
-function documentView() {
+function documentView({ quick = false } = {}) {
   const box = h('div');
   const doc = state.doc;
   const pasteId = 'doc-paste';
@@ -633,6 +664,7 @@ function documentView() {
         doc.conflicts = importConflicts(C(), res, dec);
         if (doc.conflicts.length) { render(); return; }
       }
+      if (quick) { quickImport(res, dec); return; }
       const log = importDoc(IX, C(), res, dec);
       touch();
       state.notices.push(`Перенесено сведений: ${log.set.length}; эпизодов: ${log.crimes.length}; лиц: ${log.persons.length}; потерпевших: ${log.victims.length}${log.kept.length ? `; оставлено как было в деле: ${log.kept.length}` : ''}${log.event ? (log.reusedEvent ? `; событие «${eventTitle(getEvent(C(), log.event).type)}» дополнено` : `; создано событие «${eventTitle(getEvent(C(), log.event).type)}»`) : '; событие не создано – нет даты документа'}${log.cardFacts.length ? `; заполнено реквизитов карточек: ${log.cardFacts.length}` : ''}.`);
@@ -641,8 +673,8 @@ function documentView() {
       state.tab = log.event ? 'event' : 'objects';
       render();
       scrollTo(0, 0);
-    } }, doc.conflicts?.length ? 'Перенести с выбранными заменами' : 'Перенести в дело'),
-    h('span', { class: 'muted small' }, 'Затем проверьте событие «Возбуждение уголовного дела» и ответьте на вопросы опросника пакета.')));
+    } }, doc.conflicts?.length ? 'Перенести с выбранными заменами' : quick ? 'Подставить в карточку' : 'Перенести в дело'),
+    h('span', { class: 'muted small' }, quick ? 'Затем проверьте реквизиты карточки ниже.' : 'Затем проверьте событие «Возбуждение уголовного дела» и ответьте на вопросы опросника пакета.')));
   put(box, act);
   return box;
 }
@@ -1490,7 +1522,7 @@ function cardPanel(memo, ev, k) {
     BLANKS ? h('button', { class: `btn ${ready ? '' : 'blocked'}`, disabled: !ready, title: ready ? '' : 'Сначала исправьте ошибки', onclick: () => printSheet(k.key) }, 'Печать копии бланка') : null,
     k.issued ? h('button', { class: 'btn', title: 'Карточка в режиме «изменить» с теми же сведениями – исправьте, что изменилось', onclick: () => deriveCard(ev.id, k.key, 'change') }, 'Корректирующая карточка') : null,
     k.issued && mr?.codes?.remove ? h('button', { class: 'btn', title: 'Карточка в режиме «снять»', onclick: () => deriveCard(ev.id, k.key, 'remove') }, 'Отменяющая карточка') : null,
-    k.issued && !mr?.codes?.remove ? h('span', { class: 'muted small' }, 'Отменяющая карточка для этой формы бланком не предусмотрена.') : null,
+    k.issued && !mr?.codes?.remove ? h('span', { class: 'muted small' }, 'Снятие с учета по этой форме – корректирующей карточкой (р. 2, код 3).') : null,
     BLANKS ? h('span', { class: 'muted small' }, res ? `бланк ${res.layout.blank}; заполняется реквизитов: ${plan.fields.length}` : 'карта раскладки бланка для этой формы не составлена') : h('span', { class: 'muted small' }, 'В эту сборку пакет бланков не входит: заполненный файл и печатная копия недоступны.')));
   put(box, reqTable(memo, ev, k));
   if (memo.signatures?.length) put(box, h('div', { class: 'hint small' }, h('strong', {}, 'Подписи (из профиля органа): '), memo.signatures.map((s) => `${s.label} – ${s.value}`).join('; ')));

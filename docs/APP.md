@@ -153,3 +153,6 @@ python3 scripts/import/import_okato.py --regions 30
   «Корректирующая карточка» (режим «изменить») и «Отменяющая карточка» (режим «снять», если у
   формы есть такой код: `modeRequisite`, `createChangeCard(c, evId, baseKey, mode)`).
   Печать памяток и копирование текстом сняты.
+- **0.7.1.** В быстром режиме есть блок документа (`documentView({ quick: true })` →
+  `quickImport` → `rebindQuickCard` в ядре) и кнопка «Перенести в дело» (`quickToCase`: снимается
+  признак `quick`, дело попадает в список открытых).

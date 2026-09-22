@@ -158,3 +158,6 @@ table.reqs th:last-child, table.reqs td:last-child { white-space: nowrap; }
 table.memo tr.editing td { background: var(--accent-soft); }
 tr.edit-row > td { background: var(--bg); padding: .6rem; }
 tr.edit-row .card { margin-bottom: 0; }
+.quick-doc { margin-bottom: 1rem; }
+.quick-doc > summary { font-size: .95rem; padding: .3rem 0; }
+.quick-doc .panel { margin-top: .6rem; }

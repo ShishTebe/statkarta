@@ -659,3 +659,22 @@ export function createChangeCard(c, evId, baseKey, mode = 'change') {
   ev.cards.push(card);
   return card;
 }
+
+// Быстрый режим: после переноса документа единственная карточка события «без события» привязывается
+// к объектам документа (первый эпизод, лицо, потерпевший); пустые заготовки удаляются, событие карточки
+// переносится в конец – сведения, поставленные событием документа, видны карточке (ответ В-66).
+export function rebindQuickCard(c, ev, log) {
+  const card = activeCards(ev)[0];
+  const before = { crime: ev.refs.crimes[0] ?? null, person: ev.refs.persons[0] ?? null, victim: ev.refs.victims[0] ?? null };
+  const map = { crime: log.crimes[0] ?? before.crime, person: log.persons[0] ?? before.person, victim: log.victims[0] ?? before.victim };
+  ev.refs = { crimes: map.crime ? [map.crime] : [], persons: map.person ? [map.person] : [], victims: map.victim ? [map.victim] : [] };
+  if (card) for (const k of Object.keys(card.of)) if (map[k]) card.of[k] = map[k];
+  for (const k of ['crime', 'person', 'victim']) {
+    const id = before[k];
+    if (!id || map[k] === id) continue;
+    const o = getObject(c, id);
+    if (o && !Object.keys(o.facts ?? {}).length && !o.label) removeObject(c, id);
+  }
+  c.events = [...c.events.filter((e) => e.id !== ev.id), ev];
+  return map;
+}

@@ -59,3 +59,23 @@ test('быстрый режим: одна карточка любой формы
     assert.ok(core.buildCardMemo(ix, c, ev, card, PROFILE).rows.length > 0, `ИПК ${variant}: памятка пуста`);
   }
 });
+
+test('быстрый режим: после переноса документа карточка привязывается к объектам документа (В-66)', () => {
+  const { c, ev, card } = quickCase('1');
+  // документ дал новый эпизод и лицо (заготовки crime.1 и person.1 остались пустыми), потерпевшего нет
+  const crime2 = core.addObject(c, 'crime');
+  core.setFactVersion(c, crime2, 'fact.crime.qualification', 'answered', 'ч. 1 ст. 158 УК РФ', null);
+  const person2 = core.addObject(c, 'person', { label: 'А.', crimes: [crime2.id] });
+  const vud = core.addEvent(c, { type: 'ev.vud', date: '2026-09-20', refs: { crimes: [crime2.id], persons: [person2.id], victims: [] } });
+  const map = core.rebindQuickCard(c, ev, { crimes: [crime2.id], persons: [person2.id], victims: [] });
+  assert.deepEqual(map, { crime: crime2.id, person: person2.id, victim: 'victim.1' });
+  assert.deepEqual(card.of, { crime: crime2.id });
+  assert.deepEqual(ev.refs, { crimes: [crime2.id], persons: [person2.id], victims: ['victim.1'] });
+  assert.ok(!core.getObject(c, 'crime.1') && !core.getObject(c, 'person.1'), 'пустые заготовки удалены');
+  assert.ok(core.getObject(c, 'victim.1'), 'потерпевший-заготовка остался');
+  assert.equal(c.events.at(-1).id, ev.id, 'событие карточки – последнее: сведения события документа ему видны');
+  assert.ok(core.eventRank(c, vud.id) < core.eventRank(c, ev.id));
+  assert.equal(core.activeCards(ev).length, 1);
+  const memo = core.buildCardMemo(ix, c, ev, card, PROFILE);
+  assert.ok(memo.rows.some((r) => /158/.test(r.display)), 'квалификация эпизода документа попала в карточку');
+});
