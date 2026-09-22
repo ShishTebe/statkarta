@@ -177,9 +177,9 @@ function planParts(row, field, memo) {
     } else if (part.role === 'signature') {
       const sign = (memo?.signatures ?? []).find((x) => x.id === part.who);
       const on = { investigator: memo?.profileOptions?.blank_sign_investigator !== false,
-        head: memo?.profileOptions?.blank_sign_head !== false, prosecutor: memo?.profileOptions?.blank_sign_prosecutor === true };
+        head: memo?.profileOptions?.blank_sign_head !== false, prosecutor: memo?.profileOptions?.blank_sign_prosecutor !== false };
       if (!sign?.value || !on[part.who]) continue;
-      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text: sign.value, mode: part.mode ?? 'underscores', size: part.size ?? null, caption: part.caption ?? null }];
+      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text: sign.value, mode: part.mode ?? 'underscores', size: part.size ?? null, caption: part.caption ?? null, clear: part.clear ?? [] }];
       texts.push(sign.value);
       continue;
     } else if (part.role === 'date_part') {
@@ -381,7 +381,7 @@ export function planBlank(memo, layout, { state = null, profile = null } = {}) {
 // только если это отмечено в профиле органа. Незаполненная строка остается пустой под подпись.
 export function blankSignatures(memo, profile = {}) {
   const on = { investigator: profile.blank_sign_investigator !== false,
-    head: profile.blank_sign_head !== false, prosecutor: profile.blank_sign_prosecutor === true };
+    head: profile.blank_sign_head !== false, prosecutor: profile.blank_sign_prosecutor !== false };
   return (memo.signatures ?? []).map((s) => ({ id: s.id, label: s.label,
     value: on[s.id] ? s.value : '', printed: Boolean(on[s.id]) }));
 }

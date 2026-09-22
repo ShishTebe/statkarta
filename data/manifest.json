@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "data_version": "2026.3.2-draft",
+ "data_version": "2026.3.3-draft",
  "edition": "2026",
  "effective_from": "2026-01-01",
  "generated": "2026-09-22",
@@ -156,8 +156,8 @@
   },
   {
    "path": "data/forms/2026/forma-1.json",
-   "sha256": "95ef5f53380443a3f239318607cc1a77e01f24298632ed7b0ce3f8cb51cafd91",
-   "bytes": 101565,
+   "sha256": "1cb4ea9847697247f5cd2b754d108bb98fd062cb41321f3caf3e9cde199db42f",
+   "bytes": 101180,
    "schema": "form",
    "public": true
   },
@@ -184,15 +184,15 @@
   },
   {
    "path": "data/forms/2026/forma-4.json",
-   "sha256": "d88f5a85566644f32e571d74908d57a04edf97ce4f5c5628eb49e1387ab1a0cc",
-   "bytes": 93258,
+   "sha256": "2ce4547347e8f54ea3e0cf3897b86f965e1e0895388d89de45aff1db1a11d669",
+   "bytes": 93559,
    "schema": "form",
    "public": true
   },
   {
    "path": "data/forms/2026/forma-5.json",
-   "sha256": "0ec5fed6cb384729a88511cddfa180f1735152ab344e0b3868aa8c9861089dad",
-   "bytes": 49013,
+   "sha256": "a938e9c6947a2526086ae2a2bfe0d5838943fe62e13c8323587145d8cfa49c0a",
+   "bytes": 48820,
    "schema": "form",
    "public": true
   },
@@ -226,22 +226,22 @@
   },
   {
    "path": "data/layout/2026/forma-1-1.json",
-   "sha256": "0fc060daf43f05bc06df47c91c7d064b866cb3c3926e1c3b7c488c2a8826ae89",
-   "bytes": 22286,
+   "sha256": "1d88b786ff73adb6dfd6748e143dd277977cb4828d215364c893d43640aa9adc",
+   "bytes": 22760,
    "schema": null,
    "public": true
   },
   {
    "path": "data/layout/2026/forma-1.json",
-   "sha256": "08c612fd0435fc43e954384ac9546e7fa93e57f58b85c0d4165a38d11c4a5591",
-   "bytes": 31436,
+   "sha256": "7e6fc715fee54f607c209d08c292841e960c66fb2a3ff67a63feab0d59698e4a",
+   "bytes": 31925,
    "schema": null,
    "public": true
   },
   {
    "path": "data/layout/2026/forma-2-1.json",
-   "sha256": "cf86b4a5ba0e038560254a4abd5c67233c98e32727b5b824f0ffc26a546e2a78",
-   "bytes": 12247,
+   "sha256": "8c7fe24d1da82fef0a27968ac4edc0c25af709a93416a32f2e8454bedc092cdc",
+   "bytes": 12626,
    "schema": null,
    "public": true
   },
@@ -261,8 +261,8 @@
   },
   {
    "path": "data/layout/2026/forma-4.json",
-   "sha256": "802d40819cb0dfa9a5749a183db2abde3843ee278738bfbddfbdb81edfd0e480",
-   "bytes": 27715,
+   "sha256": "19e8609314d29ff346b6e12127e3571de8c4054385e3f5126b26f39615e27217",
+   "bytes": 28075,
    "schema": null,
    "public": true
   },
@@ -324,8 +324,8 @@
   },
   {
    "path": "data/rules/2026/checks.json",
-   "sha256": "ee32ba795315f6cdd7b0ceda7cb2f6a17900f8b4f062da7b899e185684836b59",
-   "bytes": 19137,
+   "sha256": "1e7026feb7bff195470a64bba5895fb5a5ff4bdf524e53d9622175e922424530",
+   "bytes": 19231,
    "schema": "checks",
    "public": true
   },

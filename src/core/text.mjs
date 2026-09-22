@@ -105,3 +105,41 @@ export function legalRefHint(text) {
   }
   return [...new Set(out)].join('; ');
 }
+
+// Подпись дополнительного поля реквизита. При импорте она бралась как кусок текста бланка перед
+// линейкой и бывает обрезана («ым причинен…») или захватывает соседние поля («сумма подкупа руб., взятки»).
+// Берется последний отрезок между линейками (разделены двумя и более пробелами), без единиц соседнего
+// поля, от начала слова по тексту бланка; служебные заглавные заголовки отбрасываются (замечание 22.09.2026).
+const UNIT_HEAD = /^(?:руб\.?|ед\.?|штук|единиц|кг|граммов|декалитров)?[\s.,;:)]*/u;
+const KEEP_CAPS = /^(?:Российской|Федерации|России|США|РФ|УПК|СИЗО|ФСИН|ЧЧ)$/u;
+
+export function fillLabel(requisite, fill) {
+  const raw = String(fill?.label ?? '').trim();
+  if (!raw) return '';
+  if (fill.label_status === 'verified') return raw;
+  const segs = raw.split(/\s{2,}/u).map((x) => x.trim()).filter(Boolean);
+  let seg = (segs.at(-1) ?? raw).replace(UNIT_HEAD, '').trim() || segs.at(-1) || raw;
+  // обрезано посреди слова – восстановить начало слова по тексту бланка
+  const src = String(requisite?.raw ?? '').replace(/\s+/gu, ' ');
+  seg = seg.replace(/\s+/gu, ' ');
+  const at = segs.length === 1 && src ? src.indexOf(seg) : -1;
+  if (at > 0 && /[А-Яа-яA-Za-z]/u.test(src[at - 1])) {
+    let i = at;
+    while (i > 0 && /[А-Яа-яA-Za-z-]/u.test(src[i - 1])) i--;
+    seg = src.slice(i, at) + seg;
+  }
+  // «(…) всего на сумму» – без хвоста скобки; «ПРЕСТУПНОЙ ДЕЯТЕЛЬНОСТИ Изъято …» – без заголовка заглавными
+  const close = seg.lastIndexOf(')');
+  if (close > 0 && !seg.slice(0, close).includes('(') && seg.slice(close + 1).trim()) seg = seg.slice(close + 1).trim();
+  const words = seg.split(/\s+/u);
+  let k = 0;
+  while (k < words.length - 1 && /^[А-ЯA-Z]{2,}[.,]?$/u.test(words[k]) && !KEEP_CAPS.test(words[k])) k++;
+  if (k > 0 && /^[А-ЯA-Z][а-яa-z]/u.test(words[k])) seg = words.slice(k).join(' ');
+  // начало не с заглавной, дальше – новая фраза с заглавной («юридическому лицу Размер ущерба»)
+  if (/^[а-я]/u.test(seg)) {
+    const w = seg.split(/\s+/u);
+    const j = w.findIndex((x, n) => n > 0 && /^[А-Я][а-я]/u.test(x) && !KEEP_CAPS.test(x.replace(/[.,]$/, '')));
+    if (j > 0) seg = w.slice(j).join(' ');
+  }
+  return sentenceCase(seg.replace(/\s+/g, ' ').trim());
+}

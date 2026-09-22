@@ -124,3 +124,38 @@ test('В-51: потерпевший-организация извлекаетс�
   const ev = core.getEvent(c, log.event);
   assert.ok(!ev.cards.some((k) => k.form === '5'), 'ф. 5 на организацию не составляется');
 });
+
+// ---------- Третья партия замечаний 22.09.2026 ----------
+
+test('Подписи дополнительных полей читаются целиком, лишние поля убраны', () => {
+  const req = (form, number) => pack.forms.find((f) => f.form === form).requisites.find((r) => r.number === number);
+  const labels = (form, number) => (req(form, number).input?.fills ?? []).map((f) => core.fillLabel(req(form, number), f));
+  assert.deepEqual(labels('1', '31'), [], 'р. 31 ф. 1 – одно поле количества, без обрывка «ым причинен…»');
+  assert.deepEqual(labels('1', '5'), []);
+  assert.ok(labels('1.1', '28').includes('Взятки'));
+  assert.ok(labels('1.1', '28').includes('Невыплаченной заработной платы, пенсий, стипендий, пособий и иных выплат'));
+  assert.equal(labels('4', '11.1')[0], 'В порядке гражданского и арбитражного судопроизводства (1) на сумму');
+  assert.equal(labels('4', '15').length, 0);
+  for (const f of pack.forms) for (const r of f.requisites) for (const x of r.input?.fills ?? []) {
+    const l = core.fillLabel(r, x);
+    assert.ok(/^[А-ЯA-Z№(0-9]/u.test(l), `${f.form} р. ${r.number}: подпись с заглавной – «${l}»`);
+  }
+});
+
+test('Строки руководителя и прокурора – вместо печатных надписей; прокурор печатается по умолчанию', async () => {
+  const { plain } = await filledForm1({ ...PROFILE_FULL, blank_sign_prosecutor: undefined });
+  assert.ok(!/Руководитель следственного органа,/.test(plain), 'надпись руководителя убрана');
+  assert.ok(!/начальник органа \(подразделения\) дознания/.test(plain));
+  assert.ok(!/Прокурор _/.test(plain), 'надпись прокурора убрана');
+  assert.match(plain, /руководитель следственного отдела полковник юстиции П\.П\. Петров/);
+  assert.match(plain, /заместитель прокурора советник юстиции С\.С\. Сидоров/);
+  const off = await filledForm1({ ...PROFILE_FULL, blank_sign_head: false, blank_sign_prosecutor: false });
+  assert.match(off.plain, /Руководитель следственного органа,/, 'без отметки надпись остается');
+  assert.match(off.plain, /Прокурор _/);
+});
+
+test('Предел фабулы один – 450 знаков: и в проверке, и в поле р. 12', () => {
+  const check = pack.rules.checks.find((x) => x.id === 'c.fabula_length');
+  assert.deepEqual(check.assert.args, ['req.12', 450]);
+  assert.equal(pack.forms.find((f) => f.form === '1').requisites.find((r) => r.number === '12').input.max_chars, 450);
+});

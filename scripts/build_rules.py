@@ -420,8 +420,8 @@ def main():
          "assert": {"any_in": ["fact.person.arrival_purpose", ["14"]]}, "message": "Ст. 322 УК РФ: в реквизите цели приезда обязателен код 14 «незаконный мигрант»", "source_note": f"Разъяснения ГИАЦ 2025 ({N_ARRIVAL})"},
         {"id": "c.select_limits", "forms": ["*"], "severity": "error", "when": {"field_type_in": ["enum", "classifier"]}, "assert": {"fn": "form.select_ok", "args": ["req.*"]},
          "message": "Выбрано больше кодов, чем полей в бланке, или коды одного разряда наложены друг на друга", "source_note": "Бланки ред. 2026: число кодовых полей; позиционные коды справочников"},
-        {"id": "c.fabula_length", "forms": ["1"], "severity": "error", "when": {"exists": "req.12"}, "assert": {"fn": "text.max_len", "args": ["req.12", 355]},
-         "message": "Фабула длиннее 355 знаков – не поместится в поле р. 12 бланка", "source_note": "Расчет по бланку cards_1.docx: 457 мм подчеркнутых строк, Times New Roman 8 пт"},
+        {"id": "c.fabula_length", "forms": ["1"], "severity": "error", "when": {"exists": "req.12"}, "assert": {"fn": "text.max_len", "args": ["req.12", 450]},
+         "message": "Фабула длиннее 450 знаков – не поместится в поле р. 12 бланка", "source_note": "Расчет по бланку cards_1.docx: 457 мм подчеркнутых строк, фабула шрифтом 6 пт – около 470 знаков, предел 450 (замечание 22.09.2026)"},
     ]
     for f in facts:
         f.setdefault("scope", scope_of(f["id"]))

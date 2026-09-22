@@ -4,7 +4,7 @@
 // бланка (критерий A1.6-4): если бланк не тот, файл не собирается.
 
 import { readZip, entryText, replaceEntry, writeZip, sha256Hex } from './zip.mjs';
-import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText } from './ooxml.mjs';
+import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText, stripFragment, findParagraph } from './ooxml.mjs';
 import { setXlsxCell, setXlsxUnderscores, XLSX_SHEET } from './xlsxfill.mjs';
 
 export const CELL_FONT_HALF_POINTS = 16;   // 8 пунктов – как в клетках самого бланка
@@ -48,12 +48,19 @@ export async function fillDocx(bytes, layout, edits, cellEdits = []) {
     else if (e.mode === 'append') xml = appendCellText(xml, e.place, e.text, { size: e.size ?? null });
     else if (e.mode === 'prepend') xml = prependCellText(xml, e.place, e.text, { size: e.size ?? null });
     else if (e.mode === 'boxes') xml = setBoxChars(xml, e.place, e.text, { slot: e.place.slot ?? 0 });
-    else if (e.mode === 'caption') xml = replaceCaption(xml, e.place, e.caption, e.text, { size: e.size ?? null });
+    else if (e.mode === 'caption') xml = replaceCaption(clearTexts(xml, e.clear), e.place, e.caption, e.text, { size: e.size ?? null });
     else if (e.mode === 'para') xml = setCellParagraphText(xml, e.place, e.place.para ?? 0, e.text, { size: e.size ?? null });
-    else xml = setUnderscoreText(xml, e.place, e.text, { slot: e.place.slot ?? 0, span: e.place.span ?? 1, boxes: Boolean(e.place.boxes), size: e.size ?? null });
+    else xml = setUnderscoreText(clearTexts(xml, e.clear), e.place, e.text, { slot: e.place.slot ?? 0, span: e.place.span ?? 1, boxes: Boolean(e.place.boxes), size: e.size ?? null });
   }
   await replaceEntry(entries, part, new TextEncoder().encode(xml));
   return writeZip(entries);
+}
+
+// Печатные надписи, которые заменяет вписанное значение (строки подписей: «Руководитель следственного органа,»)
+function clearTexts(xml, fragments) {
+  let out = xml;
+  for (const f of fragments ?? []) out = stripFragment(out, findParagraph(out, f), f) ?? out;
+  return out;
 }
 
 export function blankFileName(form, card, { ext = 'docx' } = {}) {

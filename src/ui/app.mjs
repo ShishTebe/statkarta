@@ -829,10 +829,9 @@ function questionsFooter(ev, cardKeyValue) {
   const k = ev.cards.find((x) => x.key === cardKeyValue);
   if (!memo || !k) return h('div');
   const res = BLANKS ? blankPlan(memo) : null;
-  const problems = [
-    ...memo.checks.filter((x) => x.severity === 'error').map((x) => ({ text: `Контроль: ${x.message}`, number: /[Рр]еквизит[а-я]*\s+([\d.]+)/u.exec(x.message)?.[1] })),
-    ...(res && !res.plan.ready ? res.plan.blockers.map((b) => ({ text: b, number: /реквизит[а-я]*\s+([\d.]+)/iu.exec(b)?.[1] })) : []),
-  ];
+  // ошибки бланка уже включают ошибки контроля карточки – без повторов
+  const raw = res ? (res.plan.ready ? [] : res.plan.blockers) : memo.checks.filter((x) => x.severity === 'error').map((x) => `Контроль: ${x.message}`);
+  const problems = [...new Set(raw)].map((text) => ({ text, number: /(?:реквизит[а-я]*|р\.)\s+([\d.]+)/iu.exec(text)?.[1] }));
   const warns = [...memo.checks.filter((x) => x.severity !== 'error').map((x) => x.message), ...(res?.plan.warnings ?? [])];
   const box = h('div', { class: 'panel q-footer' }, h('h3', {}, `Карточка ${memo.cardTitle}`));
   if (state.qChecked === cardKeyValue) {
@@ -997,11 +996,13 @@ function enumInput(it, ev) {
         tip ? h('button', { class: 'tip-btn', type: 'button', title: tip, 'aria-label': 'Что означает код', onclick: (e) => { e.preventDefault(); tipText.hidden = !tipText.hidden; } }, '?') : null,
         tipText)));
   }
-  if (it.options.length > 14) {
-    put(wrap, h('label', { class: 'small filter' }, 'Найти вариант по слову или коду (поиск по списку ниже, в карточку не вносится): ',
-      h('input', { type: 'text', placeholder: 'например: давност или 52', class: 'search', oninput: (e) => {
-        const q = e.target.value.toLowerCase();
-        for (const lab of opts.querySelectorAll('label')) lab.hidden = q && !lab.textContent.toLowerCase().includes(q);
+  // поиск нужен только в длинных списках; строки скрываются стилем – атрибут hidden перебивается оформлением
+  if (it.options.length > 25) {
+    put(wrap, h('label', { class: 'small filter' }, 'Найти вариант по слову или коду: ',
+      h('input', { type: 'search', placeholder: 'например: давност или 52', class: 'search', oninput: (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        for (const lab of opts.querySelectorAll('label')) lab.style.display = q && !lab.textContent.toLowerCase().includes(q) ? 'none' : '';
+        for (const og of opts.querySelectorAll('.og')) og.style.display = q ? 'none' : '';
       } })));
   }
   put(wrap, opts, composedLine(it));
@@ -1052,11 +1053,20 @@ function fillsInput(it, ev) {
   const card0 = ev.cards.find((k) => k.key === first.card);
   const vals = card0?.fills?.[`${first.form}|${first.id}`] ?? {};
   const codes = currentKeys(it).map(keyCode);
+  // код подразделения и код органа прокуратуры подставляются из профиля органа (замечание 22.09.2026)
+  const fromProfile = profileFillsOf(IX, first.form, state.profile).filter((x) => x.requisite === first.id);
   const wrap = h('div', { class: 'fills' });
   (it.input.fills ?? []).forEach((f, i) => {
+    const prof = fromProfile.find((x) => x.index === i);
+    if (prof && (vals[i] ?? '') === '') {
+      put(wrap, h('label', { class: 'fill' }, h('span', {}, fillLabel(IX.reqs.get(first.form).get(first.id), f)),
+        h('input', { type: 'text', value: prof.value, readonly: true, title: 'Из профиля органа' }),
+        h('span', { class: 'muted small' }, 'из профиля органа – изменить можно в профиле')));
+      return;
+    }
     const forCodes = [f.for_code, ...(f.for_codes ?? [])].filter(Boolean);
     const active = !forCodes.length || forCodes.some((x) => codes.includes(x));
-    put(wrap, h('label', { class: `fill ${active ? '' : 'blocked'}` }, h('span', {}, f.label, forCodes.length ? h('span', { class: 'muted' }, ` (для кода ${forCodes.join(', ')})`) : null),
+    put(wrap, h('label', { class: `fill ${active ? '' : 'blocked'}` }, h('span', {}, fillLabel(IX.reqs.get(first.form).get(first.id), f), forCodes.length ? h('span', { class: 'muted' }, ` (для кода ${forCodes.join(', ')})`) : null),
       h('input', { type: 'text', inputmode: f.type === 'number' ? 'decimal' : null, value: vals[i] ?? '', placeholder: f.unit ?? '', disabled: !active,
         onchange: (e) => { for (const t of targets) setCardFill(ev, t.card, t.id, i, e.target.value.trim()); touch(); rerender(); } }),
       f.unit ? h('span', { class: 'muted' }, f.unit) : null,
@@ -1647,7 +1657,7 @@ function profileView() {
       h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.date_today !== false, onchange: (e) => { p.date_today = e.target.checked; } }), ' дата составления – сегодняшняя'),
       h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_investigator !== false, onchange: (e) => { p.blank_sign_investigator = e.target.checked; } }), ' печатать в бланке расшифровку подписи лица, ведущего расследование'),
       h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_head !== false, onchange: (e) => { p.blank_sign_head = e.target.checked; } }), ' печатать в бланке строку руководителя'),
-      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_prosecutor === true, onchange: (e) => { p.blank_sign_prosecutor = e.target.checked; } }), ' печатать в бланке строку прокурора'),
+      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_prosecutor !== false, onchange: (e) => { p.blank_sign_prosecutor = e.target.checked; } }), ' печатать в бланке строку прокурора'),
       h('label', { class: 'small' }, 'Срок хранения дела после финального события, месяцев ',
         h('input', { type: 'text', inputmode: 'numeric', style: 'max-width:5rem', value: String(p.retention_months ?? 6), onchange: (e) => { p.retention_months = Number(e.target.value) || 6; } })),
       h('div', { class: 'row' },
@@ -1722,7 +1732,7 @@ function blankView() {
         r.input.select ? h('span', { class: 'muted' }, 'Выбор') : null, r.input.select ? h('span', {}, `${SELECT_RU[r.input.select]}${r.input.select === 'multiple' ? ` – до ${r.input.max_codes}` : ''}`) : null,
         r.input.fields ? h('span', { class: 'muted' }, 'Кодовых полей в бланке') : null, r.input.fields ? h('span', {}, `${r.input.fields}${r.input.code_digits ? `, разрядов в коде: ${r.input.code_digits}` : ''}`) : null,
         r.input.max_chars ? h('span', { class: 'muted' }, 'Не более знаков') : null, r.input.max_chars ? h('span', {}, String(r.input.max_chars)) : null,
-        r.input.fills?.length ? h('span', { class: 'muted' }, 'Дополнительные поля') : null, r.input.fills?.length ? h('span', {}, r.input.fills.map((x) => `${x.label}${x.unit ? `, ${x.unit}` : ''}`).join('; ')) : null,
+        r.input.fills?.length ? h('span', { class: 'muted' }, 'Дополнительные поля') : null, r.input.fills?.length ? h('span', {}, r.input.fills.map((x) => `${fillLabel(r, x)}${x.unit ? `, ${x.unit}` : ''}`).join('; ')) : null,
         r.input.sources?.length ? h('span', { class: 'muted' }, 'Основание') : null, r.input.sources?.length ? h('span', { class: 'small' }, r.input.sources.join(' ')) : null) : null,
       r.raw ? h('div', {}, h('h3', { class: 'group' }, 'Текст реквизита в бланке'), h('div', { class: 'raw' }, r.raw)) : null,
       r.options.length ? h('div', {}, h('h3', { class: 'group' }, `Коды (${r.options.length})`), h('div', { class: 'table-wrap' }, h('table', { class: 'memo' },

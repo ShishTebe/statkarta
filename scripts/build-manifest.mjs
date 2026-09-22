@@ -12,7 +12,7 @@ const files = [
 
 const manifest = {
   schema_version: SCHEMA_VERSION,
-  data_version: '2026.3.2-draft',
+  data_version: '2026.3.3-draft',
   edition: '2026',
   effective_from: '2026-01-01',
   generated: new Date().toISOString().slice(0, 10),

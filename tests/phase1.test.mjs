@@ -141,8 +141,8 @@ const CHECK_CASES = {
     ['1', { 'fact.crime.ownership': ['|01', '|10'] }],
   ],
   'c.fabula_length': [
-    ['1', { 'fact.crime.fabula': 'а'.repeat(356) }],
-    ['1', { 'fact.crime.fabula': 'а'.repeat(355) }],
+    ['1', { 'fact.crime.fabula': 'а'.repeat(451) }],
+    ['1', { 'fact.crime.fabula': 'а'.repeat(450) }],
   ],
   'c.victims_count_vs_f5': [
     ['1', { 'fact.victims.victims_count': '2' }, ['1']],
