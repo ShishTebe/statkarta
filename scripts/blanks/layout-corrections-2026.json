@@ -2597,15 +2597,20 @@
      {
       "role": "signature",
       "who": "investigator",
-      "mode": "cell",
+      "mode": "para",
       "place": {
        "table": 3,
        "row": 54,
-       "cell": 1
+       "cell": 1,
+       "para": 2
       },
-      "size": 12
+      "size": 16,
+      "replace": true,
+      "align": "left",
+      "font": "Times New Roman"
      }
-    ]
+    ],
+    "note": "строка подписи – третий (нижний) абзац ячейки над линейкой; 8 пт (замечание 23.09.2026: подписи ставились в верхний абзац 6 пт и выглядели незаполненными)"
    },
    {
     "requisite": "sign.head",
@@ -2613,15 +2618,20 @@
      {
       "role": "signature",
       "who": "head",
-      "mode": "cell",
+      "mode": "para",
       "place": {
        "table": 3,
        "row": 54,
-       "cell": 3
+       "cell": 3,
+       "para": 2
       },
-      "size": 12
+      "size": 16,
+      "replace": true,
+      "align": "left",
+      "font": "Times New Roman"
      }
-    ]
+    ],
+    "note": "строка подписи – третий (нижний) абзац ячейки над линейкой; 8 пт (замечание 23.09.2026: подписи ставились в верхний абзац 6 пт и выглядели незаполненными)"
    },
    {
     "requisite": "variant",

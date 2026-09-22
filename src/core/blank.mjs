@@ -240,7 +240,8 @@ function planParts(row, field, memo) {
       const on = { investigator: memo?.profileOptions?.blank_sign_investigator !== false,
         head: memo?.profileOptions?.blank_sign_head !== false, prosecutor: memo?.profileOptions?.blank_sign_prosecutor !== false };
       if (!sign?.value || !on[part.who]) continue;
-      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text: sign.value, mode: part.mode ?? 'underscores', size: part.size ?? null, caption: part.caption ?? null, clear: part.clear ?? [] }];
+      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text: sign.value, mode: part.mode ?? 'underscores', size: part.size ?? null, caption: part.caption ?? null, clear: part.clear ?? [],
+        replace: part.replace === true, align: part.align ?? null, font: part.font ?? null }];
       texts.push(sign.value);
       continue;
     } else if (part.role === 'date_part') {

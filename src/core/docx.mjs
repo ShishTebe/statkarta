@@ -53,7 +53,7 @@ export async function fillDocx(bytes, layout, edits, cellEdits = []) {
     else if (e.mode === 'prepend') xml = prependCellText(xml, e.place, e.text, { size: e.size ?? null });
     else if (e.mode === 'boxes') xml = setBoxChars(xml, e.place, e.text, { slot: e.place.slot ?? 0 });
     else if (e.mode === 'caption') xml = replaceCaption(clearTexts(xml, e.clear), e.place, e.caption, e.text, { size: e.size ?? null });
-    else if (e.mode === 'para') xml = setCellParagraphText(xml, e.place, e.place.para ?? 0, e.text, { size: e.size ?? null });
+    else if (e.mode === 'para') xml = setCellParagraphText(xml, e.place, e.place.para ?? 0, e.text, { size: e.size ?? null, font: e.font ?? null, replace: e.replace === true, align: e.align ?? null });
     else xml = setUnderscoreText(clearTexts(xml, e.clear), e.place, e.text, { slot: e.place.slot ?? 0, span: e.place.span ?? 1, boxes: Boolean(e.place.boxes), size: e.size ?? null });
   }
   await replaceEntry(entries, part, new TextEncoder().encode(xml));

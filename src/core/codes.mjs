@@ -37,7 +37,8 @@ export function selectionProblem(requisite, codes) {
       if (overlayConflict(list[i], list[j])) return `коды ${list[i]} и ${list[j]} занимают одни и те же разряды – наложить нельзя`;
     return null;
   }
-  const max = inp.max_codes ?? 1;
+  // «multiple» без max_codes – перечень кодов через запятую в одной ячейке (ИПК): предела нет
+  const max = inp.max_codes ?? (inp.select === 'multiple' ? Infinity : 1);
   if (list.length > max) return `выбрано ${list.length} кодов, а в бланке ${max === 1 ? 'одно поле' : `полей: ${max}`}`;
   return null;
 }

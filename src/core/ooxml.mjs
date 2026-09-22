@@ -408,19 +408,28 @@ export function replaceCaption(xml, path, caption, text, { size = null } = {}) {
 }
 
 // Вписать текст в пустой абзац ячейки (р. 1 ф. 1: первая строка ячейки без линейки)
-export function setCellParagraphText(xml, path, index, text, { size = null } = {}) {
+// Текст в абзац № index ячейки: по умолчанию дописывается в конец абзаца; replace – прежние прогоны
+// (например, табуляция линейки подписи) убираются, align – выравнивание абзаца, font – шрифт прогона
+export function setCellParagraphText(xml, path, index, text, { size = null, font = null, replace = false, align = null } = {}) {
   const tc = placeRange(xml, path);
   let at = tc.inner[0];
+  const rPr = `<w:rPr>${font ? `<w:rFonts w:ascii="${font}" w:hAnsi="${font}" w:cs="${font}"/>` : ''}${size ? `<w:sz w:val="${size}"/><w:szCs w:val="${size}"/>` : ''}</w:rPr>`;
   for (let i = 0; i <= index; i++) {
     const p = xml.indexOf('<w:p', at);
     if (p < 0 || p > tc.inner[1]) throw new Error(`В ячейке нет абзаца № ${index + 1}`);
     if (i === index) {
       const r = elementRange(xml, p);
-      const run0 = `<w:r><w:rPr>${size ? `<w:sz w:val="${size}"/><w:szCs w:val="${size}"/>` : ''}</w:rPr><w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r>`;
-      if (r.selfClosing) return xml.slice(0, r.start) + xml.slice(r.start, r.end - 2) + `>${run0}</w:p>` + xml.slice(r.end);
-      const close = r.end - '</w:p>'.length;
-      const run = `<w:r><w:rPr>${size ? `<w:sz w:val="${size}"/><w:szCs w:val="${size}"/>` : ''}</w:rPr><w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r>`;
-      return xml.slice(0, close) + run + xml.slice(close);
+      const run = `<w:r>${rPr}<w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r>`;
+      if (r.selfClosing) return xml.slice(0, r.start) + xml.slice(r.start, r.end - 2) + `>${run}</w:p>` + xml.slice(r.end);
+      let para = xml.slice(r.start, r.end);
+      if (replace) para = para.replace(/<w:r(?:\s[^>]*)?>[\s\S]*?<\/w:r>/g, '');
+      if (align) {
+        para = /<w:pPr>/.test(para)
+          ? (/<w:jc /.test(para) ? para.replace(/<w:jc w:val="\w+"\/>/, `<w:jc w:val="${align}"/>`) : para.replace('</w:pPr>', `<w:jc w:val="${align}"/></w:pPr>`))
+          : para.replace(/^(<w:p(?:\s[^>]*)?>)/, `$1<w:pPr><w:jc w:val="${align}"/></w:pPr>`);
+      }
+      para = para.slice(0, para.length - '</w:p>'.length) + run + '</w:p>';
+      return xml.slice(0, r.start) + para + xml.slice(r.end);
     }
     at = elementRange(xml, p).end;
   }

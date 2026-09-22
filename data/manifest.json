@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "data_version": "2026.3.4-draft",
+ "data_version": "2026.3.5-draft",
  "edition": "2026",
  "effective_from": "2026-01-01",
  "generated": "2026-09-22",
@@ -289,8 +289,8 @@
   },
   {
    "path": "data/layout/2026/forma-ipk.json",
-   "sha256": "df244e2f9efc2fa7d24784142484a7c60be6253f33e9efd3006cfe41747dcf5b",
-   "bytes": 24051,
+   "sha256": "75ccd08f7fc838a5509dc6d9384ce3c81a77f70f90bc6671fd81e56bafb33344",
+   "bytes": 24771,
    "schema": null,
    "public": true
   },

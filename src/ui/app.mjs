@@ -1034,7 +1034,7 @@ function card(it, ev, { cardKey: onlyCard = null, group = null } = {}) {
     h('div', { class: 'why' }, why));
   const req = it.requisite;
   const inp = it.input ?? {};
-  const modeText = inp.select === 'multiple' ? `Можно выбрать до ${inp.max_codes} кодов (полей в бланке: ${inp.max_codes})`
+  const modeText = inp.select === 'multiple' ? (inp.max_codes ? `Можно выбрать до ${inp.max_codes} кодов (полей в бланке: ${inp.max_codes})` : 'Можно выбрать несколько кодов: в бланк они вписываются через запятую')
     : inp.select === 'overlay_slots' ? `Код ставится наложением двух чисел (30 + 01 = 31); таких кодов в бланке до ${inp.max_codes ?? inp.fields ?? 1}`
       : inp.select === 'overlay' ? 'Коды накладываются по разрядам: можно выбрать несколько кодов разных разрядов, например 2000 + 0030 = 2030'
       : inp.select === 'single' ? 'Выбирается один код' : null;
