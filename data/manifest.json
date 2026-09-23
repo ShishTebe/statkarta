@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
- "data_version": "2026.3.5-draft",
+ "data_version": "2026.3.6-draft",
  "edition": "2026",
  "effective_from": "2026-01-01",
- "generated": "2026-09-22",
+ "generated": "2026-09-23",
  "changelog": "docs/CHANGELOG.md",
  "status": "draft – требует предметной приемки",
  "files": [
@@ -282,8 +282,8 @@
   },
   {
    "path": "data/layout/2026/forma-ipk-in.json",
-   "sha256": "edde6175a45c88045f49bf39e979fb2c3d1da974a0f072efa7c8e0a6f44f5f76",
-   "bytes": 13496,
+   "sha256": "a80c82ab9e81bc1dece9fe473e3ac3996a5d00c581ae17111be9adef3bce6155",
+   "bytes": 14713,
    "schema": null,
    "public": true
   },

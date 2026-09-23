@@ -58,3 +58,24 @@ test('ИПК: план бланка ставит подписи следоват
   assert.ok(signs.some((e) => e.text === 'следователь майор юстиции И.И. Иванов' && e.mode === 'para' && e.replace === true && e.align === 'left'));
   assert.ok(signs.some((e) => e.text === 'руководитель отдела полковник юстиции П.П. Петров'));
 });
+
+test('карта на иностранца: подписи следователя и руководителя – на линейках р. 38 и «Начальник органа»', async () => {
+  const layout = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/layout/2026/forma-ipk-in.json'), 'utf8'));
+  assert.deepEqual(layout.fields.find((f) => f.requisite === 'sign.investigator').parts[0].place, { anchor: 'Карту заполнил', slot: 0 });
+  assert.deepEqual(layout.fields.find((f) => f.requisite === 'sign.head').parts[0].place, { anchor: 'Начальник органа', slot: 0 });
+  const c = core.createCase2({ today: '2026-09-23' });
+  core.addObject(c, 'crime'); core.addObject(c, 'person', { crimes: ['crime.1'], attrs: { foreign: true } });
+  const ev = core.addEvent(c, { type: 'ev.manual', date: '2026-09-23', refs: { crimes: ['crime.1'], persons: ['person.1'], victims: [] } });
+  const card = core.addCardManually(ix, c, ev, { form: 'ipk-in', of: { person: 'person.1' } });
+  const plan = core.planBlank(core.buildCardMemo(ix, c, ev, card, PROFILE), layout, { profile: PROFILE });
+  const signs = plan.cellEdits.filter((e) => e.place.anchor);
+  assert.equal(signs.length, 2);
+  assert.ok(signs.every((e) => e.mode === 'underscores' && e.size === 16));
+  const blanks = path.join(ROOT, 'data/blanks/2026', layout.blank);
+  if (!fs.existsSync(blanks)) return;
+  const out = await core.fillDocx(new Uint8Array(fs.readFileSync(blanks)), layout, plan.edits, plan.cellEdits);
+  const xml = await core.entryText(core.readZip(out).find((e) => e.name === 'word/document.xml'));
+  const text = (a) => xml.slice(core.findParagraph(xml, a).start, core.findParagraph(xml, a).end).replace(/<[^>]+>/g, '');
+  assert.match(text('Карту заполнил'), /Карту заполнил \(должность, ФИО, телефон\) следователь майор юстиции И\.И\. Иванов_+/);
+  assert.match(text('Начальник органа'), /Начальник органа \(ФИО, подпись\) руководитель отдела полковник юстиции П\.П\. Петров/);
+});

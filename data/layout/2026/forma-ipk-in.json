@@ -836,6 +836,50 @@
    ],
    "groups": [],
    "note": null
+  },
+  {
+   "requisite": "sign.investigator",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "investigator",
+     "mode": "underscores",
+     "place": {
+      "anchor": "Карту заполнил",
+      "slot": 0
+     },
+     "size": 16,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "р. 38 «Карту заполнил (должность, ФИО, телефон)» – линейка после надписи; должность, звание, инициалы и фамилия из профиля (просьба пользователя 23.09.2026)"
+  },
+  {
+   "requisite": "sign.head",
+   "kind": "code_cells",
+   "fills_by": null,
+   "label": null,
+   "in_form": true,
+   "parts": [
+    {
+     "role": "signature",
+     "who": "head",
+     "mode": "underscores",
+     "place": {
+      "anchor": "Начальник органа",
+      "slot": 0
+     },
+     "size": 16,
+     "groups": []
+    }
+   ],
+   "groups": [],
+   "note": "«Начальник органа (ФИО, подпись)» – линейка после надписи; строка руководителя из профиля"
   }
  ]
 }
