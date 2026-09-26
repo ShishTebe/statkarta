@@ -48,6 +48,17 @@ export function profileSave(p) {
   try { localStorage.setItem(PROFILE_KEY, JSON.stringify(sanitizeProfile(p))); return true; } catch { return false; }
 }
 
+// Журнал замечаний (канал обратной связи): только проверенный текст и место в программе, без сведений дела
+const FEEDBACK_KEY = 'statkarta.feedback';
+
+export function feedbackLoad() {
+  try { const v = JSON.parse(localStorage.getItem(FEEDBACK_KEY) ?? '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
+}
+
+export function feedbackSave(list) {
+  try { localStorage.setItem(FEEDBACK_KEY, JSON.stringify(list)); return true; } catch { return false; }
+}
+
 export function downloadText(name, text, type = 'application/json') {
   const url = URL.createObjectURL(new Blob([text], { type }));
   const a = document.createElement('a');

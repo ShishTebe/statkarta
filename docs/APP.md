@@ -156,3 +156,18 @@ python3 scripts/import/import_okato.py --regions 30
 - **0.7.1.** В быстром режиме есть блок документа (`documentView({ quick: true })` →
   `quickImport` → `rebindQuickCard` в ядре) и кнопка «Перенести в дело» (`quickToCase`: снимается
   признак `quick`, дело попадает в список открытых).
+
+## Замечания и предложения (0.8.0)
+
+- **Ядро** `src/core/feedback.mjs`: `createFeedback` (место в программе – белый список
+  `feedbackWhere`), `feedbackTokens` (фамилии лиц и потерпевших, подпись дела, числа, слова и
+  пятерки слов из текстов открытых дел, фамилии из профиля; слова пакета данных исключаются –
+  `feedbackCommonWords`), `feedbackScan` (стоп и предупреждения), `feedbackMarkdown` (партия
+  файлом со служебной отметкой `statkarta-feedback` у каждого замечания), `parseFeedbackFile`,
+  `feedbackIssueUrl` (заготовка заявки, не длиннее 7 000 знаков), `browserName`.
+- **Интерфейс**: `openFeedback(where)`, экран `feedbackView` (`state.view === 'feedback'`),
+  место – `currentWhere()` и `itemWhere(it, ev)` (подписи карточек не берутся: в них бывают
+  инициалы); журнал – `statkarta.feedback` в хранилище браузера (`feedbackLoad`, `feedbackSave`),
+  при выгрузке – повторная проверка по открытым делам.
+- **Прием** – `scripts/feedback/intake.mjs`; порядок – `docs/FEEDBACK.md`.
+

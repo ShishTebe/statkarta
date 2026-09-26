@@ -13,13 +13,15 @@ import { coreBundle, bundleSource } from './bundle.mjs';
 // Адрес публикации (ответ В-48): отсюда проверяются обновления (FR-21) по кнопке пользователя
 export const PAGES_URL = 'https://shishtebe.github.io/statkarta/';
 export const RELEASES_URL = 'https://github.com/ShishTebe/statkarta/releases/latest';
+// Репозиторий: заготовки заявок из журнала замечаний (канал обратной связи, документ 23)
+export const REPO_URL = 'https://github.com/ShishTebe/statkarta';
 
 const withPrivate = process.argv.includes('--with-private');
 const web = process.argv.includes('--web');
 const kind = web ? 'web' : withPrivate ? 'local' : 'offline';
 const pkg = readJson('package.json');
 const pack = loadPack({ withPrivate });
-const build = { app: pkg.version, data: pack.version, kind, built: new Date().toISOString().slice(0, 10), pages: PAGES_URL, releases: RELEASES_URL };
+const build = { app: pkg.version, data: pack.version, kind, built: new Date().toISOString().slice(0, 10), pages: PAGES_URL, releases: RELEASES_URL, repo: REPO_URL };
 const pagesOrigin = new URL(PAGES_URL).origin;
 const CSP = {
   // однофайловая: ни одного внешнего адреса, кроме проверки обновлений по кнопке
