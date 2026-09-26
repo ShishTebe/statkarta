@@ -1959,6 +1959,14 @@ function useRegion(rp) {
 }
 
 async function regionBoot() {
+  // Профиль из версий до 0.10.0: тогда программа работала только с кодами Камчатского края – регион 30
+  // проставляется один раз, с уведомлением; пустой профиль (новый пользователь) не трогается
+  if (REGIONS && !state.profile.region && Object.keys(state.profile).length && !kvLoad('statkarta.region_migrated', false)) {
+    state.profile = sanitizeProfile({ ...state.profile, region: REGIONS.blank_region });
+    profileSave(state.profile);
+    state.notices.push(`Регион в профиле органа установлен: ${regionInfo(REGIONS.blank_region)?.name ?? REGIONS.blank_region} – как в прежних версиях программы. Если ваш регион другой, выберите его в профиле органа.`);
+  }
+  kvSave('statkarta.region_migrated', true);
   const code = state.profile.region;
   if (!code || !REGIONS) return;
   const rp = PACK.region_packs?.[code] ?? await regionGet(code);
