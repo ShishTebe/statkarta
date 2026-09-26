@@ -53,8 +53,8 @@ test('Заданный картой размер шрифта применяет
   assert.match(out, /<w:sz w:val="12"\/>[\s\S]*Текст фабулы/);
 });
 
-test('Р. 40 ф. 1: местные подразделения из бланка информационного центра (0018, 0017, 0019)', () => {
-  const r40 = pack.forms.find((f) => f.form === '1').requisites.find((r) => r.number === '40');
+test('Р. 40 ф. 1: местные подразделения из бланка информационного центра (0018, 0017, 0019) – из пакета региона 30', () => {
+  const r40 = core.regionalPack(pack, pack.region_packs['30']).forms.find((f) => f.form === '1').requisites.find((r) => r.number === '40');
   const codes = r40.options.map((o) => o.code);
   for (const code of ['0018', '0017', '0019']) assert.ok(codes.includes(code), code);
   assert.equal(codes.indexOf('0018'), codes.indexOf('0001') + 1, 'после «следственных органов СК РФ (0001)»');

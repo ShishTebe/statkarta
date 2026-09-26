@@ -131,11 +131,27 @@ export function feedbackWhereText(w = {}) {
   return parts.join('; ');
 }
 
-export function createFeedback({ kind = 'error', source = 'self', where = {}, fields = {}, today, id } = {}) {
+// Предложение сведений региона из мастера регионального пакета (ответ В-76): только коды, наименования
+// подразделений, строка бланка и источник – без сведений дел
+export function regionProposal(o) {
+  if (!o || !/^\d{2}$/.test(String(o.code ?? ''))) return null;
+  const units = (o.unit_codes ?? []).map((u) => ({ code: String(u.code ?? '').trim(), value: String(u.value ?? '').trim().slice(0, 160) }))
+    .filter((u) => /^\d{4}$/.test(u.code) && u.value).slice(0, 20);
+  return { code: String(o.code), name: String(o.name ?? '').slice(0, 120), unit_codes: units,
+    blank_line: String(o.blank_line ?? '').trim().slice(0, 400), source: String(o.source ?? '').trim().slice(0, 400) };
+}
+
+export function regionProposalText(r) {
+  return [`Регион ${r.code}${r.name ? ` – ${r.name}` : ''}.`,
+    r.unit_codes.length ? `Местные коды: ${r.unit_codes.map((u) => `${u.code} – ${u.value}`).join('; ')}.` : 'Местных кодов нет.',
+    r.blank_line ? `Строка в бланках информационного центра: «${r.blank_line}».` : ''].filter(Boolean).join(' ');
+}
+
+export function createFeedback({ kind = 'error', source = 'self', where = {}, fields = {}, today, id, region = null } = {}) {
   const k = FEEDBACK_KINDS[kind] ? kind : 'error';
   const keep = Object.fromEntries(FEEDBACK_KINDS[k].fields.map(([f]) => [f, String(fields[f] ?? '').trim().slice(0, 4000)]).filter(([, v]) => v));
   return { id: id ?? `fb-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, created: today, kind: k, source: FEEDBACK_SOURCES[source] ? source : 'self',
-    where: feedbackWhere(where), fields: keep, status: 'draft' };
+    where: feedbackWhere(where), fields: keep, status: 'draft', ...(regionProposal(region) ? { region: regionProposal(region) } : {}) };
 }
 
 export function feedbackText(entry) {
@@ -162,7 +178,7 @@ function feedbackSection(e, n) {
   if (e.created) lines.push(`- Записано: ${fbDate(e.created)}`);
   if (e.env) lines.push(`- Версия: приложение ${e.env.app}, данные ${e.env.data}, сборка ${e.env.kind}; ${e.env.browser}`);
   for (const [f, label] of k.fields) if (e.fields?.[f]) lines.push('', `**${label}.** ${e.fields[f]}`);
-  const meta = { v: 1, id: e.id, kind: e.kind, source: e.source, created: e.created, where: e.where, env: e.env ?? null };
+  const meta = { v: 1, id: e.id, kind: e.kind, source: e.source, created: e.created, where: e.where, env: e.env ?? null, ...(e.region ? { region: e.region } : {}) };
   lines.push('', `<!-- ${FEEDBACK_MARK} ${JSON.stringify(meta).replace(/--/g, '- -')} -->`);
   return lines.join('\n');
 }

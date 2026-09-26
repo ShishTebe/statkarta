@@ -209,6 +209,21 @@ for (const f of [...walk('data').filter((x) => x !== 'data/manifest.json'), ...w
 }
 for (const f of listed.keys()) if (!f.startsWith('data-private/') || fs.existsSync(path.join(ROOT, f))) err(`манифест: лишняя запись ${f}`);
 
+// Региональные пакеты (документ 24): формат, коды ОКАТО своего региона, цели – существующие реквизиты с кодом 0001
+if (fs.existsSync(path.join(ROOT, 'data/regions/2026/index.json'))) {
+  const { regionPackProblems } = await import('../src/core/regions.mjs');
+  const rix = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/regions/2026/index.json'), 'utf8'));
+  for (const t of rix.targets) if (!reqExists(t.form, t.requisite)) err(`регионы: цель ф. ${t.form} р. ${t.requisite} – реквизита нет`);
+  for (const r of rix.regions) {
+    const f = path.join(ROOT, 'data/regions/2026', r.file);
+    if (!fs.existsSync(f)) { err(`регион ${r.code}: нет файла ${r.file}`); continue; }
+    const rp = JSON.parse(fs.readFileSync(f, 'utf8'));
+    for (const pr of regionPackProblems(rp, rix)) err(`регион ${r.code}: ${pr}`);
+    if (rp.okato.count !== rp.okato.rows.length || r.okato !== rp.okato.count) err(`регион ${r.code}: число записей ОКАТО не совпадает с перечнем`);
+  }
+  stats.regions = rix.regions.length;
+}
+
 // Итог
 const summary = { errors: errors.length, warnings: warnings.length, stats };
 console.log(JSON.stringify(summary, null, 1));

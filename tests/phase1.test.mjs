@@ -262,14 +262,16 @@ test('Иерархия справочника № 14: у кодов ФСБ ви�
   assert.equal(ix.clsCode.get(14).get('000032')?.active, false);
 });
 
-test('ОКАТО: поиск по неполному коду и названию для р. 19.1 ф. 1', () => {
-  const ok = ix.classifiers.get('okato');
+test('ОКАТО: поиск по неполному коду и названию для р. 19.1 ф. 1 (пакет региона 30, документ 24)', () => {
+  assert.equal(ix.classifiers.get('okato'), undefined, 'в общих данных ОКАТО нет – он в пакете региона');
+  const rix = core.indexPack(core.regionalPack(pack, pack.region_packs['30']));
+  const ok = rix.classifiers.get('okato');
   assert.ok(ok, 'ОКАТО загружен');
   assert.equal(ix.reqs.get('1').get('19.1').input.lookup, 'okato');
   assert.ok(core.searchClassifier(ok.entries, '30207', 5).some((e) => e.name.includes('Елизовский')));
   assert.ok(core.searchClassifier(ok.entries, 'Елизов', 5).length >= 1);
   const c = newCase({ 'fact.crime.okato': ['|30401000000'] });
-  assert.match(core.buildMemo(ix, c, '1').rows.find((r) => r.number === '19.1').display, /30401000000 – .*Петропавловск-Камчатский/);
+  assert.match(core.buildMemo(rix, c, '1').rows.find((r) => r.number === '19.1').display, /30401000000 – .*Петропавловск-Камчатский/);
 });
 
 test('Опросник формы: общие сведения о деле – только те, что нужны выбранной форме', () => {

@@ -27,7 +27,10 @@ for (const f of files) {
   for (const r of RULES) {
     // коды ОКАТО (11 разрядов) – открытый классификатор, не номера дел
     if (f.endsWith('okato.json') && r.name.startsWith('номер уголовного дела')) continue;
-    let hits = [...new Set(t.match(r.rx) ?? [])];
+    // пакет региона: проверяется часть, внесенная вручную (местные коды, строка бланка, источники); ОКАТО –
+    // открытые данные Росстата (коды из 11 цифр, названия населенных пунктов «им. В.И. Ленина»)
+    const src = f.startsWith('data/regions/') && !f.endsWith('index.json') ? JSON.stringify({ ...JSON.parse(t), okato: undefined }) : t;
+    let hits = [...new Set(src.match(r.rx) ?? [])];
     // ОКАТО тестового профиля органа в эталонном деле
     if (r.name.startsWith('номер уголовного дела')) hits = hits.filter((h) => !t.includes(`"okato": "${h}"`));
     // образцы номера с девятью и более нулями подряд (12602300000000001) – заведомо не номера дел
@@ -38,7 +41,9 @@ for (const f of files) {
 }
 for (const f of files) {
   const t = fs.readFileSync(path.join(ROOT, f), 'utf8');
-  const leaked = scrub.filter((x) => t.includes(x));
+  // ОКАТО в пакетах регионов – открытые данные Росстата: отдельное слово образца может совпасть с названием
+  // населенного пункта; такие совпадения не считаются, фрагменты из нескольких слов проверяются
+  const leaked = scrub.filter((x) => t.includes(x) && !(f.startsWith('data/regions/') && !/\s/.test(x.trim())));
   if (leaked.length) { total += leaked.length; console.log(`${f}: образец заполнения бланка ИПК: ${leaked.length} фрагм.`); }
 }
 // Адреса электронной почты (ответ В-71): адрес для писем с замечаниями в открытые файлы не попадает –

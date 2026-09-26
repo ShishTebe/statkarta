@@ -1,5 +1,7 @@
 // Прием партии замечаний, выгруженной из программы (кнопка «Замечание» → «Сохранить файлом»).
-//   node scripts/feedback/intake.mjs <файл.md> [<файл.md> ...] [--json]
+//   node scripts/feedback/intake.mjs <файл.md> [<файл.md> ...] [--json] [--regions-json]
+// --regions-json – предложения мастера регионального пакета в виде раздела "regions" для
+// scripts/import/regions-2026.json (переносится после сверки с бланками информационного центра региона).
 // Печатает таблицу разбора (Markdown) и повторно проверяет текст на сведения уголовных дел:
 // при находках уровня «block» – код выхода 1, такой файл в репозиторий и заявки не переносится.
 // Раздел «Ревизия правил» – сводка отметок и охват по видам правил текущего пакета данных.
@@ -13,6 +15,7 @@ import { loadPack } from '../load-pack.mjs';
 
 const args = process.argv.slice(2);
 const asJson = args.includes('--json');
+const regionsJson = args.includes('--regions-json');
 const files = args.filter((a) => !a.startsWith('--'));
 if (!files.length) {
   console.error('Укажите файл партии замечаний: node scripts/feedback/intake.mjs <файл.md>');
@@ -33,6 +36,13 @@ for (const f of files) {
   });
 }
 
+const proposals = rows.filter((r) => r.region);
+if (regionsJson) {
+  const out = {};
+  for (const r of proposals) out[r.region.code] = { status: 'verified', unit_codes: r.region.unit_codes, blank_line: r.region.blank_line ? { '*': r.region.blank_line } : null, sources: [r.region.source].filter(Boolean) };
+  console.log(JSON.stringify({ regions: out }, null, 1));
+  process.exit(0);
+}
 const blocked = [...rows, ...marks].filter((r) => r.found.some((x) => x.level === 'block'));
 const rules = reviewRules(loadPack());
 const byId = new Map(rules.map((r) => [r.id, r]));
@@ -47,6 +57,13 @@ if (asJson) {
     const gist = Object.values(r.fields ?? {})[0] ?? '';
     const check = r.found.length ? r.found.map((x) => `${x.level === 'block' ? 'СТОП' : 'проверить'}: ${x.why}`).join('; ') : 'чисто';
     console.log(`| ${cell(r.file)} | З-${r.n} | ${cell(r.id)} | ${cell(k.title)} | ${k.label} | ${cell(FEEDBACK_SOURCES[r.source] ?? '')} | ${cell(feedbackWhereText(r.where))} | ${cell(gist)} | ${cell(check)} |`);
+  }
+  if (proposals.length) {
+    console.log('\n## Предложения по региональным пакетам\n');
+    console.log('| Регион | Местные коды | Строка бланка | Источник |');
+    console.log('|---|---|---|---|');
+    for (const r of proposals) console.log(`| ${r.region.code} ${cell(r.region.name)} | ${cell(r.region.unit_codes.map((u) => `${u.code} – ${u.value}`).join('; ') || 'нет')} | ${cell(r.region.blank_line || 'нет')} | ${cell(r.region.source)} |`);
+    console.log('\nПеренос в scripts/import/regions-2026.json: --regions-json, затем python3 scripts/import/build_regions.py.');
   }
   if (marks.length) {
     const last = new Map(marks.map((m) => [m.rule, m]));

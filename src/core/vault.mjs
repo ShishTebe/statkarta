@@ -37,7 +37,7 @@ export async function decryptCase(record, password) {
 }
 
 // Профиль органа: только разрешенные ключи, без сведений дела (FR-36)
-export const PROFILE_KEYS = ['organ_name', 'card_unit_name', 'organ_code', 'unit_code', 'unit_name', 'prosecutor_name', 'prosecutor_code', 'prosecutor_forms',
+export const PROFILE_KEYS = ['region', 'organ_name', 'card_unit_name', 'organ_code', 'unit_code', 'unit_name', 'prosecutor_name', 'prosecutor_code', 'prosecutor_forms',
   'investigator_fio', 'investigator_position', 'investigator_rank', 'head_fio', 'head_position', 'head_rank',
   'prosecutor_fio', 'prosecutor_position', 'prosecutor_rank',
   'case_number_format', 'date_today', 'retention_months',

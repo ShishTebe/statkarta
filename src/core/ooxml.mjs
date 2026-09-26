@@ -266,6 +266,52 @@ export function stripFragment(xml, range, fragment) {
   return out;
 }
 
+// Заменить печатный текст бланка (строка местных кодов региона): fragment ищется в собранном тексте
+// абзаца Word (<w:p>) или строки книги Excel (<si>), даже если разбит на несколько прогонов; replacement
+// ставится на место первой части, остальные части убираются. Пустая замена убирает фрагмент вместе
+// с запятой после него (или перед ним). Нет фрагмента – null.
+export function replaceBlankText(xml, fragment, replacement = '') {
+  const tag = /<w:p[ >]/.test(xml) ? 'w:p' : 'si';
+  const rx = new RegExp(`<${tag}[ >]`, 'g');
+  let m;
+  while ((m = rx.exec(xml))) {
+    const r = elementRange(xml, m.index);
+    const inner = xml.slice(r.start, r.end);
+    if (new RegExp(`<${tag}[ >]`).test(inner.slice(4))) continue;
+    const parts = [];
+    const tr = /<(?:w:)?t(?:\s[^>]*)?>([\s\S]*?)<\/(?:w:)?t>/g;
+    let t;
+    while ((t = tr.exec(inner))) {
+      const start = r.start + t.index + t[0].indexOf('>') + 1;
+      parts.push({ start, text: t[1] });
+    }
+    const joined = parts.map((p) => p.text).join('');
+    const find = escapeXml(fragment);
+    let at = joined.indexOf(find);
+    if (at < 0) continue;
+    let len = find.length;
+    if (!replacement) {
+      // вместе со строкой уходит разделитель: запятая после нее, иначе запятая перед ней
+      const after = /^,\s?/.exec(joined.slice(at + len))?.[0];
+      if (after) len += after.length;
+      else if (joined.slice(at - 2, at) === ', ') { at -= 2; len += 2; }
+    }
+    let pos = 0;
+    const edits = [];
+    for (const part of parts) {
+      const from = Math.max(at, pos);
+      const to = Math.min(at + len, pos + part.text.length);
+      if (to > from) edits.push({ start: part.start + (from - pos), end: part.start + (to - pos) });
+      pos += part.text.length;
+    }
+    let out = xml;
+    edits.forEach((e, i) => { e.text = i === 0 ? escapeXml(replacement) : ''; });
+    for (const e of edits.reverse()) out = out.slice(0, e.start) + e.text + out.slice(e.end);
+    return out;
+  }
+  return null;
+}
+
 // Вписать значения сразу в несколько мест: [{ shape: № фигуры, text }]. Правки идут с конца
 // документа, поэтому найденные позиции остальных фигур не сдвигаются.
 export function fillShapes(xml, edits, opts = {}) {

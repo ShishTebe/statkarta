@@ -13,7 +13,7 @@ STEPS = [
     ["python3", "scripts/import/import_forms.py"],
     ["python3", "scripts/import/import_ipk.py"],
     ["python3", "scripts/import/import_classifiers.py"],
-    ["python3", "scripts/import/import_okato.py", "--regions", "30"],
+    ["python3", "scripts/import/build_regions.py"],
     ["python3", "scripts/import/parse_uk.py", str(SRC / "uk-rf.txt"), str(SRC / "uk-parsed.json")],
     ["python3", "scripts/import/parse_lists.py", str(SRC / "perechni-2025-07-28.vision.txt"), str(SRC / "uk-parsed.json")],
     ["python3", "scripts/import/import_legal.py", str(SRC / "razj-gp-2025-07-01.txt")],

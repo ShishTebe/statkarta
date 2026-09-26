@@ -3,7 +3,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ROOT, readJson } from './lib-data.mjs';
 
-export function loadPack({ withPrivate = false } = {}) {
+// Встроенный пакет – регион, чьи бланки информационного центра лежат в data/blanks (Камчатский край)
+export const EMBED_REGIONS = ['30'];
+
+export function loadPack({ withPrivate = false, embedRegions = EMBED_REGIONS } = {}) {
   const ED = '2026';
   const formIdx = readJson(`data/forms/${ED}/index.json`).forms;
   const forms = formIdx.map((f) => readJson(`data/forms/${ED}/${f.file}`));
@@ -24,10 +27,13 @@ export function loadPack({ withPrivate = false } = {}) {
       classifiers[c.no] = { no: d.no, title: d.title, edition: d.edition, source: d.source, notes: d.notes ?? [], entries: d.entries };
     }
   }
-  if (fs.existsSync(path.join(ROOT, `data/classifiers/${ED}/okato.json`))) {
-    const ok = readJson(`data/classifiers/${ED}/okato.json`);
-    classifiers.okato = { no: 'okato', title: ok.title, edition: ok.edition, source: ok.source, complete: ok.complete, notes: [],
-      entries: ok.entries.map((e) => ({ code: e.code, name: e.name, path: e.path, section: e.center ? `центр: ${e.center}` : undefined })) };
+  // Региональные пакеты (документ 24): в сборку входит перечень регионов и встроенные пакеты (EMBED_REGIONS);
+  // остальные загружаются пользователем с адреса публикации или из файла
+  let regions = null;
+  const regionPacks = {};
+  if (fs.existsSync(path.join(ROOT, `data/regions/${ED}/index.json`))) {
+    regions = readJson(`data/regions/${ED}/index.json`);
+    for (const code of embedRegions) if (fs.existsSync(path.join(ROOT, `data/regions/${ED}/${code}.json`))) regionPacks[code] = readJson(`data/regions/${ED}/${code}.json`);
   }
   const articles = readJson(`data/uk/${ED}/articles.json`).articles.map((a) => ({
     article: a.article, title: a.title, repealed: a.repealed,
@@ -36,7 +42,7 @@ export function loadPack({ withPrivate = false } = {}) {
   const manifest = readJson('data/manifest.json');
   return {
     version: manifest.data_version, edition: ED, generated: manifest.generated, private: withPrivate,
-    forms, classifiers,
+    forms, classifiers, regions, region_packs: regionPacks,
     uk: { articles },
     legal: { acts: readJson(`data/legal/${ED}/acts.json`).acts, notes: readJson(`data/legal/${ED}/explanations.json`).notes,
       checklist: fs.readFileSync(path.join(ROOT, `data/legal/${ED}/actuality-checklist.md`), 'utf8') },

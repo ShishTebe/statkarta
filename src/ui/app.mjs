@@ -6,8 +6,9 @@ const PACK = JSON.parse(document.getElementById('pack').textContent);
 const BLANKS = JSON.parse(document.getElementById('blanks')?.textContent || 'null');
 // Сведения о сборке: версия, вид (offline – один файл, web – PWA, local – со справочником № 17), адрес публикации
 const BUILD = JSON.parse(document.getElementById('build')?.textContent || '{}');
-const IX = indexPack(PACK);
-const EVX = eventsIndex(IX);
+// Индексы пакета данных пересобираются при выборе региона (useRegion)
+let IX = indexPack(PACK);
+let EVX = eventsIndex(IX);
 const FORM_TITLES = Object.fromEntries(PACK.forms.map((f) => [f.form, sentenceCase(f.title)]));
 const FILLS_RU = { investigator: 'лицо, ведущее расследование', registrar: 'работник регистрационного учета органа', ic: 'информационный центр', head: 'начальник органа (согласует руководитель)', court: 'суд' };
 const TYPE_RU = { enum: 'выбор кода', classifier: 'справочник', date: 'дата', text: 'текст' };
@@ -24,6 +25,7 @@ const state = {
   addEv: null, cls: { no: 2, q: '', sel: null }, blank: { form: '1', req: null, q: '' }, sheet: null, busy: null,
   qCard: null, qFocus: null, qChecked: null,
   startChoice: false, quick: { form: '1', variant: '' }, editReq: null,
+  region: null, regionMissing: null, regionNote: null, rw: null, rwOpen: false, // пакет региона (документ 24)
   fb: null, fbList: null, fbTab: 'note', rv: null, rvMarks: null, newsBanner: false, // замечания, ревизия правил, «Что нового» (без сведений дела)
   doc: null, // разбор постановления: только в памяти вкладки, в файл дела не сохраняется
 };
@@ -270,6 +272,10 @@ function startView() {
     'Программа – подсказка, а не карточка: коды и сведения проверяет и подписывает лицо, составляющее карточку. ',
     'Сведения дела не покидают этот компьютер и никуда не передаются: на диск они записываются только зашифрованными под паролем.'));
   for (const n of state.notices) put(wrap, h('div', { class: 'notice' }, n));
+  if (REGIONS && (!state.profile.region || state.regionMissing)) put(wrap, h('div', { class: 'notice' },
+    state.regionMissing ? `Пакет выбранного региона (${regionInfo(state.regionMissing)?.name ?? state.regionMissing}) не загружен на этот компьютер: местных кодов подразделений и ОКАТО нет. `
+      : 'Выберите регион в профиле органа: от него зависят местные коды следственных подразделений и ОКАТО. ',
+    h('button', { class: 'btn small', onclick: () => { state.view = 'profile'; render(); } }, 'Профиль органа')));
   const start = h('div', { class: 'panel' }, h('h2', {}, 'Начало работы'),
     h('div', { class: 'row toolbar start-big' },
       h('button', { class: 'btn primary', onclick: startQuick }, 'Быстрый режим: одна карточка'),
@@ -1222,7 +1228,7 @@ function enumInput(it, ev) {
 function classifierInput(it, ev, no) {
   const c = IX.classifiers.get(no);
   const wrap = h('div');
-  if (!c) { put(wrap, h('div', { class: 'muted small' }, `${no === 'okato' ? 'ОКАТО' : `Справочник № ${no}`} не входит в эту сборку – введите код вручную.`), textInput(it, ev)); return wrap; }
+  if (!c) { put(wrap, h('div', { class: 'muted small' }, no === 'okato' ? 'ОКАТО входит в пакет региона: выберите регион в профиле органа и загрузите пакет. Пока код можно ввести вручную.' : `Справочник № ${no} не входит в эту сборку – введите код вручную.`), textInput(it, ev)); return wrap; }
   if (no === 'okato' && !c.complete) put(wrap, h('div', { class: 'hint small' }, `Загружен неполный ОКАТО: ${c.source}. Для поиска по всем населенным пунктам нужен официальный файл Росстата.`));
   const keys = currentKeys(it);
   const entryLine = (en) => [h('span', { class: 'code' }, en.code), ' ', entryPath(en) ? h('span', { class: 'muted' }, `${entryPath(en)}: `) : null, en.name,
@@ -1587,7 +1593,7 @@ function blankPlan(memo) {
 async function blankBytes(memo, plan, layout) {
   const src = BLANKS.files[layout.blank];
   if (!src) throw new Error(`В сборке нет файла бланка ${layout.blank}`);
-  return fillDocx(base64Bytes(src), layout, plan.edits, plan.cellEdits);
+  return fillDocx(base64Bytes(src), layout, plan.edits, plan.cellEdits, { textEdits: regionBlankEdits(REGIONS, memo.form, state.region) });
 }
 
 async function saveBlank(memo, ev) {
@@ -1804,6 +1810,7 @@ function profileView() {
   const field = (label, key, attrs = {}) => h('label', { class: 'small' }, label,
     h('input', { type: 'text', class: 'search', value: p[key] ?? '', ...attrs, onchange: (e) => { p[key] = e.target.value.trim(); } }));
   return h('div', {},
+    regionPanel(),
     h('div', { class: 'panel' }, h('h2', {}, 'Профиль органа'),
       h('p', { class: 'small muted' }, 'Профиль хранится только на этом компьютере, отдельно от дел, никуда не передается и не содержит сведений дела (FR-36). Сведения подставляются во все карточки пакета.'),
       field('Наименование органа (ф. 6 р. 1, ИПК р. 79, карта на иностранца р. 2)', 'organ_name'),
@@ -1935,6 +1942,137 @@ function blankView() {
       onclick: () => { state.blank = { form: x.form, req: null, q: '' }; render(); } }, formTitleShort(IX, x.form)))), h('span', { class: 'muted small' }, FORM_TITLES[f.form])),
     h('div', { class: 'grid2' }, h('div', { class: 'panel' }, h('input', { type: 'text', class: 'search', placeholder: 'Номер или слово', value: state.blank.q,
       onchange: (e) => { state.blank.q = e.target.value; render(); } }), h('div', { class: 'scroll table-wrap' }, table)), detail));
+}
+
+// ---------- Регион (документ 24): местные коды подразделений, строка бланка и ОКАТО ----------
+
+const REGIONS = PACK.regions ?? null;
+const regionUrl = (code) => (BUILD.kind === 'web' || !BUILD.pages ? `regions/${code}.json` : `${BUILD.pages}regions/${code}.json`);
+const regionInfo = (code) => REGIONS?.regions.find((r) => r.code === code) ?? null;
+const REGION_STATUS_RU = { verified: 'местные коды внесены по бланкам информационного центра', okato: 'только ОКАТО: местные коды не внесены' };
+
+// Применить пакет региона: пакет данных пересобирается, индексы строятся заново
+function useRegion(rp) {
+  state.region = rp ?? null;
+  IX = indexPack(rp ? regionalPack(PACK, rp) : PACK);
+  EVX = eventsIndex(IX);
+}
+
+async function regionBoot() {
+  const code = state.profile.region;
+  if (!code || !REGIONS) return;
+  const rp = PACK.region_packs?.[code] ?? await regionGet(code);
+  if (rp && !regionPackProblems(rp, REGIONS).length) useRegion(rp);
+  else state.regionMissing = code;
+}
+
+async function chooseRegion(code) {
+  state.profile = sanitizeProfile({ ...state.profile, region: code || undefined });
+  profileSave(state.profile);
+  state.regionMissing = null;
+  if (!code) { useRegion(null); render(); return; }
+  const rp = PACK.region_packs?.[code] ?? await regionGet(code);
+  if (rp && !regionPackProblems(rp, REGIONS).length) useRegion(rp);
+  else { useRegion(null); state.regionMissing = code; }
+  render();
+}
+
+async function installRegion(rp, how) {
+  const problems = regionPackProblems(rp, REGIONS);
+  if (problems.length) { state.regionNote = `Пакет не принят: ${problems.join('; ')}.`; render(); return; }
+  if (state.profile.region && rp.region !== state.profile.region && !confirm(`Файл – пакет региона ${rp.region} (${rp.name}), а в профиле выбран регион ${state.profile.region}. Выбрать регион из файла?`)) return;
+  const stored = await regionPut(rp);
+  state.profile = sanitizeProfile({ ...state.profile, region: rp.region });
+  profileSave(state.profile);
+  useRegion(rp);
+  state.regionMissing = null;
+  state.regionNote = `Пакет региона ${rp.region} – ${rp.name} ${how}: ОКАТО – ${rp.okato.count} записей, местных кодов – ${rp.unit_codes.length}.${stored ? '' : ' Хранилище браузера недоступно: пакет действует только в этой вкладке.'}`;
+  render();
+}
+
+async function fetchRegion(code) {
+  state.regionNote = 'Загрузка пакета…';
+  render();
+  try {
+    const res = await fetch(regionUrl(code), { cache: 'no-store' });
+    if (!res.ok) throw new Error(`адрес ответил ${res.status}`);
+    await installRegion(JSON.parse(await res.text()), 'загружен с адреса публикации');
+  } catch (e) {
+    state.regionNote = `Загрузить пакет не удалось (${e.message}). На компьютере без интернета: откройте файл пакета на другом компьютере по ссылке ниже, сохраните его и загрузите кнопкой «Загрузить из файла».`;
+    render();
+  }
+}
+
+async function importRegionFile() {
+  const text = await pickFile('.json,application/json');
+  if (!text) return;
+  let rp;
+  try { rp = JSON.parse(text); } catch { state.regionNote = 'Файл не прочитан: это не пакет региона.'; render(); return; }
+  await installRegion(rp, 'загружен из файла');
+}
+
+function regionPanel() {
+  if (!REGIONS) return null;
+  const code = state.profile.region ?? '';
+  const info = regionInfo(code);
+  const rp = state.region;
+  const box = h('div', { class: 'panel' }, h('h2', {}, 'Регион'),
+    h('p', { class: 'small muted' }, 'От региона зависят местные коды следственных подразделений в реквизитах «уголовное дело расследовано / находится в производстве» (ф. 1 р. 40, ф. 1.1 р. 33, ф. 2 р. 54, ф. 2.1 р. 26, ф. 3 р. 15, ф. 4 р. 33, ф. 5 р. 21), их строка в бланках и ОКАТО места совершения преступления. Пакет региона – открытые справочные данные; он хранится на этом компьютере, сведения дел в него не входят.'),
+    h('label', { class: 'small' }, 'Регион ',
+      h('select', { onchange: (e) => { state.regionNote = null; chooseRegion(e.target.value); } }, h('option', { value: '' }, 'не выбран'),
+        ...[...REGIONS.regions].sort((a, b) => a.name.localeCompare(b.name, 'ru')).map((r) => h('option', { value: r.code, selected: r.code === code ? true : null }, `${r.name} (${r.code})${r.status === 'verified' ? ' – есть местные коды' : ''}`)))));
+  if (state.regionNote) put(box, h('div', { class: 'notice' }, state.regionNote));
+  if (code && rp) {
+    put(box, h('div', { class: 'kv small' },
+      h('span', { class: 'muted' }, 'Пакет'), h('span', {}, `${rp.name}, ${PACK.region_packs?.[code] ? 'встроен в программу' : 'загружен на этот компьютер'}; ${REGION_STATUS_RU[rp.status] ?? rp.status}`),
+      h('span', { class: 'muted' }, 'Местные коды'), h('span', {}, rp.unit_codes.length ? rp.unit_codes.map((u) => `${u.code} – ${u.value}`).join('; ') : 'не внесены – в реквизитах только общие коды (0001 – следственные органы СК РФ)'),
+      h('span', { class: 'muted' }, 'ОКАТО'), h('span', {}, `${rp.okato.count} записей`),
+      code !== REGIONS.blank_region ? h('span', { class: 'muted' }, 'Бланки') : null,
+      code !== REGIONS.blank_region ? h('span', {}, rp.blank_line ? 'строка местных кодов в бланках заменяется строкой вашего региона' : 'бланки взяты у информационного центра Камчатского края: строка его местных кодов при заполнении убирается') : null));
+  } else if (code) {
+    put(box, h('div', { class: 'notice' }, `Пакет региона ${info?.name ?? code} еще не загружен на этот компьютер.`));
+  }
+  if (code && !PACK.region_packs?.[code]) {
+    put(box, h('div', { class: 'toolbar' },
+      BUILD.kind !== 'local' ? h('button', { class: `btn ${rp ? '' : 'primary'}`, onclick: () => fetchRegion(code) }, rp ? 'Обновить пакет с адреса публикации' : 'Загрузить пакет с адреса публикации') : null,
+      h('button', { class: 'btn', onclick: importRegionFile }, 'Загрузить из файла'),
+      BUILD.pages ? h('a', { class: 'btn small', href: `${BUILD.pages}regions/${code}.json`, target: '_blank', rel: 'noopener noreferrer', download: `statkarta-region-${code}.json`, title: 'Для компьютера без интернета: сохраните файл и перенесите его' }, 'Файл пакета для переноса') : null));
+  } else if (!code) put(box, h('div', { class: 'toolbar' }, h('button', { class: 'btn', onclick: importRegionFile }, 'Загрузить пакет из файла')));
+  put(box, regionWizard(code, rp));
+  return box;
+}
+
+// Мастер регионального пакета (ответ В-76): местные коды своего региона → замечание-дополнение в журнале
+function regionWizard(code, rp) {
+  const w = (state.rw ??= { units: [{ code: '', value: '' }], line: '', source: '', found: null, ok: false });
+  const det = h('details', { class: 'notes', open: state.rwOpen ? true : null, ontoggle: (e) => { state.rwOpen = e.target.open; } },
+    h('summary', {}, rp?.status === 'verified' ? 'Предложить исправление сведений региона' : 'Предложить местные коды своего региона'));
+  if (!code) { put(det, h('p', { class: 'small muted' }, 'Сначала выберите регион.')); return det; }
+  put(det, h('p', { class: 'small' }, 'Коды и наименования берутся из бланков карточек вашего информационного центра: в реквизите «уголовное дело расследовано» после «следственных органов СК РФ (0001)» они напечатаны строкой «в т.ч. …». Предложение попадет в журнал замечаний и уйдет с партией; после проверки сопровождающим коды войдут в пакет региона.'));
+  w.units.forEach((u, i) => put(det, h('div', { class: 'region-unit' },
+    h('input', { type: 'text', class: 'search code', placeholder: 'код, 4 цифры', value: u.code, onchange: (e) => { u.code = e.target.value.trim(); } }),
+    h('input', { type: 'text', class: 'search name', placeholder: 'наименование, как в бланке (в т.ч. СУ СК …)', value: u.value, onchange: (e) => { u.value = e.target.value.trim(); } }),
+    w.units.length > 1 ? h('button', { class: 'btn small', onclick: () => { w.units.splice(i, 1); render(); } }, 'Убрать') : null)));
+  put(det, h('button', { class: 'btn small', onclick: () => { w.units.push({ code: '', value: '' }); render(); } }, 'Еще код'),
+    h('label', { class: 'fb-field' }, h('span', {}, 'Строка в бланках информационного центра (как напечатано)'),
+      h('textarea', { rows: 2, oninput: (e) => { w.line = e.target.value; w.found = null; } }, w.line)),
+    h('label', { class: 'fb-field' }, h('span', {}, 'Источник: чей бланк или письмо, дата'),
+      h('textarea', { rows: 1, oninput: (e) => { w.source = e.target.value; w.found = null; } }, w.source)));
+  if (w.found?.length) put(det, findingsNode(w.found, w.ok, (v) => { w.ok = v; }));
+  put(det, h('div', { class: 'toolbar' }, h('button', { class: 'btn primary', onclick: () => {
+    const region = regionProposal({ code, name: regionInfo(code)?.name, unit_codes: w.units, blank_line: w.line, source: w.source });
+    if (!region.unit_codes.length && !region.blank_line) { state.regionNote = 'Укажите хотя бы один код из 4 цифр с наименованием или строку бланка.'; render(); return; }
+    const text = `${regionProposalText(region)} ${region.source}`;
+    w.found = feedbackScan(text, fbTokens());
+    if (w.found.some((x) => x.level === 'block') || (w.found.length && !w.ok)) { render(); return; }
+    const entry = createFeedback({ kind: 'addition', where: { screen: 'Профиль органа: регион' }, fields: { what: regionProposalText(region), basis: region.source }, today: todayIso(), region });
+    entry.env = fbEnv();
+    fbJournalSave([...fbList(), entry]);
+    state.rw = null;
+    state.regionNote = 'Предложение записано в журнал замечаний. Выгрузите партию на экране «Замечание» – письмом или файлом.';
+    render();
+  } }, 'Записать в замечания')));
+  return det;
 }
 
 // ---------- Замечания и предложения (канал обратной связи, документ 23) ----------
@@ -2355,12 +2493,14 @@ async function boot() {
   if (BUILD.kind === 'web' && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   await refreshSaved();
   newsCheck();
+  await regionBoot();
   const hash = location.hash.replace('#', '');
   if (hash.startsWith('demo')) {
     state.profile = { organ_name: 'Следственный отдел (пример)', organ_code: '02', unit_code: '[код подразделения]', prosecutor_code: '[код прокуратуры]',
       investigator_position: 'следователь', investigator_rank: 'капитан юстиции', investigator_fio: 'И.И. Иванов',
       head_position: 'заместитель руководителя отдела', head_rank: 'полковник юстиции', head_fio: 'П.П. Петров',
-      prosecutor_position: 'заместитель прокурора', prosecutor_rank: 'советник юстиции', prosecutor_fio: 'С.С. Сидоров', retention_months: 6 };
+      prosecutor_position: 'заместитель прокурора', prosecutor_rank: 'советник юстиции', prosecutor_fio: 'С.С. Сидоров', retention_months: 6, region: '30' };
+    useRegion(PACK.region_packs?.['30'] ?? null);
     const full = /^demo-full-print-(.+)$/.exec(hash);
     if (full) demoFullCard(full[1]);
     else {

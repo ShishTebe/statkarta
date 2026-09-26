@@ -111,13 +111,9 @@ node --test tests/phase1.test.mjs
 Подсказки кодов (`data/rules/2026/hints.json`) предлагают коды, но не проставляют их. Условия
 неактивности вопросов – `data/rules/2026/availability.json`.
 
-ОКАТО: положите официальный CSV Росстата в «Карточки/ОКАТО/» и запустите
-
-```bash
-python3 scripts/import/import_okato.py --regions 30
-```
-
-Без параметра `--regions` импортируются все регионы (файл сборки заметно вырастет).
+ОКАТО с версии 0.10.0 входит в пакеты регионов (`data/regions/2026/`, порядок – `docs/REGIONS.md`):
+положите официальный CSV Росстата в «Карточки/ОКАТО/» и запустите
+`python3 scripts/import/build_regions.py`.
 
 ## Что добавилось в Фазах 1.6 – 3 (версии 0.4 – 0.6)
 
@@ -182,4 +178,21 @@ python3 scripts/import/import_okato.py --regions 30
   `reviewView`, отметки – `statkarta.review` в хранилище браузера. «Что нового» – `BUILD.news` из
   `docs/CHANGELOG.md` (`changelogNews`: строка «- Замечания: fb-…» дает номера исправленных),
   сообщение после обновления – `newsCheck`/`newsBanner` (`statkarta.seen_version`).
+
+## Региональные пакеты (0.10.0)
+
+- **Данные**: `data/regions/2026/index.json` (регионы, реквизиты-цели, строки местных кодов в
+  бланках) и `<код>.json` (формат `region/1`: местные коды `unit_codes`, строка бланка
+  `blank_line`, источники, ОКАТО `okato.rows` – `[код, наименование, центр]`). Собираются
+  `scripts/import/build_regions.py` из `scripts/import/regions-2026.json` и CSV Росстата.
+  Общие данные форм местных кодов не содержат.
+- **Ядро** `src/core/regions.mjs`: `regionalPack(pack, rp)` – новый пакет с местными кодами после
+  «0001» в семи реквизитах и ОКАТО региона; `regionBlankEdits(index, form, rp)` – замена строки
+  местных кодов в бланке (`replaceBlankText` в `ooxml.mjs`, параметр `textEdits` у `fillDocx`);
+  `regionPackProblems` – проверка файла пакета.
+- **Интерфейс**: блок «Регион» в профиле органа (`regionPanel`), выбор – `profile.region`;
+  пакет – встроенный (`PACK.region_packs`, Камчатский край), с адреса публикации
+  (`regions/<код>.json`) или из файла; хранится в базе браузера `statkarta-regions`;
+  `useRegion(rp)` пересобирает `IX` и `EVX`. Мастер пакета – `regionWizard` (предложение –
+  замечание-дополнение с полем `region`).
 

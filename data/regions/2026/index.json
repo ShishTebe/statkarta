@@ -1,0 +1,760 @@
+{
+ "schema": "regions-index/1",
+ "edition": "2026",
+ "targets": [
+  {
+   "form": "1",
+   "requisite": "40"
+  },
+  {
+   "form": "1.1",
+   "requisite": "33"
+  },
+  {
+   "form": "2",
+   "requisite": "54"
+  },
+  {
+   "form": "2.1",
+   "requisite": "26"
+  },
+  {
+   "form": "3",
+   "requisite": "15"
+  },
+  {
+   "form": "4",
+   "requisite": "33"
+  },
+  {
+   "form": "5",
+   "requisite": "21"
+  }
+ ],
+ "targets_source": "Реквизиты «уголовное дело расследовано / находится в производстве / решение принято» с кодом «следственных органов СК РФ (0001)»: ф. 1 р. 40, ф. 1.1 р. 33, ф. 2 р. 54, ф. 2.1 р. 26, ф. 3 р. 15, ф. 4 р. 33, ф. 5 р. 21",
+ "after": "0001",
+ "blank_region": "30",
+ "blank_fragments": {
+  "1": [
+   "в т.ч. СУ СК Камчатского края (0018), СО по г. П-Камчатскому СУ СК (0017), СО по г. Елизово СУ СК (0019)"
+  ],
+  "1.1": [
+   "в т.ч. СУ СК Камчатского края (0018), СО по г. П-К СУ СК (0017), СО по г. Елизово СУ СК (0019)"
+  ],
+  "2": [
+   "в т.ч. СУ СК Камчатского края (0018), СО по г. П-К СУ СК (0017), СО по г. Елизово СУ СК (0019)"
+  ],
+  "2.1": [
+   "в т.ч. СУ СК Камчатского края (0018), СО по г. П-Камчатскому СУ СК (0017), СО по г. Елизово СУ СК (0019)"
+  ],
+  "3": [
+   "в т.ч. СО по ОВД СУ СК Камчатского края (0018), СО по г. П-Камчатскому СУ СК (0017), СО по г. Елизово СУ СК (0019)",
+   "в т.ч. СО по ОВД СУ СК Камчатского края (0018), СО по г. П-К СУ СК (0017), СО по г. Елизово СУ СК (0019)"
+  ],
+  "4": [
+   "в т.ч. СУ СК Камчатского края (0018), СО по г. П-К СУ СК (0017), СО по г. Елизово СУ СК (0019)"
+  ],
+  "5": [
+   "в т.ч. СУ СК Камчатского края (0018), СО по г. П-Камчатскому СУ СК (0017), СО по г. Елизово СУ СК (0019)"
+  ]
+ },
+ "blank_fragments_source": "Текст бланков информационного центра Камчатского края в data/blanks/2026 – строка местных кодов после «(0001)»",
+ "regions": [
+  {
+   "code": "01",
+   "name": "Алтайский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 2210,
+   "file": "01.json"
+  },
+  {
+   "code": "02",
+   "name": "Федеральная территория «Сириус»",
+   "status": "okato",
+   "units": 0,
+   "okato": 1,
+   "file": "02.json"
+  },
+  {
+   "code": "03",
+   "name": "Краснодарский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 2215,
+   "file": "03.json"
+  },
+  {
+   "code": "04",
+   "name": "Красноярский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 1987,
+   "file": "04.json"
+  },
+  {
+   "code": "05",
+   "name": "Приморский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 683,
+   "file": "05.json"
+  },
+  {
+   "code": "07",
+   "name": "Ставропольский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 789,
+   "file": "07.json"
+  },
+  {
+   "code": "08",
+   "name": "Хабаровский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 447,
+   "file": "08.json"
+  },
+  {
+   "code": "10",
+   "name": "Амурская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 880,
+   "file": "10.json"
+  },
+  {
+   "code": "11",
+   "name": "Архангельская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 4283,
+   "file": "11.json"
+  },
+  {
+   "code": "12",
+   "name": "Астраханская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 537,
+   "file": "12.json"
+  },
+  {
+   "code": "14",
+   "name": "Белгородская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1889,
+   "file": "14.json"
+  },
+  {
+   "code": "15",
+   "name": "Брянская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 2864,
+   "file": "15.json"
+  },
+  {
+   "code": "17",
+   "name": "Владимирская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 2545,
+   "file": "17.json"
+  },
+  {
+   "code": "18",
+   "name": "Волгоградская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1984,
+   "file": "18.json"
+  },
+  {
+   "code": "19",
+   "name": "Вологодская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 8140,
+   "file": "19.json"
+  },
+  {
+   "code": "20",
+   "name": "Воронежская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 2174,
+   "file": "20.json"
+  },
+  {
+   "code": "21",
+   "name": "Донецкая Народная Республика",
+   "status": "okato",
+   "units": 0,
+   "okato": 1320,
+   "file": "21.json"
+  },
+  {
+   "code": "22",
+   "name": "Нижегородская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 5220,
+   "file": "22.json"
+  },
+  {
+   "code": "23",
+   "name": "Запорожская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 595,
+   "file": "23.json"
+  },
+  {
+   "code": "24",
+   "name": "Ивановская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3074,
+   "file": "24.json"
+  },
+  {
+   "code": "25",
+   "name": "Иркутская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1550,
+   "file": "25.json"
+  },
+  {
+   "code": "26",
+   "name": "Республика Ингушетия",
+   "status": "okato",
+   "units": 0,
+   "okato": 167,
+   "file": "26.json"
+  },
+  {
+   "code": "27",
+   "name": "Калининградская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1113,
+   "file": "27.json"
+  },
+  {
+   "code": "28",
+   "name": "Тверская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 9931,
+   "file": "28.json"
+  },
+  {
+   "code": "29",
+   "name": "Калужская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3241,
+   "file": "29.json"
+  },
+  {
+   "code": "30",
+   "name": "Камчатский край",
+   "status": "verified",
+   "units": 3,
+   "okato": 99,
+   "file": "30.json"
+  },
+  {
+   "code": "32",
+   "name": "Кемеровская область - Кузбасс",
+   "status": "okato",
+   "units": 0,
+   "okato": 1271,
+   "file": "32.json"
+  },
+  {
+   "code": "33",
+   "name": "Кировская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 4446,
+   "file": "33.json"
+  },
+  {
+   "code": "34",
+   "name": "Костромская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3323,
+   "file": "34.json"
+  },
+  {
+   "code": "35",
+   "name": "Республика Крым",
+   "status": "okato",
+   "units": 0,
+   "okato": 1034,
+   "file": "35.json"
+  },
+  {
+   "code": "36",
+   "name": "Самарская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1667,
+   "file": "36.json"
+  },
+  {
+   "code": "37",
+   "name": "Курганская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1260,
+   "file": "37.json"
+  },
+  {
+   "code": "38",
+   "name": "Курская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3317,
+   "file": "38.json"
+  },
+  {
+   "code": "40",
+   "name": "Город Санкт-Петербург город федерального значения",
+   "status": "okato",
+   "units": 0,
+   "okato": 19,
+   "file": "40.json"
+  },
+  {
+   "code": "41",
+   "name": "Ленинградская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 2956,
+   "file": "41.json"
+  },
+  {
+   "code": "42",
+   "name": "Липецкая область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1634,
+   "file": "42.json"
+  },
+  {
+   "code": "43",
+   "name": "Луганская Народная Республика",
+   "status": "okato",
+   "units": 0,
+   "okato": 948,
+   "file": "43.json"
+  },
+  {
+   "code": "44",
+   "name": "Магаданская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 81,
+   "file": "44.json"
+  },
+  {
+   "code": "45",
+   "name": "Город Москва столица Российской Федерации город федерального значения",
+   "status": "okato",
+   "units": 0,
+   "okato": 151,
+   "file": "45.json"
+  },
+  {
+   "code": "46",
+   "name": "Московская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 5979,
+   "file": "46.json"
+  },
+  {
+   "code": "47",
+   "name": "Мурманская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 142,
+   "file": "47.json"
+  },
+  {
+   "code": "49",
+   "name": "Новгородская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3847,
+   "file": "49.json"
+  },
+  {
+   "code": "50",
+   "name": "Новосибирская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1873,
+   "file": "50.json"
+  },
+  {
+   "code": "52",
+   "name": "Омская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1899,
+   "file": "52.json"
+  },
+  {
+   "code": "53",
+   "name": "Оренбургская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 2329,
+   "file": "53.json"
+  },
+  {
+   "code": "54",
+   "name": "Орловская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3195,
+   "file": "54.json"
+  },
+  {
+   "code": "56",
+   "name": "Пензенская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1707,
+   "file": "56.json"
+  },
+  {
+   "code": "57",
+   "name": "Пермский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 3594,
+   "file": "57.json"
+  },
+  {
+   "code": "58",
+   "name": "Псковская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 8599,
+   "file": "58.json"
+  },
+  {
+   "code": "60",
+   "name": "Ростовская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 2738,
+   "file": "60.json"
+  },
+  {
+   "code": "61",
+   "name": "Рязанская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3042,
+   "file": "61.json"
+  },
+  {
+   "code": "63",
+   "name": "Саратовская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1865,
+   "file": "63.json"
+  },
+  {
+   "code": "64",
+   "name": "Сахалинская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 254,
+   "file": "64.json"
+  },
+  {
+   "code": "65",
+   "name": "Свердловская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1887,
+   "file": "65.json"
+  },
+  {
+   "code": "66",
+   "name": "Смоленская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 4903,
+   "file": "66.json"
+  },
+  {
+   "code": "67",
+   "name": "Город федерального значения Севастополь",
+   "status": "okato",
+   "units": 0,
+   "okato": 50,
+   "file": "67.json"
+  },
+  {
+   "code": "68",
+   "name": "Тамбовская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1579,
+   "file": "68.json"
+  },
+  {
+   "code": "69",
+   "name": "Томская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 588,
+   "file": "69.json"
+  },
+  {
+   "code": "70",
+   "name": "Тульская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 3854,
+   "file": "70.json"
+  },
+  {
+   "code": "71",
+   "name": "Тюменская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1546,
+   "file": "71.json"
+  },
+  {
+   "code": "73",
+   "name": "Ульяновская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1137,
+   "file": "73.json"
+  },
+  {
+   "code": "74",
+   "name": "Херсонская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 760,
+   "file": "74.json"
+  },
+  {
+   "code": "75",
+   "name": "Челябинская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 1313,
+   "file": "75.json"
+  },
+  {
+   "code": "76",
+   "name": "Забайкальский край",
+   "status": "okato",
+   "units": 0,
+   "okato": 907,
+   "file": "76.json"
+  },
+  {
+   "code": "77",
+   "name": "Чукотский автономный округ",
+   "status": "okato",
+   "units": 0,
+   "okato": 68,
+   "file": "77.json"
+  },
+  {
+   "code": "78",
+   "name": "Ярославская область",
+   "status": "okato",
+   "units": 0,
+   "okato": 6266,
+   "file": "78.json"
+  },
+  {
+   "code": "79",
+   "name": "Республика Адыгея (Адыгея)",
+   "status": "okato",
+   "units": 0,
+   "okato": 241,
+   "file": "79.json"
+  },
+  {
+   "code": "80",
+   "name": "Республика Башкортостан",
+   "status": "okato",
+   "units": 0,
+   "okato": 5451,
+   "file": "80.json"
+  },
+  {
+   "code": "81",
+   "name": "Республика Бурятия",
+   "status": "okato",
+   "units": 0,
+   "okato": 890,
+   "file": "81.json"
+  },
+  {
+   "code": "82",
+   "name": "Республика Дагестан",
+   "status": "okato",
+   "units": 0,
+   "okato": 2046,
+   "file": "82.json"
+  },
+  {
+   "code": "83",
+   "name": "Кабардино-Балкарская Республика",
+   "status": "okato",
+   "units": 0,
+   "okato": 191,
+   "file": "83.json"
+  },
+  {
+   "code": "84",
+   "name": "Республика Алтай",
+   "status": "okato",
+   "units": 0,
+   "okato": 333,
+   "file": "84.json"
+  },
+  {
+   "code": "85",
+   "name": "Республика Калмыкия",
+   "status": "okato",
+   "units": 0,
+   "okato": 391,
+   "file": "85.json"
+  },
+  {
+   "code": "86",
+   "name": "Республика Карелия",
+   "status": "okato",
+   "units": 0,
+   "okato": 861,
+   "file": "86.json"
+  },
+  {
+   "code": "87",
+   "name": "Республика Коми",
+   "status": "okato",
+   "units": 0,
+   "okato": 928,
+   "file": "87.json"
+  },
+  {
+   "code": "88",
+   "name": "Республика Марий Эл",
+   "status": "okato",
+   "units": 0,
+   "okato": 1702,
+   "file": "88.json"
+  },
+  {
+   "code": "89",
+   "name": "Республика Мордовия",
+   "status": "okato",
+   "units": 0,
+   "okato": 1515,
+   "file": "89.json"
+  },
+  {
+   "code": "90",
+   "name": "Республика Северная Осетия-Алания",
+   "status": "okato",
+   "units": 0,
+   "okato": 334,
+   "file": "90.json"
+  },
+  {
+   "code": "91",
+   "name": "Карачаево-Черкесская Республика",
+   "status": "okato",
+   "units": 0,
+   "okato": 159,
+   "file": "91.json"
+  },
+  {
+   "code": "92",
+   "name": "Республика Татарстан (Татарстан)",
+   "status": "okato",
+   "units": 0,
+   "okato": 3167,
+   "file": "92.json"
+  },
+  {
+   "code": "93",
+   "name": "Республика Тыва",
+   "status": "okato",
+   "units": 0,
+   "okato": 288,
+   "file": "93.json"
+  },
+  {
+   "code": "94",
+   "name": "Удмуртская Республика",
+   "status": "okato",
+   "units": 0,
+   "okato": 2304,
+   "file": "94.json"
+  },
+  {
+   "code": "95",
+   "name": "Республика Хакасия",
+   "status": "okato",
+   "units": 0,
+   "okato": 373,
+   "file": "95.json"
+  },
+  {
+   "code": "96",
+   "name": "Чеченская Республика",
+   "status": "okato",
+   "units": 0,
+   "okato": 394,
+   "file": "96.json"
+  },
+  {
+   "code": "97",
+   "name": "Чувашская Республика - Чувашия",
+   "status": "okato",
+   "units": 0,
+   "okato": 2038,
+   "file": "97.json"
+  },
+  {
+   "code": "98",
+   "name": "Республика Саха (Якутия)",
+   "status": "okato",
+   "units": 0,
+   "okato": 1037,
+   "file": "98.json"
+  },
+  {
+   "code": "99",
+   "name": "Еврейская автономная область",
+   "status": "okato",
+   "units": 0,
+   "okato": 118,
+   "file": "99.json"
+  }
+ ]
+}

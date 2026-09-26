@@ -72,6 +72,9 @@ if (web) {
   fs.writeFileSync(path.join(outDir, 'sw.js'), sw);
   fs.copyFileSync(path.join(ROOT, 'dist/statkarta-offline.html'), path.join(outDir, 'statkarta-offline.html'));
   fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
+  // Пакеты регионов (документ 24): загружаются по выбору пользователя в профиле органа; в кэш сервис-воркера не входят
+  fs.mkdirSync(path.join(outDir, 'regions'));
+  for (const f of fs.readdirSync(path.join(ROOT, 'data/regions/2026'))) fs.copyFileSync(path.join(ROOT, 'data/regions/2026', f), path.join(outDir, 'regions', f));
 }
 // Сведения о версии – по ним приложение по кнопке проверяет, вышло ли обновление (FR-21)
 if (web) fs.writeFileSync(path.join(outDir, 'version.json'), `${JSON.stringify({ app: build.app, data: build.data, built: build.built }, null, 1)}\n`);

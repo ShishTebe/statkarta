@@ -4,7 +4,7 @@
 // бланка (критерий A1.6-4): если бланк не тот, файл не собирается.
 
 import { readZip, entryText, replaceEntry, writeZip, sha256Hex } from './zip.mjs';
-import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText, stripFragment, findParagraph } from './ooxml.mjs';
+import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText, stripFragment, findParagraph, replaceBlankText } from './ooxml.mjs';
 import { setXlsxCell, setXlsxUnderscores, setXlsxCaption, XLSX_SHEET } from './xlsxfill.mjs';
 
 export const CELL_FONT_HALF_POINTS = 16;   // 8 пунктов – как в клетках самого бланка
@@ -19,15 +19,19 @@ export async function checkBlank(bytes, layout) {
 }
 
 // Заполненный бланк: [{ shape, text }] – знаки в клетки, [{ place, text }] – значения в ячейки
-// таблицы бланка (бланки ИПК).
-export async function fillDocx(bytes, layout, edits, cellEdits = []) {
+// таблицы бланка (бланки ИПК); textEdits – [{ find, replace }] правки печатного текста для региона
+// (regionBlankEdits): строка местных кодов бланка информационного центра другого региона.
+export async function fillDocx(bytes, layout, edits, cellEdits = [], { textEdits = [] } = {}) {
   await checkBlank(bytes, layout);
   const entries = readZip(bytes);
+  const edit = (xml) => textEdits.reduce((x, e) => replaceBlankText(x, e.find, e.replace) ?? x, xml);
   if (layout.kind === 'xlsx') {
     // ф. 3 – книга Excel: знаки в ячейки листа, текст – на линейки в тексте ячеек
     const sheetEntry = entries.find((e) => e.name === XLSX_SHEET);
     let sheet = await entryText(sheetEntry);
-    const ss = await entryText(entries.find((e) => e.name === 'xl/sharedStrings.xml'));
+    const ssRaw = await entryText(entries.find((e) => e.name === 'xl/sharedStrings.xml'));
+    const ss = edit(ssRaw);
+    if (ss !== ssRaw) await replaceEntry(entries, 'xl/sharedStrings.xml', new TextEncoder().encode(ss));
     for (const e of edits) sheet = setXlsxCell(sheet, e.shape, e.text);
     for (const e of cellEdits) {
       sheet = e.mode === 'caption'
@@ -40,7 +44,7 @@ export async function fillDocx(bytes, layout, edits, cellEdits = []) {
   const part = layout.part ?? 'word/document.xml';
   const entry = entries.find((e) => e.name === part);
   if (!entry) throw new Error(`В бланке нет части ${part}`);
-  let xml = await entryText(entry);
+  let xml = edit(await entryText(entry));
   if (edits.length) xml = fillShapes(xml, edits, { size: CELL_FONT_HALF_POINTS, force: true });
   // В одной ячейке места нумеруются подряд, а вписанный текст убирает подчеркивания –
   // поэтому места заполняются с конца ячейки, чтобы номера оставшихся не сдвигались.

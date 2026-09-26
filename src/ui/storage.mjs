@@ -19,7 +19,7 @@ async function tx(mode, fn) {
   return new Promise((resolve, reject) => {
     const t = db.transaction(STORE, mode);
     const out = fn(t.objectStore(STORE));
-    t.oncomplete = () => { db.close(); resolve(out?.result ?? out); };
+    t.oncomplete = () => { db.close(); resolve(out instanceof IDBRequest ? out.result ?? null : out); };
     t.onerror = () => { db.close(); reject(t.error); };
   });
 }
@@ -46,6 +46,36 @@ export function profileLoad() {
 
 export function profileSave(p) {
   try { localStorage.setItem(PROFILE_KEY, JSON.stringify(sanitizeProfile(p))); return true; } catch { return false; }
+}
+
+// Пакеты регионов (документ 24): открытые справочные данные, отдельная база браузера на этом компьютере
+function regionDb() {
+  return new Promise((resolve, reject) => {
+    if (!globalThis.indexedDB) { reject(new Error('Хранилище браузера недоступно')); return; }
+    const req = indexedDB.open('statkarta-regions', 1);
+    req.onupgradeneeded = () => req.result.createObjectStore('packs', { keyPath: 'region' });
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error ?? new Error('Хранилище браузера недоступно'));
+  });
+}
+
+async function regionTx(mode, fn) {
+  const db = await regionDb();
+  return new Promise((resolve, reject) => {
+    const t = db.transaction('packs', mode);
+    const out = fn(t.objectStore('packs'));
+    // у запроса без найденной записи result – undefined: возвращается null, а не сам запрос
+    t.oncomplete = () => { db.close(); resolve(out instanceof IDBRequest ? out.result ?? null : out); };
+    t.onerror = () => { db.close(); reject(t.error); };
+  });
+}
+
+export async function regionGet(code) {
+  try { return (await regionTx('readonly', (s) => s.get(code))) ?? null; } catch { return null; }
+}
+
+export async function regionPut(pack) {
+  try { await regionTx('readwrite', (s) => s.put(pack)); return true; } catch { return false; }
 }
 
 // Журнал замечаний (канал обратной связи): только проверенный текст и место в программе, без сведений дела

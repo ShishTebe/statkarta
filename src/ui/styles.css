@@ -162,7 +162,10 @@ tr.edit-row .card { margin-bottom: 0; }
 .quick-doc > summary { font-size: .95rem; padding: .3rem 0; }
 .quick-doc .panel { margin-top: .6rem; }
 /* Замечания и предложения */
-.panel.feedback .fb-field { display: block; margin: .6rem 0; }
-.panel.feedback .fb-field span { display: block; font-weight: 600; margin-bottom: .2rem; }
-.panel.feedback textarea { width: 100%; box-sizing: border-box; font: inherit; }
+.fb-field { display: block; margin: .6rem 0; }
+.fb-field span { display: block; font-weight: 600; margin-bottom: .2rem; }
+.fb-field textarea, .panel.feedback textarea { width: 100%; box-sizing: border-box; font: inherit; }
+.region-unit { display: flex; gap: .5rem; align-items: center; margin: .3rem 0; }
+.region-unit input.code { width: 8rem; flex: none; }
+.region-unit input.name { flex: 1; }
 .panel.feedback select { max-width: 100%; }
