@@ -41,6 +41,21 @@ for (const f of files) {
   const leaked = scrub.filter((x) => t.includes(x));
   if (leaked.length) { total += leaked.length; console.log(`${f}: образец заполнения бланка ИПК: ${leaked.length} фрагм.`); }
 }
+// Адреса электронной почты (ответ В-71): адрес для писем с замечаниями в открытые файлы не попадает –
+// он подставляется при сборке из секрета; допустимы только служебные и вымышленные адреса
+const MAIL_OK = /@(users\.noreply\.github\.com|anthropic\.com|example\.(org|com))$/i;
+const feedbackToFile = path.join(ROOT, 'data-private/feedback-to.txt');
+const feedbackTo = fs.existsSync(feedbackToFile) ? fs.readFileSync(feedbackToFile, 'utf8').trim().toLowerCase() : '';
+const walkAll = (dir) => (fs.existsSync(path.join(ROOT, dir)) ? fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })
+  .flatMap((e) => (e.isDirectory() ? (e.name === '__pycache__' ? [] : walkAll(path.posix.join(dir, e.name))) : [path.posix.join(dir, e.name)])) : []);
+const codeFiles = [...files, ...walkAll('src'), ...walkAll('scripts'), ...walkAll('.github'), 'README.md', 'CLA.md', 'package.json']
+  .filter((f) => /\.(mjs|js|json|md|yml|yaml|py|html|css|txt)$/.test(f) && fs.existsSync(path.join(ROOT, f)));
+for (const f of [...new Set(codeFiles)]) {
+  const t = fs.readFileSync(path.join(ROOT, f), 'utf8');
+  const mails = [...new Set(t.match(/[\w.+-]+@[\w-]+\.[\w.-]*[a-z]/gi) ?? [])].filter((m) => !MAIL_OK.test(m));
+  if (feedbackTo && t.toLowerCase().includes(feedbackTo)) { total++; console.log(`${f}: адрес для писем с замечаниями`); }
+  if (mails.length) { total += mails.length; console.log(`${f}: адрес электронной почты: ${mails.length}`); }
+}
 // Опубликованные бланки (ответ В-44): текст без образцов и Ф.И.О., свойства файла без автора и организации
 const office = (dir) => fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }).flatMap((e) => (e.isDirectory()
   ? office(path.posix.join(dir, e.name)) : /\.(docx|xlsx)$/.test(e.name) ? [path.posix.join(dir, e.name)] : []));

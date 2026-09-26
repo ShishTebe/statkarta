@@ -59,6 +59,15 @@ export function feedbackSave(list) {
   try { localStorage.setItem(FEEDBACK_KEY, JSON.stringify(list)); return true; } catch { return false; }
 }
 
+// Настройки и отметки без сведений дела (отметки ревизии правил, последняя открытая версия)
+export function kvLoad(key, fallback = null) {
+  try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); } catch { return fallback; }
+}
+
+export function kvSave(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; }
+}
+
 export function downloadText(name, text, type = 'application/json') {
   const url = URL.createObjectURL(new Blob([text], { type }));
   const a = document.createElement('a');

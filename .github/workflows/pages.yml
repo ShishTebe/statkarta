@@ -30,6 +30,8 @@ jobs:
         run: npm test
       - name: Сборка
         run: npm run build:web
+        env:
+          STATKARTA_FEEDBACK_TO: ${{ secrets.FEEDBACK_TO }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist-web

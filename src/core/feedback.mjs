@@ -168,11 +168,12 @@ function feedbackSection(e, n) {
 }
 
 // Партия замечаний одним файлом .md: читается человеком, разбирается сценарием scripts/feedback/intake.mjs
-export function feedbackMarkdown(entries, env = {}, { today } = {}) {
+// appendix – готовый раздел (ревизия правил), reviewCount – число отметок в нем
+export function feedbackMarkdown(entries, env = {}, { today, appendix = '', reviewCount = 0 } = {}) {
   const head = ['# Замечания к СтатКарте', '',
     `Выгружено ${fbDate(today)}. Приложение ${env.app ?? '?'}, данные ${env.data ?? '?'}, сборка ${env.kind ?? '?'}; ${env.browser ?? ''}.`.replace(/; \.$/, '.'),
-    `Замечаний: ${entries.length}. Текст проверен программой на сведения уголовных дел и подтвержден автором.`, ''];
-  return `${[...head, ...entries.map((e, i) => feedbackSection({ ...e, env: e.env ?? env }, i + 1))].join('\n\n').replace(/\n{3,}/g, '\n\n')}\n`;
+    `Замечаний: ${entries.length}${reviewCount ? `; отметок ревизии правил: ${reviewCount}` : ''}. Текст проверен программой на сведения уголовных дел и подтвержден автором.`, ''];
+  return `${[...head, ...entries.map((e, i) => feedbackSection({ ...e, env: e.env ?? env }, i + 1)), appendix].filter(Boolean).join('\n\n').replace(/\n{3,}/g, '\n\n')}\n`;
 }
 
 // Заготовка заявки на GitHub для одного замечания: адрес открывает сам пользователь в браузере
@@ -189,7 +190,7 @@ export function feedbackIssueUrl(repo, entry, env = {}, max = 7000) {
 // Разбор файла партии: служебные отметки + текст полей из разделов
 export function parseFeedbackFile(text) {
   const out = [];
-  const sections = String(text ?? '').split(/^## З-\d+\. /m).slice(1);
+  const sections = String(text ?? '').split(/^## (?:З-\d+\. |Ревизия правил)/m).slice(1);
   for (const sec of sections) {
     const m = new RegExp(`<!-- ${FEEDBACK_MARK} (\\{.*\\}) -->`).exec(sec);
     if (!m) continue;
@@ -213,3 +214,45 @@ export function feedbackCommonWords(text) {
   for (const m of String(text ?? '').matchAll(new RegExp(`[${FB_UP}${FB_LO}]{3,}`, 'gu'))) out.add(fbLower(m[0]));
   return out;
 }
+
+// Адрес для писем с замечаниями: в репозитории его нет (секрет сборки), в собранном файле он лежит
+// закодированным и на экранах не показывается; раскодируется только при нажатии «Отправить письмом»
+export function feedbackAddrEncode(s) {
+  return [...String(s ?? '')].map((ch, i) => ch.charCodeAt(0) ^ ((i * 37 + 91) & 0xff));
+}
+
+export function feedbackAddrDecode(codes) {
+  return Array.isArray(codes) ? codes.map((x, i) => String.fromCharCode(x ^ ((i * 37 + 91) & 0xff))).join('') : '';
+}
+
+// Письмо с партией: короткая партия – в тексте письма, длинная – вложением (файл сохраняется отдельно)
+export function feedbackMailto(to, md, { today, max = 1800 } = {}) {
+  const subject = `СтатКарта: замечания от ${fbDate(today)}`;
+  const fits = md.length <= max;
+  const body = fits ? md : `Замечания – во вложении: приложите файл statkarta-zamechaniya-${today}.md из папки загрузок (текст партии также скопирован – его можно вставить сюда).`;
+  return { href: `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, fits };
+}
+
+// «Что нового» (ответ В-75): разделы журнала изменений по версиям приложения.
+// Строка «- Замечания: fb-…, fb-…» в разделе – служебные номера исправленных замечаний: на экран она не выводится,
+// а у этих замечаний в журнале пользователя появляется «исправлено в <версия>».
+export function changelogNews(md, limit = 6) {
+  const out = [];
+  const parts = String(md ?? '').split(/^## /m).slice(1);
+  for (const p of parts) {
+    const [heading, ...rest] = p.split('\n');
+    const app = /Приложение (\d+\.\d+\.\d+)/.exec(heading)?.[1];
+    if (!app) continue;
+    const lines = rest.join('\n').trim().split('\n');
+    const fixed = [];
+    const body = [];
+    for (const l of lines) {
+      if (/^- Замечания: /.test(l)) fixed.push(...(l.match(/fb-[0-9a-z]+/g) ?? []));
+      else body.push(l);
+    }
+    out.push({ app, heading: heading.trim(), body: body.join('\n').trim(), fixed });
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+

@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ROOT } from './lib-data.mjs';
 
-export const CORE_ORDER = ['text.mjs', 'uk.mjs', 'classifiers.mjs', 'codes.mjs', 'pack.mjs', 'rules.mjs', 'engine.mjs', 'model.mjs', 'package.mjs', 'vault.mjs', 'zip.mjs', 'ooxml.mjs', 'xlsxfill.mjs', 'blank.mjs', 'docx.mjs', 'doctext.mjs', 'extract.mjs', 'docimport.mjs', 'feedback.mjs'];
+export const CORE_ORDER = ['text.mjs', 'uk.mjs', 'classifiers.mjs', 'codes.mjs', 'pack.mjs', 'rules.mjs', 'engine.mjs', 'model.mjs', 'package.mjs', 'vault.mjs', 'zip.mjs', 'ooxml.mjs', 'xlsxfill.mjs', 'blank.mjs', 'docx.mjs', 'doctext.mjs', 'extract.mjs', 'docimport.mjs', 'feedback.mjs', 'review.mjs'];
 
 export function bundleSource(files) {
   return files.map((f) => {

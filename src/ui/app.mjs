@@ -24,7 +24,7 @@ const state = {
   addEv: null, cls: { no: 2, q: '', sel: null }, blank: { form: '1', req: null, q: '' }, sheet: null, busy: null,
   qCard: null, qFocus: null, qChecked: null,
   startChoice: false, quick: { form: '1', variant: '' }, editReq: null,
-  fb: null, fbList: null, // замечание в работе и журнал замечаний (без сведений дела)
+  fb: null, fbList: null, fbTab: 'note', rv: null, rvMarks: null, newsBanner: false, // замечания, ревизия правил, «Что нового» (без сведений дела)
   doc: null, // разбор постановления: только в памяти вкладки, в файл дела не сохраняется
 };
 // Открытые дела сеанса: state.cases – все дела в памяти вкладки, state.kase – текущее (дело быстрого режима в список не входит)
@@ -70,7 +70,7 @@ window.addEventListener('beforeunload', (e) => {
 
 function render() {
   const app = document.getElementById('app');
-  app.replaceChildren(header(), h('main', {}, reviewBanner(), state.updateReady ? h('div', { class: 'notice' }, 'Новая версия загружена. ', h('button', { class: 'btn primary small', onclick: applyUpdate }, 'Обновить')) : null, view()),
+  app.replaceChildren(header(), h('main', {}, reviewBanner(), newsBanner(), state.updateReady ? h('div', { class: 'notice' }, 'Новая версия загружена. ', h('button', { class: 'btn primary small', onclick: applyUpdate }, 'Обновить')) : null, view()),
     state.sheet && state.kase ? sheetPrint() : h('div'));
   document.body.classList.toggle('print-sheet', Boolean(state.sheet));
 }
@@ -98,11 +98,6 @@ function header() {
       `Замечание${fbDrafts() ? ` (${fbDrafts()})` : ''}`),
     BUILD.pages && BUILD.kind !== 'local' ? h('button', { class: 'btn', title: `Версия ${BUILD.app}, данные ${BUILD.data}`, onclick: checkUpdates }, 'Проверить обновления') : null,
     c && !c.quick && state.view === 'case' ? h('button', { class: 'btn danger', onclick: deleteCase }, 'Удалить данные дела') : null);
-}
-
-function fbDrafts() {
-  if (!state.fbList) state.fbList = feedbackLoad();
-  return state.fbList.filter((e) => e.status !== 'exported').length;
 }
 
 // Обозначение дела в списках: подпись пользователя и номер дела, если он внесен
@@ -273,7 +268,7 @@ function startView() {
   const wrap = h('div');
   put(wrap, h('div', { class: 'notice' },
     'Программа – подсказка, а не карточка: коды и сведения проверяет и подписывает лицо, составляющее карточку. ',
-    'Сведения дела не покидают устройство: на диск они попадают только зашифрованными под паролем.'));
+    'Сведения дела не покидают этот компьютер и никуда не передаются: на диск они записываются только зашифрованными под паролем.'));
   for (const n of state.notices) put(wrap, h('div', { class: 'notice' }, n));
   const start = h('div', { class: 'panel' }, h('h2', {}, 'Начало работы'),
     h('div', { class: 'row toolbar start-big' },
@@ -320,7 +315,7 @@ function startView() {
   put(wrap, h('div', { class: 'panel' }, h('h2', {}, `Сохраненные на устройстве дела (${state.saved.length})`),
     state.saved.length
       ? h('div', { class: 'table-wrap' }, h('table', { class: 'memo' }, h('tbody', {}, ...rows)))
-      : h('p', { class: 'muted small' }, 'Сохраненных дел нет. В хранилище браузера дела лежат только в зашифрованном виде; открыто хранятся обозначение дела и даты.')));
+      : h('p', { class: 'muted small' }, 'Сохраненных дел нет. Дела сохраняются на этом компьютере, во внутреннее хранилище браузера, только зашифрованными; без шифрования – лишь обозначение дела и даты. В интернет ничего не передается.')));
   return wrap;
 }
 
@@ -1734,7 +1729,7 @@ function saveView() {
   put(box, h('div', { class: 'panel' }, h('h2', {}, 'Сохранение дела'),
     h('p', { class: 'small' }, 'Дело шифруется паролем (AES-GCM, ключ из пароля через PBKDF2). Пароль не сохраняется: если он утерян, дело не восстановить.'),
     state.password ? h('p', { class: 'small muted' }, 'Пароль этого дела введен в текущем сеансе – поля ниже можно не заполнять.') : null,
-    h('label', { class: 'small' }, 'Обозначение дела в списке сохраненных (хранится открыто, без пароля – не указывайте лишнего) ',
+    h('label', { class: 'small' }, 'Обозначение дела в списке сохраненных (хранится на этом компьютере без шифрования – не указывайте лишнего) ',
       h('input', { type: 'text', class: 'search', style: 'max-width:24rem', value: c.title === 'Дело' ? '' : c.title, placeholder: 'например, дело 45',
         onchange: (e) => { c.title = e.target.value.trim() || 'Дело'; touch(); } })),
     h('div', { class: 'row' }, pwd1, pwd2),
@@ -1810,7 +1805,7 @@ function profileView() {
     h('input', { type: 'text', class: 'search', value: p[key] ?? '', ...attrs, onchange: (e) => { p[key] = e.target.value.trim(); } }));
   return h('div', {},
     h('div', { class: 'panel' }, h('h2', {}, 'Профиль органа'),
-      h('p', { class: 'small muted' }, 'Профиль хранится на устройстве отдельно от дел и не содержит сведений дела (FR-36). Сведения подставляются во все карточки пакета.'),
+      h('p', { class: 'small muted' }, 'Профиль хранится только на этом компьютере, отдельно от дел, никуда не передается и не содержит сведений дела (FR-36). Сведения подставляются во все карточки пакета.'),
       field('Наименование органа (ф. 6 р. 1, ИПК р. 79, карта на иностранца р. 2)', 'organ_name'),
       unitNameField(p),
       h('label', { class: 'small' }, 'Орган (реквизит 1 бланков)',
@@ -1943,13 +1938,19 @@ function blankView() {
 }
 
 // ---------- Замечания и предложения (канал обратной связи, документ 23) ----------
-// Замечание – место в программе (белый список) и текст пользователя. Программа ничего не отправляет:
-// партия сохраняется файлом, копируется текстом или по одному открывается заготовкой заявки на GitHub.
+// Замечание – место в программе (белый список) и текст пользователя. Программа ничего не отправляет сама:
+// партия выгружается файлом, текстом, письмом (почтовая программа пользователя) или заявкой на GitHub.
 
 const SCREEN_RU = { start: 'Дела', quick: 'Быстрый режим', profile: 'Профиль органа', cls: 'Справочники', blank: 'Бланки', legal: 'Нормативная база', feedback: 'Замечания' };
 const CASE_TAB_RU = { document: 'Документ дела', objects: 'Объекты дела', event: 'События и пакет', questions: 'Опросник пакета', print: 'Печать бланка', save: 'Сохранение и журнал' };
 const FB_REPO = BUILD.repo ?? 'https://github.com/ShishTebe/statkarta';
+const RV_KEY = 'statkarta.review';
+const SEEN_KEY = 'statkarta.seen_version';
+const NEWS = BUILD.news ?? [];
+const FIXED_IN = new Map(NEWS.flatMap((n) => n.fixed.map((id) => [id, n.app])));
 let fbCommon = null;
+let rvRules = null;
+const RULES_RV = () => (rvRules ??= reviewRules(PACK, { formTitle: (f, v) => formTitleShort(IX, f, v) }));
 
 function fbEnv() {
   return { app: BUILD.app ?? 'сборка разработчика', data: PACK.version, kind: BUILD.kind ?? 'dev', browser: browserName(navigator.userAgent, { brave: Boolean(navigator.brave) }) };
@@ -1987,8 +1988,9 @@ function itemWhere(it, ev) {
     requisiteLabel: it.requisite ? shortLabel(displayLabel(it.requisite), 120) : shortLabel(normText(it.q?.text ?? ''), 120), factId: it.factId ?? '', codes };
 }
 
-function openFeedback(where = currentWhere()) {
+function openFeedback(where = currentWhere(), tab = 'note') {
   state.fb = { kind: 'error', source: 'self', where: feedbackWhere(where), fields: {}, found: null, ok: false, back: state.view === 'feedback' ? state.fb?.back ?? 'start' : state.view };
+  state.fbTab = tab;
   state.view = 'feedback';
   render();
   scrollTo(0, 0);
@@ -1996,15 +1998,26 @@ function openFeedback(where = currentWhere()) {
 
 function fbTokens() {
   if (!fbCommon) fbCommon = feedbackCommonWords(JSON.stringify(PACK));
-  const open = [...state.cases, state.kase].filter(Boolean);
-  return feedbackTokens([...new Set(open)], state.profile, fbCommon);
+  return feedbackTokens([...new Set([...state.cases, state.kase].filter(Boolean))], state.profile, fbCommon);
+}
+
+const fbList = () => (state.fbList ??= feedbackLoad());
+const rvMarks = () => (state.rvMarks ??= kvLoad(RV_KEY, []) ?? []);
+
+function fbDrafts() {
+  return fbList().filter((e) => e.status !== 'exported').length + rvMarks().filter((m) => m.status !== 'exported').length;
 }
 
 function fbJournalSave(list) {
   state.fbList = list;
   if (feedbackSave(list)) return true;
-  state.notices.push('Журнал замечаний на устройстве недоступен (закрыто хранилище браузера): замечание сохранено файлом.');
+  state.notices.push('Журнал замечаний на компьютере недоступен (закрыто хранилище браузера): замечание сохранено файлом.');
   return false;
+}
+
+function rvSave(list) {
+  state.rvMarks = list;
+  if (!kvSave(RV_KEY, list)) state.notices.push('Отметки ревизии не сохраняются на компьютере (закрыто хранилище браузера): выгрузите их файлом до закрытия вкладки.');
 }
 
 function saveFeedback() {
@@ -2016,48 +2029,71 @@ function saveFeedback() {
   if (f.found.some((x) => x.level === 'block')) { rerender(); return; }
   if (f.found.length && !f.ok) { rerender(); return; }
   entry.env = fbEnv();
-  const list = [...(state.fbList ?? feedbackLoad()), entry];
+  const list = [...fbList(), entry];
   if (!fbJournalSave(list)) downloadText(`statkarta-zamechanie-${todayIso()}.md`, feedbackMarkdown([entry], entry.env, { today: todayIso() }), 'text/markdown');
   state.fb = { ...f, fields: {}, found: null, ok: false, saved: list.length };
   rerender();
 }
 
-// Перед выгрузкой – повторная проверка по открытым сейчас делам
-function fbCheckBeforeExport(entries) {
+// Выгрузка: замечания и отметки ревизии одной партией; перед выгрузкой – повторная проверка по открытым сейчас делам
+function exportBatch(how, { all = false } = {}) {
+  const notes = fbList().filter((e) => all || e.status !== 'exported');
+  const marks = rvMarks().filter((m) => all || m.status !== 'exported');
+  if (!notes.length && !marks.length) return;
   const tokens = fbTokens();
-  const bad = entries.filter((e) => feedbackScan(feedbackText(e), tokens).some((x) => x.level === 'block'));
-  if (!bad.length) return true;
-  state.notices.push(`Выгрузка остановлена: в замечаниях ${bad.map((e) => `З-${(state.fbList ?? []).indexOf(e) + 1}`).join(', ')} найдены сведения открытого дела. Исправьте или удалите их.`);
-  render();
-  return false;
-}
-
-function exportFeedback(entries, how) {
-  if (!entries.length || !fbCheckBeforeExport(entries)) return;
-  const md = feedbackMarkdown(entries, fbEnv(), { today: todayIso() });
-  const done = () => {
-    const list = (state.fbList ?? feedbackLoad()).map((e) => (entries.includes(e) ? { ...e, status: 'exported', exported: todayIso() } : e));
-    fbJournalSave(list);
+  const bad = [...notes.filter((e) => feedbackScan(feedbackText(e), tokens).some((x) => x.level === 'block')).map((e) => `З-${fbList().indexOf(e) + 1}`),
+    ...marks.filter((m) => feedbackScan(m.comment, tokens).some((x) => x.level === 'block')).map((m) => `правило ${m.rule}`)];
+  if (bad.length) { state.notices.push(`Выгрузка остановлена: в ${bad.join(', ')} найдены сведения открытого дела. Исправьте или удалите их.`); render(); return; }
+  const today = todayIso();
+  const md = feedbackMarkdown(notes, fbEnv(), { today, appendix: reviewMarkdown(marks, RULES_RV()), reviewCount: marks.length });
+  const file = `statkarta-zamechaniya-${today}.md`;
+  const done = (msg) => {
+    fbJournalSave(fbList().map((e) => (notes.includes(e) ? { ...e, status: 'exported', exported: today } : e)));
+    rvSave(rvMarks().map((m) => (marks.includes(m) ? { ...m, status: 'exported', exported: today } : m)));
+    if (msg) state.notices.push(msg);
     render();
   };
-  if (how === 'file') { downloadText(`statkarta-zamechaniya-${todayIso()}.md`, md, 'text/markdown'); done(); return; }
-  navigator.clipboard.writeText(md).then(() => { state.notices.push(`Скопировано замечаний: ${entries.length}. Вставьте текст в письмо или сообщение.`); done(); },
-    () => { state.notices.push('Копирование недоступно в этом браузере – сохраните замечания файлом.'); render(); });
+  if (how === 'file') { downloadText(file, md, 'text/markdown'); done(); return; }
+  if (how === 'mail') {
+    const { href, fits } = feedbackMailto(feedbackAddrDecode(BUILD.fb_to), md, { today });
+    if (!fits) { downloadText(file, md, 'text/markdown'); navigator.clipboard?.writeText(md).catch(() => {}); }
+    const a = document.createElement('a');
+    a.href = href;
+    document.body.append(a);
+    a.click();
+    a.remove();
+    done(fits ? 'Открыто письмо в почтовой программе: проверьте текст и отправьте. Если письмо не открылось, на компьютере не настроена почтовая программа – сохраните партию файлом и передайте ее сопровождающему.'
+      : `Партия большая: файл ${file} сохранен в загрузки, открыто письмо – приложите к нему этот файл и отправьте. Если письмо не открылось, передайте файл сопровождающему другим способом.`);
+    return;
+  }
+  navigator.clipboard.writeText(md).then(() => done(`Скопировано: замечаний ${notes.length}, отметок ревизии ${marks.length}. Вставьте текст в письмо или сообщение.`),
+    () => { state.notices.push('Копирование недоступно в этом браузере – сохраните партию файлом.'); render(); });
 }
 
 function feedbackView() {
   if (!state.fb) state.fb = { kind: 'error', source: 'self', where: {}, fields: {}, found: null, ok: false, back: 'start' };
-  if (!state.fbList) state.fbList = feedbackLoad();
-  const f = state.fb;
-  const list = state.fbList;
-  const kind = FEEDBACK_KINDS[f.kind];
+  const tab = state.fbTab ?? 'note';
   const wrap = h('div');
   for (const n of state.notices) put(wrap, h('div', { class: 'notice' }, n));
   state.notices = [];
+  const cov = Object.values(reviewCoverage(RULES_RV(), rvMarks())).reduce((a, g) => a + g.ok + g.wrong + g.unclear, 0);
+  const seg = (id, label) => h('button', { 'aria-pressed': String(tab === id), onclick: () => { state.fbTab = id; if (id === 'news') kvSave(SEEN_KEY, BUILD.app ?? ''); state.newsBanner = false; render(); } }, label);
+  put(wrap, h('div', { class: 'toolbar' }, h('div', { class: 'seg' }, seg('note', `Замечания (${fbList().length})`), seg('review', `Ревизия правил (${cov} из ${RULES_RV().length})`), seg('news', 'Что нового')),
+    h('button', { class: 'btn', onclick: () => { const f = state.fb; state.view = f.back && f.back !== 'feedback' ? f.back : 'start'; state.fb = null; render(); } }, 'Вернуться')));
+  if (tab === 'review') put(wrap, reviewView());
+  else if (tab === 'news') put(wrap, newsView());
+  else put(wrap, noteForm(), journalPanel());
+  if (tab !== 'news') put(wrap, exportPanel());
+  return wrap;
+}
+
+function noteForm() {
+  const f = state.fb;
+  const kind = FEEDBACK_KINDS[f.kind];
   const where = feedbackWhereText(f.where);
   const form = h('div', { class: 'panel feedback' },
     h('h2', {}, 'Замечание или предложение'),
-    h('p', { class: 'small' }, 'Замечание остается на этом компьютере, пока вы не выгрузите его ниже: программа ничего не отправляет сама. ',
+    h('p', { class: 'small' }, 'Замечание остается на этом компьютере, пока вы не выгрузите партию: программа ничего не отправляет сама. ',
       h('strong', {}, 'Не указывайте сведения уголовных дел'), ' – номера, фамилии, адреса, фабулу; пример приводите вымышленный. Перед сохранением текст проверяется на совпадения с открытыми делами.'),
     f.saved ? h('div', { class: 'notice' }, `Замечание З-${f.saved} сохранено в журнале. Можно записать следующее или выгрузить партию.`) : null,
     h('div', { class: 'kv' },
@@ -2071,50 +2107,159 @@ function feedbackView() {
       h('span', {}, where || 'не указано', where ? h('button', { class: 'btn small', style: 'margin-left:.5rem', onclick: () => { f.where = {}; rerender(); } }, 'Не прикладывать') : null)),
     ...kind.fields.map(([key, label]) => h('label', { class: 'fb-field' }, h('span', {}, label),
       h('textarea', { rows: key === 'basis' ? 2 : 3, 'data-fact': `fb.${key}`, oninput: (e) => { f.fields[key] = e.target.value; if (f.found) { f.found = null; f.ok = false; } } }, f.fields[key] ?? ''))));
-  if (f.found?.length) {
-    const block = f.found.some((x) => x.level === 'block');
-    put(form, h('div', { class: 'checks' },
-      h('div', { class: `item ${block ? 'error' : 'warning'}` }, h('strong', {}, block ? 'Не сохранено: ' : 'Проверьте: '),
-        block ? 'в тексте похоже на сведения уголовного дела или персональные данные. Замените их вымышленными или уберите.' : 'эти места похожи на сведения дела. Если это вымышленный пример или общие слова – подтвердите.'),
-      ...f.found.map((x) => h('div', { class: `item ${x.level === 'block' ? 'error' : 'warning'}` }, x.text ? `«${shortLabel(x.text, 60)}» – ` : '', x.why))));
-    if (!block) put(form, h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: f.ok ? true : null, onchange: (e) => { f.ok = e.target.checked; } }),
-      ' Проверил: сведений уголовных дел и персональных данных в тексте нет'));
-  }
-  put(form, h('div', { class: 'toolbar' },
-    h('button', { class: 'btn primary', onclick: saveFeedback }, 'Проверить и сохранить'),
-    h('button', { class: 'btn', onclick: () => { state.view = f.back && f.back !== 'feedback' ? f.back : 'start'; state.fb = null; render(); } }, 'Вернуться')));
-  put(wrap, form);
+  if (f.found?.length) put(form, findingsNode(f.found, f.ok, (v) => { f.ok = v; }));
+  put(form, h('div', { class: 'toolbar' }, h('button', { class: 'btn primary', onclick: saveFeedback }, 'Проверить и сохранить')));
+  return form;
+}
 
-  const drafts = list.filter((e) => e.status !== 'exported');
+function findingsNode(found, ok, setOk) {
+  const block = found.some((x) => x.level === 'block');
+  return h('div', {}, h('div', { class: 'checks' },
+    h('div', { class: `item ${block ? 'error' : 'warning'}` }, h('strong', {}, block ? 'Не сохранено: ' : 'Проверьте: '),
+      block ? 'в тексте похоже на сведения уголовного дела или персональные данные. Замените их вымышленными или уберите.' : 'эти места похожи на сведения дела. Если это вымышленный пример или общие слова – подтвердите.'),
+    ...found.map((x) => h('div', { class: `item ${x.level === 'block' ? 'error' : 'warning'}` }, x.text ? `«${shortLabel(x.text, 60)}» – ` : '', x.why))),
+  block ? null : h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: ok ? true : null, onchange: (e) => setOk(e.target.checked) }),
+    ' Проверил: сведений уголовных дел и персональных данных в тексте нет'));
+}
+
+function journalPanel() {
+  const list = fbList();
+  const status = (e) => (FIXED_IN.has(e.id) ? `исправлено в ${FIXED_IN.get(e.id)}` : e.status === 'exported' ? `выгружено ${isoToRu(e.exported)}` : `черновик от ${isoToRu(e.created)}`);
   const rows = list.map((e, i) => h('tr', {},
     h('td', { class: 'num' }, `З-${i + 1}`),
     h('td', {}, h('div', {}, FEEDBACK_KINDS[e.kind]?.title ?? e.kind), h('div', { class: 'src' }, feedbackWhereText(e.where) || 'место не указано')),
     h('td', { class: 'small' }, shortLabel(Object.values(e.fields ?? {})[0] ?? '', 140)),
-    h('td', { class: 'small' }, e.status === 'exported' ? `выгружено ${isoToRu(e.exported)}` : `черновик от ${isoToRu(e.created)}`),
+    h('td', { class: 'small' }, FIXED_IN.has(e.id) ? h('span', { class: 'badge b-fill' }, status(e)) : status(e)),
     h('td', {}, (() => {
       const url = feedbackIssueUrl(FB_REPO, e, e.env ?? fbEnv());
       return url ? h('a', { class: 'btn small', href: url, target: '_blank', rel: 'noopener noreferrer', title: 'Открыть заготовку заявки на GitHub: заявка будет видна всем' }, 'Заявка на GitHub') : null;
     })(),
     h('button', { class: 'btn small', onclick: () => { if (confirm(`Удалить замечание З-${i + 1}?`)) { fbJournalSave(list.filter((x) => x !== e)); render(); } } }, 'Удалить'))));
-  put(wrap, h('div', { class: 'panel' },
-    h('h2', {}, `Журнал замечаний (${list.length}; не выгружено: ${drafts.length})`),
+  const done = list.filter((e) => e.status === 'exported' || FIXED_IN.has(e.id));
+  return h('div', { class: 'panel' },
+    h('h2', {}, `Журнал замечаний (${list.length}; не выгружено: ${list.filter((e) => e.status !== 'exported').length})`),
     list.length ? h('div', { class: 'table-wrap' }, h('table', { class: 'list' },
       h('thead', {}, h('tr', {}, h('th', {}, '№'), h('th', {}, 'Вид и место'), h('th', {}, 'Суть'), h('th', {}, 'Состояние'), h('th', {}, ''))), h('tbody', {}, ...rows)))
       : h('p', { class: 'muted' }, 'Замечаний пока нет.'),
-    h('div', { class: 'toolbar' },
-      h('button', { class: 'btn primary', disabled: !drafts.length, onclick: () => exportFeedback(drafts, 'file') }, `Сохранить файлом невыгруженные (${drafts.length})`),
-      h('button', { class: 'btn', disabled: !drafts.length, onclick: () => exportFeedback(drafts, 'copy') }, 'Копировать текстом'),
-      h('button', { class: 'btn', disabled: !list.length, onclick: () => exportFeedback(list, 'file') }, 'Сохранить файлом все'),
-      list.length > drafts.length ? h('button', { class: 'btn', onclick: () => { if (confirm('Удалить из журнала выгруженные замечания?')) { fbJournalSave(drafts); render(); } } }, 'Удалить выгруженные') : null)));
+    done.length ? h('div', { class: 'toolbar' }, h('button', { class: 'btn', onclick: () => { if (confirm('Удалить из журнала выгруженные и исправленные замечания?')) { fbJournalSave(list.filter((e) => !done.includes(e))); render(); } } }, 'Удалить выгруженные и исправленные')) : null);
+}
 
-  put(wrap, h('div', { class: 'panel' }, h('h2', {}, 'Как передать замечания'),
+function exportPanel() {
+  const notes = fbList().filter((e) => e.status !== 'exported').length;
+  const marks = rvMarks().filter((m) => m.status !== 'exported').length;
+  const any = notes + marks > 0;
+  return h('div', { class: 'panel' }, h('h2', {}, 'Выгрузка партии'),
+    h('p', { class: 'small' }, `Не выгружено: замечаний ${notes}, отметок ревизии правил ${marks}. Партия – одно письмо или один файл .md, без сведений дел.`),
+    h('div', { class: 'toolbar' },
+      BUILD.fb_to ? h('button', { class: 'btn primary', disabled: !any, title: 'Открыть письмо сопровождающему в почтовой программе; адрес подставится сам', onclick: () => exportBatch('mail') }, 'Отправить письмом') : null,
+      h('button', { class: `btn ${BUILD.fb_to ? '' : 'primary'}`, disabled: !any, onclick: () => exportBatch('file') }, 'Сохранить файлом'),
+      h('button', { class: 'btn', disabled: !any, onclick: () => exportBatch('copy') }, 'Копировать текстом'),
+      h('button', { class: 'btn', disabled: !fbList().length && !rvMarks().length, onclick: () => exportBatch('file', { all: true }) }, 'Файлом все, включая выгруженные')),
     h('ol', { class: 'small' },
-      h('li', {}, h('strong', {}, 'Файлом. '), 'Кнопка «Сохранить файлом» дает один файл .md на всю партию. Передайте его сопровождающему программы любым служебным способом. Файл читается как обычный текст.'),
-      h('li', {}, h('strong', {}, 'Текстом. '), '«Копировать текстом» – для письма или сообщения.'),
-      BUILD.feedback_email ? h('li', {}, h('strong', {}, 'Письмом. '), 'Адрес для замечаний: ', h('a', { href: `mailto:${BUILD.feedback_email}?subject=${encodeURIComponent('СтатКарта: замечания')}` }, BUILD.feedback_email), ' – приложите файл партии.') : null,
-      h('li', {}, h('strong', {}, 'Заявкой на GitHub. '), 'Кнопка у замечания открывает заготовку заявки в браузере (нужны сеть и учетная запись GitHub). Заявки на GitHub видны всем – еще раз проверьте текст перед отправкой.')),
-    h('p', { class: 'small muted' }, 'Что дальше: замечания разбираются партиями; исправления выходят новой версией, в журнале изменений указывается, что исправлено. Проверить наличие новой версии – кнопкой «Проверить обновления».')));
-  return wrap;
+      BUILD.fb_to ? h('li', {}, h('strong', {}, 'Письмом. '), 'Откроется письмо сопровождающему в вашей почтовой программе – адрес и тема подставятся сами, останется проверить текст и нажать «Отправить». Большая партия прикладывается файлом.') : null,
+      h('li', {}, h('strong', {}, 'Файлом. '), 'Один файл .md на всю партию – передайте его сопровождающему любым служебным способом. Файл читается как обычный текст.'),
+      h('li', {}, h('strong', {}, 'Текстом. '), 'Для письма или сообщения.'),
+      h('li', {}, h('strong', {}, 'Заявкой на GitHub. '), 'Кнопка у отдельного замечания открывает заготовку заявки в браузере (нужны сеть и учетная запись GitHub). Заявки на GitHub видны всем – еще раз проверьте текст перед отправкой.')),
+    h('p', { class: 'small muted' }, 'Что дальше: замечания разбираются партиями, исправления выходят новой версией. После обновления на вкладке «Что нового» у ваших исправленных замечаний появится отметка «исправлено».'));
+}
+
+// Ревизия правил (ответ В-74): каждое правило пакета отмечается «верно / неверно / уточнить»
+function reviewView() {
+  const rules = RULES_RV();
+  const marks = rvMarks();
+  const byRule = new Map(marks.map((m) => [m.rule, m]));
+  const rv = (state.rv ??= { group: 'events', form: '', only: true, q: '', limit: 40, edit: null, verdict: null, text: '', found: null, ok: false });
+  const cov = reviewCoverage(rules, marks);
+  const box = h('div');
+  put(box, h('div', { class: 'panel' }, h('h2', {}, `Ревизия правил, данные ${PACK.version}`),
+    h('p', { class: 'small' }, 'Правила программы составлены по источникам, но сплошной проверки не проходили (статус «draft»). Отметьте каждое: «Верно», «Неверно» или «Уточнить». Для «Неверно» и «Уточнить» укажите, что не так и на каком основании. Отметки копятся на этом компьютере и выгружаются вместе с замечаниями.'),
+    h('div', { class: 'table-wrap' }, h('table', { class: 'list' },
+      h('thead', {}, h('tr', {}, h('th', {}, 'Вид правил'), h('th', {}, 'Всего'), h('th', {}, 'Отмечено'), h('th', {}, 'Верно'), h('th', {}, 'Неверно'), h('th', {}, 'Уточнить'))),
+      h('tbody', {}, ...Object.entries(REVIEW_GROUPS).map(([g, title]) => {
+        const c = cov[g] ?? { total: 0, ok: 0, wrong: 0, unclear: 0 };
+        return h('tr', { class: rv.group === g ? 'sel' : '', onclick: () => { Object.assign(rv, { group: g, form: '', limit: 40, edit: null }); render(); } },
+          h('td', {}, title), h('td', {}, String(c.total)), h('td', {}, `${c.ok + c.wrong + c.unclear} (${c.total ? Math.round(((c.ok + c.wrong + c.unclear) / c.total) * 100) : 0} %)`),
+          h('td', {}, String(c.ok)), h('td', {}, String(c.wrong)), h('td', {}, String(c.unclear)));
+      }))))));
+  const inGroup = rules.filter((r) => r.group === rv.group);
+  const forms = [...new Set(inGroup.map((r) => r.form).filter(Boolean).flatMap((f) => f.split(', ')))].sort((a, b) => FORM_ORDER.indexOf(a) - FORM_ORDER.indexOf(b));
+  const q = rv.q.toLowerCase();
+  const shown = inGroup.filter((r) => (!rv.form || (r.form ?? '').split(', ').includes(rv.form)) && (!rv.only || !byRule.has(r.id))
+    && (!q || `${r.id} ${r.title} ${r.detail} ${r.source}`.toLowerCase().includes(q)));
+  const list = h('div', { class: 'panel' },
+    h('h2', {}, `${REVIEW_GROUPS[rv.group]}: показано ${Math.min(shown.length, rv.limit)} из ${shown.length}`),
+    h('div', { class: 'toolbar' },
+      forms.length ? h('select', { onchange: (e) => { rv.form = e.target.value; rv.limit = 40; render(); } }, h('option', { value: '' }, 'Все формы'),
+        ...forms.map((f) => h('option', { value: f, selected: rv.form === f ? true : null }, formTitleShort(IX, f)))) : null,
+      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: rv.only ? true : null, onchange: (e) => { rv.only = e.target.checked; rv.limit = 40; render(); } }), ' только неотмеченные'),
+      h('input', { type: 'text', class: 'search', placeholder: 'Слово или номер правила', value: rv.q, onchange: (e) => { rv.q = e.target.value; rv.limit = 40; render(); } })));
+  for (const r of shown.slice(0, rv.limit)) put(list, reviewCard(r, byRule.get(r.id)));
+  if (shown.length > rv.limit) put(list, h('button', { class: 'btn', onclick: () => { rv.limit += 40; rerender(); } }, `Показать еще (${shown.length - rv.limit})`));
+  if (!shown.length) put(list, h('p', { class: 'muted' }, rv.only ? 'Все правила этого вида отмечены.' : 'Правил не найдено.'));
+  put(box, list);
+  return box;
+}
+
+function reviewCard(r, m) {
+  const rv = state.rv;
+  const editing = rv.edit === r.id;
+  const mark = (verdict, comment = '') => {
+    rvSave([...rvMarks().filter((x) => x.rule !== r.id), createReviewMark({ rule: r.id, verdict, comment, today: todayIso(), data: PACK.version })]);
+    Object.assign(rv, { edit: null, text: '', found: null, ok: false });
+    rerender();
+  };
+  const el = h('div', { class: `card ${m ? (m.verdict === 'ok' ? 'answered' : 'unknown') : ''}` },
+    h('div', { class: 'q' }, r.title),
+    r.detail ? h('div', { class: 'why' }, r.detail) : null,
+    h('div', { class: 'src' }, `${r.source ? `Источник: ${r.source}. ` : 'Источник в правиле не указан. '}Правило ${r.id}`),
+    m ? h('div', { class: 'hint small' }, h('strong', {}, `Отмечено: ${REVIEW_VERDICTS[m.verdict]}`), ` ${isoToRu(m.date)}${m.data && m.data !== PACK.version ? ` (по данным ${m.data} – правило могло измениться)` : ''}${m.comment ? `. ${m.comment}` : ''}${m.status === 'exported' ? '; выгружено' : ''}`) : null);
+  if (editing) {
+    put(el, h('label', { class: 'fb-field' }, h('span', {}, rv.verdict === 'wrong' ? 'Что не так и как должно быть, основание' : 'Что уточнить'),
+      h('textarea', { rows: 2, 'data-fact': `rv.${r.id}`, oninput: (e) => { rv.text = e.target.value; rv.found = null; rv.ok = false; } }, rv.text)));
+    if (rv.found?.length) put(el, findingsNode(rv.found, rv.ok, (v) => { rv.ok = v; }));
+    put(el, h('div', { class: 'row' },
+      h('button', { class: 'btn small primary', onclick: () => {
+        rv.found = feedbackScan(rv.text, fbTokens());
+        if (rv.found.some((x) => x.level === 'block') || (rv.found.length && !rv.ok)) { rerender(); return; }
+        mark(rv.verdict, rv.text);
+      } }, 'Сохранить отметку'),
+      h('button', { class: 'btn small', onclick: () => { Object.assign(rv, { edit: null, text: '', found: null }); rerender(); } }, 'Отмена')));
+  } else {
+    put(el, h('div', { class: 'row' },
+      h('button', { class: 'btn small', onclick: () => mark('ok') }, 'Верно'),
+      h('button', { class: 'btn small', onclick: () => { Object.assign(rv, { edit: r.id, verdict: 'wrong', text: m?.comment ?? '', found: null, ok: false }); rerender(); } }, 'Неверно'),
+      h('button', { class: 'btn small', onclick: () => { Object.assign(rv, { edit: r.id, verdict: 'unclear', text: m?.comment ?? '', found: null, ok: false }); rerender(); } }, 'Уточнить'),
+      m ? h('button', { class: 'btn small', onclick: () => { rvSave(rvMarks().filter((x) => x.rule !== r.id)); rerender(); } }, 'Снять отметку') : null));
+  }
+  return el;
+}
+
+// «Что нового» (ответ В-75): изменения последних версий и отметка исправленных замечаний пользователя
+function newsView() {
+  const mine = fbList();
+  const box = h('div', { class: 'panel' }, h('h2', {}, `Что нового: версия ${BUILD.app ?? '–'}, данные ${PACK.version}`));
+  if (!NEWS.length) put(box, h('p', { class: 'muted' }, 'Журнал изменений в эту сборку не входит.'));
+  for (const n of NEWS) {
+    const fixed = mine.map((e, i) => (n.fixed.includes(e.id) ? `З-${i + 1}` : null)).filter(Boolean);
+    put(box, h('h3', { class: 'group' }, n.heading), fixed.length ? h('div', { class: 'notice' }, `Исправлены ваши замечания: ${fixed.join(', ')}.`) : null, ...mdToNodes(n.body));
+  }
+  return box;
+}
+
+function newsBanner() {
+  if (!state.newsBanner) return null;
+  const close = () => { kvSave(SEEN_KEY, BUILD.app ?? ''); state.newsBanner = false; render(); };
+  const fixed = fbList().filter((e) => FIXED_IN.get(e.id) === BUILD.app).length;
+  return h('div', { class: 'notice' }, h('strong', {}, `Программа обновлена до версии ${BUILD.app}. `), fixed ? `Исправлено ваших замечаний: ${fixed}. ` : '',
+    h('button', { class: 'btn small primary', onclick: () => { openFeedback(currentWhere(), 'news'); close(); } }, 'Что нового'), ' ',
+    h('button', { class: 'btn small', onclick: close }, 'Закрыть'));
+}
+
+function newsCheck() {
+  if (!BUILD.app) return;
+  const seen = kvLoad(SEEN_KEY, null);
+  if (seen === null) kvSave(SEEN_KEY, BUILD.app);
+  else if (seen !== BUILD.app) state.newsBanner = true;
 }
 
 // ---------- Нормативная база ----------
@@ -2209,6 +2354,7 @@ async function boot() {
   // PWA: сервис-воркер хранит приложение для работы без сети (только в сборке для GitHub Pages)
   if (BUILD.kind === 'web' && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   await refreshSaved();
+  newsCheck();
   const hash = location.hash.replace('#', '');
   if (hash.startsWith('demo')) {
     state.profile = { organ_name: 'Следственный отдел (пример)', organ_code: '02', unit_code: '[код подразделения]', prosecutor_code: '[код прокуратуры]',

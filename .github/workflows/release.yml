@@ -22,10 +22,12 @@ jobs:
           npm test
       - name: Сборка
         run: node scripts/build-app.mjs
+        env:
+          STATKARTA_FEEDBACK_TO: ${{ secrets.FEEDBACK_TO }}
       - name: Выпуск
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "$GITHUB_REF_NAME" dist/statkarta-offline.html \
             --title "СтатКарта $GITHUB_REF_NAME" \
-            --notes "Однофайловая сборка: скачайте statkarta-offline.html и откройте двойным щелчком. Изменения – docs/CHANGELOG.md."
+            --notes "Однофайловая сборка: скачайте statkarta-offline.html и откройте двойным щелчком. Сведения дел и профиль хранятся только на вашем компьютере и никуда не передаются. Изменения – docs/CHANGELOG.md."

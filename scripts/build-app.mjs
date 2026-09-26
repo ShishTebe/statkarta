@@ -9,6 +9,7 @@ import { ROOT, readJson } from './lib-data.mjs';
 import { loadPack } from './load-pack.mjs';
 import { loadBlanks } from './load-blanks.mjs';
 import { coreBundle, bundleSource } from './bundle.mjs';
+import { feedbackAddrEncode, changelogNews } from '../src/core/feedback.mjs';
 
 // Адрес публикации (ответ В-48): отсюда проверяются обновления (FR-21) по кнопке пользователя
 export const PAGES_URL = 'https://shishtebe.github.io/statkarta/';
@@ -21,7 +22,14 @@ const web = process.argv.includes('--web');
 const kind = web ? 'web' : withPrivate ? 'local' : 'offline';
 const pkg = readJson('package.json');
 const pack = loadPack({ withPrivate });
-const build = { app: pkg.version, data: pack.version, kind, built: new Date().toISOString().slice(0, 10), pages: PAGES_URL, releases: RELEASES_URL, repo: REPO_URL };
+// Адрес для писем с замечаниями (ответ В-71): не хранится в репозитории – берется из секрета сборки
+// STATKARTA_FEEDBACK_TO (GitHub Actions) или из локального файла data-private/feedback-to.txt; в файле – закодированным
+const feedbackTo = (process.env.STATKARTA_FEEDBACK_TO ?? (fs.existsSync(path.join(ROOT, 'data-private/feedback-to.txt'))
+  ? fs.readFileSync(path.join(ROOT, 'data-private/feedback-to.txt'), 'utf8') : '')).trim();
+const build = { app: pkg.version, data: pack.version, kind, built: new Date().toISOString().slice(0, 10), pages: PAGES_URL, releases: RELEASES_URL, repo: REPO_URL,
+  ...(feedbackTo ? { fb_to: feedbackAddrEncode(feedbackTo) } : {}),
+  // «Что нового» (ответ В-75): последние разделы журнала изменений и номера исправленных замечаний
+  news: changelogNews(fs.readFileSync(path.join(ROOT, 'docs/CHANGELOG.md'), 'utf8')) };
 const pagesOrigin = new URL(PAGES_URL).origin;
 const CSP = {
   // однофайловая: ни одного внешнего адреса, кроме проверки обновлений по кнопке
@@ -69,7 +77,7 @@ if (web) {
 if (web) fs.writeFileSync(path.join(outDir, 'version.json'), `${JSON.stringify({ app: build.app, data: build.data, built: build.built }, null, 1)}\n`);
 
 const mb = (fs.statSync(out).size / 1024 / 1024).toFixed(2);
-console.log(`собрано: ${path.relative(ROOT, out)}, ${mb} МБ`);
+console.log(`собрано: ${path.relative(ROOT, out)}, ${mb} МБ; письма с замечаниями: ${feedbackTo ? 'адрес задан' : 'адрес не задан'}`);
 // Предел 8 МБ (NFR-06) относится к публикуемым сборкам; в локальной добавлен справочник № 17
 const limit = withPrivate ? 12 : 8;
 if (fs.statSync(out).size > limit * 1024 * 1024) { console.error(`превышен предел ${limit} МБ (NFR-06)`); process.exit(1); }

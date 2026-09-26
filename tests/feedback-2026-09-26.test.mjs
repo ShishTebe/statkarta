@@ -77,7 +77,7 @@ test('партия файлом: читаемый текст по канону �
   const f = path.join(dir, 'partiya.md');
   fs.writeFileSync(f, md);
   const out = execFileSync('node', ['scripts/feedback/intake.mjs', f], { encoding: 'utf8' });
-  assert.match(out, /Всего: 2; остановлено проверкой: 0/);
+  assert.match(out, /Замечаний: 2; отметок ревизии: 0; остановлено проверкой: 0/);
   fs.writeFileSync(f, md.replace('Нет кода', 'Дело 12300000000000000'));
   assert.throws(() => execFileSync('node', ['scripts/feedback/intake.mjs', f], { encoding: 'utf8', stdio: 'pipe' }), 'сведения дела останавливают прием');
   fs.rmSync(dir, { recursive: true, force: true });
