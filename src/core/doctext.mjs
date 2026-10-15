@@ -134,7 +134,7 @@ function pdfObjects(u8) {
 }
 
 // Таблица ToUnicode (bfchar, bfrange) – коды символов шрифта в буквы
-function parseToUnicode(cmap) {
+export function parseToUnicode(cmap) {
   const map = new Map();
   const hex = (h) => String.fromCharCode(...(h.match(/.{4}/g) ?? []).map((x) => parseInt(x, 16)));
   for (const block of cmap.match(/beginbfchar([\s\S]*?)endbfchar/g) ?? []) {

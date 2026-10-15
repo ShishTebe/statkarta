@@ -2037,24 +2037,29 @@
       "type": "text"
      },
      {
-      "label": "погибших",
-      "type": "number"
+      "label": "Из них погибших (30.2)",
+      "type": "number",
+      "label_status": "verified"
      },
      {
-      "label": "погибших  , здоровью которых причинен тяжкий вред",
-      "type": "number"
+      "label": "Из них здоровью которых причинен тяжкий вред (30.3)",
+      "type": "number",
+      "label_status": "verified"
      },
      {
-      "label": "в том числе н/л",
-      "type": "number"
+      "label": "В том числе несовершеннолетних (30.4)",
+      "type": "number",
+      "label_status": "verified"
      },
      {
-      "label": "в том числе женщин",
-      "type": "number"
+      "label": "В том числе женщин (30.7)",
+      "type": "number",
+      "label_status": "verified"
      },
      {
-      "label": "в том числе н/л женского пола",
-      "type": "number"
+      "label": "В том числе несовершеннолетних женского пола (30.10)",
+      "type": "number",
+      "label_status": "verified"
      }
     ]
    }

@@ -18,10 +18,19 @@ export function loadBlanks() {
     const layout = JSON.parse(fs.readFileSync(path.join(layoutDir, name), 'utf8'));
     layouts[layout.form] = layout;
   }
+  // координаты мест бланка на странице PDF – для чтения заполненной карточки из PDF (16.10.2026)
+  const pdf = {};
+  const pdfDir = path.join(layoutDir, 'pdf');
+  if (fs.existsSync(pdfDir)) {
+    for (const name of fs.readdirSync(pdfDir).filter((f) => f.endsWith('.json'))) {
+      const pos = JSON.parse(fs.readFileSync(path.join(pdfDir, name), 'utf8'));
+      if (layouts[pos.form]?.blank_sha256 === pos.blank_sha256) pdf[pos.form] = pos;
+    }
+  }
   const files = {};
   for (const b of manifest.blanks) {
     if (!layouts[b.form]) continue;
     files[b.file] = fs.readFileSync(path.join(dir, b.file)).toString('base64');
   }
-  return { version: manifest.version, built: manifest.built, blanks: manifest.blanks, layouts, files };
+  return { version: manifest.version, built: manifest.built, blanks: manifest.blanks, layouts, files, pdf };
 }

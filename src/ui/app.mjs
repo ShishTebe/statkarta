@@ -28,6 +28,7 @@ const state = {
   region: null, regionMissing: null, regionNote: null, rw: null, rwOpen: false, // пакет региона (документ 24)
   fb: null, fbList: null, fbTab: 'note', rv: null, rvMarks: null, newsBanner: false, // замечания, ревизия правил, «Что нового» (без сведений дела)
   doc: null, // разбор постановления: только в памяти вкладки, в файл дела не сохраняется
+  cardImp: null, // карточка, по которой заполняется новая (16.10.2026): только в памяти вкладки
 };
 // Открытые дела сеанса: state.cases – все дела в памяти вкладки, state.kase – текущее (дело быстрого режима в список не входит)
 
@@ -227,6 +228,7 @@ function activate(c, { tab = null } = {}) {
   state.evId = c.events.at(-1)?.id ?? null;
   state.cardKey = null; state.qCard = null; state.qFocus = null; state.qChecked = null; state.editReq = null;
   state.addEv = null; state.addCard = null; state.doc = null; state.pendingImport = null;
+  if (state.cardImp?.where !== 'start') state.cardImp = null;
   state.tab = tab ?? (state.evId ? 'event' : 'objects');
   state.password = state.passwords.get(c.id) ?? null;
   state.dirty = state.dirtyIds.has(c.id);
@@ -279,7 +281,8 @@ function startView() {
   const start = h('div', { class: 'panel' }, h('h2', {}, 'Начало работы'),
     h('div', { class: 'row toolbar start-big' },
       h('button', { class: 'btn primary', onclick: startQuick }, 'Быстрый режим: одна карточка'),
-      h('button', { class: `btn ${state.startChoice ? '' : 'primary'}`, 'aria-expanded': String(state.startChoice), onclick: () => { state.startChoice = !state.startChoice; render(); } }, 'Создать дело')));
+      h('button', { class: `btn ${state.startChoice ? '' : 'primary'}`, 'aria-expanded': String(state.startChoice), onclick: () => { state.startChoice = !state.startChoice; render(); } }, 'Создать дело'),
+      h('button', { class: 'btn', title: 'Новая карточка по заполненной карточке (Word или PDF): новый эпизод, новое лицо, другое дело', onclick: () => loadCardFile('start') }, 'По другой карточке')));
   if (state.startChoice) {
     put(start, h('div', { class: 'card' }, h('div', { class: 'q' }, 'Как заполнить данные дела?'),
       h('div', { class: 'row' },
@@ -288,8 +291,9 @@ function startView() {
         h('button', { class: 'btn small', onclick: () => { state.startChoice = false; render(); } }, 'Отмена')),
       h('p', { class: 'small muted' }, 'Вручную – эпизоды, лица и события вносятся в деле. Из файла – постановление (.docx, .txt, .rtf, .pdf с текстовым слоем): программа найдет в нем номер дела, даты, КРСП, квалификацию и лиц, вы подтвердите. Тот же выбор принимает сохраненный файл дела (.statkarta). Документ можно загрузить и позже – на вкладке «Документ дела».')));
   }
-  put(start, h('p', { class: 'small muted' }, 'Быстрый режим – одна карточка без дела: выбрать форму, заполнить реквизиты в порядке бланка, проверить, распечатать или скачать бланк; дело не заводится и не сохраняется. Дело – объекты учета, события и пакеты карточек по ним, с сохранением под паролем.'));
+  put(start, h('p', { class: 'small muted' }, 'Быстрый режим – одна карточка без дела: выбрать форму, заполнить реквизиты в порядке бланка, проверить, распечатать или скачать бланк; дело не заводится и не сохраняется. Дело – объекты учета, события и пакеты карточек по ним, с сохранением под паролем. По другой карточке – реквизиты берутся из уже заполненной карточки (Word или PDF), в том числе другого дела.'));
   put(wrap, start);
+  if (state.cardImp?.where === 'start') put(wrap, cardImportView('start'));
   if (state.pendingImport) {
     put(wrap, h('div', { class: 'panel' }, h('h2', {}, 'Открыть файл дела'),
       h('p', { class: 'small' }, 'Файл зашифрован: введите пароль, которым он был выгружен.'),
@@ -368,6 +372,12 @@ async function importCaseFile() {
     render();
     return;
   }
+  // заполненная карточка: реквизиты берутся в новую карточку (16.10.2026)
+  if (looksLikeCardFile(f.name) && await tryReadCard(f, 'start', { quiet: true })) {
+    state.cardImp.target.mode = 'case';
+    render();
+    return;
+  }
   // документ дела: новое дело и разбор документа на вкладке «Документ дела»
   if (!newCase()) return;
   state.tab = 'document';
@@ -423,6 +433,7 @@ function quickView() {
       h('button', { class: 'btn', title: 'Карточка и сведения станут делом: его можно сохранить под паролем', onclick: quickToCase }, 'Перенести в дело'),
       h('button', { class: 'btn', onclick: () => { if (leaveQuick()) { state.view = 'start'; render(); } } }, 'Завершить'))));
   put(box, h('details', { class: 'notes quick-doc', open: state.doc ? true : null }, h('summary', {}, 'Подставить сведения из документа (постановление о ВУД и др.)'), documentView({ quick: true })));
+  put(box, h('details', { class: 'notes quick-doc', open: state.cardImp?.where === 'quick' ? true : null }, h('summary', {}, 'Подставить сведения из другой карточки (Word или PDF)'), cardImportView('quick')));
   state.qCard = k.key;
   put(box, packageQuestionsView({ quick: true }));
   return box;
@@ -534,6 +545,8 @@ function parseDocText(name, text) {
 async function loadDocFile() {
   const f = await pickFileBytes('.docx,.txt,.rtf,.pdf,.doc');
   if (!f) return;
+  // карточка вместо документа – заполнение по другой карточке
+  if (looksLikeCardFile(f.name) && await tryReadCard(f, C()?.quick ? 'quick' : 'case', { quiet: true })) return;
   try {
     const { text } = await fileText(f.name, f.bytes);
     parseDocText(f.name, text);
@@ -568,6 +581,7 @@ function factOptionLabel(fid, value) {
 
 function documentView({ quick = false } = {}) {
   const box = h('div');
+  if (!quick) put(box, cardImportView('case'));
   const doc = state.doc;
   const pasteId = 'doc-paste';
   const knownDocs = PACK.documents.filter((d) => d.event).map((d) => d.title.replace(/^Постановление /, 'постановление ')).join('; ');
@@ -697,6 +711,186 @@ function shortText(v) {
 function syncAll() {
   for (const ev of C().events) if (ev.type !== MANUAL_EVENT) syncPackage(IX, C(), ev);
   touch();
+}
+
+// ---------- Заполнение по другой карточке (замечание от 16.10.2026) ----------
+// Заполненная карточка (Word или PDF из Word) читается по карте раскладки бланка; ее реквизиты
+// становятся сведениями новой карточки: новый эпизод, новое лицо по тому же преступлению,
+// карточка другого дела. Файл карточки в деле не сохраняется.
+
+let CARD_BLANKS = null;
+async function cardBlanks() {
+  if (CARD_BLANKS) return CARD_BLANKS;
+  const out = [];
+  for (const [form, layout] of Object.entries(BLANKS?.layouts ?? {})) {
+    if (layout.kind === 'xlsx' || !BLANKS.files[layout.blank]) continue;
+    const doc = readZip(base64Bytes(BLANKS.files[layout.blank])).find((e) => e.name === 'word/document.xml');
+    if (doc) out.push({ form, layout, xml: await entryText(doc) });
+  }
+  CARD_BLANKS = out;
+  return out;
+}
+
+const looksLikeCardFile = (name) => /\.(docx|pdf)$/i.test(name);
+
+// Прочитать файл как карточку; null – это не карточка (тогда файл разбирается как документ дела)
+async function tryReadCard(f, where, { quiet = false } = {}) {
+  if (!BLANKS) {
+    if (!quiet) { state.cardImp = { name: f.name, error: 'В эту сборку пакет бланков не входит: карточку прочитать нельзя.', where }; render(); }
+    return quiet ? null : false;
+  }
+  try {
+    const res = await readCardFile(IX, f.name, f.bytes, { blanks: await cardBlanks(), pdfPositions: BLANKS.pdf ?? {} });
+    const c = where === 'case' ? C() : null;
+    state.cardImp = { name: f.name, res, where, error: null, conflicts: null,
+      dec: cardImportDefaults(res, { sameCase: true }),
+      target: { mode: 'quick', form: res.form, variant: '', crime: c ? 'new' : 'crime.1', person: '', event: 'manual' } };
+    render();
+    return true;
+  } catch (e) {
+    if (quiet) return null;
+    state.cardImp = { name: f.name, error: e.message, where };
+    render();
+    return false;
+  }
+}
+
+async function loadCardFile(where) {
+  const f = await pickFileBytes('.docx,.pdf,.doc');
+  if (!f) return;
+  await tryReadCard(f, where);
+}
+
+function cardImportView(where) {
+  const ci = state.cardImp;
+  const box = h('div', { class: 'panel card-import' }, h('h2', {}, 'Заполнить по другой карточке'),
+    h('p', { class: 'small muted' }, 'Загрузите заполненную карточку – файл Word (.docx) или PDF, сохраненный из Word, на бланке ИЦ редакции 2026. Программа прочитает коды, даты, номер дела, квалификацию и фабулу по клеткам бланка, вы отметите, что взять в новую карточку: для нового эпизода, нового лица по тому же преступлению или для карточки другого дела. Файл никуда не передается и в деле не сохраняется.'),
+    h('div', { class: 'row toolbar' },
+      h('button', { class: 'btn primary', onclick: () => loadCardFile(where) }, ci?.res ? 'Загрузить другую карточку' : 'Загрузить карточку'),
+      ci ? h('button', { class: 'btn', onclick: () => { state.cardImp = null; render(); } }, 'Закрыть') : null));
+  if (!ci || ci.where !== where) return box;
+  if (ci.error) { put(box, h('div', { class: 'notice' }, `${ci.name}: ${ci.error}`)); return box; }
+  const { res, dec, target: t } = ci;
+  const c = where === 'case' ? C() : null;
+  const pdfNote = res.kind === 'pdf' ? ` PDF сверен с бланком по номерам реквизитов: ${res.match.found} из ${res.match.anchors}.` : '';
+  put(box, h('p', { class: 'small' }, `Файл: ${ci.name} – ${formLabel(res.form)}. Прочитано реквизитов: ${res.rows.length}.${pdfNote}`));
+  const relabel = (same) => {
+    ci.dec = cardImportDefaults(res, { sameCase: same });
+    ci.conflicts = null;
+    render();
+  };
+  put(box, h('div', { class: 'opts' },
+    h('label', {}, h('input', { type: 'radio', name: 'ci-same', checked: dec.sameCase, onchange: () => relabel(true) }), ' Карточка этого же уголовного дела (новый эпизод, новое лицо)'),
+    h('label', {}, h('input', { type: 'radio', name: 'ci-same', checked: !dec.sameCase, onchange: () => relabel(false) }), ' Карточка другого дела: номер дела, КРСП и дата возбуждения не переносятся')));
+  const groups = new Map();
+  for (const r of res.rows) {
+    const g = r.skip ? 'skip' : r.scope;
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g).push(r);
+  }
+  const order = ['case', 'crime', 'person', 'victim', 'card', 'skip'];
+  for (const g of order.filter((x) => groups.has(x))) {
+    const list = groups.get(g);
+    const title = g === 'skip' ? 'Не переносятся' : CARD_IMPORT_SCOPES[g] ?? g;
+    const toggle = (on) => { for (const r of list) dec.rows[r.id].accept = on; ci.conflicts = null; render(); };
+    const rows = list.map((r) => h('tr', {},
+      h('td', {}, r.skip ? h('span', { class: 'muted small' }, '–')
+        : h('input', { type: 'checkbox', checked: dec.rows[r.id].accept, 'aria-label': `Перенести реквизит ${r.number}`, onchange: (e) => { dec.rows[r.id].accept = e.target.checked; ci.conflicts = null; } })),
+      h('td', {}, `р. ${r.number}`),
+      h('td', {}, shortLabel(r.label, 70)),
+      h('td', {}, r.display || r.raw.join(' ')),
+      h('td', { class: 'small' }, r.skip ? h('span', { class: 'muted' }, r.skip) : null, r.notes.length ? h('span', { class: 'err' }, r.notes.join('; ')) : null,
+        r.hints.length ? h('span', { class: 'muted' }, r.hints.join('; ')) : null)));
+    put(box, h('h3', {}, title, g === 'skip' ? null : h('span', { class: 'row', style: 'display:inline-flex;margin-left:.6rem' },
+      h('button', { class: 'btn small', onclick: () => toggle(true) }, 'Отметить все'),
+      h('button', { class: 'btn small', onclick: () => toggle(false) }, 'Снять все'))),
+    h('div', { class: 'table-wrap' }, h('table', { class: 'memo doc-found' },
+      h('thead', {}, h('tr', {}, h('th', {}, 'Взять'), h('th', {}, 'Реквизит'), h('th', {}, 'Наименование'), h('th', {}, 'Прочитано'), h('th', {}, 'Примечание'))),
+      h('tbody', {}, ...rows))));
+  }
+  // куда: новая карточка без дела, новое дело или открытое дело; в быстром режиме – его карточка
+  const tgt = h('div', { class: 'card' }, h('div', { class: 'q' }, where === 'quick' ? 'Сведения подставляются в карточку быстрого режима' : 'Какую карточку готовить'));
+  if (where === 'quick') {
+    const k = activeCards(curEvent())[0];
+    t.form = k.form;
+    t.variant = k.variant ?? '';
+  }
+  const formSelect = h('select', { onchange: (e) => { t.form = e.target.value; t.variant = ''; render(); } },
+    ...PACK.forms.filter((x) => x.form !== '3' || t.mode !== 'case').map((x) => h('option', { value: x.form, selected: t.form === x.form }, formLabel(x.form))));
+  const variants = IX.forms.get(t.form)?.variants ?? [];
+  if (where !== 'quick') put(tgt, h('div', { class: 'row' }, h('label', { class: 'small' }, 'Форма новой карточки ', formSelect),
+    variants.length ? h('label', { class: 'small' }, ' вариант ', h('select', { onchange: (e) => { t.variant = e.target.value; render(); } }, h('option', { value: '' }, 'выберите'),
+      ...variants.map((v) => h('option', { value: v.id, selected: t.variant === v.id }, v.title)))) : null));
+  if (t.form !== res.form) put(tgt, h('div', { class: 'hint small' }, `Новая карточка другой формы: переносятся сведения дела, эпизода и лица; реквизиты, свои у ${formTitleShort(IX, res.form)} (раздел «Реквизиты карточки»), в нее не входят.`));
+  if (where === 'start') {
+    put(tgt, h('div', { class: 'opts' },
+      h('label', {}, h('input', { type: 'radio', name: 'ci-mode', checked: t.mode === 'quick', onchange: () => { t.mode = 'quick'; render(); } }), ' Одна карточка без дела (быстрый режим)'),
+      h('label', {}, h('input', { type: 'radio', name: 'ci-mode', checked: t.mode === 'case', onchange: () => { t.mode = 'case'; render(); } }), ' Новое дело с этой карточкой (можно сохранить под паролем)')));
+  } else if (where === 'case') {
+    put(tgt, h('div', { class: 'row', style: 'margin-top:.4rem' },
+      h('label', { class: 'small' }, 'Эпизод ', h('select', { onchange: (e) => { t.crime = e.target.value; ci.conflicts = null; render(); } },
+        h('option', { value: 'new', selected: t.crime === 'new' }, 'новый эпизод'),
+        ...c.crimes.map((x) => h('option', { value: x.id, selected: t.crime === x.id }, objectTitle(c, x.id))))),
+      h('label', { class: 'small' }, ' Лицо ', h('select', { onchange: (e) => { t.person = e.target.value; render(); } },
+        h('option', { value: '', selected: !t.person }, 'без лица'),
+        h('option', { value: 'new', selected: t.person === 'new' }, 'новое лицо'),
+        ...c.persons.map((x) => h('option', { value: x.id, selected: t.person === x.id }, objectTitle(c, x.id))))),
+      h('label', { class: 'small' }, ' Событие ', h('select', { onchange: (e) => { t.event = e.target.value; render(); } },
+        h('option', { value: 'manual', selected: t.event === 'manual' }, 'одна карточка (без события)'),
+        ...c.events.map((x) => h('option', { value: x.id, selected: t.event === x.id }, `${eventTitle(x.type)}, ${isoToRu(x.date)}`))))),
+    h('p', { class: 'small muted' }, 'Сведения дела и эпизода, уже внесенные в дело, не затираются: расхождения программа покажет перед переносом.'));
+  }
+  put(box, tgt);
+  if (ci.conflicts?.length) {
+    put(box, h('div', { class: 'card' }, h('div', { class: 'q' }, 'Эти сведения уже внесены в деле и отличаются'),
+      ...ci.conflicts.map((cf) => h('div', { class: 'small' }, `р. ${cf.number} ${shortLabel(cf.label, 60)}: в деле «${shortText(cf.was)}», в карточке «${shortText(cf.now)}»`)),
+      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: dec.replace, onchange: (e) => { dec.replace = e.target.checked; } }), ' заменить значениями из карточки'),
+      h('p', { class: 'small muted' }, 'Без отметки остаются значения, внесенные в деле.')));
+  }
+  const needVariant = where !== 'quick' && variants.length > 0 && !t.variant;
+  put(box, h('div', { class: 'row toolbar' },
+    h('button', { class: 'btn primary', disabled: needVariant, onclick: applyCardImp }, ci.conflicts?.length ? 'Заполнить с выбранным' : 'Заполнить новую карточку'),
+    h('span', { class: 'muted small' }, 'Затем ответьте на оставшиеся вопросы опросника: реквизиты, взятые из карточки, отмечены как ответы и их можно исправить.')));
+  return box;
+}
+
+function applyCardImp() {
+  const ci = state.cardImp;
+  const { res, dec, target: t } = ci;
+  const variant = t.variant || null;
+  let c;
+  let target;
+  // объекты карточки по кратности формы: ф. 2 – на лицо, ф. 5 – на потерпевшего и т. д.
+  const of = QUICK_OF[variant ? `${t.form}:${variant}` : t.form] ?? [];
+  if (ci.where === 'quick' || (ci.where === 'start' && t.mode === 'quick')) {
+    if (ci.where === 'start') startQuickCard(t.form, variant);
+    c = C();
+    target = { form: t.form, variant, crime: 'crime.1', person: 'person.1', victim: 'victim.1', event: curEvent().id };
+  } else if (ci.where === 'start') {
+    if (!newCase()) return;
+    c = C();
+    target = { form: t.form, variant, crime: c.crimes[0].id, person: of.includes('person') ? 'new' : null, victim: of.includes('victim') ? 'new' : null, event: 'manual', of };
+  } else {
+    c = C();
+    target = { form: t.form, variant, crime: t.crime, person: t.person || (of.includes('person') ? 'new' : null), victim: of.includes('victim') ? 'new' : null, event: t.event, of };
+    if (ci.conflicts === null) {
+      ci.conflicts = cardImportConflicts(IX, c, res, dec, { crime: t.crime });
+      if (ci.conflicts.length) { render(); return; }
+    }
+  }
+  const log = applyCardImport(IX, c, res, dec, target, state.profile);
+  const ev = getEvent(c, log.event);
+  if (ev && ev.type !== MANUAL_EVENT) syncPackage(IX, c, ev);
+  touch();
+  state.cardImp = null;
+  state.evId = log.event;
+  state.qCard = log.card;
+  if (!c.quick) state.tab = 'questions';
+  state.notices.push(`Заполнено по карточке ${ci.name}: сведений дела и эпизода – ${log.set.length}, реквизитов карточки – ${log.cardFacts}`
+    + `${log.kept.length ? `; оставлено как было в деле – ${log.kept.length}` : ''}${log.skipped.length ? `; не перенесены (свои у формы ${formTitleShort(IX, res.form)}) – р. ${[...new Set(log.skipped)].join(', ')}` : ''}.`
+    + ' Проверьте реквизиты и ответьте на оставшиеся вопросы.');
+  render();
+  scrollTo(0, 0);
 }
 
 // ---------- Объекты дела ----------

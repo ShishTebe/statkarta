@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
- "data_version": "2026.3.7-draft",
+ "data_version": "2026.3.8-draft",
  "edition": "2026",
  "effective_from": "2026-01-01",
- "generated": "2026-09-26",
+ "generated": "2026-10-15",
  "changelog": "docs/CHANGELOG.md",
  "status": "draft – требует предметной приемки",
  "files": [
@@ -149,8 +149,8 @@
   },
   {
    "path": "data/forms/2026/forma-1.json",
-   "sha256": "8e4a6a941935a97d2a813204547fbeb20c3e53b3ee7a32939b00a1b01e7cda3d",
-   "bytes": 99763,
+   "sha256": "497c6a7abe106555a7321a9a0a2d35f024b3537df9bdaec9af4e366977a3cecd",
+   "bytes": 100035,
    "schema": "form",
    "public": true
   },
@@ -226,8 +226,8 @@
   },
   {
    "path": "data/layout/2026/forma-1.json",
-   "sha256": "7e6fc715fee54f607c209d08c292841e960c66fb2a3ff67a63feab0d59698e4a",
-   "bytes": 31925,
+   "sha256": "3602221f99a85173aa084ce55edf63fac75e610a5c75b9d86deff17ea204ae12",
+   "bytes": 33118,
    "schema": null,
    "public": true
   },
@@ -284,6 +284,55 @@
    "path": "data/layout/2026/forma-ipk.json",
    "sha256": "75ccd08f7fc838a5509dc6d9384ce3c81a77f70f90bc6671fd81e56bafb33344",
    "bytes": 24771,
+   "schema": null,
+   "public": true
+  },
+  {
+   "path": "data/layout/2026/pdf/forma-1-1.json",
+   "sha256": "b1a87b5a28330b15cc9bf69a35cf57960e00e426de48d71c3526f1218f9fe0e4",
+   "bytes": 10315,
+   "schema": null,
+   "public": true
+  },
+  {
+   "path": "data/layout/2026/pdf/forma-1.json",
+   "sha256": "614cbbaf581fa22a5edce590daae1d3ea35efe5b99b4a6677b000360ad3cdc56",
+   "bytes": 16855,
+   "schema": null,
+   "public": true
+  },
+  {
+   "path": "data/layout/2026/pdf/forma-2-1.json",
+   "sha256": "0a5b7970bcf02f3c734d57e891912e4b35b02ac505c34ae87fde901f3af72209",
+   "bytes": 4848,
+   "schema": null,
+   "public": true
+  },
+  {
+   "path": "data/layout/2026/pdf/forma-2.json",
+   "sha256": "d61dcb6ed7363213e62cb412be1d9a512aed508786304984c73698378a2d269d",
+   "bytes": 9996,
+   "schema": null,
+   "public": true
+  },
+  {
+   "path": "data/layout/2026/pdf/forma-4.json",
+   "sha256": "b48296111a4cba0db365217ba5a3d4b2f79759c509a71b51039689c7f0aad1e8",
+   "bytes": 25097,
+   "schema": null,
+   "public": true
+  },
+  {
+   "path": "data/layout/2026/pdf/forma-5.json",
+   "sha256": "6d651933e42b3ac2847ff7d6491b948ba28aa05e82877c45e88427fdd18d468f",
+   "bytes": 6054,
+   "schema": null,
+   "public": true
+  },
+  {
+   "path": "data/layout/2026/pdf/forma-6.json",
+   "sha256": "6b97431433a7d7a8def86f9c50a21f9acddc51ec374a83fbd6ce2ef159b15f7a",
+   "bytes": 8633,
    "schema": null,
    "public": true
   },
