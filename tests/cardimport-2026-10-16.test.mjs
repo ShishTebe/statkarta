@@ -13,7 +13,7 @@ import { ROOT } from '../scripts/lib-data.mjs';
 const core = await importCore();
 const pack = loadPack();
 const ix = core.indexPack(core.regionalPack(pack, pack.region_packs['30']));
-const FILE = { '1': 'forma-1', '1.1': 'forma-1-1', '2': 'forma-2', '2.1': 'forma-2-1', '4': 'forma-4', '5': 'forma-5', '6': 'forma-6', ipk: 'forma-ipk', 'ipk-in': 'forma-ipk-in' };
+const FILE = { '3': 'forma-3', '1': 'forma-1', '1.1': 'forma-1-1', '2': 'forma-2', '2.1': 'forma-2-1', '4': 'forma-4', '5': 'forma-5', '6': 'forma-6', ipk: 'forma-ipk', 'ipk-in': 'forma-ipk-in' };
 const layoutOf = (form) => JSON.parse(fs.readFileSync(path.join(ROOT, `data/layout/2026/${FILE[form]}.json`), 'utf8'));
 const pdfPosOf = (form) => JSON.parse(fs.readFileSync(path.join(ROOT, `data/layout/2026/pdf/${FILE[form]}.json`), 'utf8'));
 const blankBytes = (file) => new Uint8Array(fs.readFileSync(path.join(ROOT, 'data/blanks/2026', file)));
@@ -23,8 +23,10 @@ const FABULA = 'Неустановленное лицо 20.02.2026 около 14
 const BLANKS = [];
 for (const form of Object.keys(FILE)) {
   const layout = layoutOf(form);
-  const doc = core.readZip(blankBytes(layout.blank)).find((e) => e.name === 'word/document.xml');
-  BLANKS.push({ form, layout, xml: await core.entryText(doc) });
+  const entries = core.readZip(blankBytes(layout.blank));
+  const text = async (name) => core.entryText(entries.find((e) => e.name === name));
+  BLANKS.push(layout.kind === 'xlsx' ? { form, layout, sheet: await text(core.XLSX_SHEET), shared: await text('xl/sharedStrings.xml') }
+    : { form, layout, xml: await text('word/document.xml') });
 }
 const POS = Object.fromEntries(['1', '1.1', '2', '2.1', '4', '5', '6'].map((f) => [f, pdfPosOf(f)]));
 
@@ -109,7 +111,7 @@ test('.docx ф. 1: форма определяется по бланку, все
 });
 
 test('.docx других форм: форма определяется, напечатанные реквизиты читаются', async () => {
-  for (const [form, variant] of [['1.1'], ['2'], ['2.1'], ['4'], ['5'], ['6'], ['ipk', 'lc']]) {
+  for (const [form, variant] of [['1.1'], ['2'], ['2.1'], ['3'], ['4'], ['5'], ['6'], ['ipk', 'lc']]) {
     const { memo, bytes } = await filledDocx(form, { variant });
     const res = await core.readCardFile(ix, 'к.docx', bytes, { blanks: BLANKS, pdfPositions: POS });
     assert.equal(res.form, form, `ф. ${form}`);
@@ -148,7 +150,7 @@ function miniPdf(pages) {
   const objs = [];
   const add = (body) => { objs.push(body); return objs.length; };
   const cmap = '/CIDInit /ProcSet findresource begin 12 dict begin begincmap /CMapName /T def 1 begincodespacerange <0000> <FFFF> endcodespacerange\n'
-    + '3 beginbfrange <0020> <007E> <0020> <0401> <0401> <0401> <0410> <044F> <0410> endbfrange\n1 beginbfchar <0451> <0451> endbfchar endcmap end end';
+    + '4 beginbfrange <0020> <007E> <0020> <00A0> <00A0> <00A0> <0401> <0401> <0401> <0410> <044F> <0410> endbfrange\n5 beginbfchar <0451> <0451> <00AB> <00AB> <00BB> <00BB> <2116> <2116> <2013> <2013> endbfchar endcmap end end';
   const tu = add(`<< /Length ${cmap.length} >>\nstream\n${cmap}\nendstream`);
   const font = add(`<< /Type /Font /Subtype /Type0 /BaseFont /Test /Encoding /Identity-H /ToUnicode ${tu} 0 R >>`);
   const hex = (s) => [...s].map((ch) => ch.charCodeAt(0).toString(16).padStart(4, '0')).join('');
@@ -319,13 +321,85 @@ test('р. 30 ф. 1: количество потерпевших – в перв�
   const field = layout.fields.find((f) => f.requisite === '30');
   const row = { id: '30', number: '30', status: 'fill', fills_by: 'investigator', value: '12', requisite: ix.reqs.get('1').get('30') };
   const memo = { form: '1', facts: { 'fact.victims.victims_count': { status: 'answered', value: '12' } },
-    fills: { '1|30': { 1: '1', 2: '3', 3: '2', 4: '5', 5: '1' } } };
+    fills: { '1|30': { 1: '1', 2: '3', 3: '2', 4: '5', 5: '1', 6: '4', 7: '6', 8: '7', 9: '8', 10: '9', 11: '2' } } };
   const plan = core.planField(row, field, memo);
   const at = Object.fromEntries(plan.edits.map((e) => [e.shape, e.text]));
-  assert.deepEqual(at, { 745: '1', 746: '2', 749: '1', 753: '3', 768: '2', 757: '5', 778: '1' });
+  // строки: все (744 – 753), н/л (766 – 775), женщины (755 – 764), н/л женского пола (777 – 790); поля – потер., погиб., повреж.
+  assert.deepEqual(at, { 745: '1', 746: '2', 749: '1', 753: '3', 768: '2', 771: '4', 775: '6', 757: '5', 760: '7', 764: '8', 778: '1', 787: '9', 781: '2' });
   assert.ok(!plan.blocked);
   // и обратно: из клеток – то же количество и те же поля
   const rows = core.cardValues(ix, '1', { fields: [field] }, { cells: new Map(plan.edits.map((e) => [e.shape, e.text])), texts: {} });
   assert.equal(rows[0].entries[0].value, '12');
-  assert.deepEqual(rows[0].fills, { 1: '1', 2: '3', 3: '2', 4: '5', 5: '1' });
+  assert.deepEqual(rows[0].fills, { 1: '1', 2: '3', 3: '2', 4: '5', 5: '1', 6: '4', 7: '6', 8: '7', 9: '8', 10: '9', 11: '2' });
 });
+
+test('р. 30 ф. 1: 12 полей бланка, прежнее поле № 0 скрыто, поля – в порядке бланка (ответ В-78)', () => {
+  const r = ix.reqs.get('1').get('30');
+  assert.equal(r.input.fills.length, 12);
+  assert.equal(r.input.fills[0].retired, true);
+  const shown = core.fillsInOrder(r.input.fills).map(([f]) => /\((30\.\d+)\)/.exec(f.label)[1]);
+  assert.deepEqual(shown, ['30.2', '30.3', '30.4', '30.5', '30.6', '30.7', '30.8', '30.9', '30.10', '30.11', '30.12']);
+});
+
+// ---- ответ В-80: PDF печатной копии программы ----
+
+// Копия, как ее печатает браузер: заголовок «(форма № …, ред. 2026)», строки «номер – наименование –
+// клетки»; каждый знак – отдельно, пустая клетка – неразрывный пробел (так печатает Chrome)
+function copyPdf(memo, layout, plan) {
+  const sheet = core.blankSheet(ix, memo, layout, plan, { profile: PROFILE });
+  const NB = String.fromCharCode(0xa0);
+  const pages = [{ w: 595, h: 842, items: [] }];
+  let y = 40;
+  const line = (items) => {
+    if (y > 800) { pages.push({ w: 595, h: 842, items: [] }); y = 40; }
+    pages.at(-1).items.push(...items.map((it) => ({ ...it, y })));
+    y += 14;
+  };
+  const glyphs = (x, text, step = 6) => [...text].map((ch, i) => ({ x: x + i * step, size: 10.5, text: ch }));
+  // длинный заголовок браузер переносит на вторую строку
+  const head = `${sheet.title} (форма № ${sheet.form}, ред. ${sheet.edition})`;
+  const cut = head.lastIndexOf(' ', 80);
+  line(glyphs(25.5, head.length > 80 ? head.slice(0, cut) : head));
+  if (head.length > 80) line(glyphs(25.5, head.slice(cut + 1)));
+  for (const sec of sheet.sections) {
+    if (sec.title) line(glyphs(25.5, sec.title.slice(0, 40)));
+    for (const r of sec.rows) {
+      const cells = r.groups.flatMap((g, gi) => g.map((ch, k) => ({ ch: ch || NB, gap: gi && !k })));
+      let x = 346.3;
+      const val = [];
+      for (const c of cells) { if (c.gap) x += 6; val.push({ x, size: 10.5, text: c.ch }); x += 8.32; }
+      const text = r.text ? glyphs(x + 5, r.text.slice(0, 30)) : [];
+      line([...glyphs(28.9, r.number), ...glyphs(64.7, r.label.slice(0, 20)), ...val.slice(0, 28), ...text]);
+      for (let i = 28; i < val.length; i += 28) line(val.slice(i, i + 28).map((v, k) => ({ ...v, x: 346.3 + k * 8.32 })));
+    }
+  }
+  return miniPdf(pages);
+}
+
+test('PDF печатной копии программы: клетки по порядку чтения, пустая клетка – неразрывный пробел', async () => {
+  for (const [form, variant] of [['1'], ['2'], ['5'], ['ipk', 'lc']]) {
+    const { memo, layout, plan } = await filledDocx(form, { variant });
+    const res = await core.readCardFile(ix, 'копия.pdf', copyPdf(memo, layout, plan), { blanks: BLANKS, pdfPositions: POS });
+    assert.equal(res.kind, 'copy', `ф. ${form}`);
+    assert.equal(res.form, form);
+    assert.deepEqual(res.match.problems, [], `ф. ${form}: строки без разбора`);
+    const cmp = compare(form, memo, res);
+    // текст длиннее 30 знаков в синтетической копии обрезан – сравниваются клетки
+    const diff = cmp.diff.filter((d) => !/fabula|\[|"[^"]{31,}/.test(d) && !d.includes(FABULA.slice(0, 20)));
+    assert.deepEqual(diff, [], `ф. ${form}`);
+    assert.ok(cmp.same >= 8, `ф. ${form}: прочитано ${cmp.same}`);
+  }
+});
+
+test('ф. 3 из книги Excel: форма определяется по книге, чужая книга – отказ', async () => {
+  const { memo, bytes } = await filledDocx('3');
+  const res = await core.readCardFile(ix, 'ф3.xlsx', bytes, { blanks: BLANKS });
+  assert.equal(res.kind, 'xlsx');
+  assert.equal(res.form, '3');
+  const cmp = compare('3', memo, res);
+  assert.deepEqual(cmp.diff, []);
+  assert.ok(cmp.same >= 15, `прочитано ${cmp.same}`);
+  const other = await core.zipFiles([{ name: core.XLSX_SHEET, bytes: new TextEncoder().encode('<worksheet><sheetData/></worksheet>') }]);
+  await assert.rejects(() => core.readCardFile(ix, 'книга.xlsx', other, { blanks: BLANKS }), /не похожа на бланк ф\. 3/);
+});
+

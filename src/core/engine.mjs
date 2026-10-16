@@ -245,11 +245,16 @@ export function displayOf(ix, r, value) {
   return normText(String(value));
 }
 
+// Дополнительные поля в порядке бланка: [поле, номер]; поле, выведенное из употребления (retired),
+// не показывается – номер сохраняется ради сохраненных дел (ответ В-78)
+export function fillsInOrder(fills) {
+  return (fills ?? []).map((f, i) => [f, i]).filter(([f]) => !f.retired).sort((a, b) => (a[0].order ?? a[1]) - (b[0].order ?? b[1]));
+}
+
 function fillsDisplay(c, formId, r, codes) {
-  const fl = r.input?.fills ?? [];
   const vals = c.fills?.[`${formId}|${r.id}`] ?? {};
   const out = [];
-  fl.forEach((f, i) => {
+  fillsInOrder(r.input?.fills).forEach(([f, i]) => {
     const v = vals[i];
     if (empty(v)) return;
     const forCodes = [f.for_code, ...(f.for_codes ?? [])].filter(Boolean);

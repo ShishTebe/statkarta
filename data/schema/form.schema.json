@@ -211,6 +211,15 @@
           },
           "key": {
            "type": "string"
+          },
+          "label_status": {
+           "type": "string"
+          },
+          "retired": {
+           "type": "boolean"
+          },
+          "order": {
+           "type": "number"
           }
          }
         }

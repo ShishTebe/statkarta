@@ -8,6 +8,7 @@
 // клетки → код, дата, номер, квалификация. В дело переносится только то, что подтвердил следователь.
 
 import { readZip, entryText } from './zip.mjs';
+import { xlsxCellText, XLSX_SHEET } from './xlsxfill.mjs';
 import { shapes, shapeText, findTableCell, findParagraph } from './ooxml.mjs';
 import { parseToUnicode } from './doctext.mjs';
 import { keyCode, optKey } from './pack.mjs';
@@ -94,6 +95,29 @@ export function docxCardCells(xml, blankXml, layout) {
       if (filled === null) return;
       const blank = blankXml ? ciPlaceText(blankXml, p.place) ?? '' : '';
       texts[`${f.requisite}|${i}`] = insertedText(blank, filled);
+    });
+  }
+  return { cells, texts };
+}
+
+// ---------- Excel: ф. 3 по адресам ячеек листа (ответ В-80) ----------
+
+// Текст ячеек карты раскладки ф. 3; печатный текст ячейки чистого бланка вычитается.
+// blank – { sheet, shared } чистой книги
+export function xlsxCardCells(sheet, shared, blank, layout) {
+  const cells = new Map();
+  const texts = {};
+  for (const f of layout.fields ?? []) {
+    const groups = [...(f.groups ?? []), ...(f.parts ?? []).flatMap((p) => [...(p.groups ?? []), ...(p.fills ?? [])])];
+    for (const ref of groups.flat()) {
+      if (cells.has(ref)) continue;
+      const printed = blank ? xlsxCellText(blank.sheet, blank.shared, ref).trim() : '';
+      const text = xlsxCellText(sheet, shared, ref).trim();
+      cells.set(ref, printed && text.startsWith(printed) ? text.slice(printed.length) : text);
+    }
+    (f.parts ?? []).forEach((p, i) => {
+      if (!p.place?.cell || p.role === 'signature') return;
+      texts[`${f.requisite}|${i}`] = insertedText(blank ? xlsxCellText(blank.sheet, blank.shared, p.place.cell) : '', xlsxCellText(sheet, shared, p.place.cell));
     });
   }
   return { cells, texts };
@@ -319,7 +343,7 @@ function* ciTokens(s) {
   }
 }
 
-async function ciRunContent(pdf, content, resText, ctm, page, out, cache, depth = 0) {
+async function ciRunContent(pdf, content, resText, ctm, page, out, cache, depth = 0, keepSpaces = false) {
   const { fonts, xobjects } = await ciFonts(pdf, resText, cache);
   const stack = [];
   let gs = ctm;
@@ -337,7 +361,7 @@ async function ciRunContent(pdf, content, resText, ctm, page, out, cache, depth 
     const m = ciMul(tm, gs);
     const scale = Math.hypot(m[2], m[3]) || 1;
     const hidden = clip && (m[4] < clip[0] - 0.5 || m[4] > clip[2] + 0.5 || m[5] < clip[1] - 0.5 || m[5] > clip[3] + 0.5);
-    if (text.trim() && !hidden) out.push({ page: page.index, x: m[4], y: page.h - m[5], size: size * scale, text });
+    if ((text.trim() || (keepSpaces && text)) && !hidden) out.push({ page: page.index, x: m[4], y: page.h - m[5], size: size * scale, text });
     tm = ciMul([1, 0, 0, 1, text.length * size * 0.5, 0], tm);
   };
   for (const t of ciTokens(content)) {
@@ -395,7 +419,7 @@ async function ciRunContent(pdf, content, resText, ctm, page, out, cache, depth 
         if (!st || !/\/Form/.test(st.dict.get('Subtype') ?? '')) break;
         const mtx = (st.dict.get('Matrix') ?? '').replace(/[[\]]/g, '').trim().split(/\s+/).map(Number);
         const m = mtx.length === 6 && mtx.every(Number.isFinite) ? mtx : CI_ID;
-        await ciRunContent(pdf, st.text, st.dict.get('Resources') ?? resText, ciMul(m, gs), page, out, cache, depth + 1);
+        await ciRunContent(pdf, st.text, st.dict.get('Resources') ?? resText, ciMul(m, gs), page, out, cache, depth + 1, keepSpaces);
         break;
       }
       default: break;
@@ -406,7 +430,8 @@ async function ciRunContent(pdf, content, resText, ctm, page, out, cache, depth 
 
 // Текст страниц PDF кусками с координатами: { pages: [{ w, h }], chunks: [{ page, x, y, size, text }] },
 // y – от верха страницы до базовой линии
-export async function pdfTextChunks(bytes) {
+// keepSpaces – оставлять куски из одних пробелов (пустые клетки печатной копии программы)
+export async function pdfTextChunks(bytes, { keepSpaces = false } = {}) {
   const pdf = ciPdfIndex(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes));
   if (/\/Encrypt\s/.test(pdf.src.slice(-4096)) || /\/Encrypt\s+\d+\s+\d+\s+R/.test(pdf.src)) throw new Error('PDF зашифрован – сохраните карточку в PDF без пароля или откройте файл Word');
   const roots = [...pdf.src.matchAll(/\/Root\s+(\d+)\s+\d+\s+R/g)];
@@ -444,7 +469,7 @@ export async function pdfTextChunks(bytes) {
       const arr = await ciObject(pdf, r);
       for (const m of String(arr ?? '').matchAll(/(\d+)\s+\d+\s+R/g)) text += `${(await ciStream(pdf, Number(m[1])))?.text ?? ''}\n`;
     }
-    await ciRunContent(pdf, text, p.res ?? '', CI_ID, { index, h: hgt }, chunks, cache);
+    await ciRunContent(pdf, text, p.res ?? '', CI_ID, { index, h: hgt }, chunks, cache, 0, keepSpaces);
   }
   return { pages: sizes, chunks };
 }
@@ -521,6 +546,96 @@ export function pdfCardCells(extract, pos) {
     texts[`${r.requisite}|${r.part}`] = insertedText(r.blank_text, text);
   }
   return { cells, texts, match: { anchors: pos.anchors?.length ?? 0, found, share, dx, dy } };
+}
+
+// ---------- PDF печатной копии программы (ответ В-80) ----------
+// Копия – таблица «номер – наименование – клетки»: браузер печатает ее своим шрифтом и масштабом,
+// координаты бланка ИЦ к ней не подходят. Зато пустая клетка в копии – неразрывный пробел, и
+// знаки строки по порядку чтения ложатся на клетки карты раскладки один к одному.
+
+const CI_NBSP = String.fromCharCode(0xa0);
+const CI_COPY_HEAD = /\(форма № ([0-9a-z.-]+), ред\. (\d{4})\)/;
+
+function ciLines(chunks) {
+  const lines = [];
+  for (const c of [...chunks].sort((a, b) => a.page - b.page || a.y - b.y || a.x - b.x)) {
+    const last = lines.at(-1);
+    if (last && last.page === c.page && Math.abs(last.y - c.y) < 2) last.items.push(c);
+    else lines.push({ page: c.page, y: c.y, items: [c] });
+  }
+  for (const l of lines) l.items.sort((a, b) => a.x - b.x);
+  return lines;
+}
+
+// Печатная копия: [{ form, cells, texts, rows, problems }] по каждой карточке в файле
+export function appCopySheets(extract, ix, layouts) {
+  const lines = ciLines(extract.chunks);
+  const text = (l) => l.items.map((c) => c.text).join('');
+  const sheets = [];
+  // заголовок карточки может переноситься на вторую строку
+  lines.forEach((l, i) => {
+    const m = CI_COPY_HEAD.exec(`${text(l)}${lines[i + 1] && lines[i + 1].page === l.page ? ` ${text(lines[i + 1])}` : ''}`.replace(/\s+/g, ' '));
+    if (m && (!sheets.length || sheets.at(-1).line < i - 1)) sheets.push({ line: i, form: m[1] });
+  });
+  const out = [];
+  sheets.forEach((sh, si) => {
+    const end = sheets[si + 1]?.line ?? lines.length;
+    const form = ix.forms.get(sh.form);
+    const layout = layouts[sh.form];
+    if (!form || !layout) return;
+    const own = lines.slice(sh.line, end);
+    const pageLeft = new Map();
+    for (const l of own) pageLeft.set(l.page, Math.min(pageLeft.get(l.page) ?? Infinity, l.items[0].x));
+    const geo = (page) => {
+      const left = pageLeft.get(page);
+      const w = extract.pages[page]?.w ?? 595;
+      // столбцы копии: номер (3,2 rem), наименование, клетки (42 % ширины таблицы)
+      return { left, numMax: left + 34, valLeft: left + (w - 2 * left) * 0.58 - 3 };
+    };
+    // строки реквизитов – по номеру в первом столбце, по порядку реквизитов формы
+    const starts = [];
+    let at = 0;
+    own.forEach((l, i) => {
+      const g = geo(l.page);
+      const first = l.items[0];
+      if (first.x < g.left + 1.5 || first.x > g.numMax) return;
+      const num = l.items.filter((c) => c.x < g.numMax).map((c) => c.text).join('').trim();
+      const k = form.requisites.findIndex((r, j) => j >= at && r.number === num);
+      if (k < 0) return;
+      starts.push({ i, req: form.requisites[k] });
+      at = k + 1;
+    });
+    const byReq = new Map((layout.fields ?? []).map((f) => [f.requisite, f]));
+    const cells = new Map();
+    const texts = {};
+    const problems = [];
+    starts.forEach((st, k) => {
+      const field = byReq.get(st.req.id);
+      if (!field) return;
+      const from = st.i;
+      const page = own[from].page;
+      let to = k + 1 < starts.length ? starts[k + 1].i : own.length;
+      for (let j = from + 1; j < to; j += 1) {
+        // строка раздела или заголовка (с левого края) и новая страница заканчивают реквизит
+        if (own[j].page !== page || own[j].items[0].x < geo(own[j].page).left + 1.5) { to = j; break; }
+      }
+      const g = geo(page);
+      const chars = [...own.slice(from, to).flatMap((l) => l.items.filter((c) => c.x >= g.valLeft)).map((c) => c.text).join('')];
+      const shapesFlat = (field.parts ? field.parts.flatMap((p) => [...(p.groups ?? []), ...(p.fills ?? [])]) : (field.groups ?? [])).flat();
+      if (chars.length < shapesFlat.length) {
+        if (chars.some((ch) => ch.trim() && ch !== CI_NBSP)) problems.push(st.req.number);
+        return;
+      }
+      shapesFlat.forEach((shape, n) => { const ch = chars[n]; if (ch && ch !== CI_NBSP && ch.trim()) cells.set(shape, ch); });
+      const rest = chars.slice(shapesFlat.length).join('').replace(new RegExp(CI_NBSP, 'g'), ' ').replace(/\s+/g, ' ').trim();
+      const textParts = (field.parts ?? []).map((p, n) => [p, n]).filter(([p]) => ['text', 'codes_text', 'date_text'].includes(p.role));
+      // имя и отчество – одно значение на два места бланка (word): в копии оно напечатано целиком
+      const single = textParts.length === 1 || (textParts.length > 1 && textParts.every(([p]) => p.word !== undefined));
+      if (rest && single) texts[`${field.requisite}|${textParts[0][1]}`] = rest;
+    });
+    out.push({ form: sh.form, cells, texts, rows: starts.length, problems });
+  });
+  return out;
 }
 
 // ---------- клетки → значения реквизитов ----------
@@ -779,14 +894,40 @@ export async function readCardFile(ix, name, bytes, { blanks, pdfPositions = {} 
     throw new Error(ole ? 'Карточка в старом формате Word (.doc): откройте ее в Word и сохраните как .docx или PDF' : 'Карточку можно загрузить файлом Word (.docx) или PDF');
   }
   if (isZip) {
+    const entries = readZip(u8);
+    const sheetEntry = entries.find((e) => e.name === XLSX_SHEET);
+    if (sheetEntry) {
+      const b = blanks.find((x) => x.layout.kind === 'xlsx');
+      const sharedEntry = entries.find((e) => e.name === 'xl/sharedStrings.xml');
+      const sheet = await entryText(sheetEntry);
+      const shared = sharedEntry ? await entryText(sharedEntry) : '';
+      const title = ix.forms.get(b?.form)?.title ?? '';
+      const own = b && ciSpaces(shared + sheet).toUpperCase().includes(ciSpaces(title).toUpperCase().slice(0, 30));
+      if (!own) throw new Error('Книга Excel не похожа на бланк ф. 3 редакции 2026: карточку можно загрузить файлом Word, PDF или книгой ф. 3');
+      const read = xlsxCardCells(sheet, shared, b, b.layout);
+      return { name, kind: 'xlsx', form: b.form, rows: cardValues(ix, b.form, b.layout, read), match: null };
+    }
     const xml = await ciDocumentXml(u8);
     const b = cardFormOfDocx(xml, blanks, ix.forms);
     if (!b) throw new Error('Файл Word не похож на бланк карточки этой редакции: число мест для кодов не совпадает ни с одним бланком. Карточка должна быть заполнена на бланке ИЦ редакции 2026');
     const read = docxCardCells(xml, b.xml, b.layout);
     return { name, kind: 'docx', form: b.form, rows: cardValues(ix, b.form, b.layout, read), match: null };
   }
-  const ex = await pdfTextChunks(u8);
-  if (!ex.chunks.length) throw new Error('В PDF нет текстового слоя (скан или фото). Загрузите файл Word или PDF, сохраненный из Word');
+  const ex = await pdfTextChunks(u8, { keepSpaces: true });
+  if (!ex.chunks.some((c) => c.text.trim())) throw new Error('В PDF нет текстового слоя (скан или фото). Загрузите файл Word или PDF, сохраненный из Word');
+  // печатная копия программы: заголовок «(форма № …, ред. 2026)»
+  const copies = appCopySheets(ex, ix, Object.fromEntries(blanks.map((b) => [b.form, b.layout])));
+  if (copies.length) {
+    const cp = copies.find((x) => x.rows > 0 && x.cells.size + Object.keys(x.texts).length > 0) ?? copies[0];
+    const b = blanks.find((x) => x.form === cp.form);
+    const rows = cardValues(ix, cp.form, b.layout, cp);
+    for (const n of cp.problems) {
+      const r = rows.find((x) => x.number === n);
+      if (r) { r.notes.push('клетки строки не разобраны – проверьте значение'); r.confidence = 'low'; }
+    }
+    return { name, kind: 'copy', form: cp.form, rows, match: { sheets: copies.length, rows: cp.rows, problems: cp.problems } };
+  }
+  ex.chunks = ex.chunks.filter((c) => c.text.trim());
   const all = ex.chunks.map((c) => c.text).join(' ').toUpperCase().replace(/\s+/g, ' ');
   let best = null;
   for (const b of blanks) {
@@ -799,7 +940,7 @@ export async function readCardFile(ix, name, bytes, { blanks, pdfPositions = {} 
     if (!best || score > best.score) best = { b, read, score };
   }
   if (!best || best.read.match.share < 0.35) {
-    throw new Error('PDF не совпадает с бланком карточки: номера реквизитов не на своих местах. Подходит PDF, сохраненный из Word с бланка ИЦ редакции 2026 (не скан и не копия из программы)');
+    throw new Error('PDF не совпадает с бланком карточки: номера реквизитов не на своих местах. Подходит PDF, сохраненный из Word с бланка ИЦ редакции 2026, или PDF печатной копии этой программы версии 0.12 и новее (не скан)');
   }
   return { name, kind: 'pdf', form: best.b.form, rows: cardValues(ix, best.b.form, best.b.layout, best.read), match: best.read.match };
 }

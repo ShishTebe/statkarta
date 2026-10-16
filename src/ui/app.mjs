@@ -289,7 +289,7 @@ function startView() {
         h('button', { class: 'btn primary', onclick: () => { state.startChoice = false; newCase(); } }, 'Вручную'),
         h('button', { class: 'btn', onclick: () => { state.startChoice = false; importCaseFile(); } }, 'Из файла'),
         h('button', { class: 'btn small', onclick: () => { state.startChoice = false; render(); } }, 'Отмена')),
-      h('p', { class: 'small muted' }, 'Вручную – эпизоды, лица и события вносятся в деле. Из файла – постановление (.docx, .txt, .rtf, .pdf с текстовым слоем): программа найдет в нем номер дела, даты, КРСП, квалификацию и лиц, вы подтвердите. Тот же выбор принимает сохраненный файл дела (.statkarta). Документ можно загрузить и позже – на вкладке «Документ дела».')));
+      h('p', { class: 'small muted' }, 'Вручную – эпизоды, лица и события вносятся в деле. Из файла – постановление (.docx, .txt, .rtf, .pdf с текстовым слоем): программа найдет в нем номер дела, даты, КРСП, квалификацию и лиц, вы подтвердите. Тот же выбор принимает сохраненный файл дела (.statkarta) и заполненную карточку (Word, PDF, книга ф. 3) – тогда новая карточка готовится по ней. Документ можно загрузить и позже – на вкладке «Документ дела».')));
   }
   put(start, h('p', { class: 'small muted' }, 'Быстрый режим – одна карточка без дела: выбрать форму, заполнить реквизиты в порядке бланка, проверить, распечатать или скачать бланк; дело не заводится и не сохраняется. Дело – объекты учета, события и пакеты карточек по ним, с сохранением под паролем. По другой карточке – реквизиты берутся из уже заполненной карточки (Word или PDF), в том числе другого дела.'));
   put(wrap, start);
@@ -357,7 +357,7 @@ async function openSaved(rec) {
 
 // «Из файла»: файл дела СтатКарты (зашифрованный) или документ дела – постановление и т. п.
 async function importCaseFile() {
-  const f = await pickFileBytes('.json,.statkarta,.docx,.txt,.rtf,.pdf,.doc');
+  const f = await pickFileBytes('.json,.statkarta,.docx,.txt,.rtf,.pdf,.doc,.xlsx');
   if (!f) { render(); return; }
   const head = new TextDecoder().decode(f.bytes.subarray(0, 64)).trimStart();
   if (head.startsWith('{')) {
@@ -543,7 +543,7 @@ function parseDocText(name, text) {
 }
 
 async function loadDocFile() {
-  const f = await pickFileBytes('.docx,.txt,.rtf,.pdf,.doc');
+  const f = await pickFileBytes('.docx,.txt,.rtf,.pdf,.doc,.xlsx');
   if (!f) return;
   // карточка вместо документа – заполнение по другой карточке
   if (looksLikeCardFile(f.name) && await tryReadCard(f, C()?.quick ? 'quick' : 'case', { quiet: true })) return;
@@ -723,15 +723,18 @@ async function cardBlanks() {
   if (CARD_BLANKS) return CARD_BLANKS;
   const out = [];
   for (const [form, layout] of Object.entries(BLANKS?.layouts ?? {})) {
-    if (layout.kind === 'xlsx' || !BLANKS.files[layout.blank]) continue;
-    const doc = readZip(base64Bytes(BLANKS.files[layout.blank])).find((e) => e.name === 'word/document.xml');
-    if (doc) out.push({ form, layout, xml: await entryText(doc) });
+    if (!BLANKS.files[layout.blank]) continue;
+    const entries = readZip(base64Bytes(BLANKS.files[layout.blank]));
+    const text = async (name) => { const e = entries.find((x) => x.name === name); return e ? entryText(e) : ''; };
+    // ф. 3 – книга Excel: лист и общие строки чистого бланка (ответ В-80)
+    if (layout.kind === 'xlsx') out.push({ form, layout, sheet: await text(XLSX_SHEET), shared: await text('xl/sharedStrings.xml') });
+    else out.push({ form, layout, xml: await text('word/document.xml') });
   }
   CARD_BLANKS = out;
   return out;
 }
 
-const looksLikeCardFile = (name) => /\.(docx|pdf)$/i.test(name);
+const looksLikeCardFile = (name) => /\.(docx|pdf|xlsx)$/i.test(name);
 
 // Прочитать файл как карточку; null – это не карточка (тогда файл разбирается как документ дела)
 async function tryReadCard(f, where, { quiet = false } = {}) {
@@ -756,7 +759,7 @@ async function tryReadCard(f, where, { quiet = false } = {}) {
 }
 
 async function loadCardFile(where) {
-  const f = await pickFileBytes('.docx,.pdf,.doc');
+  const f = await pickFileBytes('.docx,.pdf,.xlsx,.doc');
   if (!f) return;
   await tryReadCard(f, where);
 }
@@ -764,7 +767,7 @@ async function loadCardFile(where) {
 function cardImportView(where) {
   const ci = state.cardImp;
   const box = h('div', { class: 'panel card-import' }, h('h2', {}, 'Заполнить по другой карточке'),
-    h('p', { class: 'small muted' }, 'Загрузите заполненную карточку – файл Word (.docx) или PDF, сохраненный из Word, на бланке ИЦ редакции 2026. Программа прочитает коды, даты, номер дела, квалификацию и фабулу по клеткам бланка, вы отметите, что взять в новую карточку: для нового эпизода, нового лица по тому же преступлению или для карточки другого дела. Файл никуда не передается и в деле не сохраняется.'),
+    h('p', { class: 'small muted' }, 'Загрузите заполненную карточку на бланке ИЦ редакции 2026: файл Word (.docx), PDF, сохраненный из Word, ф. 3 – книгу Excel (.xlsx), или PDF печатной копии этой программы. Программа прочитает коды, даты, номер дела, квалификацию и фабулу по клеткам бланка, вы отметите, что взять в новую карточку: для нового эпизода, нового лица по тому же преступлению или для карточки другого дела. Файл никуда не передается и в деле не сохраняется.'),
     h('div', { class: 'row toolbar' },
       h('button', { class: 'btn primary', onclick: () => loadCardFile(where) }, ci?.res ? 'Загрузить другую карточку' : 'Загрузить карточку'),
       ci ? h('button', { class: 'btn', onclick: () => { state.cardImp = null; render(); } }, 'Закрыть') : null));
@@ -772,7 +775,9 @@ function cardImportView(where) {
   if (ci.error) { put(box, h('div', { class: 'notice' }, `${ci.name}: ${ci.error}`)); return box; }
   const { res, dec, target: t } = ci;
   const c = where === 'case' ? C() : null;
-  const pdfNote = res.kind === 'pdf' ? ` PDF сверен с бланком по номерам реквизитов: ${res.match.found} из ${res.match.anchors}.` : '';
+  const pdfNote = res.kind === 'pdf' ? ` PDF сверен с бланком по номерам реквизитов: ${res.match.found} из ${res.match.anchors}.`
+    : res.kind === 'copy' ? ` PDF печатной копии программы: строк реквизитов ${res.match.rows}${res.match.sheets > 1 ? `; карточек в файле ${res.match.sheets} – прочитана первая` : ''}.`
+      : res.kind === 'xlsx' ? ' Книга Excel.' : '';
   put(box, h('p', { class: 'small' }, `Файл: ${ci.name} – ${formLabel(res.form)}. Прочитано реквизитов: ${res.rows.length}.${pdfNote}`));
   const relabel = (same) => {
     ci.dec = cardImportDefaults(res, { sameCase: same });
@@ -1466,13 +1471,14 @@ function fillsInput(it, ev) {
   // код подразделения и код органа прокуратуры подставляются из профиля органа (замечание 22.09.2026)
   const fromProfile = profileFillsOf(IX, first.form, state.profile).filter((x) => x.requisite === first.id);
   const wrap = h('div', { class: 'fills' });
-  (it.input.fills ?? []).forEach((f, i) => {
+  // поля – в порядке бланка (order), выведенные из употребления (retired) не показываются (ответ В-78)
+  for (const [f, i] of fillsInOrder(it.input.fills)) {
     const prof = fromProfile.find((x) => x.index === i);
     if (prof && (vals[i] ?? '') === '') {
       put(wrap, h('label', { class: 'fill' }, h('span', {}, fillLabel(IX.reqs.get(first.form).get(first.id), f)),
         h('input', { type: 'text', value: prof.value, readonly: true, title: 'Из профиля органа' }),
         h('span', { class: 'muted small' }, 'из профиля органа – изменить можно в профиле')));
-      return;
+      continue;
     }
     const forCodes = [f.for_code, ...(f.for_codes ?? [])].filter(Boolean);
     const active = !forCodes.length || forCodes.some((x) => codes.includes(x));
@@ -1487,7 +1493,7 @@ function fillsInput(it, ev) {
       wrong ? h('span', { class: 'err' }, wrong) : null,
       f.unit ? h('span', { class: 'muted' }, f.unit) : null,
       f.type === 'date' && active ? todayButton((iso) => { for (const t of targets) setCardFill(ev, t.card, t.id, i, isoToRu(iso)); touch(); rerender(); }) : null));
-  });
+  }
   return wrap;
 }
 
@@ -1834,11 +1840,15 @@ function goFix(cardKeyValue, number) {
   else state.notices.push(`Реквизит ${number} заполняется не в опроснике: откройте вкладку «Печать бланка» – значение вписывается в бланк от руки.`);
 }
 
+// Пустая клетка – неразрывный пробел: на бумаге не виден, но остается в тексте PDF, поэтому по
+// сохраненной в PDF копии программа узнает, в какой клетке стоит каждый знак (ответ В-80).
+// Промежуток между группами – без текста.
+const CELL_EMPTY = String.fromCharCode(0xa0);
 function cellsRow(groups) {
   const wrap = h('span', { class: 'cellrow' });
   groups.forEach((g, gi) => {
-    if (gi) put(wrap, h('span', { class: 'gap' }, ' '));
-    for (const ch of g) put(wrap, h('span', { class: 'cell' }, ch || ' '));
+    if (gi) put(wrap, h('span', { class: 'gap' }));
+    for (const ch of g) put(wrap, h('span', { class: 'cell' }, ch || CELL_EMPTY));
   });
   return wrap;
 }
@@ -2118,7 +2128,7 @@ function blankView() {
         r.input.select ? h('span', { class: 'muted' }, 'Выбор') : null, r.input.select ? h('span', {}, `${SELECT_RU[r.input.select]}${r.input.select === 'multiple' ? ` – до ${r.input.max_codes}` : ''}`) : null,
         r.input.fields ? h('span', { class: 'muted' }, 'Кодовых полей в бланке') : null, r.input.fields ? h('span', {}, `${r.input.fields}${r.input.code_digits ? `, разрядов в коде: ${r.input.code_digits}` : ''}`) : null,
         r.input.max_chars ? h('span', { class: 'muted' }, 'Не более знаков') : null, r.input.max_chars ? h('span', {}, String(r.input.max_chars)) : null,
-        r.input.fills?.length ? h('span', { class: 'muted' }, 'Дополнительные поля') : null, r.input.fills?.length ? h('span', {}, r.input.fills.map((x) => `${fillLabel(r, x)}${x.unit ? `, ${x.unit}` : ''}`).join('; ')) : null,
+        r.input.fills?.length ? h('span', { class: 'muted' }, 'Дополнительные поля') : null, r.input.fills?.length ? h('span', {}, fillsInOrder(r.input.fills).map(([x]) => `${fillLabel(r, x)}${x.unit ? `, ${x.unit}` : ''}`).join('; ')) : null,
         r.input.sources?.length ? h('span', { class: 'muted' }, 'Основание') : null, r.input.sources?.length ? h('span', { class: 'small' }, r.input.sources.join(' ')) : null) : null,
       r.raw ? h('div', {}, h('h3', { class: 'group' }, 'Текст реквизита в бланке'), h('div', { class: 'raw' }, r.raw)) : null,
       r.options.length ? h('div', {}, h('h3', { class: 'group' }, `Коды (${r.options.length})`), h('div', { class: 'table-wrap' }, h('table', { class: 'memo' },
@@ -2641,7 +2651,8 @@ function legalView() {
 function demoCase() {
   const c = createCase2({ title: 'Дело (пример)', today: '2026-03-01' });
   const set = (cont, fid, v) => setFactVersion(c, cont, fid, 'answered', v, null);
-  set(c.case, 'fact.case.case_number', '[номер дела – пример]');
+  // номер дела – 17 цифр (ответ В-34), вымышленный: с нулями
+  set(c.case, 'fact.case.case_number', '12600000001000045');
   set(c.case, 'fact.case.kusp', '[номер КРСП – пример]');
   set(c.case, 'fact.case.kusp_date', '2026-02-21');
   set(c.case, 'fact.case.report_source', ['|statement']);
@@ -2686,6 +2697,22 @@ function demoFullCard(formId) {
     else if (it.requisite?.field_type === 'date' || it.q.answer.type === 'date') setPackageAnswer(c, ev, it, 'answered', '2026-08-20');
     else setPackageAnswer(c, ev, it, 'answered', '[пример]');
   }
+  // первый вариант ответа бывает несовместим с квалификацией примера (стадия без ст. 30, код только
+  // для ст. 263 – 264.1): такие реквизиты отмечаются «не применимо», чтобы копия печаталась
+  for (let pass = 0; pass < 4; pass += 1) {
+    const memo = buildCardMemo(IX, c, ev, card, state.profile);
+    const errors = memo.checks.filter((x) => x.severity === 'error');
+    if (!errors.length) break;
+    const items = packageQuestions(IX, c, ev, state.profile).groups.flatMap((g) => g.items);
+    for (const e of errors) {
+      // сведения проверки: сначала условие (when), затем утверждение (assert)
+      const facts = `${JSON.stringify(e.when ?? {})} ${JSON.stringify(e.assert ?? {})}`.match(/fact\.[a-z0-9_.]+/g) ?? [];
+      const byReq = items.filter((x) => x.requisites.some((r) => r.card === card.key && (e.requisites ?? []).includes(r.number)));
+      const it = [...facts.map((f) => items.find((x) => x.factId === f)), ...byReq]
+        .find((x) => x && x.answer?.status === 'answered' && x.factId !== 'fact.crime.qualification' && x.cards.includes(card.key));
+      if (it) setPackageAnswer(c, ev, it, 'na');
+    }
+  }
   state.cardKey = card.key;
   state.sheet = card.key;
 }
@@ -2698,7 +2725,7 @@ async function boot() {
   await regionBoot();
   const hash = location.hash.replace('#', '');
   if (hash.startsWith('demo')) {
-    state.profile = { organ_name: 'Следственный отдел (пример)', organ_code: '02', unit_code: '[код подразделения]', prosecutor_code: '[код прокуратуры]',
+    state.profile = { organ_name: 'Следственный отдел (пример)', organ_code: '02', unit_code: '02300000', prosecutor_code: '000',
       investigator_position: 'следователь', investigator_rank: 'капитан юстиции', investigator_fio: 'И.И. Иванов',
       head_position: 'заместитель руководителя отдела', head_rank: 'полковник юстиции', head_fio: 'П.П. Петров',
       prosecutor_position: 'заместитель прокурора', prosecutor_rank: 'советник юстиции', prosecutor_fio: 'С.С. Сидоров', retention_months: 6, region: '30' };
