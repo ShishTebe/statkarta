@@ -186,7 +186,8 @@ function printedPdf(form, plan, { shift = [0, 0], fabula = null } = {}) {
   }
   for (const [label, page, x, top] of pos.anchors) pages[page].items.push({ x: x + shift[0], y: top + 8 * 0.89 + shift[1], size: 8, text: `${label}.` });
   for (const r of pos.regions) {
-    pages[r.page].items.push({ x: r.box[0] + 6 + shift[0], y: r.box[1] + 8 + shift[1], size: 8, text: r.blank_text.split(' ').slice(0, 3).join(' ') });
+    // печатные слова бланка – на своих местах, как их печатает Word
+    for (const [wx, , top, text] of r.blank_words) pages[r.page].items.push({ x: wx + shift[0], y: top + 8 * 0.89 + shift[1], size: 8, text });
     if (fabula && r.requisite === '12') pages[r.page].items.push({ x: r.box[0] + 6 + shift[0], y: r.box[1] + 20 + shift[1], size: 6, text: fabula });
   }
   return miniPdf(pages);
@@ -403,3 +404,26 @@ test('ф. 3 из книги Excel: форма определяется по кн
   await assert.rejects(() => core.readCardFile(ix, 'книга.xlsx', other, { blanks: BLANKS }), /не похожа на бланк ф\. 3/);
 });
 
+
+// ---- В-79: PDF заполненной карточки, сохраненный Word ----
+
+test('ToUnicode: диапазон списком знаков (так пишет Word) и двузначные коды', () => {
+  const map = core.parseToUnicode('beginbfrange\n<0000> <0002> [<0020> <043E> <0440>]\n<0011> <0012> <0030>\nendbfrange\nbeginbfchar\n<41> <0041>\nendbfchar');
+  assert.equal(map.get(1), 'о');
+  assert.equal(map.get(2), 'р');
+  assert.equal(map.get(0x12), '1');
+  assert.equal(map.get(0x41), 'A');
+});
+
+const V79 = path.join(WORK, 'v79-f1-162656');
+test('PDF, сохраненный Word из заполненной карточки ф. 1: все реквизиты, фабула, р. 30', { skip: !fs.existsSync(`${V79}.pdf`) }, async () => {
+  const res = await core.readCardFile(ix, 'v.pdf', new Uint8Array(fs.readFileSync(`${V79}.pdf`)), { blanks: BLANKS, pdfPositions: POS });
+  assert.equal(res.kind, 'pdf');
+  assert.equal(res.match.found, res.match.anchors);
+  const rows = JSON.parse(fs.readFileSync(`${V79}.memo.json`, 'utf8'));
+  const { fills } = rows.pop();
+  const cmp = compare('1', { rows }, res);
+  assert.deepEqual(cmp.diff, []);
+  assert.ok(cmp.same >= 45, `прочитано ${cmp.same}`);
+  assert.deepEqual(res.rows.find((r) => r.id === '30').fills, fills['1|30']);
+});

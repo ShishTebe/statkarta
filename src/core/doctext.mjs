@@ -136,16 +136,24 @@ function pdfObjects(u8) {
 // Таблица ToUnicode (bfchar, bfrange) – коды символов шрифта в буквы
 export function parseToUnicode(cmap) {
   const map = new Map();
-  const hex = (h) => String.fromCharCode(...(h.match(/.{4}/g) ?? []).map((x) => parseInt(x, 16)));
+  const hex = (h) => (h.length <= 2 ? String.fromCharCode(parseInt(h, 16)) : String.fromCharCode(...(h.match(/.{4}/g) ?? []).map((x) => parseInt(x, 16))));
   for (const block of cmap.match(/beginbfchar([\s\S]*?)endbfchar/g) ?? []) {
     for (const m of block.matchAll(/<([0-9a-fA-F]+)>\s*<([0-9a-fA-F]+)>/g)) map.set(parseInt(m[1], 16), hex(m[2]));
   }
+  // диапазон – начальным кодом (<a> <b> <x>) или списком знаков по одному на код (<a> <b> [<x> <y> …]):
+  // вторую форму пишет Word при «Сохранить как PDF» (замечание 16.10.2026, кириллица фабулы)
   for (const block of cmap.match(/beginbfrange([\s\S]*?)endbfrange/g) ?? []) {
-    for (const m of block.matchAll(/<([0-9a-fA-F]+)>\s*<([0-9a-fA-F]+)>\s*<([0-9a-fA-F]+)>/g)) {
+    for (const m of block.matchAll(/<([0-9a-fA-F]+)>\s*<([0-9a-fA-F]+)>\s*(?:<([0-9a-fA-F]+)>|\[([^\]]*)\])/g)) {
       const from = parseInt(m[1], 16);
       const to = parseInt(m[2], 16);
-      const dst = parseInt(m[3], 16);
-      for (let c = from; c <= to && c - from < 65536; c++) map.set(c, String.fromCharCode(dst + (c - from)));
+      if (m[4] !== undefined) {
+        [...m[4].matchAll(/<([0-9a-fA-F]+)>/g)].forEach((x, i) => { if (from + i <= to) map.set(from + i, hex(x[1])); });
+        continue;
+      }
+      const dst = hex(m[3]);
+      const head = dst.slice(0, -1);
+      const last = dst.charCodeAt(dst.length - 1);
+      for (let c = from; c <= to && c - from < 65536; c++) map.set(c, head + String.fromCharCode(last + (c - from)));
     }
   }
   return map;

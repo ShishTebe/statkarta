@@ -536,14 +536,20 @@ export function pdfCardCells(extract, pos) {
   const texts = {};
   for (const r of pos.regions ?? []) {
     const [x0, y0, x1, y1] = r.box;
-    const inside = free.filter((c) => c.page === r.page && c.x >= x0 + dx && c.x <= x1 + dx && c.y - c.size * 0.7 >= y0 + dy && c.y <= y1 + dy + 4);
+    // печатные слова бланка в области («год мес. чис. часы», номер реквизита) вычитаются по месту
+    // кусок – печатный, если начинается там же, где слово бланка, и с того же слова (Word печатает
+    // надпись бланка одним куском на несколько слов), либо целиком лежит внутри слова бланка
+    const printedHere = (c) => (r.blank_words ?? []).some(([wx0, wx1, top, t]) => Math.abs(top + dy - topOf(c)) < 2.5
+      && ((Math.abs(c.x - wx0 - dx) < 1.5 && c.text.trim().startsWith(t)) || (c.x >= wx0 + dx - 1.5 && c.x <= wx1 + dx + 0.5 && t.includes(c.text.trim()))));
+    const inside = free.filter((c) => c.page === r.page && c.x >= x0 + dx && c.x <= x1 + dx && c.y - c.size * 0.7 >= y0 + dy && c.y <= y1 + dy + 4
+      && !printedHere(c));
     const lines = [];
     for (const c of [...inside].sort((a, b) => a.y - b.y || a.x - b.x)) {
       if (lines.length && Math.abs(lines.at(-1).y - c.y) < 2.5) lines.at(-1).items.push(c);
       else lines.push({ y: c.y, items: [c] });
     }
     const text = lines.map((l) => l.items.sort((a, b) => a.x - b.x).map((c) => c.text).join(' ')).join(' ');
-    texts[`${r.requisite}|${r.part}`] = insertedText(r.blank_text, text);
+    texts[`${r.requisite}|${r.part}`] = r.blank_words ? text.replace(/_{2,}/g, ' ').replace(/\s+/g, ' ').trim() : insertedText(r.blank_text, text);
   }
   return { cells, texts, match: { anchors: pos.anchors?.length ?? 0, found, share, dx, dy } };
 }
@@ -640,7 +646,8 @@ export function appCopySheets(extract, ix, layouts) {
 
 // ---------- клетки → значения реквизитов ----------
 
-const ciGroupText = (cells, group) => group.map((s) => cells.get(s) ?? '').join('').replace(/\s+/g, '');
+// разделители групп («/», «|»), напечатанные в бланке рядом с клетками, значением не считаются
+const ciGroupText = (cells, group) => group.map((s) => cells.get(s) ?? '').join('').replace(/[\s/|\\]+/g, '');
 
 function ciCandidates(ix, r) {
   const no = lookupOf(r);

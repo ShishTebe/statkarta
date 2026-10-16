@@ -15,7 +15,8 @@
 - anchors – номера реквизитов в левом поле («7.1.»): по ним проверяется, что PDF напечатан с того же
   бланка, и вычисляется сдвиг полей принтера;
 - regions – области текстовых реквизитов (фабула р. 12 ф. 1 и т. п.): от номера реквизита до номера
-  следующего; blank_text – печатный текст бланка в области (он вычитается из прочитанного).
+  следующего; blank_words – печатные слова бланка в области [x0, x1, верх, текст] (вычитаются по
+  месту), blank_text – тот же текст строкой.
 
 Результат – data/layout/2026/pdf/forma-<форма>.json (публичный: в нем только геометрия бланка).
 
@@ -115,7 +116,9 @@ def build(form):
                       and not MARK.match(w[4])]
             regions.append({"requisite": f["requisite"], "part": i, "page": pi,
                             "box": [LEFT - 4, round(y0 - 2, 1), round(x1 + 5, 1), round(y1 - 0.5, 1)],
-                            "blank_text": line_text(inside)})
+                            "blank_text": line_text(inside),
+                            # печатные слова области с местом: при чтении вычитаются по месту, а не по тексту
+                            "blank_words": [[round(w[0], 1), round(w[2], 1), round(w[1], 1), w[4]] for w in inside]})
     out = {"form": form, "blank": layout["blank"], "blank_sha256": layout["blank_sha256"],
            "source_note": "Середины мест бланка на странице PDF, напечатанного Word (scripts/blanks/build_pdf_positions.py); пункты, от левого верхнего угла",
            "pages": pages, "cells": sorted(cells), "printed": printed, "anchors": anchors, "regions": regions}
