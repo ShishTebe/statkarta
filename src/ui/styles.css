@@ -60,6 +60,8 @@ h3.group { font-size: .95rem; text-transform: none; color: var(--muted); margin:
 .results button:hover, .results button:focus { background: var(--accent-soft); }
 .hint { background: var(--accent-soft); border-radius: 6px; padding: .35rem .55rem; font-size: .88rem; margin-top: .45rem; }
 .err { color: var(--err); font-size: .88rem; margin-top: .3rem; }
+/* уведомление о сохранении профиля и дела */
+.ok-note { color: var(--ok); font-weight: 600; }
 .badge { display: inline-block; border-radius: 999px; padding: .05rem .5rem; font-size: .78rem; white-space: nowrap; background: var(--gray-soft); color: var(--muted); }
 .b-fill { background: var(--ok-soft); color: var(--ok); }
 .b-default, .b-hint { background: var(--accent-soft); color: var(--accent); }

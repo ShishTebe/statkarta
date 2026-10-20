@@ -476,31 +476,6 @@
    "review": "pending"
   },
   {
-   "id": "q.case.vud_date.date",
-   "text": "Дата возбуждения уголовного дела?",
-   "why": "ф. 3 р. 6, ф. ipk-in р. 26",
-   "forms": [
-    "3",
-    "ipk-in"
-   ],
-   "entity": "case",
-   "answer": {
-    "type": "date",
-    "multiple": null
-   },
-   "ask_when": {
-    "not_derived": [
-     "fact.case.vud_date.date"
-    ]
-   },
-   "sets": [
-    "fact.case.vud_date.date"
-   ],
-   "allow_unknown": true,
-   "status": "draft",
-   "review": "pending"
-  },
-  {
    "id": "q.case.vud_date.opte034c7",
    "text": "Дата возбуждения уголовного дела, вынесения постановления об отказе в возбуждении уголовного дела?",
    "why": "ф. 1 р. 11",

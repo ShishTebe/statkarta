@@ -29,6 +29,7 @@ const state = {
   fb: null, fbList: null, fbTab: 'note', rv: null, rvMarks: null, newsBanner: false, // замечания, ревизия правил, «Что нового» (без сведений дела)
   doc: null, // разбор постановления: только в памяти вкладки, в файл дела не сохраняется
   cardImp: null, // карточка, по которой заполняется новая (16.10.2026): только в памяти вкладки
+  profileNote: null, saveNote: null, // уведомления о сохранении профиля и дела (замечание 21.10.2026)
 };
 // Открытые дела сеанса: state.cases – все дела в памяти вкладки, state.kase – текущее (дело быстрого режима в список не входит)
 
@@ -1910,13 +1911,17 @@ function saveView() {
   const ret = retentionInfo(c, { months: retentionMonths(), today: todayIso(), isFinal, reopens: (ev) => defOf(ev.type)?.reopens === true });
   const pwd1 = h('input', { type: 'password', class: 'search', style: 'max-width:16rem', placeholder: 'Пароль (не короче 8 знаков)' });
   const pwd2 = h('input', { type: 'password', class: 'search', style: 'max-width:16rem', placeholder: 'Повторите пароль' });
-  const status = h('div', { class: 'small muted' });
+  // уведомление о сохранении остается на экране после перерисовки (замечание 21.10.2026)
+  let sn = state.saveNote?.caseId === c.id ? state.saveNote : null;
+  // дело изменено после сохранения – «сохранено» больше не верно
+  if (sn?.ok && state.dirtyIds.has(c.id)) sn = { ok: false, text: 'После сохранения в деле есть изменения – сохраните его снова.' };
+  const status = h('div', { class: `small ${sn ? (sn.ok ? 'ok-note' : 'err') : 'muted'}`, role: 'status', 'aria-live': 'polite' }, sn?.text ?? '');
   const getPassword = () => {
     const a = pwd1.value;
     const b = pwd2.value;
     if (state.password && !a) return state.password;
-    if (a.length < 8) { status.textContent = 'Пароль должен быть не короче 8 знаков'; return null; }
-    if (a !== b) { status.textContent = 'Пароли не совпадают'; return null; }
+    if (a.length < 8) { status.className = 'small err'; status.textContent = 'Пароль должен быть не короче 8 знаков'; return null; }
+    if (a !== b) { status.className = 'small err'; status.textContent = 'Пароли не совпадают'; return null; }
     return a;
   };
   const saveNow = async (toFile) => {
@@ -1932,9 +1937,14 @@ function saveView() {
       state.password = pwd;
       state.passwords.set(c.id, pwd);
       markSaved(c);
-      status.textContent = toFile ? 'Файл дела выгружен – он зашифрован тем же паролем' : `Дело сохранено на устройстве ${isoToRu(todayIso())}`;
+      state.saveNote = { caseId: c.id, ok: true, text: toFile
+        ? `Файл дела выгружен ${isoToRu(todayIso())} в ${timeNow()} – он зашифрован тем же паролем. Проверьте папку загрузок браузера.`
+        : `Дело сохранено на этом компьютере ${isoToRu(todayIso())} в ${timeNow()}. Оно есть в списке «Сохраненные на устройстве дела» на экране «Дела».` };
       render();
-    } catch (e) { status.textContent = e.message; }
+    } catch (e) {
+      state.saveNote = { caseId: c.id, ok: false, text: `Дело не сохранено: ${e.message}` };
+      render();
+    }
   };
   put(box, h('div', { class: 'panel' }, h('h2', {}, 'Сохранение дела'),
     h('p', { class: 'small' }, 'Дело шифруется паролем (AES-GCM, ключ из пароля через PBKDF2). Пароль не сохраняется: если он утерян, дело не восстановить.'),
@@ -2006,15 +2016,26 @@ function unitNameField(p) {
 function profileView() {
   const p = { ...state.profile };
   const organOptions = IX.reqs.get('1').get('1').options;
+  // уведомление о сохранении (замечание 21.10.2026): видно, сохранен профиль или нет
+  const status = h('span', { class: `small ${state.profileNote?.ok === false ? 'err' : 'ok-note'}`, role: 'status', 'aria-live': 'polite' }, state.profileNote?.text ?? '');
+  const note = (text, ok = true) => { state.profileNote = { text, ok }; };
   const save = () => {
     state.profile = sanitizeProfile(p);
-    if (!profileSave(state.profile)) alert('Хранилище браузера недоступно: профиль действует только в этой вкладке');
+    if (profileSave(state.profile)) note(`Профиль сохранен на этом компьютере ${isoToRu(todayIso())} в ${timeNow()}.`);
+    else note('Хранилище браузера недоступно: профиль действует только в этой вкладке и после ее закрытия пропадет.', false);
     render();
+  };
+  // правка любого поля – отметка «не сохранено» до нажатия «Сохранить профиль»
+  const changed = () => {
+    state.profileNote = null;
+    status.className = 'small err';
+    status.textContent = 'Есть несохраненные изменения – нажмите «Сохранить профиль».';
   };
   const field = (label, key, attrs = {}) => h('label', { class: 'small' }, label,
     h('input', { type: 'text', class: 'search', value: p[key] ?? '', ...attrs, onchange: (e) => { p[key] = e.target.value.trim(); } }));
   return h('div', {},
     regionPanel(),
+    h('div', { oninput: changed, onchange: changed },
     h('div', { class: 'panel' }, h('h2', {}, 'Профиль органа'),
       h('p', { class: 'small muted' }, 'Профиль хранится только на этом компьютере, отдельно от дел, никуда не передается и не содержит сведений дела (FR-36). Сведения подставляются во все карточки пакета.'),
       field('Наименование органа (ф. 6 р. 1, ИПК р. 79, карта на иностранца р. 2)', 'organ_name'),
@@ -2031,16 +2052,16 @@ function profileView() {
       h('p', { class: 'small muted' }, 'Подставляются в реквизиты подписи: «Заполнил» и «Руководитель» в ИПК, р. 38 карты на иностранца, строка лица, ведущего расследование.'),
       field('Должность лица, ведущего расследование', 'investigator_position', { placeholder: 'следователь' }),
       field('Специальное звание (классный чин)', 'investigator_rank', { placeholder: 'лейтенант юстиции' }),
-      field('Фамилия и инициалы', 'investigator_fio', { placeholder: 'И.И. Иванов' }),
+      field('Инициалы и фамилия', 'investigator_fio', { placeholder: 'И.И. Иванов' }),
       field('Должность руководителя', 'head_position', { placeholder: 'заместитель руководителя отдела' }),
       field('Звание руководителя', 'head_rank', { placeholder: 'полковник юстиции' }),
-      field('Фамилия и инициалы руководителя', 'head_fio', { placeholder: 'Петров П.П.' }),
-      h('p', { class: 'small muted' }, 'Строка подписи собирается через пробел: «следователь капитан юстиции Иванов И.И.».')),
+      field('Инициалы и фамилия руководителя', 'head_fio', { placeholder: 'П.П. Петров' }),
+      h('p', { class: 'small muted' }, 'Строка подписи собирается через пробел: «следователь капитан юстиции И.И. Иванов». Инициалы пишутся перед фамилией – как в расшифровке подписи.')),
     h('div', { class: 'panel' }, h('h2', {}, 'Прокурор'),
       h('p', { class: 'small muted' }, 'Код органа прокуратуры и подпись прокурора нужны не во всех органах и не во всех карточках: отметьте, где они требуются. В СК это р. 40 ф. 1 и р. 33 ф. 1.1.'),
       field('Должность прокурора', 'prosecutor_position'),
       field('Звание (классный чин) прокурора', 'prosecutor_rank'),
-      field('Фамилия и инициалы прокурора', 'prosecutor_fio'),
+      field('Инициалы и фамилия прокурора', 'prosecutor_fio', { placeholder: 'С.С. Сидоров' }),
       h('div', { class: 'row small' }, 'Карточки, где нужны код прокуратуры и подпись: ',
         ...PACK.forms.map((f) => h('label', { class: 'small' }, h('input', { type: 'checkbox',
           checked: (p.prosecutor_forms ?? ['1', '1.1']).includes(f.form),
@@ -2062,8 +2083,20 @@ function profileView() {
         h('button', { class: 'btn', onclick: async () => {
           const text = await pickFile();
           if (!text) return;
-          try { state.profile = sanitizeProfile(JSON.parse(text)); profileSave(state.profile); render(); } catch { alert('Файл профиля не читается'); }
-        } }, 'Загрузить профиль'))));
+          try {
+            state.profile = sanitizeProfile(JSON.parse(text));
+            if (profileSave(state.profile)) note(`Профиль загружен из файла и сохранен на этом компьютере ${isoToRu(todayIso())} в ${timeNow()}.`);
+            else note('Профиль загружен, но хранилище браузера недоступно: он действует только в этой вкладке.', false);
+            render();
+          } catch { alert('Файл профиля не читается'); }
+        } }, 'Загрузить профиль')),
+      status)));
+}
+
+// Время ЧЧ:ММ – для уведомлений о сохранении
+function timeNow() {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
 // ---------- Справочники ----------

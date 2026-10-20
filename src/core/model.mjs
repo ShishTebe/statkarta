@@ -182,8 +182,25 @@ export function journalText(c, { formTitle = (f) => `ф. ${f}`, eventTitle = (t)
 // ---- миграция файлов дела (NFR-12) ----
 
 // case/1 – формат Фазы 1 (приложение 0.2): { answers, fills, forms, created } без поля schema
+// Сведения, объединенные с другими: прежний ответ переносится в новое сведение, если оно не заполнено.
+// Дата возбуждения для ф. 3 р. 6 и карты на иностранца р. 26 была отдельным сведением (замечание 21.10.2026).
+export const FACT_RENAMED = { 'fact.case.vud_date.date': 'fact.case.vud_date' };
+
+function renameFacts(cont) {
+  if (!cont?.facts) return;
+  for (const [from, to] of Object.entries(FACT_RENAMED)) {
+    if (!cont.facts[from]) continue;
+    if (!cont.facts[to]?.length) cont.facts[to] = cont.facts[from];
+    delete cont.facts[from];
+  }
+}
+
 export function migrateCase(obj, { scopeOf } = {}) {
-  if (obj?.schema === CASE_SCHEMA) return obj;
+  if (obj?.schema === CASE_SCHEMA) {
+    for (const cont of [obj.case, obj.damage, ...(obj.crimes ?? []), ...(obj.persons ?? []), ...(obj.victims ?? []),
+      ...(obj.events ?? []).flatMap((e) => e.cards ?? [])]) renameFacts(cont);
+    return obj;
+  }
   if (obj && (obj.schema === 'case/1' || (!obj.schema && obj.answers))) {
     const c = createCase2({ today: obj.created ?? todayIso() });
     c.title = 'Перенесено из версии 0.2';
@@ -193,7 +210,9 @@ export function migrateCase(obj, { scopeOf } = {}) {
     const ev = addEvent(c, { type: 'ev.manual', date: obj.created ?? todayIso(), refs: { crimes: [crime.id], persons: [person.id], victims: [victim.id] } });
     const target = { case: c.case, crime, person, victim, damage: c.damage };
     const cardFacts = {};
-    for (const [fid, a] of Object.entries(obj.answers ?? {})) {
+    for (const [fid0, a] of Object.entries(obj.answers ?? {})) {
+      const fid = FACT_RENAMED[fid0] && !obj.answers[FACT_RENAMED[fid0]] ? FACT_RENAMED[fid0] : fid0;
+      if (FACT_RENAMED[fid0] && fid === fid0) continue;
       const scope = scopeOf ? scopeOf(fid) : fid.split('.')[1];
       if (target[scope]) setFactVersion(c, target[scope], fid, a.status, a.value, null);
       else cardFacts[fid] = a;

@@ -121,6 +121,11 @@ def entity(form, number):
 # (замечание пользователя от 23.09.2026). Ключ задается явно, иначе они стали бы одним фактом.
 FORM_KEY = {("1.1", "34.1"): "crime.service_help.spr14"}
 
+# Реквизит-дата, который совпадает с общим сведением дела: отдельного факта и вопроса нет, реквизит
+# берет значение общего сведения. Ф. 3 р. 6 и карта на иностранца р. 26 – дата возбуждения (в
+# опроснике ф. 3 дата ВУД спрашивалась дважды – замечание пользователя от 21.10.2026).
+FACT_ALIAS = {"fact.case.vud_date.date": "fact.case.vud_date"}
+
 
 def keyword(label):
     l = label.lower().replace("ё", "е")
@@ -189,6 +194,12 @@ def main():
         base = key.rsplit(".", 1)[0] if not key.startswith("f") else key
         same_base = [g for g in groups if not g.startswith("f") and g.rsplit(".", 1)[0] == base]
         fid = f"fact.{base}" if len(same_base) == 1 else f"fact.{key}"
+        if fid in FACT_ALIAS:
+            for f, r in items:
+                mapping.append({"id": f"m.f{f['form']}.r{r['id']}", "form": f["form"], "requisite": r["id"],
+                                "value_from": FACT_ALIAS[fid], "source_note": f"Бланк ф. {f['form']} ред. 2026, реквизит {r['number']}",
+                                "match": "shared", "scope": scope_of(FACT_ALIAS[fid]), "status": "draft"})
+            continue
         f0, r0 = items[0]
         shared += is_shared
         answer = {"type": r0["field_type"], "multiple": r0["multiple"]}

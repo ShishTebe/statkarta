@@ -117,10 +117,6 @@
      "from": "event.date"
     },
     {
-     "fact": "fact.case.vud_date.date",
-     "from": "event.date"
-    },
-    {
      "fact": "fact.case.vud_date.opte034c7",
      "value": [
       "|1"
@@ -965,10 +961,6 @@
    "sets_facts": [
     {
      "fact": "fact.case.vud_date",
-     "from": "event.date"
-    },
-    {
-     "fact": "fact.case.vud_date.date",
      "from": "event.date"
     },
     {

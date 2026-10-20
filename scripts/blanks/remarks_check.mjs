@@ -17,7 +17,6 @@ put(c.case, 'fact.case.case_number', '12600000017000123');
 put(c.case, 'fact.case.kusp', '4567');
 put(c.case, 'fact.case.kusp_date', '2026-02-27');
 put(c.case, 'fact.case.vud_date', '2026-03-01');
-put(c.case, 'fact.case.vud_date.date', '2026-03-01');
 const cr = core.getObject(c, 'crime.1');
 put(cr, 'fact.crime.crime_date', '2026-02-20');
 put(cr, 'fact.crime.okato', ['|30401000000']);

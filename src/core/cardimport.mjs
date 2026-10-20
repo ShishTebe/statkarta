@@ -20,7 +20,7 @@ import { scopeOf, modeRequisite, activeCards, addCardManually, profileFillsOf } 
 
 // Сведения, по которым карточка привязана к своему делу: из карточки другого дела по умолчанию
 // не переносятся (номер дела, КРСП, дата возбуждения)
-const CARD_CASE_IDS = new Set(['fact.case.case_number', 'fact.case.kusp', 'fact.case.kusp_date', 'fact.case.vud_date', 'fact.case.vud_date.date']);
+const CARD_CASE_IDS = new Set(['fact.case.case_number', 'fact.case.kusp', 'fact.case.kusp_date', 'fact.case.vud_date']);
 const CARD_SKIP_FILLS_BY = new Set(['ic', 'court']);
 const CARD_SCOPE_RU = { case: 'Сведения дела', crime: 'Сведения эпизода', person: 'Сведения лица', victim: 'Сведения потерпевшего', card: 'Реквизиты карточки' };
 export const CARD_IMPORT_SCOPES = CARD_SCOPE_RU;

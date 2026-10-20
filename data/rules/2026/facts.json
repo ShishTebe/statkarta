@@ -124,16 +124,6 @@
    "status": "draft"
   },
   {
-   "id": "fact.case.vud_date.date",
-   "entity": "case",
-   "scope": "case",
-   "type": "date",
-   "classifier_no": null,
-   "shared": true,
-   "label": "Дата возбуждения уголовного дела",
-   "status": "draft"
-  },
-  {
    "id": "fact.case.vud_date.opte034c7",
    "entity": "crime",
    "scope": "case",

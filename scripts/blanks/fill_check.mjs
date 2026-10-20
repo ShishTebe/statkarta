@@ -23,7 +23,6 @@ if (cr) {
   put(cr, 'fact.crime.fabula', 'Тестовая фабула: неустановленное лицо тайно похитило имущество из помещения склада, причинив ущерб.');
 }
 put(c.case, 'fact.case.vud_date', '2026-03-01');
-put(c.case, 'fact.case.vud_date.date', '2026-03-01');
 put(c.case, 'fact.f1_1.r37', '2026-04-15');
 const person = core.getObject(c, 'person.1');
 if (person) {

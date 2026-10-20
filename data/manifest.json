@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
- "data_version": "2026.3.11-draft",
+ "data_version": "2026.3.12-draft",
  "edition": "2026",
  "effective_from": "2026-01-01",
- "generated": "2026-10-19",
+ "generated": "2026-10-20",
  "changelog": "docs/CHANGELOG.md",
  "status": "draft – требует предметной приемки",
  "files": [
@@ -135,8 +135,8 @@
   },
   {
    "path": "data/events/2026/events.json",
-   "sha256": "10f9ab96552ddd8d0873b98fe996bb2e3193fe334749a04bcc7b16ee15e8c5f3",
-   "bytes": 35817,
+   "sha256": "56d45795263cac8cda3076ae551794ad46c2f4628cc34ef4f7c44b3ecfda47ee",
+   "bytes": 35659,
    "schema": "events",
    "public": true
   },
@@ -226,8 +226,8 @@
   },
   {
    "path": "data/layout/2026/forma-1.json",
-   "sha256": "88161b000fa3f50fd831348fbe467844c961d18cdc70af217a1581ed28297d99",
-   "bytes": 36491,
+   "sha256": "67f4b42faecedb742b186a13d3a9d0c7286fc61c246661950a04f2271fe3cb50",
+   "bytes": 36458,
    "schema": null,
    "public": true
   },
@@ -1003,8 +1003,8 @@
   },
   {
    "path": "data/rules/2026/facts.json",
-   "sha256": "052fcf1578332efc1405de93c5ae3a9a4705f9cb48891621e3a63b42440b392c",
-   "bytes": 90623,
+   "sha256": "7539e66c38c8ea1957b6608c4ae1065e47c1f307684bf53c072069becb566486",
+   "bytes": 90375,
    "schema": "facts",
    "public": true
   },
@@ -1017,15 +1017,15 @@
   },
   {
    "path": "data/rules/2026/mapping.json",
-   "sha256": "71dee553903ca878a0793197b22337f409db9868363282c78fd3727d147ee425",
-   "bytes": 126989,
+   "sha256": "2f3adb3506cac62acee0c86ac64cbc4e45e24310011ff41c589846eda92db180",
+   "bytes": 126979,
    "schema": "mapping",
    "public": true
   },
   {
    "path": "data/rules/2026/questions.json",
-   "sha256": "dbb5d60fd9edd1f711c917329f8224bc22c5ea470fadf24b2993ae8b4b5d1232",
-   "bytes": 167540,
+   "sha256": "1b6551248fa1b5d1cb8e1f0a0100e35b872f5c5a48ed07e338c6bbe860df8a32",
+   "bytes": 167051,
    "schema": "questions",
    "public": true
   },

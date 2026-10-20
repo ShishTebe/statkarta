@@ -28,8 +28,7 @@
      {
       "role": "date",
       "facts": [
-       "fact.case.vud_date",
-       "fact.case.vud_date.date"
+       "fact.case.vud_date"
       ],
       "format": "YYYYMMDD",
       "groups": [
