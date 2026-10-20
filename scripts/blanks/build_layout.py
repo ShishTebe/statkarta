@@ -139,12 +139,27 @@ def apply_corrections(form):
         fields[fix["requisite"]] = entry
     known = json.loads((ROOT / f"data/forms/2026/{FILE_NAME[form]}.json").read_text())
     order = {r["id"]: i for i, r in enumerate(known["requisites"])}
+    # Реквизиты без своего места в бланке (критерий A3.5-5) отмечаются явно:
+    #  «by_hand» – значение вписывается от руки (места нет, клетки – рисунок, назначение клеток не установлено);
+    #  «placed_in» – значение впечатывается в места других реквизитов (строки квалификации 21.1 – 21.3 и т. п.).
+    for key in ("by_hand", "placed_in"):
+        for req in corrections.get(key, {}):
+            if req not in order:
+                raise SystemExit(f"исправления ф. {form}: «{key}» – реквизита {req} нет в пакете формы")
+            if req in fields:
+                raise SystemExit(f"исправления ф. {form}: «{key}» – у реквизита {req} есть место в карте")
+    by_hand = [{"requisite": r, "note": n} for r, n in corrections.get("by_hand", {}).items()]
+    placed_in = [{"requisite": r, "rows": v["rows"], "note": v.get("note")} for r, v in corrections.get("placed_in", {}).items()]
     # контрольная сумма – по текущему пакету бланков: вычистка образцов меняет только текст ячеек,
     # порядок фигур и адреса ячеек при этом не меняются
     manifest = json.loads((BLANKS / "blanks.json").read_text())
     draft["blank_sha256"] = next(b["sha256"] for b in manifest["blanks"] if b["form"] == form)
     layout = {**draft, "fields": sorted(fields.values(), key=lambda f: order.get(f["requisite"], 999)),
               "map_status": corrections.get("status", draft["map_status"])}
+    if by_hand:
+        layout["by_hand"] = sorted(by_hand, key=lambda x: order[x["requisite"]])
+    if placed_in:
+        layout["placed_in"] = sorted(placed_in, key=lambda x: order[x["requisite"]])
     (OUT / f"{FILE_NAME[form]}.json").write_text(json.dumps(layout, ensure_ascii=False, indent=1) + "\n")
     return layout
 

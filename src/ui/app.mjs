@@ -1301,7 +1301,7 @@ function displayValue(it, value) {
   if (it.requisite) return displayOf(IX, it.requisite, value);
   return value.map((k) => {
     const o = it.options.find((x) => optKey(x) === k) ?? it.options.find((x) => x.code === keyCode(k));
-    return o ? `${o.code} – ${o.value}` : keyCode(k);
+    return o ? `${o.blank_code ?? o.code} – ${o.value}` : keyCode(k);
   }).join('; ');
 }
 
@@ -1378,7 +1378,7 @@ function overlaySlotsInput(it, ev) {
         rows[i] = [...row.filter((k) => overlayRank(keyCode(k)) !== rk), ...(e.target.value ? [e.target.value] : [])];
         commit();
       } }, h('option', { value: '', selected: !cur }, 'не выбрано'),
-      ...list.map((o) => h('option', { value: optKey(o), selected: optKey(o) === cur, title: o.value }, `${o.code} – ${shortLabel(sentenceCase(o.value), 60)}`)));
+      ...list.map((o) => h('option', { value: optKey(o), selected: optKey(o) === cur, title: o.value }, `${o.blank_code ?? o.code} – ${shortLabel(sentenceCase(o.value), 60)}`)));
     });
     const composed = row.length === 2 ? composeOverlay(row.map(keyCode)) : '';
     put(wrap, h('div', { class: 'row slot' }, h('span', { class: 'muted small' }, `Поле ${i + 1}: `),
@@ -1407,7 +1407,7 @@ function enumInput(it, ev) {
     const tipText = tip ? h('span', { class: 'opt-tip', hidden: true }, tip) : null;
     put(opts, h('label', { class: blocker || full ? 'blocked' : '', title: blocker ? `Тот же разряд, что у выбранного кода ${blocker}: сначала снимите его` : full ? `В бланке ${inp.max_codes} полей` : tip || null },
       h('input', { type: single ? 'radio' : 'checkbox', name: `r-${it.key}`, checked, onchange: (e) => (e.target.checked ? addCode(it, ev, k) : removeCode(it, ev, k)) }),
-      h('span', {}, h('span', { class: 'code' }, o.code), ' ', sentenceCase(o.value),
+      h('span', {}, h('span', { class: 'code' }, o.blank_code ?? o.code), ' ', sentenceCase(o.value),
         tip ? h('button', { class: 'tip-btn', type: 'button', title: tip, 'aria-label': 'Что означает код', onclick: (e) => { e.preventDefault(); tipText.hidden = !tipText.hidden; } }, '?') : null,
         tipText)));
   }
@@ -2132,7 +2132,7 @@ function blankView() {
         r.input.sources?.length ? h('span', { class: 'muted' }, 'Основание') : null, r.input.sources?.length ? h('span', { class: 'small' }, r.input.sources.join(' ')) : null) : null,
       r.raw ? h('div', {}, h('h3', { class: 'group' }, 'Текст реквизита в бланке'), h('div', { class: 'raw' }, r.raw)) : null,
       r.options.length ? h('div', {}, h('h3', { class: 'group' }, `Коды (${r.options.length})`), h('div', { class: 'table-wrap' }, h('table', { class: 'memo' },
-        h('tbody', {}, ...r.options.map((o) => h('tr', {}, h('td', {}, h('span', { class: 'code' }, o.code)), h('td', {}, o.group ? h('span', { class: 'muted' }, `${o.group}: `) : null, o.value))))))) : null,
+        h('tbody', {}, ...r.options.map((o) => h('tr', {}, h('td', {}, h('span', { class: 'code' }, o.blank_code ?? o.code)), h('td', {}, o.group ? h('span', { class: 'muted' }, `${o.group}: `) : null, o.value))))))) : null,
       r.classifier_no && IX.classifiers.get(r.classifier_no) ? h('p', { class: 'small muted' }, `Коды реквизита – по справочнику № ${r.classifier_no} (${IX.classifiers.get(r.classifier_no).entries.length} позиций), откройте кнопкой выше.`) : null,
       h('h3', { class: 'group' }, 'Разъяснения'),
       ...(notes.length ? notes.map(noteNode) : [h('p', { class: 'muted small' }, 'Разъяснений к реквизиту в пакете нет.')]));

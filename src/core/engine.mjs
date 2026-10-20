@@ -228,7 +228,8 @@ export function displayOf(ix, r, value) {
     const parts = value.map((k) => {
       const code = keyCode(k);
       const o = r.options?.find((x) => optKey(x) === k) ?? r.options?.find((x) => x.code === code);
-      return { code, title: codeTitle(ix, r, code, o) };
+      // в памятке – код так, как он напечатан в бланке (blank_code)
+      return { code: o?.blank_code ?? code, title: codeTitle(ix, r, code, o) };
     });
     if (r.input?.select === 'overlay_slots') {
       // код бланка складывается из двух чисел (30 + 01 = 31); слотов бывает несколько

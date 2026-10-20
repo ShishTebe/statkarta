@@ -255,6 +255,9 @@
         },
         "hint": {
          "type": "string"
+        },
+        "blank_code": {
+         "type": "string"
         }
        }
       }
@@ -307,6 +310,9 @@
          ]
         },
         "hint": {
+         "type": "string"
+        },
+        "blank_code": {
          "type": "string"
         }
        }

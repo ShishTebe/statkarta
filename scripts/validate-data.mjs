@@ -35,6 +35,10 @@ for (const f of walk(`data/forms/${ED}`).filter((x) => /\/(forma-|ipk)/.test(x) 
     if (r.input?.fills) for (const fl of r.input.fills) for (const c of [fl.for_code, ...(fl.for_codes ?? [])].filter(Boolean)) if (!r.options.some((o) => o.code === c)) err(`ф. ${d.form} р. ${r.id}: доп. поле для несуществующего кода ${c}`);
     const dup = codes.filter((c, i) => codes.indexOf(c) !== i);
     if (dup.length) warn(`ф. ${d.form} р. ${r.id}: повтор кодов вариантов в одной группе: ${[...new Set(dup)].map((x) => x.split('|')[1]).join(', ')}`);
+    // код в бланке (blank_code) не должен совпадать с кодом другого варианта – иначе карточку не прочитать обратно
+    const printed = r.options.map((o) => `${o.group ?? ''}|${o.blank_code ?? o.code}`);
+    const pdup = printed.filter((c, i) => printed.indexOf(c) !== i);
+    if (r.options.some((o) => o.blank_code) && pdup.length) err(`ф. ${d.form} р. ${r.id}: повтор кодов бланка: ${[...new Set(pdup)].map((x) => x.split('|')[1]).join(', ')}`);
     if (r.label_status === 'needs_review') warn(`ф. ${d.form} р. ${r.id}: наименование требует сверки с бланком`);
   }
   if (d.requisites_count !== d.requisites.length) err(`${f}: requisites_count ${d.requisites_count} ≠ ${d.requisites.length}`);

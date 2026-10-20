@@ -3,7 +3,10 @@
 //  – у каждого реквизита, который заполняет следователь или руководитель, есть место в бланке;
 //  – каждое место карты привязано к реквизиту формы;
 //  – число клеток в группе совпадает с разрядностью кода по бланку (input.code_digits);
-//  – контрольная сумма бланка совпадает с той, по которой составлена карта.
+//  – контрольная сумма бланка совпадает с той, по которой составлена карта;
+//  – реквизиты без места отмечены в карте явно (A3.5-5): «by_hand» – вписывается от руки (с причиной),
+//    «placed_in» – значение впечатывается в места других реквизитов (строки квалификации); отметка
+//    у реквизита, у которого есть место или которого нет в пакете формы, – ошибка.
 //
 // Запуск: node scripts/check-layout.mjs [--quiet]
 import fs from 'node:fs';
@@ -39,7 +42,20 @@ for (const file of fs.readdirSync(LAYOUT_DIR).filter((f) => f.endsWith('.json'))
     lines.push(`ОШИБКА: бланк ${layout.blank} изменился – контрольная сумма не совпадает с картой`);
     errors += 1;
   }
-  const missing = form.requisites.filter((r) => BY_INVESTIGATOR.has(r.fills_by) && !mapped.has(r.id));
+  const byHand = new Map((layout.by_hand ?? []).map((x) => [x.requisite, x]));
+  const placedIn = new Map((layout.placed_in ?? []).map((x) => [x.requisite, x]));
+  for (const [kind, marks] of [['от руки', byHand], ['по местам других реквизитов', placedIn]]) {
+    for (const [req, m] of marks) {
+      if (!byId.has(req)) { lines.push(`ОШИБКА: отметка «${kind}» у р. ${req} – реквизита нет в пакете формы`); errors += 1; }
+      if (mapped.has(req)) { lines.push(`ОШИБКА: отметка «${kind}» у р. ${req}, а место в карте у него есть`); errors += 1; }
+      if (kind === 'от руки' && !String(m.note ?? '').trim()) { lines.push(`ОШИБКА: у отметки «от руки» р. ${req} нет причины`); errors += 1; }
+    }
+  }
+  for (const [req, m] of placedIn) {
+    const lost = (m.rows ?? []).filter((x) => !mapped.has(x));
+    if (!m.rows?.length || lost.length) { lines.push(`ОШИБКА: р. ${req} впечатывается в места ${lost.join(', ') || '(не указаны)'}, а их нет в карте`); errors += 1; }
+  }
+  const missing = form.requisites.filter((r) => BY_INVESTIGATOR.has(r.fills_by) && !mapped.has(r.id) && !byHand.has(r.id) && !placedIn.has(r.id));
   // служебные места бланка (строки подписи «sign.*», вид карты ИПК «variant») реквизитами формы не являются
   const extra = layout.fields.filter((f) => !byId.has(f.requisite) && !f.requisite.startsWith('sign.') && f.requisite !== 'variant');
   const owner = new Map();
@@ -64,8 +80,9 @@ for (const file of fs.readdirSync(LAYOUT_DIR).filter((f) => f.endsWith('.json'))
   for (const field of layout.fields) {
     const r = byId.get(field.requisite);
     if (!r || !BY_INVESTIGATOR.has(r.fills_by)) continue;
-    // разрядность – по кодам вариантов бланка, если они есть (в пакете формы она местами указана неточно)
-    const lens = [...new Set((r.options ?? []).map((o) => String(o.code).length))];
+    // разрядность – по кодам вариантов бланка, если они есть (в пакете формы она местами указана неточно);
+    // код в бланке – blank_code, если он задан (ф. 1 р. 9.1: «04» при коде варианта «4»)
+    const lens = [...new Set((r.options ?? []).map((o) => String(o.blank_code ?? o.code).length))];
     const digits = lens.length === 1 ? lens[0] : r.input?.code_digits ?? null;
     if (!digits) continue;
     const codeGroups = field.parts ? field.parts.filter((p) => p.role === 'code').flatMap((p) => p.groups) : field.groups;
@@ -80,12 +97,14 @@ for (const file of fs.readdirSync(LAYOUT_DIR).filter((f) => f.endsWith('.json'))
     warnings += sizeProblems.length;
   }
   report.push({ form: layout.form, status: layout.map_status, fields: layout.fields.length,
-    cells: layout.fields.reduce((n, f) => n + f.groups.reduce((m, g) => m + g.length, 0), 0), lines });
+    cells: layout.fields.reduce((n, f) => n + f.groups.reduce((m, g) => m + g.length, 0), 0), lines,
+    byHand: [...byHand.keys()].map((id) => (byId.get(id)?.number && byId.get(id).number !== 'б/н' ? byId.get(id).number : id)), placedIn: placedIn.size });
 }
 
 for (const r of report) {
   if (!quiet || r.lines.length) {
-    console.log(`форма ${r.form} (${r.status}): реквизитов ${r.fields}, мест ${r.cells}`);
+    const marks = [r.byHand.length ? `от руки ${r.byHand.length} (${r.byHand.join(', ')})` : '', r.placedIn ? `по местам других ${r.placedIn}` : ''].filter(Boolean);
+    console.log(`форма ${r.form} (${r.status}): реквизитов ${r.fields}, мест ${r.cells}${marks.length ? `; ${marks.join('; ')}` : ''}`);
     for (const l of r.lines) console.log(`   ${l}`);
   }
 }

@@ -9,6 +9,16 @@ export function keyCode(key) {
   return s.includes('|') ? s.slice(s.indexOf('|') + 1) : s;
 }
 
+// Код, который впечатывается в бланк. Обычно совпадает с кодом варианта; у части реквизитов бланк
+// заказчика печатает другой код (ф. 1 р. 9.1 – «04» вместо «4»; ф. 5 р. 18.4 – код наложением
+// «до / после принятия в РФ» + территория при общем с ф. 1 и ф. 2 ответе 1–8) – он задан в
+// варианте полем blank_code. Ответ в деле по-прежнему хранится по коду варианта.
+export function blankCode(r, key) {
+  const code = keyCode(key);
+  const o = r?.options?.find((x) => optKey(x) === String(key)) ?? r?.options?.find((x) => x.code === code);
+  return o?.blank_code ?? code;
+}
+
 export function indexPack(pack) {
   const ix = {
     pack,

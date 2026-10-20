@@ -41,6 +41,8 @@ function filledCard(form, { variant = null } = {}) {
   set(cr, 'fact.crime.qualification', 'ч. 3 ст. 30, п. «в» ч. 2 ст. 158 УК РФ');
   set(cr, 'fact.crime.crime_date', '2026-02-20');
   set(cr, 'fact.crime.fabula', FABULA);
+  // р. 13.1 ф. 1 и р. 7.1 ф. 1.1 с 20.10.2026 раскладываются по клеткам «ст., зн., ч., п.» – нужна квалификация
+  set(cr, 'fact.crime.laundering_predicate', 'ч. 4 ст. 159 УК РФ');
   const p = core.addObject(c, 'person', { crimes: [cr.id] });
   const v = core.addObject(c, 'victim', { crimes: [cr.id] });
   const ev = core.addEvent(c, { type: 'ev.manual', date: '2026-03-01', refs: { crimes: [cr.id], persons: [p.id], victims: [v.id] } });
@@ -116,8 +118,10 @@ test('.docx других форм: форма определяется, напе
     const res = await core.readCardFile(ix, 'к.docx', bytes, { blanks: BLANKS, pdfPositions: POS });
     assert.equal(res.form, form, `ф. ${form}`);
     const cmp = compare(form, memo, res);
-    // одинаковые коды в разных группах вариантов (ф. 4 р. 29.2) различить по клетке нельзя – помечаются примечанием
-    assert.ok(cmp.diff.length <= 1, `ф. ${form}: ${cmp.diff.join('; ')}`);
+    // одинаковые коды в разных группах вариантов (ф. 4 р. 29.2) различить по клетке нельзя – помечаются примечанием;
+    // в квалификации ф. 4 р. 6 (с 20.10.2026 впечатывается) клеток стадии нет – «ч. 3 ст. 30» обратно не читается
+    const diff = cmp.diff.filter((d) => !/^р\. 6: "ч\. 3 ст\. 30, (.+)" → "\1"$/.test(d) || form !== '4');
+    assert.ok(diff.length <= 1, `ф. ${form}: ${diff.join('; ')}`);
     assert.ok(cmp.same >= 8, `ф. ${form}: прочитано ${cmp.same}`);
   }
 });

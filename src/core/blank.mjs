@@ -4,7 +4,7 @@
 // печатной копией – интерфейс.
 
 import { composeOverlay, overlaySlots } from './codes.mjs';
-import { keyCode } from './pack.mjs';
+import { blankCode, keyCode } from './pack.mjs';
 import { parseQualification } from './uk.mjs';
 import { ruToIso } from './text.mjs';
 
@@ -19,7 +19,7 @@ const IPK_VARIANT_MARK = { lc: 'ЛЦ', pr: 'ПР' };
 
 function blankCodesOf(row) {
   if (!Array.isArray(row.value)) return [];
-  const codes = row.value.map(keyCode).filter(Boolean);
+  const codes = row.value.map((k) => blankCode(row.requisite, k)).filter(Boolean);
   const select = row.requisite?.input?.select;
   // р. 31 ф. 1.1: код ставится наложением двух чисел (30 + 01 = 31), таких кодов может быть
   // несколько (31, 41, 14) – замечание от 23.09.2026
@@ -258,7 +258,7 @@ function planParts(row, field, memo) {
       // бланки-таблицы (ИПК): коды и даты впечатываются текстом в ячейку
       if (!row || !BLANK_FILLED.has(row.status) || row.value === null || row.value === undefined) continue;
       let text = '';
-      if (part.role === 'codes_text') text = (Array.isArray(row.value) ? row.value.map(keyCode) : [row.value]).join(', ');
+      if (part.role === 'codes_text') text = (Array.isArray(row.value) ? row.value.map((k) => blankCode(row.requisite, k)) : [row.value]).join(', ');
       else {
         const iso = blankFactValue(memo, part) ?? row.value;
         const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso));
@@ -298,6 +298,13 @@ function planParts(row, field, memo) {
     texts.push(value);
   }
   out.text = texts.join(' ');
+  // квалификация, которую не удалось разобрать на статью, часть и пункты, в клетки не попадает –
+  // об этом нужно сказать, а не оставить клетки пустыми молча
+  const qualParts = field.parts.filter((p) => p.role === 'qual' && p.slot === 'article');
+  if (qualParts.length && row && BLANK_FILLED.has(row.status) && typeof row.value === 'string' && row.value.trim()
+    && !qualParts.some((p) => blankQualSlot(row.value, 'article', p.line ?? 0, Boolean(p.episodes)))) {
+    out.notes.push(`реквизит ${field.requisite}: квалификация «${row.value}» не разобрана на статью, часть и пункт – в бланк не вписана; исправьте запись (например, «п. «в» ч. 2 ст. 158 УК РФ») или впишите от руки`);
+  }
   if (!out.edits.length && !out.cellEdits?.length && !out.notes.length) out.skip = true;
   return out;
 }
@@ -420,6 +427,14 @@ export function planBlank(memo, layout, { state = null, profile = null } = {}) {
     cellEdits.push(...(plan.cellEdits ?? []));
     notes.push(...plan.notes);
   }
+  // реквизиты без места в бланке, отмеченные в карте «от руки» (A3.5-5): значение напоминается
+  // в предупреждениях печати вместе с причиной
+  const handwritten = [];
+  for (const m of layout.by_hand ?? []) {
+    const row = rows.get(m.requisite);
+    if (!row || !BLANK_FILLED.has(row.status) || BLANK_SKIP_FILLS_BY.has(row.requisite?.fills_by) || !row.display) continue;
+    handwritten.push({ requisite: m.requisite, number: row.number, label: row.label, value: row.display, note: m.note });
+  }
   const errors = memo.checks.filter((c) => c.severity === 'error');
   const warnings = memo.checks.filter((c) => c.severity !== 'error');
   const unconfirmed = memo.rows.filter((r) => r.status === 'default' || r.status === 'hint');
@@ -429,9 +444,10 @@ export function planBlank(memo, layout, { state = null, profile = null } = {}) {
   for (const p of fields) if (p.blocked) blockers.push(p.notes.join('; '));
   return { form: layout.form, blank: layout.blank, sha256: layout.blank_sha256,
     state: state ?? (blockers.length ? 'blocked' : 'ready'),
-    fields, edits, cellEdits, blockers, notes,
+    fields, edits, cellEdits, blockers, notes, handwritten,
     warnings: [...warnings.map((c) => `Контроль: ${c.text ?? c.message ?? c.id}`),
-      ...memo.rows.filter((r) => r.warning).map((r) => `Реквизит ${r.number}: ${r.warning}`), ...notes],
+      ...memo.rows.filter((r) => r.warning).map((r) => `Реквизит ${r.number}: ${r.warning}`), ...notes,
+      ...handwritten.map((x) => `${x.number === 'б/н' ? `«${x.label}»` : `Реквизит ${x.number}`} вписывается от руки: ${x.value} (${x.note})`)],
     ready: blockers.length === 0 };
 }
 

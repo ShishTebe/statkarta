@@ -43,9 +43,9 @@ SCHEMAS = {
                                "fills": arr(obj(["label", "type"], {"label": STR, "type": enum("number", "text", "date"), "unit": STR, "digits_exact": {"type": "integer"}, "for_code": STR,
                                                                     "for_codes": arr(STR), "key": STR, "label_status": STR,
                                                                     "retired": {"type": "boolean"}, "order": {"type": "number"}})), "sources": arr(STR)}),
-             "options": arr(obj(["code", "value"], {"code": STR, "value": STR, "group": NSTR, "hint": STR}))})),
+             "options": arr(obj(["code", "value"], {"code": STR, "value": STR, "group": NSTR, "hint": STR, "blank_code": STR}))})),
          "embedded_classifiers": arr(obj(["id", "title", "applies_to", "options"], {"id": STR, "title": STR, "applies_to": arr(STR),
-                                                                                  "options": arr(obj(["code", "value"], {"code": STR, "value": STR, "group": NSTR, "hint": STR}))}))})},
+                                                                                  "options": arr(obj(["code", "value"], {"code": STR, "value": STR, "group": NSTR, "hint": STR, "blank_code": STR}))}))})},
     "classifier": {"title": "Пакет справочника", **obj(
         ["no", "title", "edition", "effective_from", "count", "entries"],
         {"no": {"type": "integer"}, "title": STR, "edition": STR, "effective_from": DATE, "effective_to": NSTR, "source": STR,

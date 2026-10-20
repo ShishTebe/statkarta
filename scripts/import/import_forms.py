@@ -223,8 +223,9 @@ def apply_labels(fid, reqs):
             if at is None:
                 sys.exit(f"form-labels ф. {fid} р. {r['id']}: для дополнения нет варианта {add['after']}")
             opt = {"code": add["code"], "value": add["value"]}
-            if add.get("hint"):
-                opt["hint"] = add["hint"]
+            for k in ("hint", "blank_code"):
+                if add.get(k):
+                    opt[k] = add[k]
             r["options"].insert(at + 1 + sum(1 for x in spec["options_add"][r["id"]][:spec["options_add"][r["id"]].index(add)] if x["after"] == add["after"]), opt)
             LOG.append(f"ф. {fid} р. {r['id']}: добавлен вариант бланка {add['code']} «{add['value']}»")
         # подписи дополнительных полей, сверенные с бланком (замечание 22.09.2026)
@@ -237,10 +238,12 @@ def apply_labels(fid, reqs):
         fixes = spec.get("options", {}).get(r["id"], {})
         for o in r["options"]:
             # исправление варианта: по коду или по «группа|код» (одинаковые коды в разных группах);
-            # строка – новое наименование, объект – наименование и (или) подсказка с полным смыслом кода
+            # строка – новое наименование, объект – наименование и (или) подсказка с полным смыслом кода;
+            # «blank_code» – код, напечатанный в бланке заказчика, если он отличается от кода варианта
+            # (ответ хранится по коду варианта, в клетки впечатывается код бланка)
             fix = fixes.get(f"{o.get('group') or ''}|{o['code']}", fixes.get(o["code"]))
             if isinstance(fix, dict):
-                o.update({k: v for k, v in fix.items() if k in ("value", "hint")})
+                o.update({k: v for k, v in fix.items() if k in ("value", "hint", "blank_code")})
             elif fix is not None:
                 o["value"] = fix
             else:

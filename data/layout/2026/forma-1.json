@@ -583,6 +583,186 @@
    "kind": "code_cells",
    "fills_by": "investigator",
    "label": "Квалификация преступления, предшествовавшего легализации (отмыванию) денежных средств и иного имущества",
+   "in_form": true,
+   "parts": [
+    {
+     "role": "fill",
+     "index": 0,
+     "digits": true,
+     "groups": [
+      [
+       270,
+       271,
+       272
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "article",
+     "line": 0,
+     "groups": [
+      [
+       267,
+       268,
+       269
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "asign",
+     "line": 0,
+     "groups": [
+      [
+       260,
+       283
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "part",
+     "line": 0,
+     "groups": [
+      [
+       261
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "points",
+     "line": 0,
+     "groups": [
+      [
+       262,
+       263,
+       264,
+       265,
+       266
+      ]
+     ]
+    },
+    {
+     "role": "fill",
+     "index": 1,
+     "digits": true,
+     "groups": [
+      [
+       273,
+       274,
+       275
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "article",
+     "line": 1,
+     "groups": [
+      [
+       250,
+       251,
+       252
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "asign",
+     "line": 1,
+     "groups": [
+      [
+       246,
+       284
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "part",
+     "line": 1,
+     "groups": [
+      [
+       248
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "points",
+     "line": 1,
+     "groups": [
+      [
+       255,
+       256,
+       257,
+       258,
+       259
+      ]
+     ]
+    },
+    {
+     "role": "fill",
+     "index": 2,
+     "digits": true,
+     "groups": [
+      [
+       276,
+       277,
+       278
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "article",
+     "line": 2,
+     "groups": [
+      [
+       253,
+       245,
+       254
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "asign",
+     "line": 2,
+     "groups": [
+      [
+       247,
+       285
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "part",
+     "line": 2,
+     "groups": [
+      [
+       249
+      ]
+     ]
+    },
+    {
+     "role": "qual",
+     "slot": "points",
+     "line": 2,
+     "groups": [
+      [
+       279,
+       280,
+       242,
+       281,
+       243
+      ]
+     ]
+    }
+   ],
    "groups": [
     [
      270,
@@ -596,7 +776,9 @@
     ],
     [
      260,
-     283,
+     283
+    ],
+    [
      261
     ],
     [
@@ -618,7 +800,9 @@
     ],
     [
      246,
-     284,
+     284
+    ],
+    [
      248
     ],
     [
@@ -640,7 +824,9 @@
     ],
     [
      247,
-     285,
+     285
+    ],
+    [
      249
     ],
     [
@@ -651,7 +837,7 @@
      243
     ]
    ],
-   "in_form": true
+   "note": "три строки: кол-во, ст., зн. (2 клетки), ч., п. – по правилам р. 13; разметка по печати размеченного бланка (20.10.2026)"
   },
   {
    "requisite": "15",

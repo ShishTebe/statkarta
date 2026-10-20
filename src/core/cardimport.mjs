@@ -652,12 +652,14 @@ const ciGroupText = (cells, group) => group.map((s) => cells.get(s) ?? '').join(
 function ciCandidates(ix, r) {
   const no = lookupOf(r);
   if (no && ix.clsCode.has(no)) return [...ix.clsCode.get(no).keys()];
-  return (r.options ?? []).map((o) => String(o.code));
+  return (r.options ?? []).map((o) => String(o.blank_code ?? o.code));
 }
 
 // Код в значение реквизита: ключ варианта бланка или код справочника
 function ciKey(ix, r, code) {
-  const opts = (r.options ?? []).filter((o) => String(o.code) === code);
+  // код бланка (blank_code), затем код варианта – так читаются и карточки, напечатанные до 0.13
+  let opts = (r.options ?? []).filter((o) => String(o.blank_code ?? o.code) === code);
+  if (!opts.length) opts = (r.options ?? []).filter((o) => String(o.code) === code);
   if (opts.length) return { key: optKey(opts[0]), ok: true, ambiguous: opts.length > 1 };
   const no = lookupOf(r);
   if (no) {
@@ -737,15 +739,22 @@ function ciPrimaryFact(ix, form, r) {
 
 const ciFactOk = (ix, fid) => Boolean(fid) && (ix.facts.has(fid) || /^fact\.f/.test(fid));
 
+// Клетки ф. 6 р. 15: стадия (01 – приготовление, 02 – покушение) и соучастие (01 – 04 – ч. 2 – 5 ст. 33,
+// 10 – 40 – ч. 1 – 4 ст. 35) – обратно к записи статей 30, 33, 35 (как их впечатывает blank.mjs)
+const CI_STAGE = { '01': 'ч. 1 ст. 30', '02': 'ч. 3 ст. 30' };
+const CI_COMPLICITY = { '01': 'ч. 2 ст. 33', '02': 'ч. 3 ст. 33', '03': 'ч. 4 ст. 33', '04': 'ч. 5 ст. 33',
+  10: 'ч. 1 ст. 35', 20: 'ч. 2 ст. 35', 30: 'ч. 3 ст. 35', 40: 'ч. 4 ст. 35' };
+
 function ciQualText(slots) {
   const lines = [...slots.keys()].sort((a, b) => a - b).map((line) => {
     const s = slots.get(line);
     if (!s.article) return null;
+    const pre = [CI_STAGE[s.stage], CI_COMPLICITY[s.complicity]].filter(Boolean);
     const art = s.asign ? `${s.article}.${s.asign}` : s.article;
     const part = s.part ? (s.psign ? `${s.part}.${s.psign}` : s.part) : '';
     const letters = [...String(s.points ?? '')].filter((x) => /\p{L}/u.test(x));
     const pts = letters.map((x, i) => `«${x}${i === 0 && s.point_sign ? `.${s.point_sign}` : ''}»`);
-    return `${pts.length ? `${pts.length > 1 ? 'пп.' : 'п.'} ${pts.join(', ')} ` : ''}${part ? `ч. ${part} ` : ''}ст. ${art} УК РФ`;
+    return `${pre.map((x) => `${x}, `).join('')}${pts.length ? `${pts.length > 1 ? 'пп.' : 'п.'} ${pts.join(', ')} ` : ''}${part ? `ч. ${part} ` : ''}ст. ${art} УК РФ`;
   }).filter(Boolean);
   return lines.join(', ');
 }
