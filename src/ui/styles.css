@@ -29,7 +29,10 @@ nav.tabs button[aria-current="page"], .seg button[aria-pressed="true"] { backgro
 .btn.danger { color: var(--err); border-color: var(--err); }
 .btn.small { padding: .15rem .5rem; font-size: .85rem; }
 .btn:disabled, .seg button:disabled { opacity: .4; cursor: default; }
-main { max-width: 1200px; margin: 0 auto; padding: 1rem; }
+/* запас снизу: последние кнопки экрана (например, «Сохранить профиль») прокручиваются выше панели Dock (замечание 09.11.2026) */
+main { max-width: 1200px; margin: 0 auto; padding: 1rem 1rem calc(1rem + 30vh); }
+.save-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+.panel label.line { display: block; margin: .25rem 0; }
 .notice { background: var(--warn-soft); border: 1px solid var(--line); border-radius: 8px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: 1rem; }

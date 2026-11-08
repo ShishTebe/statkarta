@@ -88,7 +88,8 @@ function rerender() {
 }
 
 function header() {
-  const tab = (id, label) => h('button', { 'aria-current': state.view === id ? 'page' : null, onclick: () => { state.view = id; render(); } }, label);
+  // переход на другой экран открывает его сверху, а не на прокрутке прежнего экрана
+  const tab = (id, label) => h('button', { 'aria-current': state.view === id ? 'page' : null, onclick: () => { const other = state.view !== id; state.view = id; render(); if (other) scrollTo(0, 0); } }, label);
   const c = state.kase;
   return h('header', { class: 'top' },
     h('div', { class: 'brand' }, 'СтатКарта', h('small', {}, `данные ${PACK.version}, ред. ${PACK.edition}`)),
@@ -2017,7 +2018,10 @@ function profileView() {
   const p = { ...state.profile };
   const organOptions = IX.reqs.get('1').get('1').options;
   // уведомление о сохранении (замечание 21.10.2026): видно, сохранен профиль или нет
-  const status = h('span', { class: `small ${state.profileNote?.ok === false ? 'err' : 'ok-note'}`, role: 'status', 'aria-live': 'polite' }, state.profileNote?.text ?? '');
+  // строка состояния – и вверху, и внизу экрана: кнопка «Сохранить профиль» продублирована вверху,
+  // чтобы ее не закрывала панель Dock (замечание 09.11.2026)
+  const mkStatus = (live) => h('span', { class: `small ${state.profileNote?.ok === false ? 'err' : 'ok-note'}`, ...(live ? { role: 'status', 'aria-live': 'polite' } : {}) }, state.profileNote?.text ?? '');
+  const statuses = [mkStatus(true), mkStatus(false)];
   const note = (text, ok = true) => { state.profileNote = { text, ok }; };
   const save = () => {
     state.profile = sanitizeProfile(p);
@@ -2028,12 +2032,17 @@ function profileView() {
   // правка любого поля – отметка «не сохранено» до нажатия «Сохранить профиль»
   const changed = () => {
     state.profileNote = null;
-    status.className = 'small err';
-    status.textContent = 'Есть несохраненные изменения – нажмите «Сохранить профиль».';
+    for (const s of statuses) {
+      s.className = 'small err';
+      s.textContent = 'Есть несохраненные изменения – нажмите «Сохранить профиль».';
+    }
   };
   const field = (label, key, attrs = {}) => h('label', { class: 'small' }, label,
     h('input', { type: 'text', class: 'search', value: p[key] ?? '', ...attrs, onchange: (e) => { p[key] = e.target.value.trim(); } }));
   return h('div', {},
+    h('div', { class: 'toolbar save-bar' },
+      h('button', { class: 'btn primary', onclick: save }, 'Сохранить профиль'),
+      statuses[0]),
     regionPanel(),
     h('div', { oninput: changed, onchange: changed },
     h('div', { class: 'panel' }, h('h2', {}, 'Профиль органа'),
@@ -2071,11 +2080,11 @@ function profileView() {
             p.prosecutor_forms = [...cur];
           } }), ` ${formTitleShort(IX, f.form)}`)))),
     h('div', { class: 'panel' }, h('h2', {}, 'Работа с делом'),
-      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.date_today !== false, onchange: (e) => { p.date_today = e.target.checked; } }), ' дата составления – сегодняшняя'),
-      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_investigator !== false, onchange: (e) => { p.blank_sign_investigator = e.target.checked; } }), ' печатать в бланке расшифровку подписи лица, ведущего расследование'),
-      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_head !== false, onchange: (e) => { p.blank_sign_head = e.target.checked; } }), ' печатать в бланке строку руководителя'),
-      h('label', { class: 'small' }, h('input', { type: 'checkbox', checked: p.blank_sign_prosecutor !== false, onchange: (e) => { p.blank_sign_prosecutor = e.target.checked; } }), ' печатать в бланке строку прокурора'),
-      h('label', { class: 'small' }, 'Срок хранения дела после финального события, месяцев ',
+      h('label', { class: 'small line' }, h('input', { type: 'checkbox', checked: p.date_today !== false, onchange: (e) => { p.date_today = e.target.checked; } }), ' дата составления – сегодняшняя'),
+      h('label', { class: 'small line' }, h('input', { type: 'checkbox', checked: p.blank_sign_investigator !== false, onchange: (e) => { p.blank_sign_investigator = e.target.checked; } }), ' печатать в бланке расшифровку подписи лица, ведущего расследование'),
+      h('label', { class: 'small line' }, h('input', { type: 'checkbox', checked: p.blank_sign_head !== false, onchange: (e) => { p.blank_sign_head = e.target.checked; } }), ' печатать в бланке строку руководителя'),
+      h('label', { class: 'small line' }, h('input', { type: 'checkbox', checked: p.blank_sign_prosecutor !== false, onchange: (e) => { p.blank_sign_prosecutor = e.target.checked; } }), ' печатать в бланке строку прокурора'),
+      h('label', { class: 'small line' }, 'Срок хранения дела после финального события, месяцев ',
         h('input', { type: 'text', inputmode: 'numeric', style: 'max-width:5rem', value: String(p.retention_months ?? 6), onchange: (e) => { p.retention_months = Number(e.target.value) || 6; } })),
       h('div', { class: 'row' },
         h('button', { class: 'btn primary', onclick: save }, 'Сохранить профиль'),
@@ -2090,7 +2099,7 @@ function profileView() {
             render();
           } catch { alert('Файл профиля не читается'); }
         } }, 'Загрузить профиль')),
-      status)));
+      statuses[1])));
 }
 
 // Время ЧЧ:ММ – для уведомлений о сохранении
