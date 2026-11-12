@@ -181,7 +181,8 @@ def fix_form(form):
                 LOG.append(f"ф. {fid}: реквизит {r['code']} – новый разбор вариантов не совпал по кодам, оставлен исходный")
         item = {
             "id": r["id"],
-            "number": r["code"],
+            # реквизит бланка без печатного номера (ф. 6 «направить по адресу») – «б/н», как в ИПК
+            "number": r.get("number") or r["code"],
             "label": r["label"],
             "label_status": r["label_status"],
             "field_type": t,
@@ -282,6 +283,10 @@ def main():
                     r[k] = c[k]
             if c.get("options_from_embedded"):
                 r["options"] = [dict(o) for o in emb_map[c["options_from_embedded"]]["options"]]
+            # группа вариантов встроенного справочника, которая к реквизиту не относится
+            # (ф. 6 р. 15.1 – 15.6: стадия – из квалификации, у нее свои клетки)
+            if c.get("options_drop_group"):
+                r["options"] = [o for o in r["options"] if o.get("group") != c["options_drop_group"]]
             if any(k in c for k in ("label", "field_type", "classifier_no", "raw")) or c.get("options_from_embedded"):
                 r["label_status"] = "corrected"
                 r["correction_source"] = c["source"]

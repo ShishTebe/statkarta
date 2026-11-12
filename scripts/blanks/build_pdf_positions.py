@@ -105,6 +105,15 @@ def build(form):
             if part.get("role") != "text":
                 continue
             own = [a for a in anchors if a[0] == f["requisite"]]
+            left = LEFT - 4
+            if not own and part.get("pdf_from"):
+                # реквизит без номера (ф. 6 «направить по адресу»): область – от строки с первым словом его надписи;
+                # строка занимает всю ширину бланка, поэтому и левая граница – от этого слова, а не от поля номеров
+                hit = next(((pi, w) for pi, ws in enumerate(words_by_page) for w in ws if w[4] == part["pdf_from"]), None)
+                if hit:
+                    own = [[f["requisite"], hit[0], round(hit[1][0], 1), round(hit[1][1], 1)]]
+                    # вторая линейка строки начинается еще левее первого слова (ф. 6: 25,5 против 32,3 пт)
+                    left = min(left, round(hit[1][0] - 8, 1))
             if not own:
                 print(f"ф. {form} р. {f['requisite']}: номер реквизита в левом поле не найден – область текста не задана")
                 continue
@@ -112,10 +121,10 @@ def build(form):
             below = [a[3] for a in anchors if a[1] == pi and a[3] > y0 + 2]
             y1 = min(below) if below else pages[pi][1] - 20
             x1 = pages[pi][0] - 20
-            inside = [w for w in words_by_page[pi] if w[1] >= y0 - 2 and w[3] <= y1 + 1 and w[0] >= LEFT - 4 and w[2] <= x1 + 5
+            inside = [w for w in words_by_page[pi] if w[1] >= y0 - 2 and w[3] <= y1 + 1 and w[0] >= left and w[2] <= x1 + 5
                       and not MARK.match(w[4])]
             regions.append({"requisite": f["requisite"], "part": i, "page": pi,
-                            "box": [LEFT - 4, round(y0 - 2, 1), round(x1 + 5, 1), round(y1 - 0.5, 1)],
+                            "box": [left, round(y0 - 2, 1), round(x1 + 5, 1), round(y1 - 0.5, 1)],
                             "blank_text": line_text(inside),
                             # печатные слова области с местом: при чтении вычитаются по месту, а не по тексту
                             "blank_words": [[round(w[0], 1), round(w[2], 1), round(w[1], 1), w[4]] for w in inside]})

@@ -43,6 +43,12 @@ export function parseQualification(text) {
   return { refs, main, stage, segments: segments.length, recognized: refs.length > 0 };
 }
 
+// Строки р. 15 ф. 6 (ответ В-27): статьи квалификации по порядку записи; ст. 30, 33, 35 отдельной
+// строкой не считаются – это стадия и соучастие той же строки
+export function episodeOffenses(text) {
+  return parseQualification(text).refs.filter((r) => !['30', '33', '35'].includes(r.article));
+}
+
 export function buildUkIndex(articles) {
   const idx = new Map();
   for (const a of articles) idx.set(a.article, a);

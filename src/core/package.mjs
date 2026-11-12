@@ -288,7 +288,17 @@ const SIGN_FIELDS = {
   head_line: ['head_position', 'head_rank', 'head_fio'],
   prosecutor_line: ['prosecutor_position', 'prosecutor_rank', 'prosecutor_fio'],
 };
+// Составные сведения профиля через запятую: адрес направления ф. 6 – «наименование органа, индекс, почтовый
+// адрес» (замечание 12.11.2026). Без обязательной части (почтового адреса) значения нет – вопрос задается в опроснике.
+const JOINED_FIELDS = {
+  card6_address_line: { keys: ['organ_name', 'organ_address'], need: 'organ_address' },
+};
 export function profileValue(profile, key) {
+  if (JOINED_FIELDS[key]) {
+    const j = JOINED_FIELDS[key];
+    if (!String(profile[j.need] ?? '').trim()) return null;
+    return j.keys.map((k) => String(profile[k] ?? '').trim().replace(/[\s,;]+$/, '')).filter(Boolean).join(', ');
+  }
   if (SIGN_FIELDS[key]) {
     return SIGN_FIELDS[key].map((k) => (profile[k] ?? '').trim()).filter(Boolean).join(' ') || null;
   }
@@ -503,7 +513,8 @@ export function packageQuestions(ix, c, ev, profile = {}) {
     const qs = questionsForForm(ix, view, card.form);
     const reqScope = cardRequisiteScope(ix, card);
     for (const qi of qs) {
-      const reqs = qi.requisites.filter((r) => inVariant(ix.reqs.get(card.form).get(r.id), card.variant) && inScope(reqScope, r.id));
+      const reqs = qi.requisites.filter((r) => inVariant(ix.reqs.get(card.form).get(r.id), card.variant) && inScope(reqScope, r.id)
+        && !episodeLineOff(view, ix.reqs.get(card.form).get(r.id)));
       if (qi.requisites.length && !reqs.length) continue;
       if (view.origins[qi.factId]?.startsWith('Режим карточки')) continue;
       const scope = scopeOf(ix, qi.factId);

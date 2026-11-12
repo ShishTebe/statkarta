@@ -4,6 +4,16 @@
  "review": "требует предметной ревизии (риск Д-4). Сгенерировано scripts/build_rules.py из пакета форм.",
  "facts": [
   {
+   "id": "fact.case.card6_address",
+   "entity": "court",
+   "scope": "case",
+   "type": "text",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Статистическую карточку формы № 6 направить по адресу (наименование органа, проводившего расследование, индекс, почтовый адрес)",
+   "status": "draft"
+  },
+  {
    "id": "fact.case.case_number",
    "entity": "court",
    "scope": "case",
@@ -134,13 +144,63 @@
    "status": "draft"
   },
   {
-   "id": "fact.court.qualification",
+   "id": "fact.court.complicity_l1",
    "entity": "court",
    "scope": "card",
    "type": "enum",
    "classifier_no": null,
    "shared": false,
-   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 1: статья, знак, часть, пункт; стадия, форма соучастия, категория соучастника",
+   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 1: форма соучастия, категория соучастника (статья и стадия – по квалификации р. 15)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.court.complicity_l2",
+   "entity": "court",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 2: форма соучастия, категория соучастника (статья и стадия – по квалификации р. 15)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.court.complicity_l3",
+   "entity": "court",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 3: форма соучастия, категория соучастника (статья и стадия – по квалификации р. 15)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.court.complicity_l4",
+   "entity": "court",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 4: форма соучастия, категория соучастника (статья и стадия – по квалификации р. 15)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.court.complicity_l5",
+   "entity": "court",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 5: форма соучастия, категория соучастника (статья и стадия – по квалификации р. 15)",
+   "status": "draft"
+  },
+  {
+   "id": "fact.court.complicity_l6",
+   "entity": "court",
+   "scope": "card",
+   "type": "enum",
+   "classifier_no": null,
+   "shared": false,
+   "label": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 6: форма соучастия, категория соучастника (статья и стадия – по квалификации р. 15)",
    "status": "draft"
   },
   {

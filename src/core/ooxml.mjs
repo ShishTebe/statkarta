@@ -412,6 +412,54 @@ export function setUnderscoreText(xml, path, text, { slot = 0, span = 1, minHalf
   return out;
 }
 
+// Длины линеек места (в знаках подчеркивания) – по тому же собранному тексту, что и setUnderscoreText
+export function underscoreLineLengths(xml, path) {
+  const tc = placeRange(xml, path);
+  const body = xml.slice(tc.inner[0], tc.inner[1]);
+  const joined = [...body.matchAll(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g)].map((m) => m[1]).join('');
+  return [...joined.matchAll(/_{3,}/g)].map((x) => x[0].length);
+}
+
+// Разбить текст по словам на линейки: на каждую, кроме последней, – столько слов, сколько входит
+// в fill долю ее длины (запас: буквы шире знака подчеркивания, а лишний перенос строки сдвинул бы
+// бланк); остаток – на последнюю. Слово длиннее линейки ставится целиком (шрифт уменьшится).
+export function flowWords(text, lengths, fill = 0.9) {
+  const words = String(text).trim().split(/\s+/).filter(Boolean);
+  const out = [];
+  let w = 0;
+  for (let i = 0; i < lengths.length; i += 1) {
+    if (i === lengths.length - 1) { out.push(words.slice(w).join(' ')); break; }
+    const cap = Math.floor(lengths[i] * fill);
+    let line = '';
+    while (w < words.length) {
+      const next = line ? `${line} ${words[w]}` : words[w];
+      if (next.length > cap && line) break;
+      line = next;
+      w += 1;
+      if (line.length > cap) break;
+    }
+    out.push(line);
+  }
+  return out;
+}
+
+// Текст на несколько линеек подряд с переносом по словам (ф. 6, строка «направить по адресу»: линейки
+// в разных абзацах и разного кегля – 8 и 6 пт, замечание 12.11.2026). Каждая линейка сохраняет кегль
+// бланка; линейки заполняются с последней, чтобы номера предыдущих не сдвигались.
+// lead – сколько неразрывных пробелов поставить перед текстом каждой линейки: вторая линейка ф. 6
+// начинается левее рамки таблицы, и без отступа первая буква легла бы на линию рамки.
+const FLOW_NBSP = String.fromCharCode(160);
+export function setUnderscoreFlow(xml, path, text, { slot = 0, span = 1, lead = [] } = {}) {
+  const lengths = underscoreLineLengths(xml, path).slice(slot, slot + span);
+  if (!lengths.length) throw new Error(`В ячейке ${path.table}/${path.row}/${path.cell} нет линейки № ${slot + 1}`);
+  const lines = flowWords(text, lengths.map((n, i) => Math.max(1, n - (lead[i] ?? 0))));
+  let out = xml;
+  for (let i = lines.length - 1; i >= 0; i -= 1) {
+    if (lines[i]) out = setUnderscoreText(out, path, FLOW_NBSP.repeat(lead[i] ?? 0) + lines[i], { slot: slot + i, span: 1 });
+  }
+  return out;
+}
+
 // Заменить напечатанную подпись и линейку за ней значением: «Фамилия, подпись лица, ведущего
 // расследование уголовного дела ______» → «Следователь … И.О. Фамилия» (замечание 22.09.2026).
 // Остальной текст места (дата передачи карточки, «____» 20__ г.) остается как в бланке.

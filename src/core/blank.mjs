@@ -3,9 +3,9 @@
 // в список «место бланка → знак» и в список замечаний. Сборкой .docx занимается docx.mjs,
 // печатной копией – интерфейс.
 
-import { composeOverlay, overlaySlots } from './codes.mjs';
+import { composeOverlay, overlaySlots, overlayRank } from './codes.mjs';
 import { blankCode, keyCode } from './pack.mjs';
-import { parseQualification } from './uk.mjs';
+import { parseQualification, episodeOffenses } from './uk.mjs';
 import { ruToIso } from './text.mjs';
 
 const BLANK_FILLED = new Set(['fill', 'default', 'hint']);
@@ -79,20 +79,40 @@ function blankDateDigits(iso, format, time) {
 const COMPLICITY_33 = { 2: '01', 3: '02', 4: '03', 5: '04' };
 const COMPLICITY_35 = { 1: '10', 2: '20', 3: '30', 4: '40' };
 
-function blankEpisodeSlot(text, slot, line) {
+// Две клетки «форма соучастия, категория соучастника»: коды накладываются по разрядам – форма в десятках
+// (10 – 40), категория в единицах (01 – 04): группа лиц по предварительному сговору и исполнитель – 21.
+// Источники: ответ опросника по строке (р. 15.1 – 15.6) и ст. 35, 33 в квалификации эпизода; ответ по
+// строке важнее, расхождение с квалификацией – примечание (замечание пользователя от 12.11.2026: форма
+// соучастия из опросника в бланк не попадала, а ст. 35 в квалификации обычно не пишется).
+export function blankComplicity(text, line, answerCodes = []) {
   const q = parseQualification(text);
-  const offenses = q.refs.filter((r) => !['30', '33', '35'].includes(r.article));
-  const ref = offenses[line];
+  const ref = episodeOffenses(text)[line];
+  if (!ref) return { value: '', note: null };
+  const same = q.refs.filter((r) => r.segment === ref.segment);
+  const r33 = same.find((r) => r.article === '33');
+  const r35 = same.find((r) => r.article === '35');
+  const text35 = r35 ? COMPLICITY_35[Number(r35.parts[0])] ?? '' : '';
+  const text33 = r33 ? COMPLICITY_33[Number(r33.parts[0])] ?? '' : '';
+  const ans35 = answerCodes.find((x) => String(x).length === 2 && overlayRank(x) === 0) ?? '';
+  const ans33 = answerCodes.find((x) => String(x).length === 2 && overlayRank(x) === 1) ?? '';
+  const diff = [ans35 && text35 && ans35 !== text35 ? `форма ${ans35} (в квалификации – ${text35})` : null,
+    ans33 && text33 && ans33 !== text33 ? `категория ${ans33} (в квалификации – ${text33})` : null].filter(Boolean);
+  return { value: composeOverlay([ans35 || text35, ans33 || text33].filter(Boolean)),
+    note: diff.length ? `строка ${line + 1}: соучастие по ответу расходится с квалификацией – ${diff.join(', ')}; в бланк идет ответ` : null };
+}
+
+// Коды ответа по строке р. 15 (реквизиты 15.1 – 15.6 с input.episode_line)
+function episodeLineCodes(memo, line) {
+  const lr = (memo?.rows ?? []).find((x) => x.requisite?.input?.episode_line === line + 1);
+  if (!lr || !BLANK_FILLED.has(lr.status) || !Array.isArray(lr.value)) return [];
+  return lr.value.map(keyCode);
+}
+
+function blankEpisodeSlot(text, slot, line) {
+  const ref = episodeOffenses(text)[line];
   if (!ref) return '';
   if (slot === 'stage') return ref.stage === 1 ? '01' : ref.stage === 2 ? '02' : '03';
-  if (slot === 'complicity') {
-    const same = q.refs.filter((r) => r.segment === ref.segment);
-    const r33 = same.find((r) => r.article === '33');
-    const r35 = same.find((r) => r.article === '35');
-    if (r35 && COMPLICITY_35[Number(r35.parts[0])]) return COMPLICITY_35[Number(r35.parts[0])];
-    if (r33 && COMPLICITY_33[Number(r33.parts[0])]) return COMPLICITY_33[Number(r33.parts[0])];
-    return '';
-  }
+  if (slot === 'complicity') return blankComplicity(text, line).value;
   return null;
 }
 
@@ -226,7 +246,11 @@ function planParts(row, field, memo) {
       continue;
     } else if (part.role === 'qual') {
       if (!row || !BLANK_FILLED.has(row.status) || typeof row.value !== 'string') continue;
-      value = blankQualSlot(row.value, part.slot, part.line ?? 0, Boolean(part.episodes));
+      if (part.slot === 'complicity' && part.episodes) {
+        const cp = blankComplicity(row.value, part.line ?? 0, episodeLineCodes(memo, part.line ?? 0));
+        value = cp.value;
+        if (cp.note) out.notes.push(`реквизит ${field.requisite}, ${cp.note}`);
+      } else value = blankQualSlot(row.value, part.slot, part.line ?? 0, Boolean(part.episodes));
       if (part.slot === 'points') align = 'left';
       if (part.place && value) {
         // клетки «!__!» в тексте бланка (карта на иностранцев)
@@ -283,7 +307,8 @@ function planParts(row, field, memo) {
         out.blocked = true;
         continue;
       }
-      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text, mode: part.mode ?? 'underscores', size: part.size ?? null }];
+      out.cellEdits = [...(out.cellEdits ?? []), { place: part.place, text, mode: part.mode ?? 'underscores', size: part.size ?? null,
+        ...(part.lead ? { lead: part.lead } : {}) }];
       texts.push(text);
       continue;
     }

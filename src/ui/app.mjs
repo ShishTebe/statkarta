@@ -1247,7 +1247,7 @@ function card(it, ev, { cardKey: onlyCard = null, group = null } = {}) {
   const inp = it.input ?? {};
   const modeText = inp.select === 'multiple' ? (inp.max_codes ? `Можно выбрать до ${inp.max_codes} кодов (полей в бланке: ${inp.max_codes})` : 'Можно выбрать несколько кодов: в бланк они вписываются через запятую')
     : inp.select === 'overlay_slots' ? `Код ставится наложением двух чисел (30 + 01 = 31); таких кодов в бланке до ${inp.max_codes ?? inp.fields ?? 1}`
-      : inp.select === 'overlay' ? 'Коды накладываются по разрядам: можно выбрать несколько кодов разных разрядов, например 2000 + 0030 = 2030'
+      : inp.select === 'overlay' ? `Коды накладываются по разрядам: можно выбрать несколько кодов разных разрядов, например ${overlayExample(it.options)}`
       : inp.select === 'single' ? 'Выбирается один код' : null;
   if (modeText) put(el, h('div', { class: 'mode small' }, modeText));
   if (it.origin) put(el, h('div', { class: 'hint small' }, `Подставлено: ${it.origin}. Ответ здесь заменит подстановку.`));
@@ -2048,6 +2048,9 @@ function profileView() {
     h('div', { class: 'panel' }, h('h2', {}, 'Профиль органа'),
       h('p', { class: 'small muted' }, 'Профиль хранится только на этом компьютере, отдельно от дел, никуда не передается и не содержит сведений дела (FR-36). Сведения подставляются во все карточки пакета.'),
       field('Наименование органа (ф. 6 р. 1, ИПК р. 79, карта на иностранца р. 2)', 'organ_name'),
+      field('Индекс и почтовый адрес органа (ф. 6, строка «Статистическую карточку формы № 6 направить по адресу»)', 'organ_address',
+        { placeholder: 'например: 000000, г. Энск, ул. Условная, д. 1' }),
+      h('p', { class: 'small muted' }, 'В строку ф. 6 впечатывается через запятую: наименование органа, индекс, почтовый адрес. Пока адрес не указан, программа спросит его в опроснике ф. 6.'),
       unitNameField(p),
       h('label', { class: 'small' }, 'Орган (реквизит 1 бланков)',
         h('select', { onchange: (e) => { p.organ_code = e.target.value || undefined; } },
@@ -2100,6 +2103,14 @@ function profileView() {
           } catch { alert('Файл профиля не читается'); }
         } }, 'Загрузить профиль')),
       statuses[1])));
+}
+
+// Пример наложения из кодов самого реквизита: ф. 6 р. 15.1 – «20 + 01 = 21» (раньше – всегда «2000 + 0030 = 2030»)
+function overlayExample(options) {
+  const codes = [...new Set((options ?? []).map((o) => String(o.code)))];
+  const a = codes.find((x) => overlayRank(x) >= 0);
+  const b = a && codes.find((x) => x.length === a.length && overlayRank(x) >= 0 && !overlayConflict(a, x));
+  return a && b ? `${a} + ${b} = ${composeOverlay([a, b])}` : '2000 + 0030 = 2030';
 }
 
 // Время ЧЧ:ММ – для уведомлений о сохранении
@@ -2767,7 +2778,7 @@ async function boot() {
   await regionBoot();
   const hash = location.hash.replace('#', '');
   if (hash.startsWith('demo')) {
-    state.profile = { organ_name: 'Следственный отдел (пример)', organ_code: '02', unit_code: '02300000', prosecutor_code: '000',
+    state.profile = { organ_name: 'Следственный отдел (пример)', organ_address: '000000, г. Энск, ул. Условная, д. 1', organ_code: '02', unit_code: '02300000', prosecutor_code: '000',
       investigator_position: 'следователь', investigator_rank: 'капитан юстиции', investigator_fio: 'И.И. Иванов',
       head_position: 'заместитель руководителя отдела', head_rank: 'полковник юстиции', head_fio: 'П.П. Петров',
       prosecutor_position: 'заместитель прокурора', prosecutor_rank: 'советник юстиции', prosecutor_fio: 'С.С. Сидоров', retention_months: 6, region: '30' };

@@ -184,13 +184,21 @@ export function journalText(c, { formTitle = (f) => `ф. ${f}`, eventTitle = (t)
 // case/1 – формат Фазы 1 (приложение 0.2): { answers, fills, forms, created } без поля schema
 // Сведения, объединенные с другими: прежний ответ переносится в новое сведение, если оно не заполнено.
 // Дата возбуждения для ф. 3 р. 6 и карты на иностранца р. 26 была отдельным сведением (замечание 21.10.2026).
-export const FACT_RENAMED = { 'fact.case.vud_date.date': 'fact.case.vud_date' };
+// Ф. 6 р. 15.1 – 15.6: одно сведение на шесть строк стало сведением каждой строки; прежний ответ
+// переносится в первую строку без кодов стадии – стадия берется из квалификации (замечание 12.11.2026).
+export const FACT_RENAMED = { 'fact.case.vud_date.date': 'fact.case.vud_date', 'fact.court.qualification': 'fact.court.complicity_l1' };
+const FACT_RENAMED_DROP = { 'fact.court.qualification': /^Стадии совершения преступления\|/ };
+
+function renamedValue(from, value) {
+  const drop = FACT_RENAMED_DROP[from];
+  return drop && Array.isArray(value) ? value.filter((k) => !drop.test(String(k))) : value;
+}
 
 function renameFacts(cont) {
   if (!cont?.facts) return;
   for (const [from, to] of Object.entries(FACT_RENAMED)) {
     if (!cont.facts[from]) continue;
-    if (!cont.facts[to]?.length) cont.facts[to] = cont.facts[from];
+    if (!cont.facts[to]?.length) cont.facts[to] = cont.facts[from].map((v) => ({ ...v, value: renamedValue(from, v.value) }));
     delete cont.facts[from];
   }
 }
@@ -214,8 +222,9 @@ export function migrateCase(obj, { scopeOf } = {}) {
       const fid = FACT_RENAMED[fid0] && !obj.answers[FACT_RENAMED[fid0]] ? FACT_RENAMED[fid0] : fid0;
       if (FACT_RENAMED[fid0] && fid === fid0) continue;
       const scope = scopeOf ? scopeOf(fid) : fid.split('.')[1];
-      if (target[scope]) setFactVersion(c, target[scope], fid, a.status, a.value, null);
-      else cardFacts[fid] = a;
+      const value = fid !== fid0 ? renamedValue(fid0, a.value) : a.value;
+      if (target[scope]) setFactVersion(c, target[scope], fid, a.status, value, null);
+      else cardFacts[fid] = { ...a, value };
     }
     const byForm = {};
     for (const [k, vals] of Object.entries(obj.fills ?? {})) {

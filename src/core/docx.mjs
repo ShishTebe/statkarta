@@ -4,7 +4,7 @@
 // бланка (критерий A1.6-4): если бланк не тот, файл не собирается.
 
 import { readZip, entryText, replaceEntry, writeZip, sha256Hex } from './zip.mjs';
-import { fillShapes, setCellText, setUnderscoreText, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText, stripFragment, findParagraph, replaceBlankText } from './ooxml.mjs';
+import { fillShapes, setCellText, setUnderscoreText, setUnderscoreFlow, appendCellText, prependCellText, setBoxChars, replaceCaption, setCellParagraphText, stripFragment, findParagraph, replaceBlankText } from './ooxml.mjs';
 import { setXlsxCell, setXlsxUnderscores, setXlsxCaption, XLSX_SHEET } from './xlsxfill.mjs';
 
 export const CELL_FONT_HALF_POINTS = 16;   // 8 пунктов – как в клетках самого бланка
@@ -57,6 +57,7 @@ export async function fillDocx(bytes, layout, edits, cellEdits = [], { textEdits
     else if (e.mode === 'prepend') xml = prependCellText(xml, e.place, e.text, { size: e.size ?? null });
     else if (e.mode === 'boxes') xml = setBoxChars(xml, e.place, e.text, { slot: e.place.slot ?? 0 });
     else if (e.mode === 'caption') xml = replaceCaption(clearTexts(xml, e.clear), e.place, e.caption, e.text, { size: e.size ?? null });
+    else if (e.mode === 'flow') xml = setUnderscoreFlow(xml, e.place, e.text, { slot: e.place.slot ?? 0, span: e.place.span ?? 1, lead: e.lead ?? [] });
     else if (e.mode === 'para') xml = setCellParagraphText(xml, e.place, e.place.para ?? 0, e.text, { size: e.size ?? null, font: e.font ?? null, replace: e.replace === true, align: e.align ?? null });
     else xml = setUnderscoreText(clearTexts(xml, e.clear), e.place, e.text, { slot: e.place.slot ?? 0, span: e.place.span ?? 1, boxes: Boolean(e.place.boxes), size: e.size ?? null });
   }

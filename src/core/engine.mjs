@@ -281,6 +281,18 @@ function lineOfQualification(ix, c, r) {
   return { status: 'fill', value: text, display: text, source: `Квалификация (ответ пользователя), строка ${n} в порядке убывания тяжести` };
 }
 
+// Строка р. 15 ф. 6 (input.episode_line): N-я статья квалификации карточки. Строки сверх числа статей
+// не заполняются и в опроснике не спрашиваются; первая строка спрашивается всегда (замечание 12.11.2026)
+export function episodeLineOff(c, r) {
+  const line = r?.input?.episode_line;
+  if (!line || line === 1) return null;
+  const q = c.answers?.['fact.crime.qualification'];
+  const n = q?.status === 'answered' && typeof q.value === 'string' ? episodeOffenses(q.value).length : 0;
+  if (n >= line) return null;
+  const word = n === 1 ? 'статья' : n >= 2 && n <= 4 ? 'статьи' : 'статей';
+  return n ? `В квалификации ${n} ${word} – строка ${line} не заполняется` : `Строка ${line} заполняется, если в квалификации есть ${line}-я статья`;
+}
+
 export function buildMemo(ix, c, formId) {
   const derived = deriveAll(ix, c);
   const form = ix.forms.get(formId);
@@ -306,6 +318,8 @@ export function buildMemo(ix, c, formId) {
       const line = lineOfQualification(ix, c, r);
       if (line) return { ...row, ...line };
     }
+    const off = episodeLineOff(c, r);
+    if (off) return { ...row, status: 'not_applicable', source: off };
     const a = fid ? c.answers[fid] : null;
     const d = fid ? derived[fid] : null;
     const dis = fid ? disabledReason(ix, c, fid, derived) : null;

@@ -42,6 +42,27 @@ export function insertedText(blankText, filledText) {
   return b.slice(p, b.length - s).replace(/_{2,}/g, ' ').replace(/^[\s_/]+|[\s_/]+$/g, '').replace(/\s+/g, ' ').trim();
 }
 
+// Вписанное на несколько линеек (mode flow): между линейками стоят печатные надписи бланка, поэтому
+// вписанные слова – те, что не совпали со словами чистого бланка при сравнении по порядку (наибольшая
+// общая подпоследовательность слов; остатки линеек «____» – разделители)
+export function insertedWords(blankText, filledText) {
+  const words = (s) => String(s ?? '').replace(/_+/g, ' ').split(/\s+/).filter(Boolean);
+  const a = words(blankText);
+  const b = words(filledText);
+  const lcs = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+  for (let i = a.length - 1; i >= 0; i -= 1) {
+    for (let j = b.length - 1; j >= 0; j -= 1) lcs[i][j] = a[i] === b[j] ? lcs[i + 1][j + 1] + 1 : Math.max(lcs[i + 1][j], lcs[i][j + 1]);
+  }
+  const out = [];
+  let i = 0;
+  let j = 0;
+  while (j < b.length) {
+    if (i < a.length && a[i] === b[j]) { i += 1; j += 1; } else if (i < a.length && lcs[i + 1][j] >= lcs[i][j + 1]) i += 1;
+    else { out.push(b[j]); j += 1; }
+  }
+  return out.join(' ');
+}
+
 // ---------- Word: текст мест бланка ----------
 
 async function ciDocumentXml(bytes) {
@@ -94,7 +115,7 @@ export function docxCardCells(xml, blankXml, layout) {
       const filled = ciPlaceText(xml, p.place);
       if (filled === null) return;
       const blank = blankXml ? ciPlaceText(blankXml, p.place) ?? '' : '';
-      texts[`${f.requisite}|${i}`] = insertedText(blank, filled);
+      texts[`${f.requisite}|${i}`] = p.mode === 'flow' ? insertedWords(blank, filled) : insertedText(blank, filled);
     });
   }
   return { cells, texts };
@@ -739,17 +760,26 @@ function ciPrimaryFact(ix, form, r) {
 
 const ciFactOk = (ix, fid) => Boolean(fid) && (ix.facts.has(fid) || /^fact\.f/.test(fid));
 
-// Клетки ф. 6 р. 15: стадия (01 – приготовление, 02 – покушение) и соучастие (01 – 04 – ч. 2 – 5 ст. 33,
-// 10 – 40 – ч. 1 – 4 ст. 35) – обратно к записи статей 30, 33, 35 (как их впечатывает blank.mjs)
+// Клетки ф. 6 р. 15: стадия (01 – приготовление, 02 – покушение) – обратно к записи ст. 30; соучастие –
+// наложение формы (десятки: 10 – 40, ст. 35) и категории (единицы: 01 – 04, ст. 33), см. blankComplicity.
+// Организатор, подстрекатель, пособник (02 – 04) – часть квалификации (ч. 3 – 5 ст. 33), они возвращаются
+// в ее текст; форма соучастия и исполнитель (01) в квалификации обычно не пишутся – это ответ по строке
+// р. 15.1 – 15.6 (замечание 12.11.2026)
 const CI_STAGE = { '01': 'ч. 1 ст. 30', '02': 'ч. 3 ст. 30' };
-const CI_COMPLICITY = { '01': 'ч. 2 ст. 33', '02': 'ч. 3 ст. 33', '03': 'ч. 4 ст. 33', '04': 'ч. 5 ст. 33',
-  10: 'ч. 1 ст. 35', 20: 'ч. 2 ст. 35', 30: 'ч. 3 ст. 35', 40: 'ч. 4 ст. 35' };
+const CI_COMPLICITY_33 = { 2: 'ч. 3 ст. 33', 3: 'ч. 4 ст. 33', 4: 'ч. 5 ст. 33' };
+
+function ciComplicity(value) {
+  const t = String(value ?? '').replace(/\D/g, '');
+  if (t.length !== 2) return { text: null, answer: [] };
+  const answer = [t[0] !== '0' ? `${t[0]}0` : null, t[1] === '1' ? '01' : null].filter(Boolean);
+  return { text: CI_COMPLICITY_33[Number(t[1])] ?? null, answer };
+}
 
 function ciQualText(slots) {
   const lines = [...slots.keys()].sort((a, b) => a - b).map((line) => {
     const s = slots.get(line);
     if (!s.article) return null;
-    const pre = [CI_STAGE[s.stage], CI_COMPLICITY[s.complicity]].filter(Boolean);
+    const pre = [CI_STAGE[s.stage], ciComplicity(s.complicity).text].filter(Boolean);
     const art = s.asign ? `${s.article}.${s.asign}` : s.article;
     const part = s.part ? (s.psign ? `${s.part}.${s.psign}` : s.part) : '';
     const letters = [...String(s.points ?? '')].filter((x) => /\p{L}/u.test(x));
@@ -860,6 +890,15 @@ export function cardValues(ix, form, layout, read) {
         }
       });
       if (slots.size) put(fid, ciQualText(slots));
+      // форма соучастия и исполнитель – в ответ по своей строке (р. 15.1 – 15.6)
+      for (const [line, s] of slots) {
+        if (!s.article) continue;
+        const codes = ciComplicity(s.complicity).answer;
+        const lr = [...(reqs?.values() ?? [])].find((x) => x.input?.episode_line === line + 1);
+        const lf = codes.length && lr ? ciPrimaryFact(ix, form, lr) : null;
+        const keys = codes.map((code) => lr?.options.find((o) => o.code === code)).filter(Boolean).map(optKey);
+        if (lf && keys.length) row.entries.push({ fact: lf, value: keys, label: `строка ${line + 1}: соучастие`, req: lr.id });
+      }
       if (words.length) put(fid, words.join(' '));
       // коды одного реквизита из нескольких частей – одним списком
       const codeEntries = row.entries.filter((e) => e.fact === fid && Array.isArray(e.value));
@@ -874,7 +913,8 @@ export function cardValues(ix, form, layout, read) {
     for (const e of row.entries) {
       if (!e.fact) { row.skip ??= 'сведение не переносится между карточками'; continue; }
       e.scope = scopeOf(ix, e.fact);
-      e.display = Array.isArray(e.value) || r.field_type === 'date' || /^\d{4}-\d{2}-\d{2}$/.test(String(e.value)) ? displayOf(ix, r, e.value) : String(e.value);
+      const er = e.req ? reqs.get(e.req) ?? r : r;
+      e.display = Array.isArray(e.value) || er.field_type === 'date' || /^\d{4}-\d{2}-\d{2}$/.test(String(e.value)) ? displayOf(ix, er, e.value) : String(e.value);
     }
     row.scope = row.entries.find((e) => e.fact)?.scope ?? 'card';
     row.display = [...row.entries.map((e) => (e.label ? `${e.label}: ${e.display}` : e.display)),

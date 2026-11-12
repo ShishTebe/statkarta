@@ -89,6 +89,15 @@ FORM_SHARED = {
     ("6", "1"): "case.organ_name.text", ("6", "2"): "case.case_number.text",
     ("6", "3"): "person.surname.text", ("6", "4"): "person.first_name.text", ("6", "5"): "person.patronymic.text",
     ("6", "6"): "person.birth_date.date", ("6", "15"): "crime.qualification.text",
+    # строка без номера «Статистическую карточку формы № 6 направить по адресу» – одна на дело, по умолчанию из профиля органа
+    # (замечание пользователя от 12.11.2026)
+    ("6", "send_to"): "case.card6_address.text",
+}
+# Текст вопроса, если наименование реквизита вопросом не читается
+QUESTION_TEXT = {
+    "fact.case.card6_address": "По какому адресу направить статистическую карточку ф. 6 (наименование органа, проводившего расследование, индекс, почтовый адрес)?",
+    **{f"fact.court.complicity_l{i}": f"Р. 15, строка {i} ({i}-я статья квалификации): форма соучастия (ст. 35 УК РФ) и категория соучастника (ст. 33 УК РФ)?"
+       for i in range(1, 7)},
 }
 IPK_BLOCK = {"Сведения о лице": "person", "Сведения о преступлении": "crime",
              "А. Регистр преступления (происшествия)": "case", "Б. Сведения о подозреваемом / потерпевшем / обвиняемом": "person",
@@ -120,6 +129,9 @@ def entity(form, number):
 # ф. 1.1 р. 34 – служба, установившая лицо; р. 34.1 – служба, способствовавшая раскрытию
 # (замечание пользователя от 23.09.2026). Ключ задается явно, иначе они стали бы одним фактом.
 FORM_KEY = {("1.1", "34.1"): "crime.service_help.spr14"}
+# Ф. 6 р. 15.1 – 15.6: форма соучастия и категория соучастника – у каждой строки (статьи квалификации) свои;
+# раньше одно сведение шло во все шесть строк и в бланк не попадало (замечание пользователя от 12.11.2026)
+FORM_KEY.update({("6", f"15.{i}"): f"court.complicity_l{i}.enum" for i in range(1, 7)})
 
 # Реквизит-дата, который совпадает с общим сведением дела: отдельного факта и вопроса нет, реквизит
 # берет значение общего сведения. Ф. 3 р. 6 и карта на иностранца р. 26 – дата возбуждения (в
@@ -211,7 +223,7 @@ def main():
                       "classifier_no": r0["classifier_no"], "shared": is_shared,
                       "label": sentence(r0["label"]), "status": "draft"})
         why = [f"ф. {f['form']} р. {r['number']}" for f, r in items]
-        questions.append({"id": "q." + fid[5:], "text": sentence(r0["label"]) + ("?" if not sentence(r0["label"]).endswith("?") else ""),
+        questions.append({"id": "q." + fid[5:], "text": QUESTION_TEXT.get(fid) or sentence(r0["label"]) + ("?" if not sentence(r0["label"]).endswith("?") else ""),
                           "why": ", ".join(why), "forms": forms_in, "entity": facts[-1]["entity"],
                           "answer": answer, "ask_when": {"not_derived": [fid]}, "sets": [fid],
                           "allow_unknown": True, "status": "draft", "review": "pending"})

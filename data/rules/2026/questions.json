@@ -187,6 +187,30 @@
    "review": "pending"
   },
   {
+   "id": "q.case.card6_address",
+   "text": "По какому адресу направить статистическую карточку ф. 6 (наименование органа, проводившего расследование, индекс, почтовый адрес)?",
+   "why": "ф. 6 р. б/н",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "text",
+    "multiple": null
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.case.card6_address"
+    ]
+   },
+   "sets": [
+    "fact.case.card6_address"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
    "id": "q.case.ipk_in_r1",
    "text": "Территориальный орган МВД России, ИЦ, где подлежит учету?",
    "why": "ф. ipk-in р. 1",
@@ -504,9 +528,9 @@
    "review": "pending"
   },
   {
-   "id": "q.court.qualification",
-   "text": "Квалификация по обвинительному заключению (акту), утвержденному прокурором, строка 1: статья, знак, часть, пункт; стадия, форма соучастия, категория соучастника?",
-   "why": "ф. 6 р. 15.1, ф. 6 р. 15.2, ф. 6 р. 15.3, ф. 6 р. 15.4, ф. 6 р. 15.5, ф. 6 р. 15.6",
+   "id": "q.court.complicity_l1",
+   "text": "Р. 15, строка 1 (1-я статья квалификации): форма соучастия (ст. 35 УК РФ) и категория соучастника (ст. 33 УК РФ)?",
+   "why": "ф. 6 р. 15.1",
    "forms": [
     "6"
    ],
@@ -521,11 +545,151 @@
    },
    "ask_when": {
     "not_derived": [
-     "fact.court.qualification"
+     "fact.court.complicity_l1"
     ]
    },
    "sets": [
-    "fact.court.qualification"
+    "fact.court.complicity_l1"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.court.complicity_l2",
+   "text": "Р. 15, строка 2 (2-я статья квалификации): форма соучастия (ст. 35 УК РФ) и категория соучастника (ст. 33 УК РФ)?",
+   "why": "ф. 6 р. 15.2",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "6",
+     "requisite": "15.2"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.court.complicity_l2"
+    ]
+   },
+   "sets": [
+    "fact.court.complicity_l2"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.court.complicity_l3",
+   "text": "Р. 15, строка 3 (3-я статья квалификации): форма соучастия (ст. 35 УК РФ) и категория соучастника (ст. 33 УК РФ)?",
+   "why": "ф. 6 р. 15.3",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "6",
+     "requisite": "15.3"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.court.complicity_l3"
+    ]
+   },
+   "sets": [
+    "fact.court.complicity_l3"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.court.complicity_l4",
+   "text": "Р. 15, строка 4 (4-я статья квалификации): форма соучастия (ст. 35 УК РФ) и категория соучастника (ст. 33 УК РФ)?",
+   "why": "ф. 6 р. 15.4",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "6",
+     "requisite": "15.4"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.court.complicity_l4"
+    ]
+   },
+   "sets": [
+    "fact.court.complicity_l4"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.court.complicity_l5",
+   "text": "Р. 15, строка 5 (5-я статья квалификации): форма соучастия (ст. 35 УК РФ) и категория соучастника (ст. 33 УК РФ)?",
+   "why": "ф. 6 р. 15.5",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "6",
+     "requisite": "15.5"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.court.complicity_l5"
+    ]
+   },
+   "sets": [
+    "fact.court.complicity_l5"
+   ],
+   "allow_unknown": true,
+   "status": "draft",
+   "review": "pending"
+  },
+  {
+   "id": "q.court.complicity_l6",
+   "text": "Р. 15, строка 6 (6-я статья квалификации): форма соучастия (ст. 35 УК РФ) и категория соучастника (ст. 33 УК РФ)?",
+   "why": "ф. 6 р. 15.6",
+   "forms": [
+    "6"
+   ],
+   "entity": "court",
+   "answer": {
+    "type": "enum",
+    "multiple": null,
+    "options_from": {
+     "form": "6",
+     "requisite": "15.6"
+    }
+   },
+   "ask_when": {
+    "not_derived": [
+     "fact.court.complicity_l6"
+    ]
+   },
+   "sets": [
+    "fact.court.complicity_l6"
    ],
    "allow_unknown": true,
    "status": "draft",
